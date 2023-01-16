@@ -16,8 +16,13 @@ class AddGig extends StatefulWidget {
   final Map<String, dynamic> bodyprovider;
   final File doc;
   final File licence;
-  const AddGig({Key? key, required this.bodyprovider, required this.doc, required this.licence}) : super(key: key);
 
+  const AddGig(
+      {Key? key,
+      required this.bodyprovider,
+      required this.doc,
+      required this.licence})
+      : super(key: key);
 
   @override
   State<AddGig> createState() => _AddGigState();
@@ -187,8 +192,7 @@ class _AddGigState extends State<AddGig> {
                     ),
                     10.verticalSpace,
                     AddPhotoWidget(
-                      isUploading: isUploading,
-                      filePath: images!=null && images.isNotEmpty ?images.first:null,
+                      isUploading: false,
                       onTap: () {
                         source(context, false);
                       },
@@ -205,21 +209,58 @@ class _AddGigState extends State<AddGig> {
                     15.verticalSpace,
                     Row(
                       children: [
-                        Checkbox(value: true, onChanged: (b){}, ),
-                        Text("For licenced work", style: TextStyle(
-                            color: Colors.black,
-                            fontSize: ScreenUtil().setSp(14),
-                            fontWeight: FontWeight.w500),)
+                        Checkbox(
+                          value: true,
+                          onChanged: (b) {},
+                        ),
+                        Text(
+                          "For licenced work",
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: ScreenUtil().setSp(14),
+                              fontWeight: FontWeight.w500),
+                        )
                       ],
                     ),
-
-
+                    20.verticalSpace,
+                    images != null && images.length > 0
+                        ? Container(
+                      height: 100,
+                      child: ListView.builder(
+                          shrinkWrap: true,
+                          scrollDirection: Axis.horizontal,
+                          itemCount: images.length,
+                          itemBuilder: (_, index) {
+                            return Container(
+                                margin: EdgeInsets.only(left: 5),
+                                width: 100,
+                                height: 100,
+                                child: AddPhotoWidget(
+                                  isUploading: isUploading,
+                                  filePath: images[index],
+                                  onTap: () {
+                                    source(context, false);
+                                  },
+                                  icon: Icons.upload,
+                                  progress: progress,
+                                  isImage: false,
+                                  onTapCancel: () {
+                                    setState(() {
+                                      // uploadTask.cancel();
+                                      isUploading = false;
+                                    });
+                                  },
+                                ));
+                          }),
+                    )
+                        : SizedBox(),
                     20.verticalSpace,
                     SizedBox(
                       height: ScreenUtil().screenHeight * 0.07,
                       child: TextButton(
                         style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all(Colors.blue),
+                          backgroundColor:
+                              MaterialStateProperty.all(Colors.blue),
                           shape: MaterialStateProperty.all(
                             RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(
@@ -247,21 +288,22 @@ class _AddGigState extends State<AddGig> {
                         ),
                         onPressed: () {
                           doRegister();
-                          },
+                        },
                       ),
                     ),
-
                   ],
                 )),
-
           ],
         ),
       ),
     );
   }
 
-  void doRegister() async{
-    await HttpClient().providersignup(widget.bodyprovider, widget.doc, widget.licence, images.first).then((value) {
+  void doRegister() async {
+    await HttpClient()
+        .providersignup(
+            widget.bodyprovider, widget.doc, widget.licence, images.first)
+        .then((value) {
       Navigator.pushReplacement(
           context,
           MaterialPageRoute(
@@ -269,6 +311,5 @@ class _AddGigState extends State<AddGig> {
     }).catchError((e) {
       BaseDio.getDioError(e);
     });
-    }
-
+  }
 }
