@@ -47,11 +47,14 @@ class _AddDocumentState extends State<AddDocument> {
             minimumAspectRatio: 1,
           ));
       if (croppedFile != null) {
-        if(type==1){
-          doc = croppedFile;
-        }else{
-          licence = croppedFile;
-        }
+        setState(() {
+          if(type==1){
+            doc = croppedFile;
+          }else{
+            licence = croppedFile;
+          }
+        });
+
         // await uploadFile(await compressimage(croppedFile));
       }
     }
@@ -198,6 +201,7 @@ class _AddDocumentState extends State<AddDocument> {
                       onTap: () {
                         source(context, 1);
                       },
+                      filePath:doc,
                       icon: Icons.upload,
                       progress: progress,
                       isImage: false,
@@ -229,6 +233,7 @@ class _AddDocumentState extends State<AddDocument> {
                     10.verticalSpace,
                     AddPhotoWidget(
                       isUploading: isUploading,
+                      filePath: licence,
                       onTap: () {
                         source(context, 2);
                       },

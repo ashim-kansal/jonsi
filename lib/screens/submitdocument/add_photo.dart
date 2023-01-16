@@ -9,14 +9,17 @@ class AddPhotoWidget extends StatefulWidget {
   final bool isImage;
 
   final String? url;
+  final File? filePath;
   final bool isUploading;
   final double? progress;
   final IconData? icon;
   final VoidCallback? onTapCancel;
+
   const AddPhotoWidget({
     required this.onTap,
     required this.isImage,
     this.url,
+    this.filePath,
     required this.isUploading,
     this.progress,
     this.icon,
@@ -50,69 +53,74 @@ class _AddPhotoWidgetState extends State<AddPhotoWidget> {
             ),
           ],
         ),
-        child: !widget.isImage
-            ? !widget.isUploading
-                ? Icon(
-                    widget.icon ?? Icons.add_photo_alternate_outlined,
-                    color: Colors.grey,
-                    size: 40,
-                  )
+        child: widget.filePath != null
+            ? Image.file(
+                widget.filePath!,
+                fit: BoxFit.cover,
+              )
+            : !widget.isImage
+                ? !widget.isUploading
+                    ? Icon(
+                        widget.icon ?? Icons.add_photo_alternate_outlined,
+                        color: Colors.grey,
+                        size: 40,
+                      )
+                    : Stack(
+                        children: [
+                          Align(
+                            alignment: Alignment.center,
+                            child: CircularPercentIndicator(
+                              radius: 30.0,
+                              lineWidth: 3.0,
+                              percent: widget.progress!,
+                              progressColor: Colors.blue,
+                            ),
+                          ),
+                          Align(
+                            alignment: Alignment.center,
+                            child: GestureDetector(
+                              onTap: widget.onTapCancel ?? () {},
+                              child: const Icon(
+                                Icons.close,
+                                color: Colors.red,
+                              ),
+                            ),
+                          ),
+                        ],
+                      )
                 : Stack(
                     children: [
                       Align(
-                        alignment: Alignment.center,
-                        child: CircularPercentIndicator(
-                          radius: 30.0,
-                          lineWidth: 3.0,
-                          percent: widget.progress!,
-                          progressColor: Colors.blue,
-                        ),
-                      ),
+                          alignment: Alignment.center,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(12.0),
+                            child: CachedNetworkImage(
+                              imageUrl: widget.url!,
+                              width: double.infinity,
+                              height: double.infinity,
+                              fit: BoxFit.cover,
+                            ),
+                          )),
                       Align(
                         alignment: Alignment.center,
                         child: GestureDetector(
-                          onTap: widget.onTapCancel ?? () {},
-                          child: const Icon(
-                            Icons.close,
-                            color: Colors.red,
+                          onTap: widget.onTap,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(30.0),
+                            ),
+                            padding: const EdgeInsets.all(8),
+                            child: const Icon(
+                              Icons.delete,
+                              color: Colors.red,
+                              size: 20,
+                            ),
                           ),
                         ),
                       ),
                     ],
-                  )
-            : Stack(
-                children: [
-                  Align(
-                      alignment: Alignment.center,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(12.0),
-                        child: CachedNetworkImage(
-                          imageUrl: widget.url!,
-                          width: double.infinity,
-                          height: double.infinity,
-                          fit: BoxFit.cover,
-                        ),
-                      )),
-                  Align(
-                    alignment: Alignment.center,
-                    child: GestureDetector(
-                      onTap: widget.onTap,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(30.0),
-                        ),
-                        padding: const EdgeInsets.all(8),
-                        child: const Icon(
-                          Icons.delete,
-                          color: Colors.red,
-                          size: 20,
-                        ),
-                      ),
-                    ),
                   ),
-                ],
-              ),
       ),
     );
   }

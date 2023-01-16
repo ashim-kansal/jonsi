@@ -71,7 +71,7 @@ class _HttpClient implements HttpClient {
 
     final _result = await _dio.fetch(_setStreamType<HttpResponse<dynamic>>(
         Options(method: 'POST', headers: _headers, extra: _extra)
-            .compose(_dio.options, 'auth/poviderregister/',
+            .compose(_dio.options, 'auth/poviderregister',
                 queryParameters: queryParameters, data: formData)
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = _result.data;
@@ -119,7 +119,7 @@ class _HttpClient implements HttpClient {
     _data.addAll(params);
     final _result = await _dio.fetch(_setStreamType<HttpResponse<dynamic>>(
         Options(method: 'POST', headers: _headers, extra: _extra)
-            .compose(_dio.options, 'http://127.0.0.1:8000/api/login/app/',
+            .compose(_dio.options, 'auth/login',
                 queryParameters: queryParameters, data: _data)
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = _result.data;

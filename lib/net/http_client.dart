@@ -18,7 +18,7 @@ import '../models/serializable_model/thread_id.dart';
 import 'base_dio.dart';
 part 'http_client.g.dart';
 
-@RestApi(baseUrl: "http://127.0. 0.1:8000/api/")
+@RestApi(baseUrl: "http://urbanmalta.com/api/")
 abstract class HttpClient {
   factory HttpClient([Dio? dio, String? baseUrl]) {
     dio = BaseDio.getInstance().getDio();
@@ -34,7 +34,7 @@ abstract class HttpClient {
   @POST('auth/customerregister/')
   Future<HttpResponse?> userSignup(@Body() Map<String, dynamic> params, File file);
 
-  @POST('api/login/app/')
+  @POST('auth/login/')
   Future<HttpResponse> signin(@Body() Map<String, dynamic> params);
 
   @PATCH('provider/send-otp-email/{id}/')
@@ -42,6 +42,7 @@ abstract class HttpClient {
 
   @PATCH('provider/send-otp-sms/{id}/')
   Future<HttpResponse> sendotpphno(@Path('id') String id);
+
 
   @PATCH('provider/verify-email/{id}/')
   Future<HttpResponse> varifyotp(

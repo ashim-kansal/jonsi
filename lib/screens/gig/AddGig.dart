@@ -8,6 +8,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:kappu/components/AppColors.dart';
 import 'package:kappu/net/base_dio.dart';
 import 'package:kappu/screens/submitdocument/add_photo.dart';
+import '../../common/bottom_nav_bar.dart';
 import '../../net/http_client.dart';
 import '../../common/CircleButton.dart';
 
@@ -49,8 +50,9 @@ class _AddGigState extends State<AddGig> {
             minimumAspectRatio: 1,
           ));
       if (croppedFile != null) {
-        images.add(croppedFile);
-        // await uploadFile(await compressimage(croppedFile));
+        setState(() {
+          images.add(croppedFile);
+        });
       }
     }
     Navigator.pop(context);
@@ -186,6 +188,7 @@ class _AddGigState extends State<AddGig> {
                     10.verticalSpace,
                     AddPhotoWidget(
                       isUploading: isUploading,
+                      filePath: images!=null && images.isNotEmpty ?images.first:null,
                       onTap: () {
                         source(context, false);
                       },
@@ -255,13 +258,14 @@ class _AddGigState extends State<AddGig> {
         ),
       ),
     );
-
   }
 
   void doRegister() async{
     await HttpClient().providersignup(widget.bodyprovider, widget.doc, widget.licence, images.first).then((value) {
-
-
+      Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+              builder: (context) => const BottomNavBar(isprovider: false)));
     }).catchError((e) {
       BaseDio.getDioError(e);
     });

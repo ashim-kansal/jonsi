@@ -60,7 +60,7 @@ dependencies:
   json_annotation: ^4.4.0
   another_flushbar: ^1.10.29
   flutter_datetime_picker: ^1.5.1
-  path: ^1.8.1
+  path: ^1.8.0
   http: ^0.13.4
   web_socket_channel: ^2.2.0
   firebase_core: ^1.20.0

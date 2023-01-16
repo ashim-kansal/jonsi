@@ -95,7 +95,7 @@ class _SplashViewState extends State<SplashView> {
                   child: returnButtonWithTextImage(context,
                       'assets/images/find_icon.png', "Find a service\n"),
                   style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.white, // Background color
+                      primary: Colors.white, // Background color
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10.0),
                       ))),
@@ -117,7 +117,7 @@ class _SplashViewState extends State<SplashView> {
                       'assets/images/seller_icon.png',
                       "Become a Service\n Provider"),
                   style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.white, // Background color
+                      primary: Colors.white, // Background color
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10.0),
                       ))),

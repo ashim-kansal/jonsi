@@ -176,7 +176,6 @@ class _LoginScreenState extends State<LoginScreen> {
                   'email': emailController.text.trim(),
                   'password': passwordController.text,
                 };
-
                 await HttpClient().signin(body).then((loginresponse) async {
                   if (loginresponse.data['data']['is_provider']) {
                     provider.token = loginresponse.data['data']['token'];
