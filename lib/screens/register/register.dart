@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kappu/models/serializable_model/Language.dart';
 import 'package:kappu/models/serializable_model/CategoryResponse.dart';
+import 'package:kappu/screens/register/register_more.dart';
 import 'package:kappu/screens/register/widgets/text_field.dart';
 import 'package:kappu/screens/submitdocument/submit_doc.dart';
 import 'package:validators/validators.dart';
@@ -51,24 +52,28 @@ class _SignUpState extends State<SignUp> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _lastnameController = TextEditingController();
 
-  List<Category> catagories = [Category(id: 1, name: "Select a Service", createdAt: "")];
-  List<Language> languages = [Language(id: -1, name: 'English')
-    ,Language(id: -2, name: 'Maltese')
-    ,Language(id: -3, name: 'Italian')
-    ,Language(id: -4, name: 'Spanish')
-    ,Language(id: -5, name: 'French')
-    ,Language(id: -6, name: 'German')
-    ,Language(id: -7, name: 'Polish')
-    ,Language(id: -8, name: 'Arabic')
-    ,Language(id: -9, name: 'Dutch')
+  List<Category> catagories = [
+    Category(id: 1, name: "Select a Service", createdAt: "")
+  ];
+  List<Language> languages = [
+    Language(id: -1, name: 'English'),
+    Language(id: -2, name: 'Maltese'),
+    Language(id: -3, name: 'Italian'),
+    Language(id: -4, name: 'Spanish'),
+    Language(id: -5, name: 'French'),
+    Language(id: -6, name: 'German'),
+    Language(id: -7, name: 'Polish'),
+    Language(id: -8, name: 'Arabic'),
+    Language(id: -9, name: 'Dutch')
   ];
 
-  Category selectedcatagory = Category(id: -1, name: "Select a Service", createdAt: "");
+  Category selectedcatagory =
+      Category(id: -1, name: "Select a Service", createdAt: "");
   Language selectedLanguage = Language(id: -1, name: 'English');
 
   String vaidatePassword(String password) {
     if (password.contains(
-        RegExp(r'(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{6,}$'))) {
+        RegExp(r'(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$'))) {
       return 'Strong';
     } else {
       return 'Weak';
@@ -85,13 +90,17 @@ class _SignUpState extends State<SignUp> {
   }
 
   getcatagory() async {
-    await HttpClient().getCatagory().then((value) => {
-      if(value.status){
-        setState(() {
-          this.catagories = value.data;
-        })
-      }
-    }).catchError((e){
+    await HttpClient()
+        .getCatagory()
+        .then((value) => {
+              if (value.status)
+                {
+                  setState(() {
+                    this.catagories = value.data;
+                  })
+                }
+            })
+        .catchError((e) {
       BaseDio.getDioError(e);
     });
   }
@@ -183,8 +192,11 @@ class _SignUpState extends State<SignUp> {
                           hintText: 'Age',
                           keyboardType: TextInputType.number,
                           prefixIcon: profileIcon,
-                          validator: (value) =>
-                          value!.isEmpty ? "Enter Your Age" : value!.length>2? "Enter valid age" : null,
+                          validator: (value) => value!.isEmpty
+                              ? "Enter Your Age"
+                              : value!.length > 2
+                                  ? "Enter valid age"
+                                  : null,
                         ),
                       if (widget.isprovider)
                         CustomTextFormField(
@@ -193,18 +205,19 @@ class _SignUpState extends State<SignUp> {
                           keyboardType: TextInputType.text,
                           prefixIcon: profileIcon,
                           validator: (value) =>
-                          value!.isEmpty ? "Enter Your Nationality" : null,
+                              value!.isEmpty ? "Enter Your Nationality" : null,
                         ),
-                      if (widget.isprovider)
-                        CustomTextFormField(
-                          controller: _descController,
-                          hintText: 'Description | Cover letter – why should user hire you?',
-                          keyboardType: TextInputType.text,
-                          prefixIcon: profileIcon,
-                          maxlines: 3,
-                          validator: (value) =>
-                          value!.isEmpty ? "Enter Your Description" : null,
-                        ),
+                      // if (widget.isprovider)
+                      //   CustomTextFormField(
+                      //     controller: _descController,
+                      //     hintText:
+                      //         'Description | Cover letter – why should user hire you?',
+                      //     keyboardType: TextInputType.text,
+                      //     prefixIcon: profileIcon,
+                      //     maxlines: 3,
+                      //     validator: (value) =>
+                      //         value!.isEmpty ? "Enter Your Description" : null,
+                      //   ),
                       if (!widget.isprovider)
                         Padding(
                           padding: EdgeInsets.only(top: 10.h),
@@ -263,104 +276,121 @@ class _SignUpState extends State<SignUp> {
                             },
                           ),
                         ),
-                      if (widget.isprovider)
-                        Material(
-                            borderRadius: BorderRadius.circular(ScreenUtil().screenHeight * 0.03),
-                            elevation: 20,
-                            child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              SizedBox(
-                                height: ScreenUtil().setHeight(50),
-                                width: ScreenUtil().setWidth(317),
-                                child: DropdownButtonFormField<Category>(
-                                  decoration: InputDecoration(
-                                      border: InputBorder.none,
-                                      contentPadding: EdgeInsets.only(left: 15, right: 15, top: 5),
-                                      hintStyle:
-                                          TextStyle(color: Colors.grey[100]),
-                                      hintText: "Choose catagory",
-                                      fillColor: Colors.red[100]),
-                                  style: TextStyle(
-                                    color: Colors.grey.shade600,
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: ScreenUtil().setSp(15),
-                                  ),
-                                  value: catagories.first,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      selectedcatagory = value!;
-                                    });
-                                  },
-                                  items: catagories
-                                      .map((value) => DropdownMenuItem(
-                                          value: value,
-                                          child: Text(value.name)))
-                                      .toList(),
-                                ),
-                              )
-                            ])),
+                      // if (widget.isprovider)
+                      //   Material(
+                      //       borderRadius: BorderRadius.circular(
+                      //           ScreenUtil().screenHeight * 0.03),
+                      //       elevation: 20,
+                      //       child: Row(
+                      //           mainAxisAlignment:
+                      //               MainAxisAlignment.spaceBetween,
+                      //           children: [
+                      //             SizedBox(
+                      //               height: ScreenUtil().setHeight(50),
+                      //               width: ScreenUtil().setWidth(317),
+                      //               child: DropdownButtonFormField<Category>(
+                      //                 decoration: InputDecoration(
+                      //                     border: InputBorder.none,
+                      //                     contentPadding: EdgeInsets.only(
+                      //                         left: 15, right: 15, top: 5),
+                      //                     hintStyle: TextStyle(
+                      //                         color: Colors.grey[100]),
+                      //                     hintText: "Choose catagory",
+                      //                     fillColor: Colors.red[100]),
+                      //                 style: TextStyle(
+                      //                   color: Colors.grey.shade600,
+                      //                   fontWeight: FontWeight.w500,
+                      //                   fontSize: ScreenUtil().setSp(15),
+                      //                 ),
+                      //                 value: catagories.first,
+                      //                 onChanged: (value) {
+                      //                   setState(() {
+                      //                     selectedcatagory = value!;
+                      //                   });
+                      //                 },
+                      //                 items: catagories
+                      //                     .map((value) => DropdownMenuItem(
+                      //                         value: value,
+                      //                         child: Text(value.name)))
+                      //                     .toList(),
+                      //               ),
+                      //             )
+                      //           ])),
                       10.verticalSpace,
                       if (widget.isprovider)
                         Material(
-                            borderRadius: BorderRadius.circular(ScreenUtil().screenHeight * 0.03),
+                            borderRadius: BorderRadius.circular(
+                                ScreenUtil().screenHeight * 0.03),
                             elevation: 20,
                             child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              SizedBox(
-                                height: ScreenUtil().setHeight(50),
-                                width: ScreenUtil().setWidth(317),
-                                child: DropdownButtonFormField<Language>(
-                                  decoration: InputDecoration(
-                                      border: InputBorder.none,
-                                      contentPadding: EdgeInsets.only(left: 15, right: 15, top: 5),
-                                      hintStyle:
-                                      TextStyle(color: Colors.grey[100]),
-                                      hintText: "Language known",
-                                      fillColor: Colors.red[100]),
-                                  style: TextStyle(
-                                    color: Colors.grey.shade600,
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: ScreenUtil().setSp(15),
-                                  ),
-                                  value: languages.first,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      selectedLanguage = value!;
-                                    });
-                                  },
-                                  items: languages
-                                      .map((value) => DropdownMenuItem(
-                                      value: value,
-                                      child: Text(value.name, style: TextStyle(color: Colors.grey.shade600,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  SizedBox(
+                                    height: ScreenUtil().setHeight(50),
+                                    width: ScreenUtil().setWidth(317),
+                                    child: DropdownButtonFormField<Language>(
+                                      decoration: InputDecoration(
+                                          border: InputBorder.none,
+                                          contentPadding: EdgeInsets.only(
+                                              left: 15, right: 15, top: 5),
+                                          hintStyle: TextStyle(
+                                              color: Colors.grey[100]),
+                                          hintText: "Language known",
+                                          fillColor: Colors.red[100]),
+                                      style: TextStyle(
+                                        color: Colors.grey.shade600,
                                         fontWeight: FontWeight.w500,
-                                        fontSize: ScreenUtil().setSp(15),),)))
-                                      .toList(),
-                                ),
-                              ),
-
-                            ])),
+                                        fontSize: ScreenUtil().setSp(15),
+                                      ),
+                                      value: languages.first,
+                                      onChanged: (value) {
+                                        setState(() {
+                                          selectedLanguage = value!;
+                                        });
+                                      },
+                                      items: languages
+                                          .map((value) => DropdownMenuItem(
+                                              value: value,
+                                              child: Text(
+                                                value.name,
+                                                style: TextStyle(
+                                                  color: Colors.grey.shade600,
+                                                  fontWeight: FontWeight.w500,
+                                                  fontSize:
+                                                      ScreenUtil().setSp(15),
+                                                ),
+                                              )))
+                                          .toList(),
+                                    ),
+                                  ),
+                                ])),
                       10.verticalSpace,
-                      if (widget.isprovider)
-                        CustomTextFormField(
-                          controller: _rateController,
-                          hintText: '\$ per hour',
-                          keyboardType: TextInputType.number,
-                          prefixIcon: profileIcon,
-                          validator: (value) =>
-                          value!.isEmpty ? "Enter \$ per hour" : value!.length>2? "Enter valid \$ per hour" : null,
-                        ),
-                      if (widget.isprovider)
-                        CustomTextFormField(
-                          controller: _extraRateController,
-                          hintText: 'Extra \$ for urgent need',
-                          keyboardType: TextInputType.number,
-                          prefixIcon: profileIcon,
-                          validator: (value) =>
-                          value!.isEmpty ? "Enter extra \$" : value!.length>2? "Enter valid extra \$" : null,
-                        ),
+                      // if (widget.isprovider)
+                      //   CustomTextFormField(
+                      //     controller: _rateController,
+                      //     hintText: '\$ per hour',
+                      //     keyboardType: TextInputType.number,
+                      //     prefixIcon: profileIcon,
+                      //     validator: (value) => value!.isEmpty
+                      //         ? "Enter \$ per hour"
+                      //         : value!.length > 2
+                      //             ? "Enter valid \$ per hour"
+                      //             : null,
+                      //   ),
+                      // if (widget.isprovider)
+                      //   CustomTextFormField(
+                      //     controller: _extraRateController,
+                      //     hintText: 'Extra \$ for urgent need',
+                      //     keyboardType: TextInputType.number,
+                      //     prefixIcon: profileIcon,
+                      //     validator: (value) => value!.isEmpty
+                      //         ? "Enter extra \$"
+                      //         : value!.length > 2
+                      //             ? "Enter valid extra \$"
+                      //             : null,
+                      //   ),
 
                       CustomTextFormField(
                         controller: _passwordController,
@@ -465,33 +495,23 @@ class _SignUpState extends State<SignUp> {
 
   onregisterpressedprovider() async {
     if (_formState.currentState!.validate()) {
-      // if (!loading) {
-        // setState(() {
-        //   this.loading = true;
-        // });
 
-        Map<String, dynamic> bodyprovider = {
-          'first_name': _nameController.text,
-          'last_name': _lastnameController.text,
-          'username': _lastnameController.text,
-          'email': _emailController.text,
-          'category': selectedcatagory.id,
-          'phone_number': _phnocontroller.text,
-          'password': _passwordController.text,
-          'is_provider': true,
-          "Age":_ageController.text,
-          "nationality":_nationalityController.text,
-          "language": selectedLanguage.name,
-          "service_title":"proidehoubroufo-770",
-          "description":_descController.text,
-          "Perhour":_rateController.text,
-          "Extra_for_urgent_need":_extraRateController.text
-        };
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => AddDocument(bodyprovider: bodyprovider)));
-
+      Map<String, dynamic> bodyprovider = {
+        'first_name': _nameController.text,
+        'last_name': _lastnameController.text,
+        'username': _lastnameController.text,
+        'email': _emailController.text,
+        'phone_number': _phnocontroller.text,
+        'password': _passwordController.text,
+        "Age": _ageController.text,
+        "nationality": _nationalityController.text,
+        "language": selectedLanguage.name,
+        "service_title": "proidehoubroufo-770",
+      };
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => RegisterMore(bodyprovider: bodyprovider)));
     }
   }
 

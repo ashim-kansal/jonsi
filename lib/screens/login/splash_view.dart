@@ -168,7 +168,7 @@ class _SplashViewState extends State<SplashView> {
                           context,
                           MaterialPageRoute(
                               builder: (context) =>
-                                  const BottomNavBar(isprovider: false)));
+                                  const BottomNavBar(isprovider: true)));
                     },
                     style: OutlinedButton.styleFrom(
                         backgroundColor: Colors.white,

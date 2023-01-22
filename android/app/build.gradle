@@ -53,7 +53,7 @@ android {
     }
 
     signingConfigs {
-        debug{
+        release{
 //            keyAlias 'androiddebugkey'
 //            keyPassword '123456'
 //            storeFile file('mykey.jks')

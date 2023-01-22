@@ -3,6 +3,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kappu/common/customtexts.dart';
+import 'package:kappu/common/dialogues.dart';
 import 'package:kappu/common/painter.dart';
 import 'package:kappu/helperfunctions/screen_nav.dart';
 import 'package:kappu/models/serializable_model/signedinprovider.dart';
@@ -177,38 +178,40 @@ class _LoginScreenState extends State<LoginScreen> {
                   'password': passwordController.text,
                 };
                 await HttpClient().signin(body).then((loginresponse) async {
-                  if (loginresponse.data['data']['is_provider']) {
+                  if (loginresponse.data['data']['user']['is_provider']) {
                     provider.token = loginresponse.data['data']['token'];
-                    provider.provider =
-                        SignedInProvider.fromJson(loginresponse.data);
-                    checkaddusertoken(provider.provider.id);
-                    HttpClient()
-                        .getuserprofilepic(provider.provider.id.toString())
-                        .then((getprofilepicresponse) {
-                      provider.providerprofilepicurl =
-                          getprofilepicresponse.data['profile_picture'];
-                    }).catchError((e) {});
+                    // provider.provider =
+                    //     SignedInProvider.fromJson(loginresponse.data);
+                    // checkaddusertoken(provider.provider.id);
+                    // HttpClient()
+                    //     .getuserprofilepic(provider.provider.id.toString())
+                    //     .then((getprofilepicresponse) {
+                    //   provider.providerprofilepicurl =
+                    //       getprofilepicresponse.data['profile_picture'];
+                    // }).catchError((e) {});
                   } else {
                     user.token = loginresponse.data['data']['token'];
-                    user.user = SignedInuser.fromJson(loginresponse.data);
-                    checkaddusertoken(user.user.id);
-                    await HttpClient()
-                        .getuserprofilepic(user.user.id.toString())
-                        .then((getprofilepicresponse) {
-                      user.userprofilepicurl =
-                          getprofilepicresponse.data['profile_picture'];
-                    }).catchError((e) {});
+                    // user.user = SignedInuser.fromJson(loginresponse.data);
+                    // checkaddusertoken(user.user.id);
+                    // await HttpClient()
+                    //     .getuserprofilepic(user.user.id.toString())
+                    //     .then((getprofilepicresponse) {
+                    //   user.userprofilepicurl =
+                    //       getprofilepicresponse.data['profile_picture'];
+                    // }).catchError((e) {});
                   }
                   signin = false;
                   changeScreenReplacement(
                       context,
                       BottomNavBar(
-                        isprovider: loginresponse.data['data']['is_provider'],
+                        isprovider: loginresponse.data['data']['user']['is_provider'],
                       ));
                 }).catchError((error) {
                   signin = false;
                   setState(() {});
-                  BaseDio.getDioError(error);
+                  showAlertDialog(
+                      error: "Please check the credentials",
+                      errorType: "Alert");
                 });
               }
             }

@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:kappu/screens/ProviderScreens/dashboard/provider_home.dart';
 import 'package:kappu/screens/bookings/booking_screen.dart';
 import 'package:kappu/screens/catagories/catagories_screen.dart';
 import 'package:kappu/screens/notification/notification_screen.dart';
@@ -47,26 +48,22 @@ class _BottomNavBarState extends State<BottomNavBar> {
 
   List<Widget> _buildScreensprovider() {
     return [
-      const BookingScreen(),
-      const NotificationsPageProvider(),
+      const ProviderHomeScreen(),
       const AllChatsScreenProvider(),
-      const SettingsPageProvider(),
+      const NotificationsPageProvider(),
+      const BookingScreen(),
     ];
   }
 
   List<PersistentBottomNavBarItem> _navBarsItemsprovider() {
     return [
+
       PersistentBottomNavBarItem(
         icon: const Icon(
-          Icons.book_rounded,
+          Icons.home_outlined,
         ),
-        title: "Bookings",
-        activeColorPrimary: Colors.blue,
-        inactiveColorPrimary: Colors.grey,
-      ),
-      PersistentBottomNavBarItem(
-        icon: const Icon(Icons.notifications),
-        title: ("Notification"),
+        title: "Home",
+        textStyle: const TextStyle(),
         activeColorPrimary: Colors.blue,
         inactiveColorPrimary: Colors.grey,
       ),
@@ -77,8 +74,16 @@ class _BottomNavBarState extends State<BottomNavBar> {
         inactiveColorPrimary: Colors.grey,
       ),
       PersistentBottomNavBarItem(
-        icon: const Icon(Icons.settings),
-        title: ("Setting"),
+        icon: const Icon(Icons.notifications),
+        title: ("Notification"),
+        activeColorPrimary: Colors.blue,
+        inactiveColorPrimary: Colors.grey,
+      ),
+      PersistentBottomNavBarItem(
+        icon: const Icon(
+          Icons.book_rounded,
+        ),
+        title: "Bookings",
         activeColorPrimary: Colors.blue,
         inactiveColorPrimary: Colors.grey,
       ),

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:kappu/common/dialogues.dart';
 import 'package:kappu/components/AppColors.dart';
 import 'package:kappu/screens/gig/AddGig.dart';
 import 'package:kappu/screens/submitdocument/add_photo.dart';
@@ -286,10 +287,16 @@ class _AddDocumentState extends State<AddDocument> {
                           ],
                         ),
                         onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => AddGig(bodyprovider: widget.bodyprovider, doc: doc!, licence: licence!)));
+                          if(doc!=null && licence!=null){
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => AddGig(bodyprovider: widget.bodyprovider, doc: doc!, licence: licence!)));
+                          }else{
+                            showAlertDialog(
+                                error: "Please add documents",
+                                errorType: "Alert");
+                          }
                         },
                       ),
                     ),

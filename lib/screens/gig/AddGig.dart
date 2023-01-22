@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:kappu/common/dialogues.dart';
 import 'package:kappu/components/AppColors.dart';
 import 'package:kappu/net/base_dio.dart';
 import 'package:kappu/screens/submitdocument/add_photo.dart';
@@ -300,16 +301,28 @@ class _AddGigState extends State<AddGig> {
   }
 
   void doRegister() async {
-    await HttpClient()
-        .providersignup(
-            widget.bodyprovider, widget.doc, widget.licence, images.first)
-        .then((value) {
-      Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-              builder: (context) => const BottomNavBar(isprovider: false)));
-    }).catchError((e) {
-      BaseDio.getDioError(e);
-    });
+    if(images.isEmpty){
+      showAlertDialog(
+          error: "Please add gig image",
+          errorType: "Alert");
+    }else{
+      await HttpClient()
+          .providersignup(
+          widget.bodyprovider, widget.doc, widget.licence, images.first)
+          .then((value) {
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+                builder: (context) => const BottomNavBar(isprovider: false)));
+      }).catchError((e) {
+        if(e.response !=null && e.response.data['data'].length>0){
+          showAlertDialog(
+              error: "Please check your email address",
+              errorType: "Alert");
+        }
+      });
+    }
+
+
   }
 }
