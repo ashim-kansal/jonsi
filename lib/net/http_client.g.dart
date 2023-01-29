@@ -10,7 +10,7 @@ part of 'http_client.dart';
 
 class _HttpClient implements HttpClient {
   _HttpClient(this._dio, {this.baseUrl}) {
-    baseUrl ??= 'http://urbanmalta.com/api/';
+    baseUrl ??= 'https://urbanmalta.com/api/';
   }
 
   final Dio _dio;
