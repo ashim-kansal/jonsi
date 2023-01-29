@@ -174,6 +174,7 @@ class _LoginScreenState extends State<LoginScreen> {
             if (_formState.currentState!.validate()) {
               if (!signin) {
                 signin = true;
+                isLoading = true;
                 setState(() {});
                 Map<String, dynamic> body = {
                   'email': emailController.text.trim(),
@@ -203,6 +204,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     // }).catchError((e) {});
                   }
                   signin = false;
+                  isLoading = false;
                   changeScreenReplacement(
                       context,
                       BottomNavBar(
@@ -210,6 +212,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ));
                 }).catchError((error) {
                   signin = false;
+                  isLoading = false;
                   setState(() {});
                   showAlertDialog(
                       error: "Please check the credentials",

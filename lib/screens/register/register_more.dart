@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kappu/models/serializable_model/CategoryResponse.dart';
+import 'package:kappu/screens/gig/AddGig.dart';
 import 'package:kappu/screens/register/widgets/text_field.dart';
 import 'package:kappu/screens/submitdocument/submit_doc.dart';
 
@@ -196,7 +197,7 @@ class _RegisterMoreState extends State<RegisterMore> {
                             'Description | Cover letter – why should user hire you?',
                         keyboardType: TextInputType.text,
                         prefixIcon: profileIcon,
-                        maxlines: 3,
+                        maxlines: 5,
                         validator: (value) =>
                             value!.isEmpty ? "Enter Your Description" : null,
                       ),
@@ -266,7 +267,12 @@ class _RegisterMoreState extends State<RegisterMore> {
       Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) => AddDocument(bodyprovider: bodyprovider1)));
+              builder: (context) => AddGig(bodyprovider: widget.bodyprovider)));
+
+      // Navigator.push(
+      //     context,
+      //     MaterialPageRoute(
+      //         builder: (context) => AddDocument(bodyprovider: bodyprovider1)));
     }
   }
 

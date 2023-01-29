@@ -11,13 +11,14 @@ class CustomProgressBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return Center(child:Container(
+      margin: const EdgeInsets.only(top:300),
       width: 50,
       height: 50,
         child: Center(
           child: CircularProgressIndicator(
               valueColor: AlwaysStoppedAnimation<Color>(valueColor)),
         )
-    );
+    ));
   }
 }

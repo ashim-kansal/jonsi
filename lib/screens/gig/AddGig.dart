@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:kappu/common/custom_progress_bar.dart';
 import 'package:kappu/common/dialogues.dart';
 import 'package:kappu/components/AppColors.dart';
 import 'package:kappu/net/base_dio.dart';
@@ -15,14 +16,15 @@ import '../../common/CircleButton.dart';
 
 class AddGig extends StatefulWidget {
   final Map<String, dynamic> bodyprovider;
-  final File doc;
-  final File licence;
+  // final File doc;
+  // final File licence;
 
   const AddGig(
       {Key? key,
-      required this.bodyprovider,
-      required this.doc,
-      required this.licence})
+      required this.bodyprovider
+      // ,required this.doc,
+      // required this.licence
+      })
       : super(key: key);
 
   @override
@@ -31,6 +33,7 @@ class AddGig extends StatefulWidget {
 
 class _AddGigState extends State<AddGig> {
   bool isUploading = false;
+  bool isLoading = false;
   double progress = 0;
   List<File> images = [];
 
@@ -154,148 +157,152 @@ class _AddGigState extends State<AddGig> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Padding(
-                padding: const EdgeInsets.fromLTRB(15, 30, 15, 15),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(height: ScreenUtil().setHeight(40)),
-                    Center(
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(100),
-                        child: Image.asset(
-                          "assets/images/first-screen-logo.png",
-                          height: 80.h,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: ScreenUtil().setHeight(10)),
-                    Center(
-                      child: Text(
-                        "Add GIG Profile",
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: ScreenUtil().setSp(28),
-                            fontWeight: FontWeight.w800),
-                      ),
-                    ),
-                    15.verticalSpace,
-                    Text(
-                      "Upload Multiple Images",
-                      style: TextStyle(
-                          color: AppColors.text_desc,
-                          fontSize: ScreenUtil().setSp(14),
-                          fontWeight: FontWeight.w500),
-                    ),
-                    10.verticalSpace,
-                    AddPhotoWidget(
-                      isUploading: false,
-                      onTap: () {
-                        source(context, false);
-                      },
-                      icon: Icons.upload,
-                      progress: progress,
-                      isImage: false,
-                      onTapCancel: () {
-                        setState(() {
-                          // uploadTask.cancel();
-                          isUploading = false;
-                        });
-                      },
-                    ),
-                    15.verticalSpace,
-                    Row(
-                      children: [
-                        Checkbox(
-                          value: true,
-                          onChanged: (b) {},
-                        ),
-                        Text(
-                          "For licenced work",
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: ScreenUtil().setSp(14),
-                              fontWeight: FontWeight.w500),
-                        )
-                      ],
-                    ),
-                    20.verticalSpace,
-                    images != null && images.length > 0
-                        ? Container(
-                      height: 100,
-                      child: ListView.builder(
-                          shrinkWrap: true,
-                          scrollDirection: Axis.horizontal,
-                          itemCount: images.length,
-                          itemBuilder: (_, index) {
-                            return Container(
-                                margin: EdgeInsets.only(left: 5),
-                                width: 100,
-                                height: 100,
-                                child: AddPhotoWidget(
-                                  isUploading: isUploading,
-                                  filePath: images[index],
-                                  onTap: () {
-                                    source(context, false);
-                                  },
-                                  icon: Icons.upload,
-                                  progress: progress,
-                                  isImage: false,
-                                  onTapCancel: () {
-                                    setState(() {
-                                      // uploadTask.cancel();
-                                      isUploading = false;
-                                    });
-                                  },
-                                ));
-                          }),
-                    )
-                        : SizedBox(),
-                    20.verticalSpace,
-                    SizedBox(
-                      height: ScreenUtil().screenHeight * 0.07,
-                      child: TextButton(
-                        style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStateProperty.all(Colors.blue),
-                          shape: MaterialStateProperty.all(
-                            RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(
-                                    ScreenUtil().screenHeight * 0.035)),
+        child: Stack(children: [
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                  padding: const EdgeInsets.fromLTRB(15, 30, 15, 15),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(height: ScreenUtil().setHeight(40)),
+                      Center(
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(100),
+                          child: Image.asset(
+                            "assets/images/first-screen-logo.png",
+                            height: 80.h,
+                            fit: BoxFit.cover,
                           ),
                         ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            const Opacity(
-                              opacity: 0,
-                              child: Icon(Icons.arrow_forward_ios),
-                            ),
-                            Text(
-                              "Submit",
-                              style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                color: Colors.white,
-                                fontSize: 14.sp,
-                                fontFamily: 'Montserrat-Medium',
-                              ),
-                            ),
-                            Image.asset('assets/icons/arw.png', scale: 1.0),
-                          ],
+                      ),
+                      SizedBox(height: ScreenUtil().setHeight(10)),
+                      Center(
+                        child: Text(
+                          "Add GIG Profile",
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: ScreenUtil().setSp(28),
+                              fontWeight: FontWeight.w800),
                         ),
-                        onPressed: () {
-                          doRegister();
+                      ),
+                      15.verticalSpace,
+                      Text(
+                        "Upload Multiple Images",
+                        style: TextStyle(
+                            color: AppColors.text_desc,
+                            fontSize: ScreenUtil().setSp(14),
+                            fontWeight: FontWeight.w500),
+                      ),
+                      10.verticalSpace,
+                      AddPhotoWidget(
+                        isUploading: false,
+                        onTap: () {
+                          source(context, false);
+                        },
+                        icon: Icons.upload,
+                        progress: progress,
+                        isImage: false,
+                        onTapCancel: () {
+                          setState(() {
+                            // uploadTask.cancel();
+                            isUploading = false;
+                          });
                         },
                       ),
-                    ),
-                  ],
-                )),
-          ],
-        ),
+                      15.verticalSpace,
+                      Row(
+                        children: [
+                          Checkbox(
+                            value: true,
+                            onChanged: (b) {},
+                          ),
+                          Text(
+                            "For licenced work",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: ScreenUtil().setSp(14),
+                                fontWeight: FontWeight.w500),
+                          )
+                        ],
+                      ),
+                      20.verticalSpace,
+                      images != null && images.length > 0
+                          ? Container(
+                        height: 100,
+                        child: ListView.builder(
+                            shrinkWrap: true,
+                            scrollDirection: Axis.horizontal,
+                            itemCount: images.length,
+                            itemBuilder: (_, index) {
+                              return Container(
+                                  margin: EdgeInsets.only(left: 5),
+                                  width: 100,
+                                  height: 100,
+                                  child: AddPhotoWidget(
+                                    isUploading: isUploading,
+                                    filePath: images[index],
+                                    onTap: () {
+                                      source(context, false);
+                                    },
+                                    icon: Icons.upload,
+                                    progress: progress,
+                                    isImage: false,
+                                    onTapCancel: () {
+                                      setState(() {
+                                        // uploadTask.cancel();
+                                        isUploading = false;
+                                      });
+                                    },
+                                  ));
+                            }),
+                      )
+                          : SizedBox(),
+                      20.verticalSpace,
+                      SizedBox(
+                        height: ScreenUtil().screenHeight * 0.07,
+                        child: TextButton(
+                          style: ButtonStyle(
+                            backgroundColor:
+                            MaterialStateProperty.all(Colors.blue),
+                            shape: MaterialStateProperty.all(
+                              RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(
+                                      ScreenUtil().screenHeight * 0.035)),
+                            ),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const Opacity(
+                                opacity: 0,
+                                child: Icon(Icons.arrow_forward_ios),
+                              ),
+                              Text(
+                                "Submit",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.white,
+                                  fontSize: 14.sp,
+                                  fontFamily: 'Montserrat-Medium',
+                                ),
+                              ),
+                              Image.asset('assets/icons/arw.png', scale: 1.0),
+                            ],
+                          ),
+                          onPressed: () {
+                            doRegister();
+                          },
+                        ),
+                      ),
+                    ],
+                  )),
+            ],
+          ),
+          if(isLoading)
+            CustomProgressBar()
+        ],)
       ),
     );
   }
@@ -306,15 +313,24 @@ class _AddGigState extends State<AddGig> {
           error: "Please add gig image",
           errorType: "Alert");
     }else{
+      setState(() {
+        isLoading = true;
+      });
       await HttpClient()
           .providersignup(
-          widget.bodyprovider, widget.doc, widget.licence, images.first)
+          widget.bodyprovider, images.first)
           .then((value) {
+        setState(() {
+          isLoading = false;
+        });
         Navigator.pushReplacement(
             context,
             MaterialPageRoute(
                 builder: (context) => const BottomNavBar(isprovider: false)));
       }).catchError((e) {
+        setState(() {
+          isLoading = false;
+        });
         if(e.response !=null && e.response.data['data'].length>0){
           showAlertDialog(
               error: "Please check your email address",
