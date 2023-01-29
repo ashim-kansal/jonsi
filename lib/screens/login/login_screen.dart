@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:kappu/common/custom_progress_bar.dart';
 import 'package:kappu/common/customtexts.dart';
 import 'package:kappu/common/dialogues.dart';
 import 'package:kappu/common/painter.dart';
@@ -35,6 +36,7 @@ class _LoginScreenState extends State<LoginScreen> {
   String password = '';
   bool _showPassword = true;
   bool signin = false;
+  bool isLoading = false;
   final _formState = GlobalKey<FormState>();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -300,14 +302,20 @@ class _LoginScreenState extends State<LoginScreen> {
       body: CustomPaint(
         painter: SignUpPainter(),
         child: SingleChildScrollView(
-          child: Form(
-              key: _formState,
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20.w),
-                child: Column(
-                  children: children2,
-                ),
-              )),
+          child: Stack(
+            children: [
+              Form(
+                  key: _formState,
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20.w),
+                    child: Column(
+                      children: children2,
+                    ),
+                  )),
+              if(isLoading)
+                const CustomProgressBar()
+            ],
+          ),
         ),
       ),
     );
