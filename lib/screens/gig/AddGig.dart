@@ -15,14 +15,15 @@ import '../../common/CircleButton.dart';
 
 class AddGig extends StatefulWidget {
   final Map<String, dynamic> bodyprovider;
-  final File doc;
-  final File licence;
+  // final File doc;
+  // final File licence;
 
   const AddGig(
       {Key? key,
-      required this.bodyprovider,
-      required this.doc,
-      required this.licence})
+      required this.bodyprovider
+      // ,required this.doc,
+      // required this.licence
+      })
       : super(key: key);
 
   @override
@@ -308,7 +309,7 @@ class _AddGigState extends State<AddGig> {
     }else{
       await HttpClient()
           .providersignup(
-          widget.bodyprovider, widget.doc, widget.licence, images.first)
+          widget.bodyprovider, images.first)
           .then((value) {
         Navigator.pushReplacement(
             context,

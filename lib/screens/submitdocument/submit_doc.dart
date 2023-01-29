@@ -288,10 +288,10 @@ class _AddDocumentState extends State<AddDocument> {
                         ),
                         onPressed: () {
                           if(doc!=null && licence!=null){
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => AddGig(bodyprovider: widget.bodyprovider, doc: doc!, licence: licence!)));
+                            // Navigator.push(
+                            //     context,
+                            //     MaterialPageRoute(
+                            //         builder: (context) => AddGig(bodyprovider: widget.bodyprovider, doc: doc!, licence: licence!)));
                           }else{
                             showAlertDialog(
                                 error: "Please add documents",

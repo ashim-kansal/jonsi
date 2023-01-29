@@ -29,7 +29,7 @@ abstract class HttpClient {
   Future<UserSignUpModel?> signup(@Body() Map<String, dynamic> params);
 
   @POST('auth/poviderregister/')
-  Future<HttpResponse?> providersignup(@Body() Map<String, dynamic> params, File docPath, File licencePath, File gigpath);
+  Future<HttpResponse?> providersignup(@Body() Map<String, dynamic> params, File gigpath);
 
   @POST('auth/customerregister/')
   Future<HttpResponse?> userSignup(@Body() Map<String, dynamic> params, File file);

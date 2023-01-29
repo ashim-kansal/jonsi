@@ -10,6 +10,7 @@ class CustomTextFormField extends StatefulWidget {
   final Function(String)? onChanged;
   final Widget? prefixIcon;
   final Widget? suffixIcon;
+  final bool? readOnly;
   final TextInputType keyboardType;
   bool showPassword;
   final Color? bordercolor;
@@ -24,6 +25,7 @@ class CustomTextFormField extends StatefulWidget {
       this.onChanged,
       this.prefixIcon,
       this.suffixIcon,
+      this.readOnly = false,
       required this.keyboardType,
       this.showPassword = false,
       this.bordercolor,
@@ -52,6 +54,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
           validator: widget.validator,
           keyboardType: widget.keyboardType,
           obscuringCharacter: '*',
+          readOnly: widget.readOnly!,
           obscureText: widget.showPassword,
           decoration: InputDecoration(
             prefixIcon: Padding(

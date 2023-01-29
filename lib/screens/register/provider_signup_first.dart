@@ -33,12 +33,14 @@ class ProviderSignupFirstScreen extends StatelessWidget {
       ),
       body: Container(
         color: Colors.white,
+        height: MediaQuery.of(context).size.height,
         child: Column(
           children: [
             Padding(
               padding: const EdgeInsets.fromLTRB(15, 30, 15, 15),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const Text(
                     "Work your way",

@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:csc_picker/csc_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
 import 'package:kappu/models/serializable_model/Language.dart';
 import 'package:kappu/models/serializable_model/CategoryResponse.dart';
 import 'package:kappu/screens/register/register_more.dart';
@@ -187,17 +188,39 @@ class _SignUpState extends State<SignUp> {
                               value!.isEmpty ? "Enter Your username" : null,
                         ),
                       if (widget.isprovider)
-                        CustomTextFormField(
+                        InkWell(
+                          onTap: ()async{
+                            print('ssss');
+                            DateTime? pickedDate = await showDatePicker(
+                                context: context,
+                                initialDate: DateTime.now(),
+                                firstDate: DateTime(1950),
+                                //DateTime.now() - not to allow to choose before today.
+                                lastDate: DateTime(2100));
+
+                            if (pickedDate != null) {
+                              print(
+                                  pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
+                              String formattedDate =
+                              DateFormat('dd/MM/yyyy').format(pickedDate);
+                              print(
+                                  formattedDate); //formatted date output using intl package =>  2021-03-16
+                              setState(() {
+                                _ageController.text =
+                                    formattedDate;
+                                //set output date to TextField value.
+                              });
+                            } else {}
+                          },
+                          child: CustomTextFormField(
                           controller: _ageController,
                           hintText: 'Age',
-                          keyboardType: TextInputType.number,
+                          readOnly: true,
+                          enabled: false,
+                          keyboardType: TextInputType.none,
                           prefixIcon: profileIcon,
-                          validator: (value) => value!.isEmpty
-                              ? "Enter Your Age"
-                              : value!.length > 2
-                                  ? "Enter valid age"
-                                  : null,
-                        ),
+                          validator: (value) => null,
+                        ),),
                       if (widget.isprovider)
                         CustomTextFormField(
                           controller: _nationalityController,

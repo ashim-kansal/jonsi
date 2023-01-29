@@ -36,7 +36,7 @@ class _HttpClient implements HttpClient {
   }
 
   @override
-  Future<HttpResponse<dynamic>?> providersignup(params, doc, licence, gigImage) async {
+  Future<HttpResponse<dynamic>?> providersignup(params, gigImage) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = {
@@ -59,11 +59,11 @@ class _HttpClient implements HttpClient {
       "Perhour":params['Perhour'],
       "description":params["description"],
       "Extra_for_urgent_need":params['Extra_for_urgent_need'],
-      "profileFileUpload" :  await MultipartFile.fromFile(doc.path, filename: doc.path.split('/').last),
-      'additionaldocuments[]': [
-        await MultipartFile.fromFile(doc.path, filename: doc.path.split('/').last),
-        await MultipartFile.fromFile(licence.path, filename: licence.path.split('/').last),
-      ],
+      "profileFileUpload" :  await MultipartFile.fromFile(gigImage.path, filename: gigImage.path.split('/').last),
+      // 'additionaldocuments[]': [
+      //   await MultipartFile.fromFile(doc.path, filename: doc.path.split('/').last),
+      //   await MultipartFile.fromFile(licence.path, filename: licence.path.split('/').last),
+      // ],
       'fileUploadGIG[]': [
         await MultipartFile.fromFile(gigImage.path, filename: gigImage.path.split('/').last),
         // await MultipartFile.fromFile('./text2.txt', filename: 'text2.txt'),
