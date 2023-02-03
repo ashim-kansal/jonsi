@@ -326,7 +326,7 @@ class _AddGigState extends State<AddGig> {
         Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-                builder: (context) => const BottomNavBar(isprovider: false)));
+                builder: (context) => const BottomNavBar(isprovider: true)));
       }).catchError((e) {
         setState(() {
           isLoading = false;

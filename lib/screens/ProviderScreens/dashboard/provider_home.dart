@@ -226,7 +226,7 @@ class _ProviderHomeScreenState extends State<ProviderHomeScreen> {
                                       child: EarningItem(
                                     title: '\$0',
                                     subTitle: 'Personal Balance',
-                                    titleColor: AppColors.app_blue,
+                                    titleColor: AppColors.app_color,
                                   )),
                                   Expanded(
                                       child: EarningItem(
@@ -242,7 +242,7 @@ class _ProviderHomeScreenState extends State<ProviderHomeScreen> {
                                       child: EarningItem(
                                     title: '\$0',
                                     subTitle: 'Earning this month',
-                                    titleColor: AppColors.app_color,
+                                    titleColor: AppColors.app_black,
                                   )),
                                   Expanded(
                                       child: Expanded(

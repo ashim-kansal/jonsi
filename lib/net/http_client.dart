@@ -18,7 +18,7 @@ import '../models/serializable_model/thread_id.dart';
 import 'base_dio.dart';
 part 'http_client.g.dart';
 
-@RestApi(baseUrl: "http://urbanmalta.com/api/")
+@RestApi(baseUrl: "https://urbanmalta.com/api/")
 abstract class HttpClient {
   factory HttpClient([Dio? dio, String? baseUrl]) {
     dio = BaseDio.getInstance().getDio();
