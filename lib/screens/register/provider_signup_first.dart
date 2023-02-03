@@ -317,47 +317,48 @@ class ProviderSignupFirstScreen extends StatelessWidget {
                     height: 1,
                     margin: const EdgeInsets.fromLTRB(0, 10, 0, 10),
                   ),
-                  SizedBox(
-                    height: ScreenUtil().screenHeight * 0.05,
-                    child: TextButton(
-                      style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all(Colors.blue),
-                        shape: MaterialStateProperty.all(
-                          RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(
-                                  ScreenUtil().screenHeight * 0.025)),
-                        ),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Opacity(
-                            opacity: 0,
-                            child: Icon(Icons.arrow_forward_ios),
-                          ),
-                          Text(
-                            "Continue",
-                            style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              color: Colors.white,
-                              fontSize: 14.sp,
-                              fontFamily: 'Montserrat-Medium',
-                            ),
-                          ),
-                          Image.asset('assets/icons/arw.png', scale: 1.0),
-                        ],
-                      ),
-                      onPressed: () {
-                        changeScreen(
-                            context: context,
-                            screen: SocailSignUpScreen());
-                      },
-                    ),
-                  ),
-
                 ],
               ),
-            )
+            ),
+            Spacer(),
+            Container(
+              height: ScreenUtil().screenHeight * 0.05,
+              margin: EdgeInsets.all(15),
+              child: TextButton(
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(Colors.blue),
+                  shape: MaterialStateProperty.all(
+                    RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(
+                            ScreenUtil().screenHeight * 0.025)),
+                  ),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Opacity(
+                      opacity: 0,
+                      child: Icon(Icons.arrow_forward_ios),
+                    ),
+                    Text(
+                      "Continue",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        color: Colors.white,
+                        fontSize: 14.sp,
+                        fontFamily: 'Montserrat-Medium',
+                      ),
+                    ),
+                    Image.asset('assets/icons/arw.png', scale: 1.0),
+                  ],
+                ),
+                onPressed: () {
+                  changeScreen(
+                      context: context,
+                      screen: SocailSignUpScreen());
+                },
+              ),
+            ),
           ],
         ),
       ),

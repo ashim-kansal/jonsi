@@ -148,6 +148,9 @@ class _SignUpState extends State<SignUp> {
                         keyboardType: TextInputType.text,
                         prefixIcon: profileIcon,
                         hintText: 'First Name',
+                        onChanged: (value){
+                          setState(() {});
+                        },
                       ),
                       CustomTextFormField(
                         controller: _lastnameController,
@@ -156,6 +159,9 @@ class _SignUpState extends State<SignUp> {
                         keyboardType: TextInputType.text,
                         prefixIcon: profileIcon,
                         hintText: 'Last Name',
+                        onChanged: (value){
+                          setState(() {});
+                        },
                       ),
                       CustomTextFormField(
                         controller: _emailController,
@@ -175,6 +181,9 @@ class _SignUpState extends State<SignUp> {
                         hintText: 'Phone Number',
                         keyboardType: TextInputType.number,
                         prefixIcon: profileIcon,
+                        onChanged: (value){
+                          setState(() {});
+                        },
                         validator: (value) =>
                             value!.isEmpty ? "Enter Your Phone Number" : null,
                       ),
@@ -183,6 +192,9 @@ class _SignUpState extends State<SignUp> {
                           controller: _addresscontoller,
                           hintText: 'Address',
                           keyboardType: TextInputType.text,
+                          onChanged: (value){
+                            setState(() {});
+                          },
                           prefixIcon: const Icon(Icons.location_on),
                           validator: (value) =>
                               value!.isEmpty ? "Enter Your username" : null,
@@ -217,6 +229,9 @@ class _SignUpState extends State<SignUp> {
                           hintText: 'Age',
                           readOnly: true,
                           enabled: false,
+                            onChanged: (value){
+                              setState(() {});
+                            },
                           keyboardType: TextInputType.none,
                           prefixIcon: profileIcon,
                           validator: (value) => null,
@@ -227,6 +242,9 @@ class _SignUpState extends State<SignUp> {
                           hintText: 'Nationality',
                           keyboardType: TextInputType.text,
                           prefixIcon: profileIcon,
+                          onChanged: (value){
+                            setState(() {});
+                          },
                           validator: (value) =>
                               value!.isEmpty ? "Enter Your Nationality" : null,
                         ),

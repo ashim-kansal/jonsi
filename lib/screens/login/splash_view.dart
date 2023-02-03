@@ -43,15 +43,21 @@ class _SplashViewState extends State<SplashView> {
         child: Stack(
           //alignment:new Alignment(x, y)
           children: <Widget>[
-            Positioned(
-              width: MediaQuery.of(context).size.width,
+            Flexible(
+                flex: 7,
                 child: controller.value.isInitialized
-                    ? AspectRatio(
-                        aspectRatio: controller.value.aspectRatio,
-                        child: VideoPlayer(controller),
+                    ? Container(
+                        margin: const EdgeInsets.only(bottom: 140),
+                        width: double.infinity,
+                        color: Colors.black,
+                        child: AspectRatio(
+                          aspectRatio: controller.value.aspectRatio,
+                          child: VideoPlayer(controller),
+                        ),
                       )
                     : Container()),
-            Positioned(
+            Flexible(
+              flex: 3,
               child: signInView(context),
             )
           ],
@@ -64,7 +70,7 @@ class _SplashViewState extends State<SplashView> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        (ScreenUtil().screenHeight * 0.37).verticalSpace,
+        Spacer(),
         Row(
           children: [
             const SizedBox(width: 20),
@@ -89,39 +95,41 @@ class _SplashViewState extends State<SplashView> {
             SizedBox(
               width: 20.h,
             ),
-            Expanded(
-              child: ElevatedButton(
-                  onPressed: () {},
-                  child: returnButtonWithTextImage(context,
-                      'assets/images/find_icon.png', "Find a service\n"),
-                  style: ElevatedButton.styleFrom(
-                      primary: Colors.white, // Background color
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                      ))),
-            ),
+            Flexible(
+                flex: 1,
+                fit: FlexFit.tight,
+                child: ElevatedButton(
+                    onPressed: () {},
+                    child: returnButtonWithTextImage(context,
+                        'assets/images/find_icon.png', "Find a service\n"),
+                    style: ElevatedButton.styleFrom(
+                        primary: Colors.white, // Background color
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                        )))),
             SizedBox(
               width: 20.h,
             ),
-            Expanded(
-              child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
+            Flexible(
+                flex: 1,
+                fit: FlexFit.tight,
+                child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  const ProviderSignupFirstScreen()));
+                    },
+                    child: returnButtonWithTextImage(
                         context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                const ProviderSignupFirstScreen()));
-                  },
-                  child: returnButtonWithTextImage(
-                      context,
-                      'assets/images/seller_icon.png',
-                      "Become a Service\n Provider"),
-                  style: ElevatedButton.styleFrom(
-                      primary: Colors.white, // Background color
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                      ))),
-            ),
+                        'assets/images/seller_icon.png',
+                        "Become a Service\n Provider"),
+                    style: ElevatedButton.styleFrom(
+                        primary: Colors.white, // Background color
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                        )))),
             SizedBox(
               width: 20.h,
             ),
@@ -191,6 +199,9 @@ class _SplashViewState extends State<SplashView> {
             ),
           ],
         ),
+        SizedBox(
+          height: 8.h,
+        ),
       ],
     );
   }
@@ -242,7 +253,7 @@ class _SplashViewState extends State<SplashView> {
 
   Image returnLogo(BuildContext context) {
     return Image.asset(
-      'assets/images/first-screen-logo.png',
+      'assets/images/colorfulLogo.png',
       width: MediaQuery.of(context).size.width * 0.23,
       height: MediaQuery.of(context).size.height * 0.1,
       fit: BoxFit.fill,
