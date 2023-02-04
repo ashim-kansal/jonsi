@@ -134,7 +134,7 @@ class _SignUpState extends State<SignUp> {
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(100),
                           child: Image.asset(
-                            "assets/images/cheese-logo-trasparente.png",
+                            "assets/images/colorfulLogo.png",
                             height: 120.h,
                             fit: BoxFit.cover,
                           ),

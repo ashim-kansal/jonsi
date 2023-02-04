@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kappu/helperfunctions/screen_nav.dart';
 import 'package:kappu/screens/login/widgets/google_login_button.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 import 'register.dart';
 
 class SocailSignUpScreen extends StatelessWidget {
@@ -23,7 +25,7 @@ class SocailSignUpScreen extends StatelessWidget {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(100),
                       child: Image.asset(
-                        "assets/images/first-screen-logo.png",
+                        "assets/images/colorfulLogo.png",
                         height: 80.h,
                         fit: BoxFit.cover,
                       ),
@@ -154,7 +156,15 @@ class SocailSignUpScreen extends StatelessWidget {
                             fontFamily: 'Montserrat-Medium'),
                       ),
                       GestureDetector(
-                        onTap: () {},
+                        onTap: () async {
+                          String url = "https://urbanmalta.com/privacy-policy";
+                          var urllaunchable = await canLaunchUrlString(url); //canLaunch is from url_launcher package
+                          if(urllaunchable){
+                            await launchUrlString(url); //launch is ffrom url_launcher package to launch URL
+                          }else{
+                            print("URL can't be launched.");
+                          }
+                        },
                         child: const Text(
                           'Terms of Service',
                           style: TextStyle(
@@ -198,4 +208,5 @@ class SocailSignUpScreen extends StatelessWidget {
       ),
     ));
   }
+
 }
