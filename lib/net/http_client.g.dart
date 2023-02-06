@@ -59,7 +59,7 @@ class _HttpClient implements HttpClient {
       "Perhour":params['Perhour'],
       "description":params["description"],
       "Extra_for_urgent_need":params['Extra_for_urgent_need'],
-      "profileFileUpload" :  await MultipartFile.fromFile(gigImage.path, filename: gigImage.path.split('/').last),
+      // "profileFileUpload" :  await MultipartFile.fromFile(gigImage.path, filename: gigImage.path.split('/').last),
       // 'additionaldocuments[]': [
       //   await MultipartFile.fromFile(doc.path, filename: doc.path.split('/').last),
       //   await MultipartFile.fromFile(licence.path, filename: licence.path.split('/').last),
@@ -97,7 +97,7 @@ class _HttpClient implements HttpClient {
       'password': params['password'],
       "nationality":params['nationality'],
       "language": params['language'],
-      'fileUpload': await MultipartFile.fromFile(profilePic.path, filename: profilePic.path.split('/').last),
+      // 'fileUpload': await MultipartFile.fromFile(profilePic.path, filename: profilePic.path.split('/').last),
 
     });
 
@@ -259,20 +259,35 @@ class _HttpClient implements HttpClient {
   }
 
   @override
-  Future<Category> getservicecatagorynbyid(id) async {
+  Future<TrendingServicesResponse> getTrendingCatagory() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<Category>(
+        _setStreamType<CategoryResponse>(
             Options(method: 'GET', headers: _headers, extra: _extra)
-                .compose(_dio.options, 'category/${id}',
+                .compose(_dio.options, 'trending/profile',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = Category.fromJson(_result.data!);
-    return value;
+    return TrendingServicesResponse.fromJson(_result.data!);
   }
+
+  // @override
+  // Future<Category> getservicecatagorynbyid(id) async {
+  //   const _extra = <String, dynamic>{};
+  //   final queryParameters = <String, dynamic>{};
+  //   final _headers = <String, dynamic>{};
+  //   final _data = <String, dynamic>{};
+  //   final _result = await _dio.fetch<Map<String, dynamic>>(
+  //       _setStreamType<Category>(
+  //           Options(method: 'GET', headers: _headers, extra: _extra)
+  //               .compose(_dio.options, 'category/${id}',
+  //                   queryParameters: queryParameters, data: _data)
+  //               .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+  //   final value = Category.fromJson(_result.data!);
+  //   return value;
+  // }
 
   @override
   Future<HttpResponse<dynamic>> createoffer(params) async {

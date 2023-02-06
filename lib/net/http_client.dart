@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:kappu/models/serializable_model/Language.dart';
+import 'package:kappu/models/serializable_model/TrendingServicesResponse.dart';
 import 'package:kappu/models/serializable_model/signup.dart';
 import 'package:retrofit/dio.dart';
 import 'package:retrofit/http.dart';
@@ -66,8 +67,11 @@ abstract class HttpClient {
   @GET('allcat')
   Future<CategoryResponse> getCatagory();
 
-  @GET('category/{id}')
-  Future<Category> getservicecatagorynbyid(@Path('id') String id);
+  @GET('trending/profile')
+  Future<TrendingServicesResponse> getTrendingCatagory();
+
+  // @GET('category/{id}')
+  // Future<Category> getservicecatagorynbyid(@Path('id') String id);
 
   @POST('service/')
   Future<HttpResponse> createoffer(@Body() Map<String, dynamic> params);
