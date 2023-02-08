@@ -1,6 +1,7 @@
 // import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:kappu/components/AppColors.dart';
 import 'package:kappu/screens/chats/all_chat_screen.dart';
 import 'package:kappu/screens/home_page/widgets/slider.dart';
 import 'package:kappu/screens/settings/settings_screen.dart';
@@ -32,72 +33,42 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             Container(
               height: ScreenUtil().setHeight(170),
-              color: Colors.blue,
+              color: Colors.white,
               child: Column(
                 children: [
                   SizedBox(
-                    height: ScreenUtil().setHeight(50),
+                    height: ScreenUtil().setHeight(30),
                   ),
                   Padding(
                     padding: EdgeInsets.only(left: ScreenUtil().setWidth(10)),
                     child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           const Icon(
                             Icons.location_pin,
-                            color: Colors.white,
-                            size: 30,
+                            color: Colors.blue,
+                            size: 20,
                           ),
                           Padding(
-                            padding: const EdgeInsets.all(8.0),
+                            padding: const EdgeInsets.all(2.0),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Text("Current Location",
                                     style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: ScreenUtil().setSp(14),
+                                        color: AppColors.title_desc,
+                                        fontSize: ScreenUtil().setSp(10),
                                         fontWeight: FontWeight.w500)),
                                 Text("Germany",
                                     style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: ScreenUtil().setSp(12),
+                                        color: AppColors.text_desc,
+                                        fontSize: ScreenUtil().setSp(14),
                                         fontWeight: FontWeight.w500))
                               ],
                             ),
                           ),
                           SizedBox(
                             width: ScreenUtil().setWidth(50),
-                          ),
-                          // CircleAvatar(
-                          //     backgroundColor: Colors.white,
-                          //     child: IconButton(
-                          //       onPressed: () {
-                          //         pushDynamicScreen(context,
-                          //             screen: NotificationsPage(),
-                          //             withNavBar: false);
-                          //       },
-                          //       icon: const Icon(
-                          //         Icons.notifications,
-                          //         color: Colors.blue,
-                          //       ),
-                          //     )),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 8.0),
-                            child: CircleAvatar(
-                                backgroundColor: Colors.white,
-                                child: IconButton(
-                                  onPressed: () {
-                                    pushDynamicScreen(context,
-                                        screen: AllChatScreen(),
-                                        withNavBar: false);
-                                  },
-                                  icon: const Icon(
-                                    Icons.message,
-                                    color: Colors.blue,
-                                  ),
-                                )),
                           ),
                           Padding(
                             padding: const EdgeInsets.only(left: 8.0),
@@ -111,7 +82,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         withNavBar: false);
                                   },
                                   icon: const Icon(
-                                    Icons.settings,
+                                    Icons.account_circle_outlined,
                                     color: Colors.blue,
                                   ),
                                 )),
