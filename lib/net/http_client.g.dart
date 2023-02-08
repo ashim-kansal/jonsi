@@ -259,18 +259,71 @@ class _HttpClient implements HttpClient {
   }
 
   @override
-  Future<TrendingServicesResponse> getTrendingCatagory() async {
+  Future<List<TrendingServicesResponse>> getTrendingCatagory() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<CategoryResponse>(
+    final _result = await _dio.fetch<String>(
+        _setStreamType<TrendingServicesResponse>(
             Options(method: 'GET', headers: _headers, extra: _extra)
                 .compose(_dio.options, 'trending/profile',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    return TrendingServicesResponse.fromJson(_result.data!);
+    return trendingResponseFromJson(_result.data!);
+  }
+
+  @override
+  Future<List<RecommendedServiceProvidersResponse>> getRecommendedServiceProviders(id) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    var formData = FormData.fromMap({
+      'id': id,
+    });
+
+    final _result = await _dio.fetch<String>(
+        _setStreamType<RecommendedServiceProvidersResponse>(
+            Options(method: 'POST', headers: _headers, extra: _extra)
+                .compose(_dio.options, 'services/byid',
+                    queryParameters: queryParameters, data: formData)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    return recommendedServiceProvidersResponseFromJson(_result.data!);
+  }
+
+  @override
+  Future<List<RecommendedServiceProvidersResponse>> getServiceProviderDetail(id) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    var formData = FormData.fromMap({
+      'id': id,
+    });
+    final _result = await _dio.fetch<String>(
+        _setStreamType<RecommendedServiceProvidersResponse>(
+            Options(method: 'POST', headers: _headers, extra: _extra)
+                .compose(_dio.options, 'services/details',
+                    queryParameters: queryParameters, data: formData)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    return recommendedServiceProvidersResponseFromJson(_result.data!);
+  }
+
+  @override
+  Future<List<RecommendedServiceProvidersResponse>> getRelatedProviders(catId, userId) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    var formData = FormData.fromMap({
+      'category_id': catId,
+      'user_id': userId,
+    });
+    final _result = await _dio.fetch<String>(
+        _setStreamType<RecommendedServiceProvidersResponse>(
+            Options(method: 'POST', headers: _headers, extra: _extra)
+                .compose(_dio.options, 'services/recommended',
+                    queryParameters: queryParameters, data: formData)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    return recommendedServiceProvidersResponseFromJson(_result.data!);
   }
 
   // @override

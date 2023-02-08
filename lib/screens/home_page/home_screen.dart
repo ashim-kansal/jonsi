@@ -162,17 +162,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 fontSize: ScreenUtil().setSp(21)),
                           ),
                         ),
-                        // Padding(
-                        //   padding: const EdgeInsets.only(right: 20),
-                        //   child: Text(
-                        //     'See all',
-                        //     style: TextStyle(
-                        //         color: Colors.blue,
-                        //         fontWeight: FontWeight.bold,
-                        //         fontFamily: "Radomir Tinkov",
-                        //         fontSize: ScreenUtil().setSp(20)),
-                        //   ),
-                        // ),
+
                       ],
                     ),
                   ),
@@ -180,38 +170,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     padding: EdgeInsets.only(
                         left: ScreenUtil().setWidth(4), bottom: 10),
                     child:
-                        // SizedBox(
-                        //   height: MediaQuery.of(context).size.height * 0.12,
-                        //   child: ListView(
-                        //     scrollDirection: Axis.horizontal,
-                        //     physics: const ScrollPhysics(),
-                        //     children: servicesSummary
-                        //         .map((item) => Padding(
-                        //               padding: const EdgeInsets.all(8.0),
-                        //               child: Container(
-                        //                 decoration: BoxDecoration(
-                        //                     borderRadius: BorderRadius.circular(20),
-                        //                     border: Border.all(color: Colors.grey)),
-                        //                 child: Padding(
-                        //                   padding: const EdgeInsets.all(8.0),
-                        //                   child: Column(children: [
-                        //                     Image.asset(
-                        //                       item.imagepath,
-                        //                       height: ScreenUtil().setHeight(40),
-                        //                     ),
-                        //                     Text(item.servicename,
-                        //                         style: TextStyle(
-                        //                             color: Colors.grey,
-                        //                             fontSize:
-                        //                                 ScreenUtil().setSp(14),
-                        //                             fontWeight: FontWeight.w500))
-                        //                   ]),
-                        //                 ),
-                        //               ),
-                        //             ))
-                        //         .toList(),
-                        //   ),
-                        // )
                         const Servicescontainer(),
                   ),
                   // Divider(

@@ -53,9 +53,6 @@ class _SignUpState extends State<SignUp> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _lastnameController = TextEditingController();
 
-  List<Category> catagories = [
-    Category(id: 1, name: "Select a Service", createdAt: "")
-  ];
   List<Language> languages = [
     Language(id: -1, name: 'English'),
     Language(id: -2, name: 'Maltese'),
@@ -68,8 +65,8 @@ class _SignUpState extends State<SignUp> {
     Language(id: -9, name: 'Dutch')
   ];
 
-  Category selectedcatagory =
-      Category(id: -1, name: "Select a Service", createdAt: "");
+  // Category selectedcatagory =
+  //     Category(id: -1, name: "Select a Service", createdAt: "");
   Language selectedLanguage = Language(id: -1, name: 'English');
 
   String vaidatePassword(String password) {
@@ -85,26 +82,26 @@ class _SignUpState extends State<SignUp> {
   void initState() {
     super.initState();
     print('bbbb');
-    if (widget.isprovider) {
-      getcatagory();
-    }
+    // if (widget.isprovider) {
+    //   getcatagory();
+    // }
   }
 
-  getcatagory() async {
-    await HttpClient()
-        .getCatagory()
-        .then((value) => {
-              if (value.status)
-                {
-                  setState(() {
-                    this.catagories = value.data;
-                  })
-                }
-            })
-        .catchError((e) {
-      BaseDio.getDioError(e);
-    });
-  }
+  // getcatagory() async {
+  //   await HttpClient()
+  //       .getCatagory()
+  //       .then((value) => {
+  //             if (value.status)
+  //               {
+  //                 setState(() {
+  //                   this.catagories = value.data;
+  //                 })
+  //               }
+  //           })
+  //       .catchError((e) {
+  //     BaseDio.getDioError(e);
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {

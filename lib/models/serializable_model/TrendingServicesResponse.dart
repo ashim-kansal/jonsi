@@ -4,9 +4,9 @@
 
 import 'dart:convert';
 
-List<TrendingServicesResponse> categoryResponseFromJson(String str) => List<TrendingServicesResponse>.from(json.decode(str).map((x) => TrendingServicesResponse.fromJson(x)));
+List<TrendingServicesResponse> trendingResponseFromJson(String str) => List<TrendingServicesResponse>.from(json.decode(str).map((x) => TrendingServicesResponse.fromJson(x)));
 
-String categoryResponseToJson(List<TrendingServicesResponse> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+String trendingResponseToJson(List<TrendingServicesResponse> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class TrendingServicesResponse {
     TrendingServicesResponse({
@@ -39,7 +39,7 @@ class TrendingServicesResponse {
     String slug;
     double rating;
 
-    factory TrendingServicesResponse.fromJson(Map<String, dynamic> json) => CategoryResponse(
+    factory TrendingServicesResponse.fromJson(Map<String, dynamic> json) => TrendingServicesResponse(
         id: json["id"],
         title: json["title"],
         description: json["description"],
