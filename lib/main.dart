@@ -15,6 +15,8 @@ import 'main_context.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:http/http.dart' as http;
 
+import 'screens/ProviderScreens/provider_detail.dart';
+
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   print('Handling a background message ${message.messageId}');
 }
@@ -208,7 +210,7 @@ class _MyAppState extends State<MyApp> {
                 //         isprovider: false,
                 //       )
                 //     :
-                const SplashView()),
+                const ProviderDetailScreen()),
       ),
     );
   }
