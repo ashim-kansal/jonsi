@@ -19,7 +19,7 @@ class SignedInProvider {
   bool isprovider;
 
   @JsonKey(name: 'category')
-  int catagoryid;
+  int? catagoryid;
 
   SignedInProvider({
     required this.id,
@@ -28,7 +28,7 @@ class SignedInProvider {
     required this.lastname,
     required this.phno,
     required this.isprovider,
-    required this.catagoryid,
+    this.catagoryid,
   });
 
   /// Connect the generated [_$SignInFromJson] function to the `fromJson`

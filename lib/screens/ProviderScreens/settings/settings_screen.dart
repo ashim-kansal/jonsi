@@ -61,13 +61,8 @@ class _SettingsPageProviderState extends State<SettingsPageProvider> {
                       ),
                       leading: CircleAvatar(
                         backgroundColor: Colors.transparent,
-                        backgroundImage: loggedinprovider
-                                    .providerprofilepicurl ==
-                                ''
-                            ? const NetworkImage(
+                        backgroundImage: NetworkImage(
                                 'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500')
-                            : NetworkImage(
-                                loggedinprovider.providerprofilepicurl),
                       ),
                       trailing: const Icon(
                         Icons.edit,

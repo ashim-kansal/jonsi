@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:kappu/components/AppColors.dart';
 import 'package:kappu/screens/search_screen/search_screen.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
@@ -27,25 +28,26 @@ class _SearchTextFieldState extends State<SearchTextField> {
       child: Container(
         height: 50.h,
         decoration: BoxDecoration(
-          color: const Color(0xFFF6F6F6),
-          borderRadius: BorderRadius.circular(15),
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(25),
+          border: Border.all(color: Colors.grey),
         ),
         child: TextFormField(
           onTap: () {
-            pushDynamicScreen(context,
-                screen: SearchScreen(), withNavBar: false);
+            // pushDynamicScreen(context,
+            //     screen: SearchScreen(), withNavBar: false);
           },
           controller: controller,
           onFieldSubmitted: (value) => {if (value.length > 2) {}},
           cursorColor: Colors.black,
           style: TextStyle(
             color: Colors.grey,
-            fontSize: ScreenUtil().setSp(21),
+            fontSize: ScreenUtil().setSp(18),
           ),
           decoration: InputDecoration(
             border: const UnderlineInputBorder(
               borderSide: BorderSide(
-                color: Color(0xFFF6F6F6),
+                color: AppColors.color_3f3c3c,
               ),
             ),
             focusedBorder: OutlineInputBorder(
@@ -75,11 +77,11 @@ class _SearchTextFieldState extends State<SearchTextField> {
             hintText: widget.hintext,
             hintStyle: TextStyle(
               color: Colors.grey,
-              fontSize: ScreenUtil().setSp(18),
+              fontSize: ScreenUtil().setSp(16),
               fontWeight: FontWeight.normal,
             ),
             prefixIcon: Transform.scale(
-              scale: 0.5,
+              scale: 0.45,
               child: Image.asset(
                 "assets/images/Search.png",
                 fit: BoxFit.cover,

@@ -1,6 +1,6 @@
 // To parse this JSON data, do
 //
-//     final categoryResponse = categoryResponseFromJson(jsonString);
+//     final trendingServicesResponse = trendingServicesResponseFromJson(jsonString);
 
 import 'dart:convert';
 
@@ -23,6 +23,7 @@ class TrendingServicesResponse {
         required this.reviewCount,
         required this.slug,
         required this.rating,
+        required this.gigdocument,
     });
 
     int id;
@@ -37,7 +38,8 @@ class TrendingServicesResponse {
     String ratingCount;
     int reviewCount;
     String slug;
-    double rating;
+    int rating;
+    List<Gigdocument> gigdocument;
 
     factory TrendingServicesResponse.fromJson(Map<String, dynamic> json) => TrendingServicesResponse(
         id: json["id"],
@@ -52,7 +54,8 @@ class TrendingServicesResponse {
         ratingCount: json["rating_count"],
         reviewCount: json["review_count"],
         slug: json["slug"],
-        rating: json["rating"]?.toDouble(),
+        rating: json["rating"],
+        gigdocument: List<Gigdocument>.from(json["gigdocument"].map((x) => Gigdocument.fromJson(x))),
     );
 
     Map<String, dynamic> toJson() => {
@@ -69,5 +72,38 @@ class TrendingServicesResponse {
         "review_count": reviewCount,
         "slug": slug,
         "rating": rating,
+        "gigdocument": List<dynamic>.from(gigdocument.map((x) => x.toJson())),
+    };
+}
+
+class Gigdocument {
+    Gigdocument({
+        required this.id,
+        required this.fileName,
+        required this.userid,
+        required this.serviceid,
+        required this.fileType,
+    });
+
+    int id;
+    String fileName;
+    int userid;
+    int serviceid;
+    String fileType;
+
+    factory Gigdocument.fromJson(Map<String, dynamic> json) => Gigdocument(
+        id: json["id"],
+        fileName: json["file_name"],
+        userid: json["userid"],
+        serviceid: json["serviceid"],
+        fileType: json["file_type"],
+    );
+
+    Map<String, dynamic> toJson() => {
+        "id": id,
+        "file_name": fileName,
+        "userid": userid,
+        "serviceid": serviceid,
+        "file_type": fileType,
     };
 }

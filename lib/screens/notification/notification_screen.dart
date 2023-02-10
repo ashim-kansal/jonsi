@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
 import 'package:kappu/components/MyAppBar.dart';
 import 'package:kappu/models/notification.dart';
+import 'package:kappu/models/serializable_model/NotificationModel.dart';
+import 'package:kappu/net/http_client.dart';
 
 class NotificationScreen extends StatefulWidget {
   const NotificationScreen({Key? key}) : super(key: key);
@@ -12,6 +15,7 @@ class NotificationScreen extends StatefulWidget {
 
 class _NotificationScreenState extends State<NotificationScreen> {
   bool showNote = true;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -87,22 +91,33 @@ class _NotificationScreenState extends State<NotificationScreen> {
                 )
               : Container(),
           SizedBox(
-            height: ScreenUtil().setHeight(590),
-            child: ListView(
-              shrinkWrap: true,
-              padding: EdgeInsets.zero,
-              children: tempnotifications
-                  .map((item) => Padding(
+              height: ScreenUtil().setHeight(590),
+              child: FutureBuilder(
+                  future: HttpClient()
+                      .getNotifications("2", "Bearer 436|9tPOCMv1jRRW7NWm80lqiBrkL9lJmkUZ2M3NapU4"),
+                  builder: (context,
+                      AsyncSnapshot<List<NotificationModel>>
+                          response) {
+                    if (response.connectionState != ConnectionState.done) {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                    return ListView(
+                      shrinkWrap: true,
+                      padding: EdgeInsets.zero,
+                      children: response.data!
+                          .map((item) => Padding(
                         padding: const EdgeInsets.only(bottom: 2.0),
                         child: Container(
-                          color: item.viewd ? Colors.white : Color(0xFFE4E5EA),
+                          color:  Color(0xFFE4E5EA),
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Row(children: [
                               CircleAvatar(
                                 radius: ScreenUtil().setHeight(30),
                                 backgroundImage:
-                                    NetworkImage(item.senderpicurl),
+                                NetworkImage('https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500'),
                               ),
                               Padding(
                                 padding: const EdgeInsets.only(left: 8.0),
@@ -110,10 +125,10 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                   width: ScreenUtil().setWidth(250),
                                   child: Column(
                                     crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                    CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        item.notifiationtext,
+                                        item.title!,
                                         style: TextStyle(
                                           fontSize: ScreenUtil().setSp(14),
                                           color: Colors.black,
@@ -122,7 +137,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                       ),
                                       const SizedBox(height: 8),
                                       Text(
-                                        "1 week ago",
+                                        DateFormat.jm().format(item.createdAt!).toString(),
                                         style: TextStyle(
                                             fontSize: ScreenUtil().setSp(12),
                                             color: Color(0xFF7B7D83),
@@ -138,9 +153,9 @@ class _NotificationScreenState extends State<NotificationScreen> {
                           ),
                         ),
                       ))
-                  .toList(),
-            ),
-          ),
+                          .toList(),
+                    );
+                  })),
         ]),
       ),
     );

@@ -4,11 +4,14 @@ import 'package:csc_picker/csc_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
+import 'package:kappu/common/bottom_nav_bar.dart';
 import 'package:kappu/models/serializable_model/Language.dart';
 import 'package:kappu/models/serializable_model/CategoryResponse.dart';
+import 'package:kappu/provider/provider_provider.dart';
 import 'package:kappu/screens/register/register_more.dart';
 import 'package:kappu/screens/register/widgets/text_field.dart';
 import 'package:kappu/screens/submitdocument/submit_doc.dart';
+import 'package:provider/provider.dart';
 import 'package:validators/validators.dart';
 import '../../common/button.dart';
 import '../../common/dialogues.dart';
@@ -562,22 +565,35 @@ class _SignUpState extends State<SignUp> {
           });
           Map<String, dynamic> body = {
             'first_name': _nameController.text,
+            'username': _nameController.text+"_"+_lastnameController.text,
             'last_name': _lastnameController.text,
             'email': _emailController.text,
             'phone_number': _phnocontroller.text,
-            'password': _passwordController.text
+            'password': _passwordController.text,
+            'language': 'english',
+            'nationality': countryValue,
           };
 
           await HttpClient().userSignup(body, new File("path")).then((value) {
             loading = false;
+            final provider = Provider.of<ProviderProvider>(context);
+
+            if(value?.data['status']) {
+              provider.token = value?.data['token'];
+              provider.firstName = _nameController.text;
+              provider.lastName = _lastnameController.text;
+              provider.phone = _phnocontroller.text;
+              provider.email = _emailController.text;
+              provider.isProvider = false;
+              // provider.nationality = loginresponse.data['data']['user']['nationality'];
+              // provider.language = loginresponse.data['data']['user']['languages'];
+            }
             setState(() {});
-            Navigator.push(
+            Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => EmailOTPConfirmation(
-                          id: value!.data['id'],
-                          email: _emailController.text,
-                        )));
+                    builder: (context) => const BottomNavBar(isprovider: false)));
+
           }).catchError((e) {
             setState(() {
               this.loading = false;

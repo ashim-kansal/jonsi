@@ -103,7 +103,7 @@ class _HttpClient implements HttpClient {
 
     final _result = await _dio.fetch(_setStreamType<HttpResponse<dynamic>>(
         Options(method: 'POST', headers: _headers, extra: _extra)
-            .compose(_dio.options, 'auth/customerregister/',
+            .compose(_dio.options, 'auth/customerregister',
                 queryParameters: queryParameters, data: formData)
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = _result.data;
@@ -259,6 +259,21 @@ class _HttpClient implements HttpClient {
   }
 
   @override
+  Future<List<FaqModel>> getFaqs() async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<String>(
+        _setStreamType<FaqModel>(
+            Options(method: 'GET', headers: _headers, extra: _extra)
+                .compose(_dio.options, 'faqs',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    return faqModelFromJson(_result.data!);
+  }
+
+  @override
   Future<List<TrendingServicesResponse>> getTrendingCatagory() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -324,6 +339,23 @@ class _HttpClient implements HttpClient {
                     queryParameters: queryParameters, data: formData)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     return recommendedServiceProvidersResponseFromJson(_result.data!);
+  }
+
+  @override
+  Future<List<NotificationModel>> getNotifications(id, token) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{'Authorization': token};
+    var formData = FormData.fromMap({
+      'user_id': id,
+    });
+    final _result = await _dio.fetch<String>(
+        _setStreamType<RecommendedServiceProvidersResponse>(
+            Options(method: 'POST', headers: _headers, extra: _extra)
+                .compose(_dio.options, 'user/notifications',
+                    queryParameters: queryParameters, data: formData)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    return notificationModelFromJson(_result.data!);
   }
 
   // @override

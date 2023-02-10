@@ -2,10 +2,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kappu/components/AppColors.dart';
+import 'package:kappu/provider/provider_provider.dart';
 import 'package:kappu/screens/chats/all_chat_screen.dart';
 import 'package:kappu/screens/home_page/widgets/slider.dart';
+import 'package:kappu/screens/login/login_screen.dart';
 import 'package:kappu/screens/settings/settings_screen.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
+import 'package:provider/provider.dart';
 
 // import '../../constants/services.dart';
 import '../notification/notifications.dart';
@@ -23,6 +26,8 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<ProviderProvider>(context);
+
     return Scaffold(
       body: GestureDetector(
         onTap: () {
@@ -43,13 +48,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     padding: EdgeInsets.only(left: ScreenUtil().setWidth(10)),
                     child: Row(
                         children: [
-                          const Icon(
-                            Icons.location_pin,
-                            color: Colors.blue,
-                            size: 20,
-                          ),
+                          Image.asset('assets/icons/location.png', scale: 1.0),
                           Padding(
-                            padding: const EdgeInsets.all(2.0),
+                            padding: const EdgeInsets.fromLTRB(5,2,2,2.0),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
@@ -67,9 +68,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ],
                             ),
                           ),
-                          SizedBox(
-                            width: ScreenUtil().setWidth(50),
-                          ),
+                          Spacer(),
                           Padding(
                             padding: const EdgeInsets.only(left: 8.0),
                             child: CircleAvatar(
@@ -77,9 +76,18 @@ class _HomeScreenState extends State<HomeScreen> {
                                 backgroundColor: Colors.white,
                                 child: IconButton(
                                   onPressed: () {
-                                    pushDynamicScreen(context,
-                                        screen: SettingsPage(),
-                                        withNavBar: false);
+                                    print(provider.token);
+
+                                    if(provider.token !=null) {
+                                      pushDynamicScreen(context,
+                                          screen: SettingsPage(),
+                                          withNavBar: false);
+                                    }else{
+                                      pushDynamicScreen(context,
+                                          screen: LoginScreen(),
+                                          withNavBar: false);
+
+                                    }
                                   },
                                   icon: const Icon(
                                     Icons.account_circle_outlined,
@@ -93,13 +101,13 @@ class _HomeScreenState extends State<HomeScreen> {
                         ]),
                   ),
                   SizedBox(
-                    height: ScreenUtil().setHeight(17),
+                    height: ScreenUtil().setHeight(15),
                   ),
                   Padding(
                     padding: EdgeInsets.symmetric(
                         horizontal: ScreenUtil().setWidth(8)),
                     child: SearchTextField(
-                      hintext: "Search A Service",
+                      hintext: "Search Services",
                       onSearchingComplete: () {},
                     ),
                   )
@@ -111,35 +119,23 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+
                   const SizedBox(
                     height: 15,
                   ),
                   const SliderWidget(),
                   Padding(
-                    padding: EdgeInsets.only(
-                        left: ScreenUtil().setWidth(8),
-                        bottom: ScreenUtil().setHeight(10)),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.all(
-                              MediaQuery.of(context).size.width * 0.00),
-                          child: Text(
-                            'Services',
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                                fontSize: ScreenUtil().setSp(21)),
-                          ),
-                        ),
-
-                      ],
+                    padding: EdgeInsets.all(5),
+                    child: Text(
+                      'Services',
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontSize: ScreenUtil().setSp(21)),
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(
-                        left: ScreenUtil().setWidth(4), bottom: 10),
+                    padding: EdgeInsets.all(10),
                     child:
                         const Servicescontainer(),
                   ),

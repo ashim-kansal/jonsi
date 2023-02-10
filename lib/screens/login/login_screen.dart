@@ -60,7 +60,6 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<ProviderProvider>(context);
-    final user = Provider.of<UserProvider>(context);
     var children2 = [
       120.verticalSpace,
       returnLogo(context),
@@ -181,30 +180,18 @@ class _LoginScreenState extends State<LoginScreen> {
                   'password': passwordController.text,
                 };
                 await HttpClient().signin(body).then((loginresponse) async {
-                  if (loginresponse.data['data']['user']['is_provider']) {
+                  if(loginresponse.data['isSuccess']) {
                     provider.token = loginresponse.data['data']['token'];
-                    // provider.provider =
-                    //     SignedInProvider.fromJson(loginresponse.data);
-                    // checkaddusertoken(provider.provider.id);
-                    // HttpClient()
-                    //     .getuserprofilepic(provider.provider.id.toString())
-                    //     .then((getprofilepicresponse) {
-                    //   provider.providerprofilepicurl =
-                    //       getprofilepicresponse.data['profile_picture'];
-                    // }).catchError((e) {});
-                  } else {
-                    user.token = loginresponse.data['data']['token'];
-                    // user.user = SignedInuser.fromJson(loginresponse.data);
-                    // checkaddusertoken(user.user.id);
-                    // await HttpClient()
-                    //     .getuserprofilepic(user.user.id.toString())
-                    //     .then((getprofilepicresponse) {
-                    //   user.userprofilepicurl =
-                    //       getprofilepicresponse.data['profile_picture'];
-                    // }).catchError((e) {});
+                    provider.firstName = loginresponse.data['data']['user']['first_name'];
+                    provider.lastName = loginresponse.data['data']['user']['last_name'];
+                    // provider.phone = loginresponse.data['data']['user']['phone_number'];
+                    provider.isProvider = loginresponse.data['data']['user']['is_provider'];
+                    provider.nationality = loginresponse.data['data']['user']['nationality'];
+                    provider.language = loginresponse.data['data']['user']['languages'];
                   }
                   signin = false;
                   isLoading = false;
+                  print('aaaaa');
                   changeScreenReplacement(
                       context,
                       BottomNavBar(

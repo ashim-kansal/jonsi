@@ -10,61 +10,55 @@ String recommendedServiceProvidersResponseToJson(List<RecommendedServiceProvider
 
 class RecommendedServiceProvidersResponse {
     RecommendedServiceProvidersResponse({
-        required this.id,
-        required this.title,
+        this.id,
+        this.title,
         this.description,
-        required this.isPaused,
-        required this.createdAt,
-        required this.updatedAt,
-        required this.categoryId,
+        this.isPaused,
+        this.createdAt,
+        this.updatedAt,
+        this.categoryId,
         this.userId,
-        required this.isDeleted,
+        this.isDeleted,
         this.ratingCount,
         this.reviewCount,
         this.slug,
-        required this.rating,
-        this.userData,
+        this.rating,
+        // this.userData,
         this.servicepackages,
-        this.reviews,
-        this.gigdocument,
     });
 
-    int id;
-    String title;
+    int? id;
+    String? title;
     String? description;
-    bool isPaused;
-    DateTime createdAt;
-    DateTime updatedAt;
-    int categoryId;
+    bool? isPaused;
+    DateTime? createdAt;
+    DateTime? updatedAt;
+    int? categoryId;
     int? userId;
-    bool isDeleted;
-    String? ratingCount;
-    int? reviewCount;
+    bool? isDeleted;
+    dynamic ratingCount;
+    dynamic reviewCount;
     String? slug;
-    dynamic rating;
-    UserData? userData;
+    int? rating;
+    // UserData? userData;
     Servicepackages? servicepackages;
-    List<Review>? reviews;
-    List<Gigdocument>? gigdocument;
 
     factory RecommendedServiceProvidersResponse.fromJson(Map<String, dynamic> json) => RecommendedServiceProvidersResponse(
         id: json["id"],
         title: json["title"],
         description: json["description"],
         isPaused: json["is_paused"],
-        createdAt: DateTime.parse(json["created_at"]),
-        updatedAt: DateTime.parse(json["updated_at"]),
+        createdAt: json["created_at"] == null ? null : DateTime.parse(json["created_at"]),
+        updatedAt: json["updated_at"] == null ? null : DateTime.parse(json["updated_at"]),
         categoryId: json["category_id"],
         userId: json["user_id"],
         isDeleted: json["is_deleted"],
-        ratingCount: json["rating_count"],
-        reviewCount: json["review_count"],
+        ratingCount: json["rating_count"] == null ? 0 : json["rating_count"],
+        reviewCount: json["review_count"]== null ? 0 : json["review_count"],
         slug: json["slug"],
         rating: json["rating"],
-        userData: json["user_data"] == null ? null : UserData.fromJson(json["user_data"]),
+        // userData: json["user_data"] == null ? null : UserData.fromJson(json["user_data"]),
         servicepackages: json["servicepackages"] == null ? null : Servicepackages.fromJson(json["servicepackages"]),
-        reviews: json["reviews"] == null ? [] : List<Review>.from(json["reviews"]!.map((x) => Review.fromJson(x))),
-        gigdocument: json["gigdocument"] == null ? [] : List<Gigdocument>.from(json["gigdocument"]!.map((x) => Gigdocument.fromJson(x))),
     );
 
     Map<String, dynamic> toJson() => {
@@ -72,8 +66,8 @@ class RecommendedServiceProvidersResponse {
         "title": title,
         "description": description,
         "is_paused": isPaused,
-        "created_at": createdAt.toIso8601String(),
-        "updated_at": updatedAt.toIso8601String(),
+        "created_at": createdAt?.toIso8601String(),
+        "updated_at": updatedAt?.toIso8601String(),
         "category_id": categoryId,
         "user_id": userId,
         "is_deleted": isDeleted,
@@ -81,128 +75,46 @@ class RecommendedServiceProvidersResponse {
         "review_count": reviewCount,
         "slug": slug,
         "rating": rating,
-        "user_data": userData?.toJson(),
+        // "user_data": userData?.toJson(),
         "servicepackages": servicepackages?.toJson(),
-        "reviews": reviews == null ? [] : List<dynamic>.from(reviews!.map((x) => x.toJson())),
-        "gigdocument": gigdocument == null ? [] : List<dynamic>.from(gigdocument!.map((x) => x.toJson())),
-    };
-}
-
-class Gigdocument {
-    Gigdocument({
-        required this.id,
-        required this.fileName,
-        required this.userid,
-        required this.serviceid,
-        required this.fileType,
-    });
-
-    int id;
-    String fileName;
-    int userid;
-    int serviceid;
-    String fileType;
-
-    factory Gigdocument.fromJson(Map<String, dynamic> json) => Gigdocument(
-        id: json["id"],
-        fileName: json["file_name"],
-        userid: json["userid"],
-        serviceid: json["serviceid"],
-        fileType: json["file_type"],
-    );
-
-    Map<String, dynamic> toJson() => {
-        "id": id,
-        "file_name": fileName,
-        "userid": userid,
-        "serviceid": serviceid,
-        "file_type": fileType,
-    };
-}
-
-class Review {
-    Review({
-        required this.id,
-        required this.review,
-        required this.rating,
-        required this.updatedAt,
-        required this.createdAt,
-        required this.reviewerId,
-        required this.serviceId,
-        required this.bookingId,
-        required this.slug,
-    });
-
-    int id;
-    String review;
-    String rating;
-    DateTime updatedAt;
-    DateTime createdAt;
-    int reviewerId;
-    int serviceId;
-    int bookingId;
-    String slug;
-
-    factory Review.fromJson(Map<String, dynamic> json) => Review(
-        id: json["id"],
-        review: json["review"],
-        rating: json["rating"],
-        updatedAt: DateTime.parse(json["updated_at"]),
-        createdAt: DateTime.parse(json["created_at"]),
-        reviewerId: json["reviewer_id"],
-        serviceId: json["service_id"],
-        bookingId: json["booking_id"],
-        slug: json["slug"],
-    );
-
-    Map<String, dynamic> toJson() => {
-        "id": id,
-        "review": review,
-        "rating": rating,
-        "updated_at": updatedAt.toIso8601String(),
-        "created_at": createdAt.toIso8601String(),
-        "reviewer_id": reviewerId,
-        "service_id": serviceId,
-        "booking_id": bookingId,
-        "slug": slug,
     };
 }
 
 class Servicepackages {
     Servicepackages({
-        required this.id,
-        required this.title,
+        this.id,
+        this.title,
         this.description,
         this.location,
-        required this.price,
-        required this.createdAt,
-        required this.updatedAt,
-        required this.serviceId,
-        this.time,
+        this.price,
+        this.createdAt,
+        this.updatedAt,
+        this.serviceId,
+        // this.time,
         this.extraForUrgentNeed,
     });
 
-    int id;
-    String title;
+    int? id;
+    String? title;
     String? description;
-    Location? location;
-    String price;
-    DateTime createdAt;
-    DateTime updatedAt;
-    int serviceId;
-    String? time;
+    String? location;
+    String? price;
+    DateTime? createdAt;
+    DateTime? updatedAt;
+    int? serviceId;
+    // dynamic? time;
     int? extraForUrgentNeed;
 
     factory Servicepackages.fromJson(Map<String, dynamic> json) => Servicepackages(
         id: json["id"],
         title: json["title"],
         description: json["description"],
-        location: locationValues.map[json["location"]]!,
+        location: json["location"],
         price: json["price"],
-        createdAt: DateTime.parse(json["created_at"]),
-        updatedAt: DateTime.parse(json["updated_at"]),
+        createdAt: json["created_at"] == null ? null : DateTime.parse(json["created_at"]),
+        updatedAt: json["updated_at"] == null ? null : DateTime.parse(json["updated_at"]),
         serviceId: json["service_id"],
-        time: json["time"],
+        // time: json["time"],
         extraForUrgentNeed: json["extra_for_urgent_need"],
     );
 
@@ -210,50 +122,42 @@ class Servicepackages {
         "id": id,
         "title": title,
         "description": description,
-        "location": locationValues.reverse[location],
+        "location": location,
         "price": price,
-        "created_at": createdAt.toIso8601String(),
-        "updated_at": updatedAt.toIso8601String(),
+        "created_at": createdAt?.toIso8601String(),
+        "updated_at": updatedAt?.toIso8601String(),
         "service_id": serviceId,
-        "time": time,
+        // "time": time,
         "extra_for_urgent_need": extraForUrgentNeed,
     };
 }
 
-enum Location { NATIONALITY, LOCATION_NATIONALITY, TAXILA }
-
-final locationValues = EnumValues({
-    "nationality": Location.LOCATION_NATIONALITY,
-    "Nationality": Location.NATIONALITY,
-    "Taxila": Location.TAXILA
-});
-
 class UserData {
     UserData({
-        required this.isSuperuser,
-        required this.isStaff,
-        required this.isActive,
-        required this.dateJoined,
-        required this.id,
+        this.isSuperuser,
+        this.isStaff,
+        this.isActive,
+        this.dateJoined,
+        this.id,
         this.firstName,
         this.lastName,
-        required this.username,
-        required this.email,
+        this.username,
+        this.email,
         this.phoneNumber,
         this.otpSms,
         this.otpEmail,
         this.otpSmsCreatedAt,
         this.otpEmailCreatedAt,
-        required this.isAdmin,
-        required this.isProvider,
-        required this.updatedAt,
-        required this.createdAt,
+        this.isAdmin,
+        this.isProvider,
+        this.updatedAt,
+        this.createdAt,
         this.categoryId,
         this.fcmToken,
         this.address,
         this.about,
-        this.nationality,
-        this.languages,
+        // this.nationality,
+        // this.languages,
         this.profilePic,
         this.gigDoc,
         this.gig2Doc,
@@ -262,30 +166,30 @@ class UserData {
         this.loginSrc,
     });
 
-    bool isSuperuser;
-    bool isStaff;
-    bool isActive;
-    String dateJoined;
-    int id;
-    FirstName? firstName;
-    LastName? lastName;
-    String username;
-    String email;
+    bool? isSuperuser;
+    bool? isStaff;
+    bool? isActive;
+    String? dateJoined;
+    int? id;
+    String? firstName;
+    String? lastName;
+    String? username;
+    String? email;
     String? phoneNumber;
     dynamic otpSms;
     dynamic otpEmail;
     dynamic otpSmsCreatedAt;
     dynamic otpEmailCreatedAt;
-    bool isAdmin;
-    bool isProvider;
-    DateTime updatedAt;
-    DateTime createdAt;
-    int? categoryId;
+    bool? isAdmin;
+    bool? isProvider;
+    DateTime? updatedAt;
+    DateTime? createdAt;
+    dynamic categoryId;
     dynamic fcmToken;
     dynamic address;
     String? about;
-    Location? nationality;
-    Languages? languages;
+    // Location? nationality;
+    // Languages? languages;
     String? profilePic;
     String? gigDoc;
     String? gig2Doc;
@@ -299,8 +203,8 @@ class UserData {
         isActive: json["is_active"],
         dateJoined: json["date_joined"],
         id: json["id"],
-        firstName: firstNameValues.map[json["first_name"]]!,
-        lastName: lastNameValues.map[json["last_name"]]!,
+        firstName: json["first_name"],
+        lastName: json["last_name"],
         username: json["username"],
         email: json["email"],
         phoneNumber: json["phone_number"],
@@ -310,14 +214,14 @@ class UserData {
         otpEmailCreatedAt: json["otp_email_created_at"],
         isAdmin: json["is_admin"],
         isProvider: json["is_provider"],
-        updatedAt: DateTime.parse(json["updated_at"]),
-        createdAt: DateTime.parse(json["created_at"]),
+        updatedAt: json["updated_at"] == null ? null : DateTime.parse(json["updated_at"]),
+        createdAt: json["created_at"] == null ? null : DateTime.parse(json["created_at"]),
         categoryId: json["category_id"],
         fcmToken: json["fcm_token"],
         address: json["address"],
         about: json["about"],
-        nationality: locationValues.map[json["nationality"]]!,
-        languages: languagesValues.map[json["languages"]]!,
+        // nationality: locationValues.map[json["nationality"]]!,
+        // languages: languagesValues.map[json["languages"]]!,
         profilePic: json["profile_pic"],
         gigDoc: json["gig_doc"],
         gig2Doc: json["gig2_doc"],
@@ -332,8 +236,8 @@ class UserData {
         "is_active": isActive,
         "date_joined": dateJoined,
         "id": id,
-        "first_name": firstNameValues.reverse[firstName],
-        "last_name": lastNameValues.reverse[lastName],
+        "first_name": firstName,
+        "last_name": lastName,
         "username": username,
         "email": email,
         "phone_number": phoneNumber,
@@ -343,14 +247,14 @@ class UserData {
         "otp_email_created_at": otpEmailCreatedAt,
         "is_admin": isAdmin,
         "is_provider": isProvider,
-        "updated_at": updatedAt.toIso8601String(),
-        "created_at": createdAt.toIso8601String(),
+        "updated_at": updatedAt?.toIso8601String(),
+        "created_at": createdAt?.toIso8601String(),
         "category_id": categoryId,
         "fcm_token": fcmToken,
         "address": address,
         "about": about,
-        "nationality": locationValues.reverse[nationality],
-        "languages": languagesValues.reverse[languages],
+        // "nationality": locationValues.reverse[nationality],
+        // "languages": languagesValues.reverse[languages],
         "profile_pic": profilePic,
         "gig_doc": gigDoc,
         "gig2_doc": gig2Doc,
@@ -360,16 +264,6 @@ class UserData {
     };
 }
 
-enum FirstName { EMPTY, PARSHANT, RAJA, ROHAN, QASIM }
-
-final firstNameValues = EnumValues({
-    "": FirstName.EMPTY,
-    "Parshant": FirstName.PARSHANT,
-    "Qasim": FirstName.QASIM,
-    "Raja": FirstName.RAJA,
-    "rohan": FirstName.ROHAN
-});
-
 enum Languages { ENGLISH, HINDI, LANGUAGES_ENGLISH }
 
 final languagesValues = EnumValues({
@@ -378,14 +272,6 @@ final languagesValues = EnumValues({
     "english": Languages.LANGUAGES_ENGLISH
 });
 
-enum LastName { EMPTY, KUMAR, LAST_NAME_KUMAR, SIDDIQUI }
-
-final lastNameValues = EnumValues({
-    "": LastName.EMPTY,
-    "Kumar": LastName.KUMAR,
-    "kumar": LastName.LAST_NAME_KUMAR,
-    "Siddiqui": LastName.SIDDIQUI
-});
 
 class EnumValues<T> {
     Map<String, T> map;

@@ -39,14 +39,15 @@ class _SliderWidgetState extends State<SliderWidget> {
                     autoPlayCurve: Curves.easeInOutBack,
                     autoPlayInterval: const Duration(seconds: 3)),
                 items: response.data!
-                    .map((item) => Padding(
+                    .map((item) =>
+                    Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 4.0),
                     child: GestureDetector(
                       onTap: () {
-                        pushDynamicScreen(context,
-                            screen:
-                            ProviderOffersFromHomePage(serviceid: item.id),
-                            withNavBar: false);
+                        // pushDynamicScreen(context,
+                        //     screen:
+                        //     ProviderOffersFromHomePage(serviceid: item.id, name: item.),
+                        //     withNavBar: false);
                       },
                       child: Stack(
                         children: [
@@ -54,22 +55,15 @@ class _SliderWidgetState extends State<SliderWidget> {
                               height: ScreenUtil().setHeight(170),
                               decoration: BoxDecoration(
                                 color: const Color(0xff7c94b6),
-                                borderRadius: BorderRadius.circular(20),
+                                borderRadius: BorderRadius.circular(5),
                                 image: DecorationImage(
                                   fit: BoxFit.cover,
                                   colorFilter: ColorFilter.mode(
                                       Colors.black.withOpacity(0.4),
                                       BlendMode.darken),
-                                  image: AssetImage(
-                                    'assets/images/bycyclemechenic.jpg',
-                                  ),
+                                  image: getImage(item)
                                 ),
                               )),
-                          // Center(
-                          //     child: Image.asset(
-                          //   item[0],
-                          //   fit: BoxFit.cover,
-                          // )),
                           Padding(
                             padding: EdgeInsets.only(
                               left: ScreenUtil().setWidth(10),
@@ -99,20 +93,59 @@ class _SliderWidgetState extends State<SliderWidget> {
                                 SizedBox(
                                   height: ScreenUtil().setHeight(50),
                                 ),
-                                Container(
-                                  height: ScreenUtil().setHeight(28),
-                                  width: ScreenUtil().setWidth(90),
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      color: Colors.blue),
-                                  child: Center(
-                                    child: Text(
-                                      'Book Now',
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: ScreenUtil().setSp(13)),
+                                // Container(
+                                //   height: ScreenUtil().setHeight(28),
+                                //   width: ScreenUtil().setWidth(90),
+                                //   decoration: BoxDecoration(
+                                //       borderRadius: BorderRadius.circular(10),
+                                //       color: Colors.blue),
+                                //   child: Center(
+                                //     child: Text(
+                                //       'Book Now',
+                                //       style: TextStyle(
+                                //           color: Colors.white,
+                                //           fontWeight: FontWeight.bold,
+                                //           fontSize: ScreenUtil().setSp(13)),
+                                //     ),
+                                //   ),
+                                // ),
+                                SizedBox(
+                                  height: 28,
+                                  width: 150,
+                                  child: TextButton(
+                                    style: ButtonStyle(
+                                      backgroundColor: MaterialStateProperty.all(Colors.blue),
+                                      shape: MaterialStateProperty.all(
+                                        RoundedRectangleBorder(
+                                          borderRadius:
+                                          BorderRadius.circular(14),
+                                        ),
+                                      ),
                                     ),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        const Opacity(
+                                          opacity: 0,
+                                          child: Icon(Icons.arrow_forward_ios),
+                                        ),
+                                        Text(
+                                          "Book Now",
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.w500,
+                                            color: Colors.white,
+                                            fontSize: 14.sp,
+                                            fontFamily: 'Montserrat-Light',
+                                          ),
+                                        ),
+                                        Image.asset('assets/icons/arw.png', scale: 1.0),
+                                      ],
+                                    ),
+                                    onPressed: ()  {
+                                      // pushDynamicScreen(context,
+                                      //     screen: ProviderOffersFromHomePage(serviceid: response.data!.data[index].id),
+                                      //     withNavBar: false);
+                                    },
                                   ),
                                 ),
                               ],
@@ -130,5 +163,15 @@ class _SliderWidgetState extends State<SliderWidget> {
         );
 
 
+  }
+
+  getImage(TrendingServicesResponse item) {
+    if(item.gigdocument!=null && item.gigdocument.length>0 ){
+      return NetworkImage("https://urbanmalta.com/public/users/user_${item.gigdocument[0].userid}/documents/${item.gigdocument[0].fileName}");
+    }else{
+      return AssetImage(
+        'assets/images/bycyclemechenic.jpg',
+      );
+    }
   }
 }

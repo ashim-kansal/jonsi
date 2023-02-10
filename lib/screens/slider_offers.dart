@@ -6,11 +6,13 @@ import '../../net/http_client.dart';
 import '../components/AppColors.dart';
 import '../components/ProviderItem.dart';
 import '../components/MyAppBar.dart';
+import '../models/serializable_model/RecommendedServiceProvidersResponse.dart';
 
 class ProviderOffersFromHomePage extends ModalRoute<void> {
   final int serviceid;
+  final String name;
 
-  ProviderOffersFromHomePage({required this.serviceid});
+  ProviderOffersFromHomePage({required this.serviceid, required this.name});
 
   @override
   Duration get transitionDuration => const Duration(milliseconds: 500);
@@ -31,11 +33,9 @@ class ProviderOffersFromHomePage extends ModalRoute<void> {
   bool get maintainState => true;
 
   @override
-  Widget buildPage(
-    BuildContext context,
-    Animation<double> animation,
-    Animation<double> secondaryAnimation,
-  ) {
+  Widget buildPage(BuildContext context,
+      Animation<double> animation,
+      Animation<double> secondaryAnimation,) {
     // This makes sure that text and other content follows the material style
     return Material(
       type: MaterialType.transparency,
@@ -43,74 +43,87 @@ class ProviderOffersFromHomePage extends ModalRoute<void> {
     );
   }
 
+
   List<bool> isSelected = [true, false, false];
 
   Widget _buildOverlayContent(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.app_bg,
-      appBar: MyAppBar(title: 'Service Provide List'),
-      body: SingleChildScrollView(
-        physics: ScrollPhysics(),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Container(
-              color: Colors.white,
-              child: Padding(
-                padding: EdgeInsets.fromLTRB(30, 20, 30, 30),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text("House Cleaning",
+        backgroundColor: AppColors.app_bg,
+        appBar: MyAppBar(title: 'Service Provide List'),
+        body: SingleChildScrollView(
+          physics: ScrollPhysics(),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Container(
+                color: Colors.white,
+                child: Padding(
+                  padding: EdgeInsets.fromLTRB(30, 20, 30, 30),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(this.name,
+                          style: TextStyle(
+                              fontSize: 20.sp,
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold)),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        "Hire a house cleaner to clean your kitchen, hall, lawn and washroom",
                         style: TextStyle(
-                            fontSize: 20.sp,
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold)),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Text(
-                      "Hire a house cleaner to clean your kitchen, hall, lawn and washroom",
-                      style: TextStyle(
-                          fontSize: 12.sp,
-                          color: AppColors.title_desc,
-                          fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.center,
-                    )
-                  ],
+                            fontSize: 12.sp,
+                            color: AppColors.title_desc,
+                            fontWeight: FontWeight.bold),
+                        textAlign: TextAlign.center,
+                      )
+                    ],
+                  ),
                 ),
               ),
-            ),
-            Padding(
-              padding: EdgeInsets.all(10),
-              child: Text(
-                "Recommended for you",
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 14.sp,
-                    fontWeight: FontWeight.bold
+              Padding(
+                padding: EdgeInsets.all(10),
+                child: Text(
+                  "Recommended for you",
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.bold
+                  ),
                 ),
               ),
-            ),
-            Padding(
-              padding: EdgeInsets.all(10),
-              child: ListView.separated(
-                physics: NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                itemCount: 5,
-                itemBuilder: (context, position) {
-                  return ItemServicesCard();
-                }
-                ,
-                separatorBuilder: (context, index) => SizedBox(
-                  height: 10,
-                )
-                ,
+              Padding(
+                  padding: EdgeInsets.all(10),
+                  child: FutureBuilder(
+                      future: HttpClient().getRecommendedServiceProviders("${this.serviceid}"),
+                      builder: (context,
+                          AsyncSnapshot<List<RecommendedServiceProvidersResponse>> response) {
+                        if (response.connectionState != ConnectionState.done) {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+                        return ListView.separated(
+                          physics: NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount: response.data!.length,
+                          itemBuilder: (context, position) {
+                            return ItemServicesCard(data : response.data![position]);
+                          }
+                          ,
+                          separatorBuilder: (context, index) =>
+                              SizedBox(
+                                height: 10,
+                              )
+                          ,
+                        );
+
+                      })
               ),
-            ),
-          ],
-        ),
-      )
+            ],
+          ),
+        )
     );
   }
 }

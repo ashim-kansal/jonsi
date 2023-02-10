@@ -13,9 +13,9 @@ import '../../provider/userprovider.dart';
 import '../provider_reviews/provider_reviews.dart';
 
 class ProviderProfilePageScreen extends ModalRoute<void> {
-  final ProviderProfile providerProfile;
+  ProviderProfile? providerProfile;
 
-  ProviderProfilePageScreen({required this.providerProfile});
+  ProviderProfilePageScreen({this.providerProfile});
   @override
   Duration get transitionDuration => const Duration(milliseconds: 500);
 
@@ -76,9 +76,7 @@ class ProviderProfilePageScreen extends ModalRoute<void> {
                   child: Material(
                     color: Colors.transparent,
                     child: Ink.image(
-                      image: NetworkImage(providerProfile.profilepicture != null
-                          ? providerProfile.profilepicture!
-                          : 'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500'),
+                      image: NetworkImage('https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500'),
                       fit: BoxFit.cover,
                       width: 128,
                       height: 128,
@@ -93,14 +91,14 @@ class ProviderProfilePageScreen extends ModalRoute<void> {
           Column(
             children: [
               Text(
-                providerProfile.firstname + " " + providerProfile.lastname,
+                "providerProfile.firstname" + " " + "providerProfile.lastname",
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: ScreenUtil().setSp(22)),
               ),
               const SizedBox(height: 4),
               Text(
-                providerProfile.email,
+                "providerProfile.email",
                 style: const TextStyle(color: Colors.grey),
               )
             ],
@@ -117,24 +115,23 @@ class ProviderProfilePageScreen extends ModalRoute<void> {
               ),
               child: const Text('Message'),
               onPressed: () async {
-                print('kamal he bhai');
-                Map<String, dynamic> map = {
-                  'user_one': loggedinuser.user.id,
-                  'user_two': providerProfile.id,
-                };
-                HttpClient().gethread(map).then((value) {
-                  print("><><><><><");
-                  pushDynamicScreen(context,
-                      screen: ChattingScreen(
-                          otheruserid: providerProfile.id,
-                          threadid: value.id,
-                          otherusername: providerProfile.firstname +
-                              " " +
-                              providerProfile.lastname));
-                }).catchError((e) {
-                  print('Error he bhai');
-                  showErrorFlushBar(context: context, message: e.toString());
-                });
+                // Map<String, dynamic> map = {
+                //   'user_one': loggedinuser.user.id,
+                //   'user_two': "providerProfile.id",
+                // };
+                // HttpClient().gethread(map).then((value) {
+                //   print("><><><><><");
+                //   pushDynamicScreen(context,
+                //       screen: ChattingScreen(
+                //           otheruserid: providerProfile.id,
+                //           threadid: value.id,
+                //           otherusername: providerProfile.firstname +
+                //               " " +
+                //               providerProfile.lastname));
+                // }).catchError((e) {
+                //   print('Error he bhai');
+                //   showErrorFlushBar(context: context, message: e.toString());
+                // });
               },
             )),
           ),
@@ -147,16 +144,16 @@ class ProviderProfilePageScreen extends ModalRoute<void> {
                 child: MaterialButton(
                   padding: const EdgeInsets.symmetric(vertical: 4),
                   onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => ProviderReviewsPage(
-                                providerid: providerProfile.id,
-                                averagerating: (providerProfile.averagerating *
-                                            pow(10.0, 1))
-                                        .round()
-                                        .toDouble() /
-                                    pow(10.0, 1))));
+                    // Navigator.push(
+                    //     context,
+                    //     MaterialPageRoute(
+                    //         builder: (context) => ProviderReviewsPage(
+                    //             providerid: providerProfile.id,
+                    //             averagerating: (providerProfile.averagerating *
+                    //                         pow(10.0, 1))
+                    //                     .round()
+                    //                     .toDouble() /
+                    //                 pow(10.0, 1))));
                   },
                   materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                   child: Column(
@@ -170,11 +167,7 @@ class ProviderProfilePageScreen extends ModalRoute<void> {
                             color: Colors.yellow.shade800,
                           ),
                           Text(
-                            ((providerProfile.averagerating * pow(10.0, 1))
-                                        .round()
-                                        .toDouble() /
-                                    pow(10.0, 1))
-                                .toString(),
+                            "a",
                             style: TextStyle(
                                 color: Colors.yellow.shade800,
                                 fontWeight: FontWeight.bold,
@@ -197,14 +190,14 @@ class ProviderProfilePageScreen extends ModalRoute<void> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
                 child: buildButton(context,
-                    providerProfile.totalreviews.toString(), 'Total Ratings '),
+                    "0", 'Total Ratings '),
               ),
               buildDivider(),
               Padding(
                 padding: const EdgeInsets.only(left: 8.0),
                 child: buildButton(
                     context,
-                    providerProfile.completedorders.toString(),
+                    "0",
                     'Total Services'),
               ),
             ],
@@ -224,7 +217,7 @@ class ProviderProfilePageScreen extends ModalRoute<void> {
                 ),
                 SizedBox(height: ScreenUtil().setHeight(4)),
                 Text(
-                  providerProfile.email,
+                  "providerProfile.email",
                   textAlign: TextAlign.justify,
                   style: TextStyle(
                       fontSize: ScreenUtil().setSp(14),
@@ -241,7 +234,7 @@ class ProviderProfilePageScreen extends ModalRoute<void> {
                 ),
                 SizedBox(height: ScreenUtil().setHeight(4)),
                 Text(
-                  providerProfile.phno,
+                  "providerProfile.phno",
                   textAlign: TextAlign.justify,
                   style: TextStyle(
                       fontSize: ScreenUtil().setSp(14),
@@ -258,7 +251,7 @@ class ProviderProfilePageScreen extends ModalRoute<void> {
                 ),
                 SizedBox(height: ScreenUtil().setHeight(4)),
                 Text(
-                  providerProfile.skill,
+                  "providerProfile.skill",
                   textAlign: TextAlign.justify,
                   style: TextStyle(
                       fontSize: ScreenUtil().setSp(14),
@@ -275,9 +268,7 @@ class ProviderProfilePageScreen extends ModalRoute<void> {
                 ),
                 SizedBox(height: ScreenUtil().setHeight(4)),
                 Text(
-                  providerProfile.bio != null
-                      ? providerProfile.bio!
-                      : "Bio not set",
+                  "Bio not set",
                   textAlign: TextAlign.justify,
                   style: TextStyle(
                       fontSize: ScreenUtil().setSp(14),

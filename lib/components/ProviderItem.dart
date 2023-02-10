@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kappu/components/AppColors.dart';
+import 'package:kappu/models/serializable_model/RecommendedServiceProvidersResponse.dart';
 
 class ItemServicesCard extends StatefulWidget {
+  RecommendedServiceProvidersResponse data;
+  ItemServicesCard({required this.data});
+
   // final CartItem item;
   // final VoidCallback onAddClick;
   // final VoidCallback onMinusClick;
@@ -44,7 +48,7 @@ class ItemServicesCardState extends State<ItemServicesCard> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Text(
-                    'John Carter',
+                    this.widget.data.title!,
                     textAlign: TextAlign.start,
                     style: TextStyle(
                         color: AppColors.app_color,
@@ -54,7 +58,7 @@ class ItemServicesCardState extends State<ItemServicesCard> {
                   Container(
                     width: 200,
                     child: Text(
-                      'I will provide you house cleaning services',
+                      this.widget.data.description!,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       softWrap: false,
@@ -70,28 +74,28 @@ class ItemServicesCardState extends State<ItemServicesCard> {
                         color: Colors.yellow,
                       ),
                       Text(
-                        ' 4.0 (125 Rating)',
+                        ' ${this.widget.data.rating} (0 Rating)',
                         style: TextStyle(fontSize: 10.sp, color: Colors.black),
                       ),
                     ],
                   ),
-                  Text(
-                    'Including 2 Packages',
-                    textAlign: TextAlign.start,
-                    style: TextStyle(color: Colors.black, fontSize: 10.sp),
-                  ),
+                  // Text(
+                  //   'Including 2 Packages',
+                  //   textAlign: TextAlign.start,
+                  //   style: TextStyle(color: Colors.black, fontSize: 10.sp),
+                  // ),
                   Container(
                     child: Row(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          'Hourly Price',
+                          'Hourly Price  :  ',
                           style:
                               TextStyle(color: Colors.black, fontSize: 10.sp),
                         ),
                         Text(
-                          '\$44',
+                          this.widget.data.servicepackages?.price==null ? "\$0" : "\$${this.widget.data.servicepackages?.price}" ,
                           style: TextStyle(
                               color: Colors.black,
                               fontSize: 10.sp,

@@ -1,7 +1,9 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:kappu/models/serializable_model/FaqModel.dart';
 import 'package:kappu/models/serializable_model/Language.dart';
+import 'package:kappu/models/serializable_model/NotificationModel.dart';
 import 'package:kappu/models/serializable_model/RecommendedServiceProvidersResponse.dart';
 import 'package:kappu/models/serializable_model/TrendingServicesResponse.dart';
 import 'package:kappu/models/serializable_model/signup.dart';
@@ -33,10 +35,10 @@ abstract class HttpClient {
   @POST('auth/poviderregister/')
   Future<HttpResponse?> providersignup(@Body() Map<String, dynamic> params, File gigpath);
 
-  @POST('auth/customerregister/')
+  @POST('auth/customerregister')
   Future<HttpResponse?> userSignup(@Body() Map<String, dynamic> params, File file);
 
-  @POST('auth/login/')
+  @POST('auth/login')
   Future<HttpResponse> signin(@Body() Map<String, dynamic> params);
 
   @PATCH('provider/send-otp-email/{id}/')
@@ -68,6 +70,9 @@ abstract class HttpClient {
   @GET('allcat')
   Future<CategoryResponse> getCatagory();
 
+  @GET('faqs')
+  Future<List<FaqModel>> getFaqs();
+
   @GET('trending/profile')
   Future<List<TrendingServicesResponse>> getTrendingCatagory();
 
@@ -79,6 +84,9 @@ abstract class HttpClient {
 
   @POST('services/recommended')
   Future<List<RecommendedServiceProvidersResponse>> getRelatedProviders(catId, serviceProviderId);
+
+  @POST('user/notifications')
+  Future<List<NotificationModel>> getNotifications(userId, token);
 
   // @GET('category/{id}')
   // Future<Category> getservicecatagorynbyid(@Path('id') String id);

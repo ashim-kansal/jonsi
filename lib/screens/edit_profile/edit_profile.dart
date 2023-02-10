@@ -51,11 +51,11 @@ class _EditProfileState extends State<EditProfile> {
                     : providerProvider.provider.id.toString(),
                 updatebody)
             .then((value) => {
-                  widget.isuser
-                      ? userprovider.userprofilepicurl =
-                          updatedprofileresponse.data['data']['url']
-                      : providerProvider.providerprofilepicurl =
-                          updatedprofileresponse.data['data']['url'],
+                  // widget.isuser
+                  //     ? userprovider.userprofilepicurl =
+                  //         updatedprofileresponse.data['data']['url']
+                  //     : providerProvider.providerprofilepicurl =
+                  //         updatedprofileresponse.data['data']['url'],
                 })
             .catchError((e) {});
       });
@@ -182,14 +182,8 @@ class _EditProfileState extends State<EditProfile> {
                           child: Material(
                             color: Colors.transparent,
                             child: Ink.image(
-                              image: picked
-                                  ? FileImage(File(image!.path))
-                                  : loggedinprovider.providerprofilepicurl == ''
-                                      ? const AssetImage(
-                                          'assets/images/lawyer.jpg')
-                                      : NetworkImage(loggedinprovider
-                                              .providerprofilepicurl)
-                                          as ImageProvider,
+                              image: FileImage(File(image!.path)),
+
                               fit: BoxFit.cover,
                               width: 128,
                               height: 128,
