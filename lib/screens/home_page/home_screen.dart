@@ -78,14 +78,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                   onPressed: () {
                                     print(provider.token);
 
-                                    if(provider.token !=null) {
+                                    if(provider.token !=null && provider.token.isNotEmpty) {
                                       pushDynamicScreen(context,
                                           screen: SettingsPage(),
                                           withNavBar: false);
                                     }else{
-                                      pushDynamicScreen(context,
-                                          screen: LoginScreen(),
-                                          withNavBar: false);
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                              const LoginScreen()));
 
                                     }
                                   },

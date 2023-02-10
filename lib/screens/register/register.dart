@@ -108,6 +108,8 @@ class _SignUpState extends State<SignUp> {
 
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<ProviderProvider>(context);
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -185,7 +187,7 @@ class _SignUpState extends State<SignUp> {
                           setState(() {});
                         },
                         validator: (value) =>
-                            value!.isEmpty ? "Enter Your Phone Number" : null,
+                            value!.length!=10 ? "Phone Number should be 10 digit long" : null,
                       ),
                       if (!widget.isprovider)
                         CustomTextFormField(
@@ -197,7 +199,7 @@ class _SignUpState extends State<SignUp> {
                           },
                           prefixIcon: const Icon(Icons.location_on),
                           validator: (value) =>
-                              value!.isEmpty ? "Enter Your username" : null,
+                              value!.isEmpty ? "Enter Your Address" : null,
                         ),
                       if (widget.isprovider)
                         InkWell(
@@ -517,9 +519,9 @@ class _SignUpState extends State<SignUp> {
                       CustomButton(
                           buttontext: "Next",
                           isLoading: loading,
-                          onPressed: widget.isprovider
+                          onPressed: (){widget.isprovider
                               ? onregisterpressedprovider
-                              : onregisterpressed),
+                              : onregisterpressed(provider);}),
                       10.verticalSpace,
 
                       // const OrSignUpWith()
@@ -556,55 +558,48 @@ class _SignUpState extends State<SignUp> {
     }
   }
 
-  onregisterpressed() async {
+  onregisterpressed(provider) async {
     if (_formState.currentState!.validate()) {
-      if (stateValue != '' && cityValue != '') {
-        if (!loading) {
+      if (!loading) {
+        setState(() {
+          this.loading = true;
+        });
+        Map<String, dynamic> body = {
+          'first_name': _nameController.text,
+          'username': _nameController.text+"_"+_lastnameController.text,
+          'last_name': _lastnameController.text,
+          'email': _emailController.text,
+          'phone_number': _phnocontroller.text,
+          'password': _passwordController.text,
+          'language': 'english',
+          'nationality': countryValue,
+        };
+
+        await HttpClient().userSignup(body, new File("path")).then((value) {
+          loading = false;
+
+          if(value?.data['status']) {
+            provider.token = value?.data['token'];
+            provider.firstName = _nameController.text;
+            provider.lastName = _lastnameController.text;
+            provider.phone = _phnocontroller.text;
+            provider.email = _emailController.text;
+            provider.isProvider = false;
+            // provider.nationality = loginresponse.data['data']['user']['nationality'];
+            // provider.language = loginresponse.data['data']['user']['languages'];
+          }
+          setState(() {});
+          Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => const BottomNavBar(isprovider: false)));
+
+        }).catchError((e) {
           setState(() {
-            this.loading = true;
+            this.loading = false;
           });
-          Map<String, dynamic> body = {
-            'first_name': _nameController.text,
-            'username': _nameController.text+"_"+_lastnameController.text,
-            'last_name': _lastnameController.text,
-            'email': _emailController.text,
-            'phone_number': _phnocontroller.text,
-            'password': _passwordController.text,
-            'language': 'english',
-            'nationality': countryValue,
-          };
-
-          await HttpClient().userSignup(body, new File("path")).then((value) {
-            loading = false;
-            final provider = Provider.of<ProviderProvider>(context);
-
-            if(value?.data['status']) {
-              provider.token = value?.data['token'];
-              provider.firstName = _nameController.text;
-              provider.lastName = _lastnameController.text;
-              provider.phone = _phnocontroller.text;
-              provider.email = _emailController.text;
-              provider.isProvider = false;
-              // provider.nationality = loginresponse.data['data']['user']['nationality'];
-              // provider.language = loginresponse.data['data']['user']['languages'];
-            }
-            setState(() {});
-            Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => const BottomNavBar(isprovider: false)));
-
-          }).catchError((e) {
-            setState(() {
-              this.loading = false;
-            });
-            BaseDio.getDioError(e);
-          });
-        }
-      } else {
-        showAlertDialog(
-            error: "Select your state and City to complete address",
-            errorType: "Incomplete info");
+          BaseDio.getDioError(e);
+        });
       }
     }
   }
