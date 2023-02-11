@@ -9,7 +9,9 @@ import 'package:kappu/common/custom_progress_bar.dart';
 import 'package:kappu/common/dialogues.dart';
 import 'package:kappu/components/AppColors.dart';
 import 'package:kappu/net/base_dio.dart';
+import 'package:kappu/provider/provider_provider.dart';
 import 'package:kappu/screens/submitdocument/add_photo.dart';
+import 'package:provider/provider.dart';
 import '../../common/bottom_nav_bar.dart';
 import '../../net/http_client.dart';
 import '../../common/CircleButton.dart';
@@ -155,6 +157,8 @@ class _AddGigState extends State<AddGig> {
 
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<ProviderProvider>(context);
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Stack(children: [
@@ -292,7 +296,7 @@ class _AddGigState extends State<AddGig> {
                             ],
                           ),
                           onPressed: () {
-                            doRegister();
+                            doRegister(provider);
                           },
                         ),
                       ),
@@ -307,7 +311,7 @@ class _AddGigState extends State<AddGig> {
     );
   }
 
-  void doRegister() async {
+  void doRegister(provider) async {
     if(images.isEmpty){
       showAlertDialog(
           error: "Please add gig image",
@@ -323,6 +327,16 @@ class _AddGigState extends State<AddGig> {
         setState(() {
           isLoading = false;
         });
+        if(value?.data['status']) {
+          provider.token = value?.data['token'];
+          provider.firstName = widget.bodyprovider['first_name'];
+          provider.lastName = widget.bodyprovider['last_name'];
+          provider.phone = widget.bodyprovider['phone_number'];
+          provider.email = widget.bodyprovider['email'];
+          provider.isProvider = true;
+          provider.nationality = widget.bodyprovider['nationality'];
+          // provider.language = loginresponse.data['data']['user']['languages'];
+        }
         Navigator.pushReplacement(
             context,
             MaterialPageRoute(

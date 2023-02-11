@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kappu/helperfunctions/screen_nav.dart';
+import 'package:kappu/provider/provider_provider.dart';
 import 'package:kappu/screens/register/provider_signup_first.dart';
+import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
 import '../../common/bottom_nav_bar.dart';
 import 'login_screen.dart';
@@ -37,6 +39,8 @@ class _SplashViewState extends State<SplashView> {
 
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<ProviderProvider>(context);
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: CustomPaint(
