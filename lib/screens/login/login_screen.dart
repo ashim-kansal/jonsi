@@ -6,6 +6,7 @@ import 'package:kappu/common/custom_progress_bar.dart';
 import 'package:kappu/common/customtexts.dart';
 import 'package:kappu/common/dialogues.dart';
 import 'package:kappu/common/painter.dart';
+import 'package:kappu/constants/storage_manager.dart';
 import 'package:kappu/helperfunctions/screen_nav.dart';
 import 'package:kappu/models/serializable_model/signedinprovider.dart';
 import 'package:kappu/provider/provider_provider.dart';
@@ -181,13 +182,13 @@ class _LoginScreenState extends State<LoginScreen> {
                 };
                 await HttpClient().signin(body).then((loginresponse) async {
                   if(loginresponse.data['isSuccess']) {
-                    provider.token = loginresponse.data['data']['token'];
-                    provider.firstName = loginresponse.data['data']['user']['first_name'];
-                    provider.lastName = loginresponse.data['data']['user']['last_name'];
-                    provider.email = loginresponse.data['data']['user']['email'];
-                    provider.isProvider = loginresponse.data['data']['user']['is_provider'];
-                    provider.nationality = loginresponse.data['data']['user']['nationality'];
-                    provider.language = loginresponse.data['data']['user']['languages'];
+                    StorageManager().accessToken = loginresponse.data['data']['token'];
+                    StorageManager().userId = loginresponse.data['data']['user']['id'];
+                    StorageManager().name = loginresponse.data['data']['user']['first_name']+" "+loginresponse.data['data']['user']['last_name'];
+                    StorageManager().email = loginresponse.data['data']['user']['email'];
+                    StorageManager().isProvider = loginresponse.data['data']['user']['is_provider'];
+                    StorageManager().nationality = loginresponse.data['data']['user']['nationality'];
+                    StorageManager().language = loginresponse.data['data']['user']['languages'];
                   }
                   signin = false;
                   isLoading = false;

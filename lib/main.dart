@@ -233,7 +233,7 @@ class _InitialScreenState extends State<InitialScreen> {
     final provider = Provider.of<ProviderProvider>(context);
     return Scaffold(
         backgroundColor: AppColors.app_bg,
-        body: StorageManager().accessToken.isNotEmpty
+        body: StorageManager().isInitialized && StorageManager().accessToken.isNotEmpty
             ? BottomNavBar(
                 isprovider: provider.isProvider!,
               )
