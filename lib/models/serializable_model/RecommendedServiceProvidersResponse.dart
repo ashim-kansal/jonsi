@@ -24,6 +24,7 @@ class RecommendedServiceProvidersResponse {
         this.slug,
         this.rating,
         // this.userData,
+        this.gigdocument,
         this.servicepackages,
     });
 
@@ -42,6 +43,7 @@ class RecommendedServiceProvidersResponse {
     int? rating;
     // UserData? userData;
     Servicepackages? servicepackages;
+    List<Gigdocument>? gigdocument;
 
     factory RecommendedServiceProvidersResponse.fromJson(Map<String, dynamic> json) => RecommendedServiceProvidersResponse(
         id: json["id"],
@@ -57,6 +59,7 @@ class RecommendedServiceProvidersResponse {
         reviewCount: json["review_count"]== null ? 0 : json["review_count"],
         slug: json["slug"],
         rating: json["rating"],
+        gigdocument: json["gigdocument"] == null ? [] : List<Gigdocument>.from(json["gigdocument"]!.map((x) => Gigdocument.fromJson(x))),
         // userData: json["user_data"] == null ? null : UserData.fromJson(json["user_data"]),
         servicepackages: json["servicepackages"] == null ? null : Servicepackages.fromJson(json["servicepackages"]),
     );
@@ -75,6 +78,7 @@ class RecommendedServiceProvidersResponse {
         "review_count": reviewCount,
         "slug": slug,
         "rating": rating,
+        "gigdocument": gigdocument == null ? [] : List<dynamic>.from(gigdocument!.map((x) => x.toJson())),
         // "user_data": userData?.toJson(),
         "servicepackages": servicepackages?.toJson(),
     };
@@ -284,3 +288,37 @@ class EnumValues<T> {
         return reverseMap;
     }
 }
+
+
+class Gigdocument {
+    Gigdocument({
+        this.id,
+        this.fileName,
+        this.userid,
+        this.serviceid,
+        this.fileType,
+    });
+
+    int? id;
+    String? fileName;
+    int? userid;
+    int? serviceid;
+    String? fileType;
+
+    factory Gigdocument.fromJson(Map<String, dynamic> json) => Gigdocument(
+        id: json["id"],
+        fileName: json["file_name"],
+        userid: json["userid"],
+        serviceid: json["serviceid"],
+        fileType: json["file_type"],
+    );
+
+    Map<String, dynamic> toJson() => {
+        "id": id,
+        "file_name": fileName,
+        "userid": userid,
+        "serviceid": serviceid,
+        "file_type": fileType,
+    };
+}
+

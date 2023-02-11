@@ -184,7 +184,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     provider.token = loginresponse.data['data']['token'];
                     provider.firstName = loginresponse.data['data']['user']['first_name'];
                     provider.lastName = loginresponse.data['data']['user']['last_name'];
-                    // provider.phone = loginresponse.data['data']['user']['phone_number'];
+                    provider.email = loginresponse.data['data']['user']['email'];
                     provider.isProvider = loginresponse.data['data']['user']['is_provider'];
                     provider.nationality = loginresponse.data['data']['user']['nationality'];
                     provider.language = loginresponse.data['data']['user']['languages'];

@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kappu/components/AppColors.dart';
+import 'package:kappu/components/MyAppBar.dart';
 
 import '../../common/button.dart';
 
 class ProviderDetailScreen extends StatefulWidget {
-  const ProviderDetailScreen({Key? key}) : super(key: key);
+  final int id;
+  ProviderDetailScreen({required this.id});
 
   @override
   _ProviderDetailScreenState createState() => _ProviderDetailScreenState();
@@ -46,7 +48,7 @@ class _ProviderDetailScreenState extends State<ProviderDetailScreen> {
                       )),
                   Container(
                     width: double.infinity,
-                    height: 250,
+                    height: 50,
                     color: Colors.grey,
                   )
                 ],

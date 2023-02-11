@@ -11,8 +11,9 @@ import '../models/serializable_model/RecommendedServiceProvidersResponse.dart';
 class ProviderOffersFromHomePage extends ModalRoute<void> {
   final int serviceid;
   final String name;
+  final String desc;
 
-  ProviderOffersFromHomePage({required this.serviceid, required this.name});
+  ProviderOffersFromHomePage({required this.serviceid, required this.name, required this.desc});
 
   @override
   Duration get transitionDuration => const Duration(milliseconds: 500);
@@ -71,7 +72,7 @@ class ProviderOffersFromHomePage extends ModalRoute<void> {
                         height: 10,
                       ),
                       Text(
-                        "Hire a house cleaner to clean your kitchen, hall, lawn and washroom",
+                        this.desc,
                         style: TextStyle(
                             fontSize: 12.sp,
                             color: AppColors.title_desc,

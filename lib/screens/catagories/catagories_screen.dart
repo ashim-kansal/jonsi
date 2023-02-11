@@ -39,7 +39,7 @@ class _CatagoriesScreenState extends State<CatagoriesScreen> {
                   GestureDetector(
                     onTap: () {
                       pushDynamicScreen(context,
-                          screen: ProviderOffersFromHomePage(serviceid: item.id, name: item.name),
+                          screen: ProviderOffersFromHomePage(serviceid: item.id, name: item.name, desc: item.description),
                           withNavBar: false);
                     },
                     child: Row(

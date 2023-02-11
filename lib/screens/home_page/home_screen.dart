@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kappu/components/AppColors.dart';
+import 'package:kappu/helperfunctions/screen_nav.dart';
 import 'package:kappu/provider/provider_provider.dart';
 import 'package:kappu/screens/chats/all_chat_screen.dart';
 import 'package:kappu/screens/home_page/widgets/slider.dart';
@@ -83,12 +84,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                           screen: SettingsPage(),
                                           withNavBar: false);
                                     }else{
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                              const LoginScreen()));
-
+                                      // Navigator.push(
+                                      //     context,
+                                      //     MaterialPageRoute(
+                                      //         builder: (context) =>
+                                      //         const LoginScreen()));
+                                      changeScreen(
+                                          context: context, screen: const LoginScreen());
                                     }
                                   },
                                   icon: const Icon(

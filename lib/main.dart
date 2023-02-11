@@ -5,6 +5,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:kappu/common/bottom_nav_bar.dart';
 import 'package:kappu/provider/provider_provider.dart';
 import 'package:kappu/provider/userprovider.dart';
 import 'package:kappu/screens/login/login_screen.dart';
@@ -14,8 +15,6 @@ import 'package:provider/provider.dart';
 import 'main_context.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:http/http.dart' as http;
-
-import 'screens/ProviderScreens/provider_detail.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   print('Handling a background message ${message.messageId}');
@@ -183,6 +182,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     // GoogleSignInAccount? user = _currentuser;
+
     return ScreenUtilInit(
       designSize: const Size(360, 690),
       minTextAdapt: true,
@@ -205,12 +205,9 @@ class _MyAppState extends State<MyApp> {
               primarySwatch: Colors.blue,
             ),
             home:
-                // user != null
-                //     ? const BottomNavBar(
-                //         isprovider: false,
-                //       )
-                //     :
-                const ProviderDetailScreen()),
+            // (provider.token!=null && provider.token.isNotEmpty)
+            //     ? BottomNavBar(isprovider: provider.isProvider!,):
+        const SplashView()),
       ),
     );
   }

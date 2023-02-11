@@ -47,7 +47,7 @@ class _ServicescontainerState extends State<Servicescontainer> {
                           child: GestureDetector(
                             onTap: () {
                               pushDynamicScreen(context,
-                                  screen: ProviderOffersFromHomePage(serviceid: response.data!.data[index].id, name: response.data!.data[index].name),
+                                  screen: ProviderOffersFromHomePage(serviceid: response.data!.data[index].id, name: response.data!.data[index].name, desc: response.data!.data[index].description),
                                   withNavBar: false);
                             },
                             child: Container(

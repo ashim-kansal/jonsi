@@ -29,11 +29,11 @@ class _RegisterMoreState extends State<RegisterMore> {
   final TextEditingController _extraRateController = TextEditingController();
 
   List<Category> catagories = [
-    Category(id: 1, name: "Select a Service", createdAt: "",image: "")
+    Category(id: 1, name: "Select a Service", createdAt: "",image: "", description: "")
   ];
 
   Category selectedcatagory =
-      Category(id: -1, name: "Select a Service", createdAt: "",image: "");
+      Category(id: -1, name: "Select a Service", createdAt: "",image: "", description: "");
 
   @override
   void initState() {
