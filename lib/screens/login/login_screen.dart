@@ -6,6 +6,7 @@ import 'package:kappu/common/custom_progress_bar.dart';
 import 'package:kappu/common/customtexts.dart';
 import 'package:kappu/common/dialogues.dart';
 import 'package:kappu/common/painter.dart';
+import 'package:kappu/constants/storage_manager.dart';
 import 'package:kappu/helperfunctions/screen_nav.dart';
 import 'package:kappu/models/serializable_model/signedinprovider.dart';
 import 'package:kappu/provider/provider_provider.dart';
@@ -181,6 +182,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 };
                 await HttpClient().signin(body).then((loginresponse) async {
                   if(loginresponse.data['isSuccess']) {
+                    StorageManager().accessToken = loginresponse.data['data']['token'];
                     provider.token = loginresponse.data['data']['token'];
                     provider.firstName = loginresponse.data['data']['user']['first_name'];
                     provider.lastName = loginresponse.data['data']['user']['last_name'];
