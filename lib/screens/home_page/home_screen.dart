@@ -1,12 +1,8 @@
-// import 'package:dots_indicator/dots_indicator.dart';
-import 'dart:html';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kappu/components/AppColors.dart';
 import 'package:kappu/helperfunctions/screen_nav.dart';
 import 'package:kappu/provider/provider_provider.dart';
-import 'package:kappu/screens/chats/all_chat_screen.dart';
 import 'package:kappu/screens/home_page/widgets/slider.dart';
 import 'package:kappu/screens/login/login_screen.dart';
 import 'package:kappu/screens/settings/settings_screen.dart';
@@ -122,7 +118,10 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             Expanded(
-                child: ListView(
+                child: MediaQuery.removePadding(
+                    context: context,
+                    removeTop: true,
+                    child:ListView(
               padding: EdgeInsets.zero,
               shrinkWrap: true,
               children: [
@@ -149,7 +148,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 // const OurBestServices(),
                 const SizedBox(height: 45)
               ],
-            )),
+            ))),
           ],
         ),
       ),

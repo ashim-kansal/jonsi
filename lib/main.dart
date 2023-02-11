@@ -33,7 +33,6 @@ void main() async {
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
-  WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
 
   FirebaseMessaging messaging = FirebaseMessaging.instance;
@@ -170,6 +169,7 @@ class _MyAppState extends State<MyApp> {
 
   String token = '';
 
+
   getToken() async {
     token = (await widget.messaging.getToken())!;
     print("!!!!!!!!!!!!!!!");
@@ -232,16 +232,16 @@ class _InitialScreenState extends State<InitialScreen> {
   @override
   void initState() {
     super.initState();
+    StorageManager().accessToken = "abc";
   }
 
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<ProviderProvider>(context);
     return Scaffold(
         backgroundColor: AppColors.app_bg,
         body: StorageManager().accessToken!=null&& StorageManager().accessToken.isNotEmpty
             ? BottomNavBar(
-                isprovider: provider.isProvider!,
+                isprovider: false,
               )
             : SplashView());
   }
