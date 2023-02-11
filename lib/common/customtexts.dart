@@ -66,8 +66,9 @@ Widget ProfileItem(
 }
 
 Widget ProfileItemTitle(
-    {required String label,}) {
+    {required String label,context}) {
   return Container(
+    width: MediaQuery.of(context).size.width,
     color: AppColors.color_fafafa,
     child: Padding(
       padding: EdgeInsets.fromLTRB(10,12,10,12),

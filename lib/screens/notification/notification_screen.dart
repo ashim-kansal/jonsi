@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:kappu/components/MyAppBar.dart';
+import 'package:kappu/constants/storage_manager.dart';
 import 'package:kappu/models/notification.dart';
 import 'package:kappu/models/serializable_model/NotificationModel.dart';
 import 'package:kappu/net/http_client.dart';
@@ -94,7 +95,9 @@ class _NotificationScreenState extends State<NotificationScreen> {
               height: ScreenUtil().setHeight(590),
               child: FutureBuilder(
                   future: HttpClient()
-                      .getNotifications("2", "Bearer 436|9tPOCMv1jRRW7NWm80lqiBrkL9lJmkUZ2M3NapU4"),
+                      .getNotifications(
+                      StorageManager().userId.toString(),
+                      "Bearer "+StorageManager().accessToken),
                   builder: (context,
                       AsyncSnapshot<List<NotificationModel>>
                           response) {

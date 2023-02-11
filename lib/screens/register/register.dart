@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:kappu/common/bottom_nav_bar.dart';
+import 'package:kappu/constants/storage_manager.dart';
 import 'package:kappu/models/serializable_model/Language.dart';
 import 'package:kappu/models/serializable_model/CategoryResponse.dart';
 import 'package:kappu/provider/provider_provider.dart';
@@ -108,7 +109,6 @@ class _SignUpState extends State<SignUp> {
 
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<ProviderProvider>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -521,7 +521,7 @@ class _SignUpState extends State<SignUp> {
                           isLoading: loading,
                           onPressed: (){widget.isprovider
                               ? onregisterpressedprovider
-                              : onregisterpressed(provider);}),
+                              : onregisterpressed();}),
                       10.verticalSpace,
 
                       // const OrSignUpWith()
@@ -558,7 +558,7 @@ class _SignUpState extends State<SignUp> {
     }
   }
 
-  onregisterpressed(provider) async {
+  onregisterpressed() async {
     if (_formState.currentState!.validate()) {
       if (!loading) {
         setState(() {
@@ -579,14 +579,14 @@ class _SignUpState extends State<SignUp> {
           loading = false;
 
           if(value?.data['status']) {
-            provider.token = value?.data['token'];
-            provider.firstName = _nameController.text;
-            provider.lastName = _lastnameController.text;
+            var provider = StorageManager();
+            provider.accessToken = value?.data['token'];
+            provider.name = _nameController.text+ " "+_lastnameController.text;
             provider.phone = _phnocontroller.text;
             provider.email = _emailController.text;
             provider.isProvider = false;
-            // provider.nationality = loginresponse.data['data']['user']['nationality'];
-            // provider.language = loginresponse.data['data']['user']['languages'];
+            provider.nationality = value?.data['user']['nationality'];
+            provider.language = value?.data['user']['languages'];
           }
           setState(() {});
           Navigator.pushReplacement(
