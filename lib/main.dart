@@ -11,6 +11,7 @@ import 'package:kappu/screens/login/login_screen.dart';
 import 'package:kappu/screens/login/splash_view.dart';
 import 'package:kappu/screens/login_registration.dart/login_registration.dart';
 import 'package:provider/provider.dart';
+import 'components/AppColors.dart';
 import 'main_context.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:http/http.dart' as http;
@@ -156,6 +157,8 @@ class _MyAppState extends State<MyApp> {
       }
     });
 
+
+
     getToken();
   }
 
@@ -210,8 +213,32 @@ class _MyAppState extends State<MyApp> {
                 //         isprovider: false,
                 //       )
                 //     :
-                const ProviderDetailScreen()),
+                const InitialScreen()),
       ),
     );
   }
 }
+
+
+class InitialScreen extends StatefulWidget {
+  const InitialScreen({Key? key}) : super(key: key);
+
+  @override
+  _InitialScreenState createState() => _InitialScreenState();
+}
+
+class _InitialScreenState extends State<InitialScreen> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final provider = Provider.of<ProviderProvider>(context);
+    return const Scaffold(
+        backgroundColor: AppColors.app_bg,
+        body: SplashView());
+  }
+}
+

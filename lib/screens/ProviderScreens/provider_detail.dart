@@ -319,7 +319,7 @@ class _ProviderDetailScreenState extends State<ProviderDetailScreen> {
                         const LinearProgressIndicator(
                           backgroundColor: Colors.white,
                           valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
-                          value: 20,
+                          value: 0.8,
                         ),
                         const SizedBox(height: 10,),
                         Row(
@@ -393,7 +393,35 @@ class _ProviderDetailScreenState extends State<ProviderDetailScreen> {
                   ),
                   Container(
                     padding: EdgeInsets.all(20),
-                    child:  Text(
+                    child:  const Text(
+                      '125 Reviews',
+                      style: TextStyle(
+                          color: Color(0xffF79E1F),
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  Container(
+                      padding: const EdgeInsets.all(20),
+                      height: 250,
+                      child:  SizedBox(
+                          height: 100,
+                          child: ListView.builder(
+                            shrinkWrap:  true,
+                            scrollDirection: Axis.horizontal,
+                            itemCount: 3,
+                            itemBuilder: (context,index){
+                              return Container(
+                                width: 100,
+                                height: 100,
+                                color: Colors.blue,
+                              );
+                            },
+                          )
+                      ),),
+                  Container(
+                    padding: EdgeInsets.all(20),
+                    child:  const Text(
                       'Recommended for you',
                       style: TextStyle(
                           color: Colors.black,
@@ -404,7 +432,7 @@ class _ProviderDetailScreenState extends State<ProviderDetailScreen> {
                   Container(
                     padding: const EdgeInsets.all(20),
                     height: 250,
-                    child:  Expanded(child:ListView(
+                    child:  ListView(
                       shrinkWrap: true,
                       scrollDirection: Axis.horizontal,
                       children: [
@@ -445,7 +473,7 @@ class _ProviderDetailScreenState extends State<ProviderDetailScreen> {
                         ),
                       ],
                     ),
-                  ))
+                  )
                 ],
               ))
             ],
