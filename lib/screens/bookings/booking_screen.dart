@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kappu/components/AppColors.dart';
+import 'package:kappu/constants/storage_manager.dart';
 import 'package:kappu/models/serializable_model/booking.dart';
 import 'package:kappu/net/http_client.dart';
 import 'package:kappu/provider/provider_provider.dart';
@@ -8,6 +9,8 @@ import 'package:kappu/provider/userprovider.dart';
 import 'package:kappu/screens/bookings/widgets/cancelled_booking.dart';
 import 'package:kappu/screens/bookings/widgets/booking_widget.dart';
 import 'package:provider/provider.dart';
+
+import '../../models/serializable_model/OrderListResponse.dart';
 
 class BookingScreen extends StatefulWidget {
   const BookingScreen({Key? key}) : super(key: key);
@@ -79,12 +82,10 @@ class _BookingScreenState extends State<BookingScreen> {
             builder: (context, loggedinprovider, child) {
               return TabBarView(children: [
                 FutureBuilder(
-                    future: HttpClient().getactivebookingrequest(
-                        false,
-                        true,
-                        false,
-                        "Bearer " ),
-                    builder: (context, AsyncSnapshot<List<Booking>> snapshot) {
+                    future: HttpClient().getActivebookings(
+                        '2',
+                        "Bearer 433|gxM6CeYDegwoOpx4AobsO9hfAn0qcCKl1CtrdNMZ"),
+                    builder: (context, AsyncSnapshot<List<OrderListResponse>> snapshot) {
                       if (snapshot.connectionState != ConnectionState.done) {
                         return const Center(
                           child: CircularProgressIndicator(),
@@ -101,14 +102,6 @@ class _BookingScreenState extends State<BookingScreen> {
                                     setState(() {});
                                   },
                                   child: const Text('Reload')),
-                              Padding(
-                                padding: EdgeInsets.all(ScreenUtil().setHeight(10)),
-                                child: BookingWidget(
-                                  bookingstatus: 'Completed',
-                                  setbookingstate: reloadpage,
-                                  booking: getBooking(),
-                                ),
-                              ),
                             ],
                           ),
                         );
@@ -131,11 +124,10 @@ class _BookingScreenState extends State<BookingScreen> {
                       );
                     }),
                 FutureBuilder(
-                    future: HttpClient().getrequestedbooking(
-                        false,
-                        false,
-                        "Bearer " ),
-                    builder: (context, AsyncSnapshot<List<Booking>> snapshot) {
+                    future: HttpClient().getrequestedbookings(
+                        '2',
+                        "Bearer 433|gxM6CeYDegwoOpx4AobsO9hfAn0qcCKl1CtrdNMZ" ),
+                    builder: (context, AsyncSnapshot<List<OrderListResponse>> snapshot) {
                       if (snapshot.connectionState != ConnectionState.done) {
                         return const Center(
                           child: CircularProgressIndicator(),
@@ -165,7 +157,7 @@ class _BookingScreenState extends State<BookingScreen> {
                                   padding: EdgeInsets.all(
                                       ScreenUtil().setHeight(10)),
                                   child: BookingWidget(
-                                    bookingstatus: 'Requested',
+                                    bookingstatus: 'Request',
                                     setbookingstate: reloadpage,
                                     booking: item,
                                   ),
@@ -175,9 +167,9 @@ class _BookingScreenState extends State<BookingScreen> {
                     }),
                 FutureBuilder(
                     future: HttpClient().getcompletedbooking(
-                        true,
-                        "Bearer " ),
-                    builder: (context, AsyncSnapshot<List<Booking>> snapshot) {
+                        '2',
+                        "Bearer 433|gxM6CeYDegwoOpx4AobsO9hfAn0qcCKl1CtrdNMZ" ),
+                    builder: (context, AsyncSnapshot<List<OrderListResponse>> snapshot) {
                       if (snapshot.connectionState != ConnectionState.done) {
                         return const Center(
                           child: CircularProgressIndicator(),
@@ -216,10 +208,10 @@ class _BookingScreenState extends State<BookingScreen> {
                       );
                     }),
                 FutureBuilder(
-                    future: HttpClient().getcancelledbooking(
-                        true,
-                        "Bearer " ),
-                    builder: (context, AsyncSnapshot<List<Booking>> snapshot) {
+                    future: HttpClient().getCancelledbooking(
+              '2',
+              "Bearer 433|gxM6CeYDegwoOpx4AobsO9hfAn0qcCKl1CtrdNMZ" ),
+                    builder: (context, AsyncSnapshot<List<OrderListResponse>> snapshot) {
                       if (snapshot.connectionState != ConnectionState.done) {
                         return const Center(
                           child: CircularProgressIndicator(),
@@ -248,7 +240,9 @@ class _BookingScreenState extends State<BookingScreen> {
                             .map((item) => Padding(
                                   padding: EdgeInsets.all(
                                       ScreenUtil().setHeight(10)),
-                                  child: CancelledBookingWidget(
+                                  child: BookingWidget(
+                                    bookingstatus: "Cancel",
+                                    setbookingstate: reloadpage,
                                     booking: item,
                                   ),
                                 ))
