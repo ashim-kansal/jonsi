@@ -5,6 +5,8 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:kappu/common/bottom_nav_bar.dart';
+import 'package:kappu/constants/storage_manager.dart';
 import 'package:kappu/provider/provider_provider.dart';
 import 'package:kappu/provider/userprovider.dart';
 import 'package:kappu/screens/login/login_screen.dart';
@@ -16,15 +18,15 @@ import 'main_context.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:http/http.dart' as http;
 
-import 'screens/ProviderScreens/provider_detail.dart';
-
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   print('Handling a background message ${message.messageId}');
 }
 
 late AndroidNotificationChannel channel;
 late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
+
 void main() async {
+  StorageManager().init();
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
 
@@ -74,6 +76,7 @@ void main() async {
 
 class MyApp extends StatefulWidget {
   final FirebaseMessaging messaging;
+
   const MyApp({Key? key, required this.messaging}) : super(key: key);
 
   @override
@@ -134,7 +137,6 @@ class _MyAppState extends State<MyApp> {
             platformChannelSpecifics);
       }
     });
-
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
       print(">>>>>>>>>>>>>");
       print(message.data);
@@ -157,17 +159,17 @@ class _MyAppState extends State<MyApp> {
       }
     });
 
-
-
     getToken();
   }
 
   String token = '';
+
   getToken() async {
     token = (await widget.messaging.getToken())!;
     print("!!!!!!!!!!!!!!!");
     print(token);
   }
+
   // GoogleSignInAccount? _currentuser;
 
   // @override
@@ -186,39 +188,32 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     // GoogleSignInAccount? user = _currentuser;
+
     return ScreenUtilInit(
       designSize: const Size(360, 690),
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (context, child) => MultiProvider(
-        providers: [
-          ChangeNotifierProvider(
-            create: (context) => ProviderProvider(),
-          ),
-          ChangeNotifierProvider(
-            create: (context) => UserProvider(),
-          ),
-        ],
-        child: MaterialApp(
-            navigatorKey: NavigationService.navigatorKey,
-            title: 'jonsi',
-            debugShowCheckedModeBanner: false,
-            theme: ThemeData(
-              scaffoldBackgroundColor: Colors.white,
-              primarySwatch: Colors.blue,
+          providers: [
+            ChangeNotifierProvider(
+              create: (context) => ProviderProvider(),
             ),
-            home:
-                // user != null
-                //     ? const BottomNavBar(
-                //         isprovider: false,
-                //       )
-                //     :
-                const InitialScreen()),
-      ),
+            ChangeNotifierProvider(
+              create: (context) => UserProvider(),
+            ),
+          ],
+          child: MaterialApp(
+              navigatorKey: NavigationService.navigatorKey,
+              title: 'jonsi',
+              debugShowCheckedModeBanner: false,
+              theme: ThemeData(
+                scaffoldBackgroundColor: Colors.white,
+                primarySwatch: Colors.blue,
+              ),
+              home: const InitialScreen())),
     );
   }
 }
-
 
 class InitialScreen extends StatefulWidget {
   const InitialScreen({Key? key}) : super(key: key);
@@ -236,9 +231,12 @@ class _InitialScreenState extends State<InitialScreen> {
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<ProviderProvider>(context);
-    return const Scaffold(
+    return Scaffold(
         backgroundColor: AppColors.app_bg,
-        body: SplashView());
+        body: StorageManager().accessToken.isNotEmpty
+            ? BottomNavBar(
+                isprovider: provider.isProvider!,
+              )
+            : SplashView());
   }
 }
-

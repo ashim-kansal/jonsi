@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kappu/common/customtexts.dart';
 import 'package:kappu/components/AppColors.dart';
 import 'package:kappu/components/MyAppBar.dart';
+import 'package:kappu/provider/provider_provider.dart';
 import 'package:kappu/provider/userprovider.dart';
 import 'package:kappu/screens/edit_profile/edit_profile.dart';
 import 'package:kappu/screens/faqs/frequently_asked_questions.dart';
@@ -11,6 +12,7 @@ import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
 
 import '../../../helperfunctions/screen_nav.dart';
+import '../ProviderScreens/settings/widgets/alert_dialogue.dart';
 
 class SettingsPage extends ModalRoute<void> {
   @override
@@ -49,6 +51,7 @@ class SettingsPage extends ModalRoute<void> {
   late int cardViewed;
   bool alreadyowned = false;
   Widget _buildOverlayContent(BuildContext context) {
+    final provider = Provider.of<ProviderProvider>(context);
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -71,10 +74,10 @@ class SettingsPage extends ModalRoute<void> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('John Wing', style: TextStyle(fontFamily: "Montserrat-Bold", fontSize: 18, color: Colors.black),),
-                      Text('Johnwing@gmail.com', style: TextStyle(fontFamily: "Montserrat-Regular", fontSize: 12, color: AppColors.text_desc),),
+                      Text(provider.firstName+ " "+ provider.lastName, style: TextStyle(fontFamily: "Montserrat-Bold", fontSize: 18, color: Colors.black),),
+                      Text(provider.email, style: TextStyle(fontFamily: "Montserrat-Regular", fontSize: 12, color: AppColors.text_desc),),
                       10.verticalSpace,
-                      Text('+356 0382 7535', style: TextStyle(fontFamily: "Montserrat-Regular", fontSize: 12, color: AppColors.text_desc),),
+                      Text("provider.phone", style: TextStyle(fontFamily: "Montserrat-Regular", fontSize: 12, color: AppColors.text_desc),),
                     ],
                   ),
                   Spacer(),
@@ -97,7 +100,9 @@ class SettingsPage extends ModalRoute<void> {
               ProfileItem(label: "Change Password", iconPath: 'assets/icons/loc.png', onTap: (){
                 print("change pasworhhh   jd");
               }),
-              ProfileItem(label: "Logout", iconPath: 'assets/icons/loc.png'),
+              ProfileItem(label: "Logout", iconPath: 'assets/icons/loc.png', onTap:(){
+                showAlertDialog(context);
+              }),
               ProfileItemTitle(label: "General"),
               ProfileItem(label: "Add GIG", iconPath: 'assets/icons/loc.png'),
               ProfileItem(label: "GIGs Offered", iconPath: 'assets/icons/loc.png'),

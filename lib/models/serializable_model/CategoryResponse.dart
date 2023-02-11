@@ -36,18 +36,21 @@ class Category {
     Category({
         required this.id,
         required this.name,
+        required this.description,
         required this.createdAt,
         required this.image,
     });
 
     int id;
     String name;
+    String description;
     String createdAt;
     String image;
 
     factory Category.fromJson(Map<String, dynamic> json) => Category(
         id: json["id"],
         name: json["name"],
+        description: json["description"],
         createdAt: json["created_at"],
         image: json["image"],
     );
@@ -57,5 +60,6 @@ class Category {
         "name": name,
         "created_at": createdAt,
         "image": image,
+        "description": description,
     };
 }

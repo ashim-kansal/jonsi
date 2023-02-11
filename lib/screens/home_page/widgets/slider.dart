@@ -5,6 +5,7 @@ import 'package:kappu/models/serializable_model/TrendingServicesResponse.dart';
 import 'package:kappu/net/http_client.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
+import '../../ProviderScreens/provider_detail.dart';
 import '../../slider_offers.dart';
 
 class SliderWidget extends StatefulWidget {
@@ -44,10 +45,7 @@ class _SliderWidgetState extends State<SliderWidget> {
                     padding: const EdgeInsets.symmetric(horizontal: 4.0),
                     child: GestureDetector(
                       onTap: () {
-                        // pushDynamicScreen(context,
-                        //     screen:
-                        //     ProviderOffersFromHomePage(serviceid: item.id, name: item.),
-                        //     withNavBar: false);
+
                       },
                       child: Stack(
                         children: [
@@ -111,7 +109,7 @@ class _SliderWidgetState extends State<SliderWidget> {
                                 // ),
                                 SizedBox(
                                   height: 28,
-                                  width: 150,
+                                  width: 120,
                                   child: TextButton(
                                     style: ButtonStyle(
                                       backgroundColor: MaterialStateProperty.all(Colors.blue),
@@ -123,12 +121,8 @@ class _SliderWidgetState extends State<SliderWidget> {
                                       ),
                                     ),
                                     child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      crossAxisAlignment: CrossAxisAlignment.center,
                                       children: [
-                                        const Opacity(
-                                          opacity: 0,
-                                          child: Icon(Icons.arrow_forward_ios),
-                                        ),
                                         Text(
                                           "Book Now",
                                           style: TextStyle(
@@ -138,13 +132,17 @@ class _SliderWidgetState extends State<SliderWidget> {
                                             fontFamily: 'Montserrat-Light',
                                           ),
                                         ),
-                                        Image.asset('assets/icons/arw.png', scale: 1.0),
+                                        15.horizontalSpace,
+                                        Image.asset('assets/icons/arw.png', scale: 2,fit: BoxFit.cover),
                                       ],
                                     ),
                                     onPressed: ()  {
-                                      // pushDynamicScreen(context,
-                                      //     screen: ProviderOffersFromHomePage(serviceid: response.data!.data[index].id),
-                                      //     withNavBar: false);
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  ProviderDetailScreen(id: item.id!)));
+
                                     },
                                   ),
                                 ),

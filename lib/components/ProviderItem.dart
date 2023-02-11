@@ -3,6 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kappu/components/AppColors.dart';
 import 'package:kappu/models/serializable_model/RecommendedServiceProvidersResponse.dart';
 
+import '../screens/ProviderScreens/provider_detail.dart';
+
 class ItemServicesCard extends StatefulWidget {
   RecommendedServiceProvidersResponse data;
   ItemServicesCard({required this.data});
@@ -22,7 +24,16 @@ class ItemServicesCard extends StatefulWidget {
 class ItemServicesCardState extends State<ItemServicesCard> {
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return GestureDetector(
+        onTap: (){
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) =>
+                  ProviderDetailScreen(id: widget.data.id!)));
+
+        },
+        child: Container(
       height: 120,
       child: DecoratedBox(
         decoration: BoxDecoration(
@@ -31,10 +42,7 @@ class ItemServicesCardState extends State<ItemServicesCard> {
         child: Row(
           children: [
             Container(
-              child: Image.asset('assets/images/barber.jpg',
-                  height: 120,
-                  width: 150,
-                  fit: BoxFit.fill),
+              child: getImage(widget.data!),
               decoration: new BoxDecoration(
                 color: Colors.white,
                 borderRadius: new BorderRadius.only(topLeft: new Radius.circular(6), bottomLeft: new Radius.circular(6)),
@@ -58,7 +66,7 @@ class ItemServicesCardState extends State<ItemServicesCard> {
                   Container(
                     width: 200,
                     child: Text(
-                      this.widget.data.description!,
+                      this.widget.data.description==null ? "" : this.widget.data.description!,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       softWrap: false,
@@ -110,6 +118,21 @@ class ItemServicesCardState extends State<ItemServicesCard> {
           ],
         ),
       ),
-    );
+    ));
+  }
+
+  getImage(RecommendedServiceProvidersResponse item) {
+    if(item.gigdocument!=null && item.gigdocument!.length>0 ){
+      print(item.gigdocument![0].fileName);
+      return Image.network("https://urbanmalta.com/public/users/user_${item.gigdocument![0].userid}/documents/${item.gigdocument![0].fileName}",
+            height: 120,
+            width: 150,
+            fit: BoxFit.fill);
+    }else{
+      return Image.asset('assets/images/barber.jpg',
+          height: 120,
+          width: 150,
+          fit: BoxFit.fill);
+    }
   }
 }
