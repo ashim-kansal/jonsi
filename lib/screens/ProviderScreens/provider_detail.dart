@@ -250,6 +250,151 @@ class _ProviderDetailScreenState extends State<ProviderDetailScreen> {
                       )),
                   Container(
                     padding: EdgeInsets.all(20),
+                    child:  Row(
+                      children: [
+                        RatingBar.builder(
+                          initialRating: 3,
+                          minRating: 1,
+                          direction: Axis.horizontal,
+                          allowHalfRating: true,
+                          itemCount: 5,
+                          itemSize: 20,
+                          ignoreGestures: true,
+                          itemPadding: EdgeInsets.only(right: 0.1),
+                          itemBuilder: (context, _) =>
+                              Icon(Icons.star, color: Colors.amber),
+                          onRatingUpdate: (rating) {
+                            print(rating);
+                          },
+                        )
+                      ],
+                    ),
+
+                  ),
+                  Container(
+                    padding: const EdgeInsets.all(20),
+                    margin: const EdgeInsets.only(left: 20,right: 20),
+                    decoration: BoxDecoration(
+                      color: Color(0xff4995EB).withOpacity(0.2),
+                      borderRadius: BorderRadius.circular(10)
+                    ),
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            Expanded(
+                                child: Text('5 Stars',
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.bold))),
+                            Text('20 Reviews',
+                                style: TextStyle(
+                                    color: Colors.grey,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.normal)),
+                          ],
+                        ),
+                        const SizedBox(height: 5,),
+                        const LinearProgressIndicator(
+                          backgroundColor: Colors.white,
+                          valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
+                          value: 20,
+                        ),
+                        const SizedBox(height: 10,),
+                        Row(
+                          children: [
+                            Expanded(
+                                child: Text('5 Stars',
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.bold))),
+                            Text('20 Reviews',
+                                style: TextStyle(
+                                    color: Colors.grey,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.normal)),
+                          ],
+                        ),
+                        const SizedBox(height: 5,),
+                        const LinearProgressIndicator(
+                          backgroundColor: Colors.white,
+                          valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
+                          value: 20,
+                        ),
+                        const SizedBox(height: 10,),
+                        Row(
+                          children: [
+                            Expanded(
+                                child: Text('5 Stars',
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.bold))),
+                            Text('20 Reviews',
+                                style: TextStyle(
+                                    color: Colors.grey,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.normal)),
+                          ],
+                        ),
+                        const SizedBox(height: 5,),
+                        const LinearProgressIndicator(
+                          backgroundColor: Colors.white,
+                          valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
+                          value: 20,
+                        ),
+                        const SizedBox(height: 10,),
+                        Row(
+                          children: [
+                            Expanded(
+                                child: Text('5 Stars',
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.bold))),
+                            Text('20 Reviews',
+                                style: TextStyle(
+                                    color: Colors.grey,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.normal)),
+                          ],
+                        ),
+                        const SizedBox(height: 5,),
+                        const LinearProgressIndicator(
+                          backgroundColor: Colors.white,
+                          valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
+                          value: 20,
+                        ),
+                        const SizedBox(height: 10,),
+                        Row(
+                          children: [
+                            Expanded(
+                                child: Text('5 Stars',
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.bold))),
+                            Text('20 Reviews',
+                                style: TextStyle(
+                                    color: Colors.grey,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.normal)),
+                          ],
+                        ),
+                        const SizedBox(height: 5,),
+                        const LinearProgressIndicator(
+                          backgroundColor: Colors.white,
+                          valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
+                          value: 20,
+                        ),
+                        const SizedBox(height: 10,),
+                      ],
+                    )
+                  ),
+                  Container(
+                    padding: EdgeInsets.all(20),
                     child:  Text(
                       'Recommended for you',
                       style: TextStyle(
