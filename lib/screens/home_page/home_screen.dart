@@ -1,4 +1,6 @@
 // import 'package:dots_indicator/dots_indicator.dart';
+import 'dart:html';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kappu/components/AppColors.dart';
@@ -47,69 +49,70 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   Padding(
                     padding: EdgeInsets.only(left: ScreenUtil().setWidth(10)),
-                    child: Row(
-                        children: [
-                          Image.asset('assets/icons/location.png', scale: 1.0),
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(5,2,2,2.0),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Text("Current Location",
-                                    style: TextStyle(
-                                        color: AppColors.title_desc,
-                                        fontSize: ScreenUtil().setSp(10),
-                                        fontWeight: FontWeight.w500)),
-                                Text("Germany",
-                                    style: TextStyle(
-                                        color: AppColors.text_desc,
-                                        fontSize: ScreenUtil().setSp(14),
-                                        fontWeight: FontWeight.w500))
-                              ],
-                            ),
-                          ),
-                          Spacer(),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 8.0),
-                            child: CircleAvatar(
-                                // radius: 30,
-                                backgroundColor: Colors.white,
-                                child: IconButton(
-                                  onPressed: () {
-                                    print(provider.token);
+                    child: Row(children: [
+                      Image.asset('assets/icons/location.png', scale: 1.0),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(5, 2, 2, 2.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text("Current Location",
+                                style: TextStyle(
+                                    color: AppColors.title_desc,
+                                    fontSize: ScreenUtil().setSp(10),
+                                    fontWeight: FontWeight.w500)),
+                            Text("Germany",
+                                style: TextStyle(
+                                    color: AppColors.text_desc,
+                                    fontSize: ScreenUtil().setSp(14),
+                                    fontWeight: FontWeight.w500))
+                          ],
+                        ),
+                      ),
+                      Spacer(),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 8.0),
+                        child: CircleAvatar(
+                            // radius: 30,
+                            backgroundColor: Colors.white,
+                            child: IconButton(
+                              onPressed: () {
+                                print(provider.token);
 
-                                    if(provider.token !=null && provider.token.isNotEmpty) {
-                                      pushDynamicScreen(context,
-                                          screen: SettingsPage(),
-                                          withNavBar: false);
-                                    }else{
-                                      // Navigator.push(
-                                      //     context,
-                                      //     MaterialPageRoute(
-                                      //         builder: (context) =>
-                                      //         const LoginScreen()));
-                                      changeScreen(
-                                          context: context, screen: const LoginScreen());
-                                    }
-                                  },
-                                  icon: const Icon(
-                                    Icons.account_circle_outlined,
-                                    color: Colors.blue,
-                                  ),
-                                )),
-                          ),
-                          SizedBox(
-                            width: ScreenUtil().setWidth(15),
-                          )
-                        ]),
+                                if (provider.token != null &&
+                                    provider.token.isNotEmpty) {
+                                  pushDynamicScreen(context,
+                                      screen: SettingsPage(),
+                                      withNavBar: false);
+                                } else {
+                                  // Navigator.push(
+                                  //     context,
+                                  //     MaterialPageRoute(
+                                  //         builder: (context) =>
+                                  //         const LoginScreen()));
+                                  changeScreen(
+                                      context: context,
+                                      screen: const LoginScreen());
+                                }
+                              },
+                              icon: const Icon(
+                                Icons.account_circle_outlined,
+                                color: Colors.blue,
+                              ),
+                            )),
+                      ),
+                      SizedBox(
+                        width: ScreenUtil().setWidth(15),
+                      )
+                    ]),
                   ),
                   SizedBox(
                     height: ScreenUtil().setHeight(15),
                   ),
                   Padding(
                     padding: EdgeInsets.symmetric(
-                        horizontal: ScreenUtil().setWidth(8)),
+                        horizontal: ScreenUtil().setWidth(6)),
                     child: SearchTextField(
                       hintext: "Search Services",
                       onSearchingComplete: () {},
@@ -119,40 +122,34 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             Expanded(
-                child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-
-                  const SizedBox(
-                    height: 15,
+                child: ListView(
+              padding: EdgeInsets.zero,
+              shrinkWrap: true,
+              children: [
+                const SliderWidget(),
+                Padding(
+                  padding: EdgeInsets.only(left: 20, right: 20, bottom: 5),
+                  child: Text(
+                    'Services',
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                        fontSize: ScreenUtil().setSp(21)),
                   ),
-                  const SliderWidget(),
-                  Padding(
-                    padding: EdgeInsets.all(5),
-                    child: Text(
-                      'Services',
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: ScreenUtil().setSp(21)),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.all(10),
-                    child:
-                        const Servicescontainer(),
-                  ),
-                  // Divider(
-                  //   thickness: 5,
-                  //   color: Colors.grey.shade300,
-                  // ),
-                  // const ServicesSliderHorizontal(),
-                  // const OurBestServices(),
-                  const SizedBox(height: 45)
-                ],
-              ),
-            ))
+                ),
+                Padding(
+                  padding: EdgeInsets.all(10),
+                  child: const Servicescontainer(),
+                ),
+                // Divider(
+                //   thickness: 5,
+                //   color: Colors.grey.shade300,
+                // ),
+                // const ServicesSliderHorizontal(),
+                // const OurBestServices(),
+                const SizedBox(height: 45)
+              ],
+            )),
           ],
         ),
       ),

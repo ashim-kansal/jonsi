@@ -23,7 +23,7 @@ class RecommendedServiceProvidersResponse {
         this.reviewCount,
         this.slug,
         this.rating,
-        // this.userData,
+        this.userData,
         this.gigdocument,
         this.servicepackages,
     });
@@ -41,7 +41,7 @@ class RecommendedServiceProvidersResponse {
     dynamic reviewCount;
     String? slug;
     int? rating;
-    // UserData? userData;
+    UserData? userData;
     Servicepackages? servicepackages;
     List<Gigdocument>? gigdocument;
 
@@ -60,7 +60,7 @@ class RecommendedServiceProvidersResponse {
         slug: json["slug"],
         rating: json["rating"],
         gigdocument: json["gigdocument"] == null ? [] : List<Gigdocument>.from(json["gigdocument"]!.map((x) => Gigdocument.fromJson(x))),
-        // userData: json["user_data"] == null ? null : UserData.fromJson(json["user_data"]),
+        userData: json["user_data"] == null ? null : UserData.fromJson(json["user_data"]),
         servicepackages: json["servicepackages"] == null ? null : Servicepackages.fromJson(json["servicepackages"]),
     );
 
@@ -79,7 +79,7 @@ class RecommendedServiceProvidersResponse {
         "slug": slug,
         "rating": rating,
         "gigdocument": gigdocument == null ? [] : List<dynamic>.from(gigdocument!.map((x) => x.toJson())),
-        // "user_data": userData?.toJson(),
+        "user_data": userData?.toJson(),
         "servicepackages": servicepackages?.toJson(),
     };
 }

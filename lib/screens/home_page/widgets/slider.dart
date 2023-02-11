@@ -108,8 +108,8 @@ class _SliderWidgetState extends State<SliderWidget> {
                                 //   ),
                                 // ),
                                 SizedBox(
-                                  height: 28,
-                                  width: 120,
+                                  height: 35,
+                                  width: 125,
                                   child: TextButton(
                                     style: ButtonStyle(
                                       backgroundColor: MaterialStateProperty.all(Colors.blue),
@@ -128,7 +128,7 @@ class _SliderWidgetState extends State<SliderWidget> {
                                           style: TextStyle(
                                             fontWeight: FontWeight.w500,
                                             color: Colors.white,
-                                            fontSize: 14.sp,
+                                            fontSize: 14,
                                             fontFamily: 'Montserrat-Light',
                                           ),
                                         ),
