@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kappu/common/bottom_nav_bar.dart';
@@ -26,7 +27,12 @@ late AndroidNotificationChannel channel;
 late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
 
 void main() async {
-  StorageManager().init();
+  WidgetsFlutterBinding.ensureInitialized();
+  await StorageManager().init();
+  await SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
 
@@ -233,7 +239,7 @@ class _InitialScreenState extends State<InitialScreen> {
     final provider = Provider.of<ProviderProvider>(context);
     return Scaffold(
         backgroundColor: AppColors.app_bg,
-        body: StorageManager().isInitialized && StorageManager().accessToken.isNotEmpty
+        body: StorageManager().accessToken!=null&& StorageManager().accessToken.isNotEmpty
             ? BottomNavBar(
                 isprovider: provider.isProvider!,
               )
