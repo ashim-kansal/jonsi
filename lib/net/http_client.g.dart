@@ -322,7 +322,7 @@ class _HttpClient implements HttpClient {
   }
 
   @override
-  Future<List<RecommendedServiceProvidersResponse>> getServiceProviderDetail(id) async {
+  Future<List<ProviderDetailModel>> getServiceProviderDetail(id) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -330,12 +330,12 @@ class _HttpClient implements HttpClient {
       'id': id,
     });
     final _result = await _dio.fetch<String>(
-        _setStreamType<RecommendedServiceProvidersResponse>(
+        _setStreamType<ProviderDetailModel>(
             Options(method: 'POST', headers: _headers, extra: _extra)
                 .compose(_dio.options, 'services/details',
                     queryParameters: queryParameters, data: formData)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    return recommendedServiceProvidersResponseFromJson(_result.data!);
+    return providerDetailModelFromJson(_result.data!);
   }
 
   @override
