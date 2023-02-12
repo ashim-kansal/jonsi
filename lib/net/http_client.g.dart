@@ -274,6 +274,21 @@ class _HttpClient implements HttpClient {
   }
 
   @override
+  Future<List<PopularServiceListResponse>> getPopularServices() async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<String>(
+        _setStreamType<PopularServiceListResponse>(
+            Options(method: 'GET', headers: _headers, extra: _extra)
+                .compose(_dio.options, 'getpopuplerservices',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    return popularServiceListResponseFromJson(_result.data!);
+  }
+
+  @override
   Future<List<TrendingServicesResponse>> getTrendingCatagory() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -340,6 +355,38 @@ class _HttpClient implements HttpClient {
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     return recommendedServiceProvidersResponseFromJson(_result.data!);
   }
+
+  @override
+  Future<AddOrderResponse> addOrder(
+      String location, String token, String total_price, String provider_id,
+      String service_id, String user_id, String address, String currency,
+      String service_fee)
+  async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{'Authorization': token};
+
+    var formData = FormData.fromMap({
+      'location': location,
+      'total_price': total_price,
+      'provider_id': provider_id,
+      'service_id': service_id,
+      'user_id': user_id,
+      'address': address,
+      'currency': currency,
+      'service_fee': service_fee,
+    });
+
+    final _result = await _dio.fetch<String>(
+        _setStreamType<AddOrderResponse>(
+            Options(method: 'POST', headers: _headers, extra: _extra)
+                .compose(_dio.options, 'order/add',
+                queryParameters: queryParameters, data: formData)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    return addOrderResponseFromJson(_result.data!);
+
+  }
+
 
   @override
   Future<List<NotificationModel>> getNotifications(id, token) async {

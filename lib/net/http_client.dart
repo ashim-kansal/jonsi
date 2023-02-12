@@ -9,7 +9,9 @@ import 'package:kappu/models/serializable_model/TrendingServicesResponse.dart';
 import 'package:kappu/models/serializable_model/signup.dart';
 import 'package:retrofit/dio.dart';
 import 'package:retrofit/http.dart';
+import '../models/serializable_model/AddOrderResponse.dart';
 import '../models/serializable_model/OrderListResponse.dart';
+import '../models/serializable_model/PopularServiceListResponse.dart';
 import '../models/serializable_model/ServiceResponse.dart';
 import '../models/serializable_model/CategoryResponse.dart';
 import '../models/serializable_model/allchats.dart';
@@ -74,6 +76,9 @@ abstract class HttpClient {
   @GET('faqs')
   Future<List<FaqModel>> getFaqs();
 
+  @GET('getpopuplerservices')
+  Future<List<PopularServiceListResponse>> getPopularServices();
+
   @GET('trending/profile')
   Future<List<TrendingServicesResponse>> getTrendingCatagory();
 
@@ -105,6 +110,11 @@ abstract class HttpClient {
   @POST('orders/provider/accpeted')
   Future<List<OrderListResponse>> getActivebookings(
       String provider_id, String token);
+
+
+  @POST('order/add')
+  Future<AddOrderResponse> addOrder(
+      String location, String token, String total_price, String provider_id, String service_id, String user_id, String address, String currency, String service_fee);
 
 
   // @GET('category/{id}')

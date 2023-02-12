@@ -37,7 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              height: ScreenUtil().setHeight(170),
+              height: ScreenUtil().setHeight(160),
               color: Colors.white,
               child: Column(
                 children: [
@@ -128,7 +128,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           20.verticalSpace,
                           const SliderWidget(),
                           Padding(
-                            padding: EdgeInsets.only(left: 20, right: 20, bottom: 5),
+                            padding: EdgeInsets.only(left: 10, right: 20, bottom: 5),
                             child: Text(
                               'Popular Services',
                               style: TextStyle(
@@ -142,7 +142,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: const OurBestServices(),
                           ),
                           Padding(
-                            padding: EdgeInsets.only(left: 20, right: 20, bottom: 5),
+                            padding: EdgeInsets.only(left: 10, right: 20, bottom: 5),
                             child: Text(
                               'Best Services',
                               style: TextStyle(

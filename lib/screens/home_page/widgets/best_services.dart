@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:kappu/components/AppColors.dart';
+import 'package:kappu/net/http_client.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
-import '../../../models/service.dart';
+import '../../../models/serializable_model/PopularServiceListResponse.dart';
+import '../../slider_offers.dart';
 
 class OurBestServices extends StatefulWidget {
   const OurBestServices({Key? key}) : super(key: key);
@@ -16,79 +20,103 @@ class _OurBestServicesState extends State<OurBestServices> {
     return Column(
       children: [
         Container(
-          child: Padding(
-            padding: const EdgeInsets.only(left: 6),
-            child: Column(
-              children: [
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.35,
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(4, 8, 16, 8),
-                    child: ListView(
-                        scrollDirection: Axis.horizontal,
-                        physics: const ScrollPhysics(),
-                        children: tempserrvices
-                            .map((item) => Padding(
-                                  padding: const EdgeInsets.only(left: 8.0),
-                                  child: Card(
-                                    elevation: 2,
-                                    child: SizedBox(
-                                      width: ScreenUtil().setWidth(220),
-                                      child: InkWell(
-                                        onTap: () => {},
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment
-                                              .stretch, // add this
-                                          children: <Widget>[
-                                            ClipRRect(
-                                              borderRadius:
-                                                  const BorderRadius.all(
-                                                      Radius.circular(8)),
-                                              child: Image.network(
-                                                  item.imageUrl,
-                                                  // width: 300,
-                                                  height: ScreenUtil()
-                                                      .setHeight(125),
-                                                  fit: BoxFit.fill),
+          child: Column(
+            children: [
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.25,
+                child: Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 8, 16, 8),
+                    child: FutureBuilder(
+                        future: HttpClient().getPopularServices(),
+                        builder: (context,
+                            AsyncSnapshot<List<PopularServiceListResponse>>
+                                response) {
+                          if (response.connectionState !=
+                              ConnectionState.done) {
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          }
+                          return ListView(
+                              scrollDirection: Axis.horizontal,
+                              physics: const ScrollPhysics(),
+                              children: response.data!
+                                  .map((item) => Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 4.0),
+                                        child: Card(
+                                          elevation: 2,
+                                          child: SizedBox(
+                                            width: ScreenUtil().setWidth(
+                                                MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.4),
+                                            child: InkWell(
+                                              onTap: () => {
+                                                pushDynamicScreen(context,
+                                                    screen: ProviderOffersFromHomePage(
+                                                        serviceid: item.id!,
+                                                        name: item.name!,
+                                                        desc: "item.description"),
+                                                    withNavBar: false)
+                                              },
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment
+                                                        .stretch, // add this
+                                                children: <Widget>[
+                                                  ClipRRect(
+                                                    borderRadius:
+                                                        const BorderRadius.only(
+                                                            topLeft:
+                                                                Radius.circular(
+                                                                    8),
+                                                            topRight:
+                                                                Radius.circular(
+                                                                    8)),
+                                                    child:
+                                                        getImage(item.image!),
+                                                  ),
+                                                  Padding(
+                                                    padding: EdgeInsets.all(12),
+                                                    child: Text(
+                                                      item.name!,
+                                                      maxLines: 1,
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                      style: TextStyle(
+                                                          color: AppColors
+                                                              .text_desc,
+                                                          fontSize: ScreenUtil()
+                                                              .setSp(14),
+                                                          fontWeight:
+                                                              FontWeight.bold),
+                                                    ),
+                                                  )
+                                                ],
+                                              ),
                                             ),
-                                            ListTile(
-                                                title: Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      const SizedBox(
-                                                        height: 10,
-                                                      ),
-                                                      Text(
-                                                        item.description,
-                                                        maxLines: 1,
-                                                        overflow: TextOverflow
-                                                            .ellipsis,
-                                                        style: TextStyle(
-                                                            color: Colors.black,
-                                                            fontSize:
-                                                                ScreenUtil()
-                                                                    .setSp(18),
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .bold),
-                                                      ),
-                                                    ]),),
-                                          ],
+                                          ),
                                         ),
-                                      ),
-                                    ),
-                                  ),
-                                ))
-                            .toList()),
-                  ),
-                ),
-              ],
-            ),
+                                      ))
+                                  .toList());
+                        })),
+              ),
+            ],
           ),
         )
       ],
     );
+  }
+
+  getImage(String image) {
+    return Image.network(
+        "https://urbanmalta.com/public/uploads/servicecategory/$image",
+        // width: 300,
+        height: ScreenUtil().setHeight(100),
+        fit: BoxFit.fill);
   }
 }

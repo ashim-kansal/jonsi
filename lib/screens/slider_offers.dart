@@ -58,6 +58,7 @@ class ProviderOffersFromHomePage extends ModalRoute<void> {
             children: <Widget>[
               Container(
                 color: Colors.white,
+                width: MediaQuery.of(context).size.width,
                 child: Padding(
                   padding: EdgeInsets.fromLTRB(30, 20, 30, 30),
                   child: Column(
