@@ -6,6 +6,7 @@ import 'package:kappu/components/AppColors.dart';
 import 'package:kappu/components/MyAppBar.dart';
 
 import '../../common/button.dart';
+import '../../common/validation_dialogbox.dart';
 import '../../models/serializable_model/RecommendedServiceProvidersResponse.dart';
 import '../../net/http_client.dart';
 
@@ -263,7 +264,20 @@ class _ProviderDetailScreenState extends State<ProviderDetailScreen> {
                                             scale: 1.0),
                                       ],
                                     ),
-                                    onPressed: () {},
+                                    onPressed: () {
+
+                                      showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return WarningDialogBox(
+                                              title: 'Delete Item',
+                                              descriptions: 'Do you want to delete this job',
+                                              buttonTitle:'Delete',
+                                              buttonColor: AppColors.red,
+                                              onPressed: (type) => {}, icon: Icons.cancel,
+                                            );
+                                          });
+                                    },
                                   ),
                                 ),
                               ],

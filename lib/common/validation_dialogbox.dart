@@ -1,43 +1,143 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:kappu/components/AppColors.dart';
 
-
-class ValidationDialogBox extends StatefulWidget {
+class WarningDialogBox extends StatefulWidget {
   /// Creates a widget combines of  [Container].
   /// [title], [descriptions], [onPressed] must not be null.
   ///
-  /// This widget will return dialog to show validation.
-  /// For e.g. if the user enter invalid credentials then will show dialog with appropriate [title] and [descriptions]
-  const ValidationDialogBox(
-      {Key? key,
-      this.title,
-      this.descriptions,
-      required this.onPressed})
-      : super(key: key);
+  /// This widget will return dialog to show warning.
+  /// For e.g. when user tap on report user icon will show [WarningDialogBox] to warn user about the action.
+  const WarningDialogBox({
+    Key? key,
+    required this.title,
+    required this.icon,
+    required this.descriptions,
+    required this.buttonTitle,
+    required this.onPressed,
+    this.buttonColor = AppColors.red,
+  }) : super(key: key);
 
-  final String ?title, descriptions;
+  final String title, descriptions, buttonTitle;
+  final Color buttonColor;
+  final IconData icon;
   final Function onPressed;
 
   @override
-  _ValidationDialogBoxState createState() => _ValidationDialogBoxState();
+  _WarningDialogBoxState createState() => _WarningDialogBoxState();
 }
 
-class _ValidationDialogBoxState extends State<ValidationDialogBox> {
+class _WarningDialogBoxState extends State<WarningDialogBox> {
   @override
   Widget build(BuildContext context) {
-    return SimpleDialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(6),
-        ),
-        title: Text('Title'),
-        elevation: 5,
-        insetPadding: EdgeInsets.only(
-            top: MediaQuery.of(context).size.height - 380, left: 25, right: 25),
-        backgroundColor: Colors.white,
-        children: [
-          Text('Title'),
+    return Dialog(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(15),
+      ),
+      elevation: 5,
+      backgroundColor: Colors.transparent,
+      child: contentBox(context),
+    );
+  }
 
-        ],
+  Stack contentBox(context) {
+    return Stack(
+      children: <Widget>[
+        Container(
+          decoration: BoxDecoration(
+            shape: BoxShape.rectangle,
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(5),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              SizedBox(
+                height: 20,
+              ),
+              Container(
+                padding: EdgeInsets.all(12),
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: widget.buttonColor,
+                ),
+                child: Icon(
+                  widget.icon,
+                  color: Colors.white,
+                ),
+              ),
+              SizedBox(
+                height: 12,
+              ),
+              Text(
+                widget.title,
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                    fontSize: 18),
+              ),
+              SizedBox(
+                height: 12,
+              ),
+              Text(
+                widget.descriptions,
+                style: TextStyle(
+                    fontWeight: FontWeight.normal,
+                    color: Color(0xff7B7D83),
+                    fontSize: 12),
+              ),
+              SizedBox(
+                height: 15,
+              ),
+              Container(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    InkWell(
+                        onTap: () {
+                          widget.onPressed();
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: widget.buttonColor),
+                          padding: EdgeInsets.only(
+                              left: 25, right: 25, top: 10, bottom: 10),
+                          child: Text(
+                            widget.buttonTitle,
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        )),
+                    SizedBox(
+                      width: 15,
+                    ),
+                    InkWell(
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: Colors.black),
+                          padding: EdgeInsets.only(
+                              left: 15, right: 15, top: 10, bottom: 10),
+                          child: Text(
+                            'Cancel',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        )),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }
