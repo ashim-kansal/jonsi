@@ -92,7 +92,7 @@ class _ProviderDetailScreenState extends State<ProviderDetailScreen> {
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
                                     Text(
-                                      response.data != null
+                                       response.data![0].userData!=null &&response.data![0].userData!.firstName != null
                                           ? '${response.data![0].userData!.firstName!} '
                                               '${response.data![0].userData!.lastName!}'
                                           : '',
@@ -222,7 +222,7 @@ class _ProviderDetailScreenState extends State<ProviderDetailScreen> {
                                                   fontWeight:
                                                       FontWeight.bold))),
                                       Text(
-                                          '${response.data![0].servicepackages!.price!}',
+                                          response.data![0].servicepackages!=null?'${response.data![0].servicepackages!.price!}':'',
                                           style: TextStyle(
                                               color: Colors.black,
                                               fontSize: 16,
