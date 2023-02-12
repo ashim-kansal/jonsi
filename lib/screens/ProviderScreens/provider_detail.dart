@@ -4,6 +4,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kappu/components/AppColors.dart';
 import 'package:kappu/components/MyAppBar.dart';
+import 'package:kappu/screens/ProviderScreens/order_review.dart';
 
 import '../../common/button.dart';
 import '../../common/validation_dialogbox.dart';
@@ -265,8 +266,13 @@ class _ProviderDetailScreenState extends State<ProviderDetailScreen> {
                                       ],
                                     ),
                                     onPressed: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  OrderReview(id: 1)));
 
-                                      showDialog(
+                                     /* showDialog(
                                           context: context,
                                           builder: (BuildContext context) {
                                             return WarningDialogBox(
@@ -276,7 +282,7 @@ class _ProviderDetailScreenState extends State<ProviderDetailScreen> {
                                               buttonColor: AppColors.red,
                                               onPressed: (type) => {}, icon: Icons.cancel,
                                             );
-                                          });
+                                          });*/
                                     },
                                   ),
                                 ),
