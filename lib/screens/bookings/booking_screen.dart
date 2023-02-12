@@ -60,19 +60,6 @@ class _BookingScreenState extends State<BookingScreen> {
               ],
             ),
             backgroundColor: Colors.white,
-            leading: Padding(
-              padding: EdgeInsets.all(10),
-              child: RawMaterialButton(
-                onPressed: () => Navigator.of(context).pop(),
-                fillColor: AppColors.app_color,
-                child: Icon(
-                  Icons.arrow_back_ios_new,
-                  size: 20.0,
-                  color: Colors.white,
-                ),
-                shape: CircleBorder(),
-              ),
-            ),
             shadowColor: Colors.white,
             elevation: 2,
           ),
@@ -257,25 +244,4 @@ class _BookingScreenState extends State<BookingScreen> {
     );
   }
 
-  Booking getBooking() {
-    return Booking(
-        id: 1,
-        userfname: "userfname",
-        userlname: "userlname",
-        useremail: "useremail",
-        userid: 11,
-        providerid: 12,
-        providerfname: "providerfname",
-        providerlname: "providerlname",
-        provideremail: "provideremail",
-        location: "location",
-        address: "address",
-        time: "time",
-        totalprice: 100.11,
-        serviceid: 13,
-        servicetitle: "servicetitle",
-        boughtpackages: [],
-        comments: "comments",
-        rating: 0);
-  }
 }

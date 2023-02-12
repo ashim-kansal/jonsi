@@ -70,7 +70,7 @@ class _OtpState extends State<Otp> with SingleTickerProviderStateMixin {
                     ? Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const LoginScreen()))
+                            builder: (context) => LoginScreen()))
                     : Navigator.pop(context);
               },
             ),

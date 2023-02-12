@@ -147,7 +147,7 @@ class LoginOrRegistration extends StatelessWidget {
                           ),
                           onPressed: () {
                             changeScreen(
-                                context: context, screen: const LoginScreen());
+                                context: context, screen: LoginScreen());
                           },
                         ),
                       ),

@@ -189,7 +189,7 @@ class _CreateNewPasswordState extends State<CreateNewPassword> {
                           Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const LoginScreen()));
+                                  builder: (context) => LoginScreen()));
                         }).catchError((err) {
                           resetingpassword = true;
                           setState(() {});

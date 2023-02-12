@@ -24,9 +24,10 @@ class _AllChatsScreenProviderState extends State<AllChatsScreenProvider> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+          backgroundColor: Colors.white,
           title: Text(
         "Chats",
-        style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold),
+        style: TextStyle(fontSize: 20.sp, color: Colors.black, fontWeight: FontWeight.bold),
       )),
       body: Column(children: [
         SizedBox(height: ScreenUtil().setHeight(17)),

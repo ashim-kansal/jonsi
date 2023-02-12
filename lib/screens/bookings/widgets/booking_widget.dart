@@ -141,7 +141,13 @@ class _BookingWidgetState extends State<BookingWidget> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                           Text(getDate(this.widget.booking.createdAt!), style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w500, color: Colors.black, fontFamily: "Montserrat-SemiBold"),),
-                      Text('. . .', style: TextStyle(fontSize: 20.sp, color: Colors.black,fontWeight: FontWeight.bold),)
+                      GestureDetector(
+                        onTap: (){
+                          print('more');
+                        },
+                        child:                       Text('. . .', style: TextStyle(fontSize: 20.sp, color: Colors.black,fontWeight: FontWeight.bold),)
+                        ,
+                      ),
                     ],
                   ),
 

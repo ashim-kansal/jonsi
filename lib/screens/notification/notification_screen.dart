@@ -18,9 +18,25 @@ class _NotificationScreenState extends State<NotificationScreen> {
   bool showNote = true;
 
   @override
+  void initState() {
+    super.initState();
+    if(StorageManager().accessToken.isEmpty){
+
+    }
+
+  }
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppBar(title: 'Notifications'),
+      appBar: AppBar(
+          backgroundColor: Colors.white,
+          title: Column(
+        children: [
+          Text(
+              "Notifications",
+              style: TextStyle(fontSize: 20.sp, color: Colors.black, fontWeight: FontWeight.bold)),
+        ],
+      )),
       body: SingleChildScrollView(
         child: Column(children: [
           showNote

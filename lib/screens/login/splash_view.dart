@@ -151,7 +151,7 @@ class _SplashViewState extends State<SplashView> {
                 child: OutlinedButton(
                     onPressed: () {
                       changeScreen(
-                          context: context, screen: const LoginScreen());
+                          context: context, screen: LoginScreen());
                     },
                     style: OutlinedButton.styleFrom(
                         backgroundColor: Colors.white,

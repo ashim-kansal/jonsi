@@ -80,14 +80,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                       screen: SettingsPage(),
                                       withNavBar: false);
                                 } else {
-                                  // Navigator.pushReplacement(
-                                  //     context,
-                                  //     MaterialPageRoute(
-                                  //         builder: (context) => const LoginScreen()));
-
                                   changeScreen(
                                       context: context,
-                                      screen: const LoginScreen());
+                                      screen: LoginScreen(isFromOtherScreen: true));
                                 }
                               },
                               icon: const Icon(

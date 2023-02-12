@@ -75,7 +75,9 @@ class SettingsPage extends ModalRoute<void> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(provider.name, style: TextStyle(fontFamily: "Montserrat-Bold", fontSize: 18, color: Colors.black),),
+                      Text(provider.name,
+                        textAlign: TextAlign.justify,
+                        style: TextStyle(fontFamily: "Montserrat-Bold", fontSize: 18, color: Colors.black, ),),
                       Text(provider.email, style: TextStyle(fontFamily: "Montserrat-Regular", fontSize: 12, color: AppColors.text_desc),),
                       10.verticalSpace,
                       Text(provider.phone, style: TextStyle(fontFamily: "Montserrat-Regular", fontSize: 12, color: AppColors.text_desc),),

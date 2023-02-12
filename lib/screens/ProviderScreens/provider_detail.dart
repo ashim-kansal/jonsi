@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -269,7 +271,7 @@ class _ProviderDetailScreenState extends State<ProviderDetailScreen> {
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  OrderReview(id: 1)));
+                                                  OrderReview(bodyprovider: new HashMap(),)));
 
                                      /* showDialog(
                                           context: context,

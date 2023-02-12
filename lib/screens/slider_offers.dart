@@ -45,7 +45,7 @@ class ProviderOffersFromHomePage extends ModalRoute<void> {
   }
 
 
-  List<bool> isSelected = [true, false, false];
+
 
   Widget _buildOverlayContent(BuildContext context) {
     return Scaffold(

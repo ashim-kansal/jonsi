@@ -26,7 +26,9 @@ import 'google_signin.dart';
 import 'package:the_apple_sign_in/the_apple_sign_in.dart' hide ButtonStyle;
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+  bool isFromOtherScreen;
+
+  LoginScreen({this.isFromOtherScreen = false});
 
   @override
   _LoginScreenState createState() => _LoginScreenState();
@@ -194,7 +196,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   signin = false;
                   isLoading = false;
                   print('aaaaa');
-                  changeScreenReplacement(
+                  widget.isFromOtherScreen
+                    ? Navigator.pop(context)
+                   : changeScreenReplacement(
                       context,
                       BottomNavBar(
                         isprovider: loginresponse.data['data']['user']['is_provider'],

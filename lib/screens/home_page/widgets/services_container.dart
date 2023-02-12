@@ -5,6 +5,7 @@ import 'package:kappu/models/serializable_model/CategoryResponse.dart';
 import 'package:kappu/net/http_client.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
+import '../../catagories/catagories_screen.dart';
 import '../../slider_offers.dart';
 
 class Servicescontainer extends StatefulWidget {
@@ -41,12 +42,10 @@ class _ServicescontainerState extends State<Servicescontainer> {
                       color: Colors.white,
                       child: GestureDetector(
                         onTap: () {
+                          print(index);
                           response.data!.data.length>7 && index==7 ?
                           pushDynamicScreen(context,
-                              screen: ProviderOffersFromHomePage(
-                                  serviceid: response.data!.data[index].id,
-                                  name: response.data!.data[index].name,
-                                  desc: response.data!.data[index].description),
+                              screen: CategoryRoutePage(),
                               withNavBar: false)
                           :
                           pushDynamicScreen(context,

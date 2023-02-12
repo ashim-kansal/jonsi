@@ -2,10 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class OrderReview extends StatefulWidget {
-  final int id;
+import '../../components/MyAppBar.dart';
 
-  OrderReview({required this.id});
+class OrderReview extends StatefulWidget {
+  final Map<String, dynamic> bodyprovider;
+
+  OrderReview({required this.bodyprovider});
 
   @override
   _OrderReviewState createState() => _OrderReviewState();
@@ -20,45 +22,12 @@ class _OrderReviewState extends State<OrderReview> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: MyAppBar(title: "Order review"),
         backgroundColor: Colors.white,
         body: Container(
           color: Colors.white,
           child: Column(
             children: [
-              Container(
-                  padding:
-                      EdgeInsets.only(top: 50, left: 10, right: 10, bottom: 15),
-                  color: Colors.white,
-                  child: Row(
-                    children: [
-                      CircleAvatar(
-                          backgroundColor: Colors.blue,
-                          radius: 15,
-                          child: Center(
-                            child: IconButton(
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                              icon: const Icon(
-                                Icons.arrow_back_ios,
-                                color: Colors.white,
-                                size: 15,
-                              ),
-                            ),
-                          )),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Text(
-                        "Order review",
-                        style: TextStyle(
-                            fontSize: ScreenUtil().setSp(16),
-                            color: Colors.black,
-                            fontWeight: FontWeight.w600,
-                            height: 1.4),
-                      ),
-                    ],
-                  )),
               Divider(
                 height: 0.5,
                 color: Colors.grey,
