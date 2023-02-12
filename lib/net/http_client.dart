@@ -116,6 +116,15 @@ abstract class HttpClient {
   Future<AddOrderResponse> addOrder(
       String location, String token, String total_price, String provider_id, String service_id, String user_id, String address, String currency, String service_fee);
 
+  @POST('orders/provider/requests/accept')
+  Future<AddOrderResponse> acceptOrder(String bookingId, String token);
+
+  @POST('orders/provider/requests/cancel')
+  Future<AddOrderResponse> cancelOrder(String bookingId, String token);
+
+  @POST('orders/provider/requests/completed')
+  Future<AddOrderResponse> completeOrder(String bookingId, String token);
+
 
   // @GET('category/{id}')
   // Future<Category> getservicecatagorynbyid(@Path('id') String id);
