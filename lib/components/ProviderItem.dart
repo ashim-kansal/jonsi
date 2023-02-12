@@ -48,7 +48,7 @@ class ItemServicesCardState extends State<ItemServicesCard> {
                 borderRadius: new BorderRadius.only(topLeft: new Radius.circular(6), bottomLeft: new Radius.circular(6)),
               ),
             ),
-            Padding(
+            Expanded(child: Padding(
               padding: EdgeInsets.all(10),
               child: Column(
                 mainAxisSize: MainAxisSize.max,
@@ -114,7 +114,7 @@ class ItemServicesCardState extends State<ItemServicesCard> {
                   )
                 ],
               ),
-            )
+            ))
           ],
         ),
       ),
