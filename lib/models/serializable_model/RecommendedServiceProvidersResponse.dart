@@ -4,6 +4,8 @@
 
 import 'dart:convert';
 
+import 'OrderListResponse.dart';
+
 List<RecommendedServiceProvidersResponse> recommendedServiceProvidersResponseFromJson(String str) => List<RecommendedServiceProvidersResponse>.from(json.decode(str).map((x) => RecommendedServiceProvidersResponse.fromJson(x)));
 
 String recommendedServiceProvidersResponseToJson(List<RecommendedServiceProvidersResponse> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
@@ -23,7 +25,7 @@ class RecommendedServiceProvidersResponse {
         this.reviewCount,
         this.slug,
         this.rating,
-        // this.userData,
+        this.userData,
         this.gigdocument,
         this.servicepackages,
     });
@@ -41,7 +43,7 @@ class RecommendedServiceProvidersResponse {
     dynamic reviewCount;
     String? slug;
     int? rating;
-    // UserData? userData;
+    UserData? userData;
     Servicepackages? servicepackages;
     List<Gigdocument>? gigdocument;
 
@@ -60,7 +62,7 @@ class RecommendedServiceProvidersResponse {
         slug: json["slug"],
         rating: json["rating"],
         gigdocument: json["gigdocument"] == null ? [] : List<Gigdocument>.from(json["gigdocument"]!.map((x) => Gigdocument.fromJson(x))),
-        // userData: json["user_data"] == null ? null : UserData.fromJson(json["user_data"]),
+        userData: json["user_data"] == null ? null : UserData.fromJson(json["user_data"]),
         servicepackages: json["servicepackages"] == null ? null : Servicepackages.fromJson(json["servicepackages"]),
     );
 
@@ -79,7 +81,7 @@ class RecommendedServiceProvidersResponse {
         "slug": slug,
         "rating": rating,
         "gigdocument": gigdocument == null ? [] : List<dynamic>.from(gigdocument!.map((x) => x.toJson())),
-        // "user_data": userData?.toJson(),
+        "user_data": userData?.toJson(),
         "servicepackages": servicepackages?.toJson(),
     };
 }
@@ -136,137 +138,6 @@ class Servicepackages {
     };
 }
 
-class UserData {
-    UserData({
-        this.isSuperuser,
-        this.isStaff,
-        this.isActive,
-        this.dateJoined,
-        this.id,
-        this.firstName,
-        this.lastName,
-        this.username,
-        this.email,
-        this.phoneNumber,
-        this.otpSms,
-        this.otpEmail,
-        this.otpSmsCreatedAt,
-        this.otpEmailCreatedAt,
-        this.isAdmin,
-        this.isProvider,
-        this.updatedAt,
-        this.createdAt,
-        this.categoryId,
-        this.fcmToken,
-        this.address,
-        this.about,
-        // this.nationality,
-        // this.languages,
-        this.profilePic,
-        this.gigDoc,
-        this.gig2Doc,
-        this.activationToken,
-        this.socialLoginId,
-        this.loginSrc,
-    });
-
-    bool? isSuperuser;
-    bool? isStaff;
-    bool? isActive;
-    String? dateJoined;
-    int? id;
-    String? firstName;
-    String? lastName;
-    String? username;
-    String? email;
-    String? phoneNumber;
-    dynamic otpSms;
-    dynamic otpEmail;
-    dynamic otpSmsCreatedAt;
-    dynamic otpEmailCreatedAt;
-    bool? isAdmin;
-    bool? isProvider;
-    DateTime? updatedAt;
-    DateTime? createdAt;
-    dynamic categoryId;
-    dynamic fcmToken;
-    dynamic address;
-    String? about;
-    // Location? nationality;
-    // Languages? languages;
-    String? profilePic;
-    String? gigDoc;
-    String? gig2Doc;
-    String? activationToken;
-    dynamic socialLoginId;
-    dynamic loginSrc;
-
-    factory UserData.fromJson(Map<String, dynamic> json) => UserData(
-        isSuperuser: json["is_superuser"],
-        isStaff: json["is_staff"],
-        isActive: json["is_active"],
-        dateJoined: json["date_joined"],
-        id: json["id"],
-        firstName: json["first_name"],
-        lastName: json["last_name"],
-        username: json["username"],
-        email: json["email"],
-        phoneNumber: json["phone_number"],
-        otpSms: json["otp_sms"],
-        otpEmail: json["otp_email"],
-        otpSmsCreatedAt: json["otp_sms_created_at"],
-        otpEmailCreatedAt: json["otp_email_created_at"],
-        isAdmin: json["is_admin"],
-        isProvider: json["is_provider"],
-        updatedAt: json["updated_at"] == null ? null : DateTime.parse(json["updated_at"]),
-        createdAt: json["created_at"] == null ? null : DateTime.parse(json["created_at"]),
-        categoryId: json["category_id"],
-        fcmToken: json["fcm_token"],
-        address: json["address"],
-        about: json["about"],
-        // nationality: locationValues.map[json["nationality"]]!,
-        // languages: languagesValues.map[json["languages"]]!,
-        profilePic: json["profile_pic"],
-        gigDoc: json["gig_doc"],
-        gig2Doc: json["gig2_doc"],
-        activationToken: json["activation_token"],
-        socialLoginId: json["social_login_id"],
-        loginSrc: json["login_src"],
-    );
-
-    Map<String, dynamic> toJson() => {
-        "is_superuser": isSuperuser,
-        "is_staff": isStaff,
-        "is_active": isActive,
-        "date_joined": dateJoined,
-        "id": id,
-        "first_name": firstName,
-        "last_name": lastName,
-        "username": username,
-        "email": email,
-        "phone_number": phoneNumber,
-        "otp_sms": otpSms,
-        "otp_email": otpEmail,
-        "otp_sms_created_at": otpSmsCreatedAt,
-        "otp_email_created_at": otpEmailCreatedAt,
-        "is_admin": isAdmin,
-        "is_provider": isProvider,
-        "updated_at": updatedAt?.toIso8601String(),
-        "created_at": createdAt?.toIso8601String(),
-        "category_id": categoryId,
-        "fcm_token": fcmToken,
-        "address": address,
-        "about": about,
-        // "nationality": locationValues.reverse[nationality],
-        // "languages": languagesValues.reverse[languages],
-        "profile_pic": profilePic,
-        "gig_doc": gigDoc,
-        "gig2_doc": gig2Doc,
-        "activation_token": activationToken,
-        "social_login_id": socialLoginId,
-        "login_src": loginSrc,
-    };
-}
 
 enum Languages { ENGLISH, HINDI, LANGUAGES_ENGLISH }
 
