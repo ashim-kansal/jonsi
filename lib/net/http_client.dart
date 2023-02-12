@@ -19,6 +19,7 @@ import '../models/serializable_model/booking.dart';
 import '../models/serializable_model/chat.dart';
 import '../models/serializable_model/forget_password_response.dart';
 import '../models/serializable_model/offer.dart';
+import '../models/serializable_model/provider_detail_model.dart';
 import '../models/serializable_model/provider_profile.dart';
 import '../models/serializable_model/review.dart';
 import '../models/serializable_model/thread_id.dart';
@@ -86,7 +87,7 @@ abstract class HttpClient {
   Future<List<RecommendedServiceProvidersResponse>> getRecommendedServiceProviders(categoryid);
 
   @POST('services/details')
-  Future<List<RecommendedServiceProvidersResponse>> getServiceProviderDetail(serviceProviderId);
+  Future<List<ProviderDetailModel>> getServiceProviderDetail(serviceProviderId);
 
   @POST('services/recommended')
   Future<List<RecommendedServiceProvidersResponse>> getRelatedProviders(catId, serviceProviderId);
