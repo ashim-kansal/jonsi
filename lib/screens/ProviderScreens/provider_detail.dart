@@ -96,8 +96,7 @@ class _ProviderDetailScreenState extends State<ProviderDetailScreen> {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   Text(
-                                    '',
-                                    //response.data!=null?'${response.data![0].userData!.firstName!}' '${response.data![0].userData!.lastName!}':'',
+                                    response.data!=null?'${response.data![0].userData!.firstName!}' '${response.data![0].userData!.lastName!}':'',
                                     style: TextStyle(
                                         color: Colors.black,
                                         fontSize: 18,
