@@ -26,7 +26,7 @@ class _SearchTextFieldState extends State<SearchTextField> {
         horizontal: size.width * 0.02,
       ),
       child: Container(
-        height: 50.h,
+        height: 40.h,
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(25),

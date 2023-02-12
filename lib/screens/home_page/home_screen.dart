@@ -70,7 +70,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       Padding(
                         padding: const EdgeInsets.only(left: 8.0),
                         child: CircleAvatar(
-                            // radius: 30,
+                          // radius: 30,
                             backgroundColor: Colors.white,
                             child: IconButton(
                               onPressed: () {
@@ -122,33 +122,33 @@ class _HomeScreenState extends State<HomeScreen> {
                     context: context,
                     removeTop: true,
                     child:ListView(
-              padding: EdgeInsets.zero,
-              shrinkWrap: true,
-              children: [
-                const SliderWidget(),
-                Padding(
-                  padding: EdgeInsets.only(left: 20, right: 20, bottom: 5),
-                  child: Text(
-                    'Services',
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: ScreenUtil().setSp(21)),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.all(10),
-                  child: const Servicescontainer(),
-                ),
-                // Divider(
-                //   thickness: 5,
-                //   color: Colors.grey.shade300,
-                // ),
-                // const ServicesSliderHorizontal(),
-                // const OurBestServices(),
-                const SizedBox(height: 45)
-              ],
-            ))),
+                      padding: EdgeInsets.zero,
+                      shrinkWrap: true,
+                      children: [
+                        const SliderWidget(),
+                        Padding(
+                          padding: EdgeInsets.only(left: 20, right: 20, bottom: 5),
+                          child: Text(
+                            'Services',
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize: ScreenUtil().setSp(21)),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.all(10),
+                          child: const Servicescontainer(),
+                        ),
+                        // Divider(
+                        //   thickness: 5,
+                        //   color: Colors.grey.shade300,
+                        // ),
+                        // const ServicesSliderHorizontal(),
+                        // const OurBestServices(),
+                        const SizedBox(height: 45)
+                      ],
+                    ))),
           ],
         ),
       ),
