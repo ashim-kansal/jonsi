@@ -21,7 +21,7 @@ class WarningDialogBox extends StatefulWidget {
   final String title, descriptions, buttonTitle;
   final Color buttonColor;
   final IconData icon;
-  final Function onPressed;
+  final Function() onPressed;
 
   @override
   _WarningDialogBoxState createState() => _WarningDialogBoxState();
@@ -96,9 +96,7 @@ class _WarningDialogBoxState extends State<WarningDialogBox> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     InkWell(
-                        onTap: () {
-                          widget.onPressed();
-                        },
+                        onTap:widget.onPressed,
                         child: Container(
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(20),

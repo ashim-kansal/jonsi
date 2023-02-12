@@ -95,7 +95,10 @@ class _ProviderDetailScreenState extends State<ProviderDetailScreen> {
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
                                     Text(
-                                       response.data![0].userData!=null &&response.data![0].userData!.firstName != null
+                                      response.data![0].userData != null &&
+                                              response.data![0].userData!
+                                                      .firstName !=
+                                                  null
                                           ? '${response.data![0].userData!.firstName!} '
                                               '${response.data![0].userData!.lastName!}'
                                           : '',
@@ -225,7 +228,10 @@ class _ProviderDetailScreenState extends State<ProviderDetailScreen> {
                                                   fontWeight:
                                                       FontWeight.bold))),
                                       Text(
-                                          response.data![0].servicepackages!=null?'${response.data![0].servicepackages!.price!}':'',
+                                          response.data![0].servicepackages !=
+                                                  null
+                                              ? '${response.data![0].servicepackages!.price!}'
+                                              : '',
                                           style: TextStyle(
                                               color: Colors.black,
                                               fontSize: 16,
@@ -274,23 +280,26 @@ class _ProviderDetailScreenState extends State<ProviderDetailScreen> {
                                         ],
                                       ),
                                       onPressed: () {
+                                        Map<String, dynamic> map = {
+                                          'name': response.data![0].title,
+                                          'desc': response.data![0].description,
+                                          'price': response
+                                              .data![0].servicepackages!.price,
+                                          // 'image': response.data![0].gigdocument![0].fileName ?? "",
+                                          'location': response.data![0]
+                                              .servicepackages!.location,
+                                          'provider_id':
+                                              response.data![0].userId,
+                                          'service_id': response.data![0].id,
+                                        };
+
                                         Navigator.push(
                                             context,
                                             MaterialPageRoute(
                                                 builder: (context) =>
-                                                    OrderReview(bodyprovider: new HashMap(),)));
-
-                                        /* showDialog(
-                                          context: context,
-                                          builder: (BuildContext context) {
-                                            return WarningDialogBox(
-                                              title: 'Delete Item',
-                                              descriptions: 'Do you want to delete this job',
-                                              buttonTitle:'Delete',
-                                              buttonColor: AppColors.red,
-                                              onPressed: (type) => {}, icon: Icons.cancel,
-                                            );
-                                          });*/
+                                                    OrderReview(
+                                                      bodyprovider: map,
+                                                    )));
                                       },
                                     ),
                                   ),

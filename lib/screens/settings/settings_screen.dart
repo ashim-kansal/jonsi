@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kappu/common/customtexts.dart';
 import 'package:kappu/components/AppColors.dart';
@@ -14,6 +15,7 @@ import 'package:provider/provider.dart';
 
 import '../../../helperfunctions/screen_nav.dart';
 import '../ProviderScreens/settings/widgets/alert_dialogue.dart';
+import '../login/login_screen.dart';
 
 class SettingsPage extends ModalRoute<void> {
   @override
@@ -53,7 +55,15 @@ class SettingsPage extends ModalRoute<void> {
   bool alreadyowned = false;
   Widget _buildOverlayContent(BuildContext context) {
     final provider = StorageManager();
+    if(provider.accessToken.isEmpty){
+      SchedulerBinding.instance.addPostFrameCallback((_) async {
+        final result = await Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen(isFromOtherScreen: true)));
+        if(result=="1"){
+          setState(() { });
+        }
 
+      });
+    }
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: MyAppBar(title: 'Setting'),

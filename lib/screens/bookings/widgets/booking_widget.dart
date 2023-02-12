@@ -18,7 +18,7 @@ import '../../booking_detail/widgets/rating_widget.dart';
 class BookingWidget extends StatefulWidget {
   final String bookingstatus;
   final OrderListResponse booking;
-  final Function setbookingstate;
+  final Function() setbookingstate;
   const BookingWidget(
       {Key? key,
       required this.booking,

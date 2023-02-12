@@ -197,7 +197,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   isLoading = false;
                   print('aaaaa');
                   widget.isFromOtherScreen
-                    ? Navigator.pop(context)
+                    ? Navigator.pop(context, "1")
                    : changeScreenReplacement(
                       context,
                       BottomNavBar(

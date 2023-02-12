@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:kappu/components/MyAppBar.dart';
 import 'package:kappu/constants/storage_manager.dart';
+import 'package:kappu/helperfunctions/screen_nav.dart';
 import 'package:kappu/models/notification.dart';
 import 'package:kappu/models/serializable_model/NotificationModel.dart';
 import 'package:kappu/net/http_client.dart';
+
+import '../login/login_screen.dart';
 
 class NotificationScreen extends StatefulWidget {
   const NotificationScreen({Key? key}) : super(key: key);
@@ -20,13 +24,22 @@ class _NotificationScreenState extends State<NotificationScreen> {
   @override
   void initState() {
     super.initState();
-    if(StorageManager().accessToken.isEmpty){
 
-    }
 
   }
   @override
   Widget build(BuildContext context) {
+    if(StorageManager().accessToken.isEmpty){
+      SchedulerBinding.instance.addPostFrameCallback((_) async {
+        final result = await Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen(isFromOtherScreen: true)));
+        if(result=="1"){
+          setState(() {
+
+          });
+        }
+
+      });
+    }
     return Scaffold(
       appBar: AppBar(
           backgroundColor: Colors.white,

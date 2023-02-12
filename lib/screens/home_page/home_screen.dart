@@ -75,15 +75,15 @@ class _HomeScreenState extends State<HomeScreen> {
                             backgroundColor: Colors.white,
                             child: IconButton(
                               onPressed: () {
-                                if (StorageManager().accessToken.isNotEmpty) {
+                                // if (StorageManager().accessToken.isNotEmpty) {
                                   pushDynamicScreen(context,
                                       screen: SettingsPage(),
                                       withNavBar: false);
-                                } else {
-                                  changeScreen(
-                                      context: context,
-                                      screen: LoginScreen(isFromOtherScreen: true));
-                                }
+                                // } else {
+                                //   changeScreen(
+                                //       context: context,
+                                //       screen: LoginScreen(isFromOtherScreen: true));
+                                // }
                               },
                               icon: const Icon(
                                 Icons.account_circle_outlined,

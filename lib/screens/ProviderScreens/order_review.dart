@@ -1,6 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:kappu/common/validation_dialogbox.dart';
+import 'package:kappu/components/AppColors.dart';
+import 'package:kappu/net/base_dio.dart';
+import 'package:kappu/net/http_client.dart';
+import 'package:kappu/constants/storage_manager.dart';
 
 import '../../components/MyAppBar.dart';
 
@@ -22,7 +26,7 @@ class _OrderReviewState extends State<OrderReview> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppBar(title: "Order review"),
+        appBar: MyAppBar(title: "Order review"),
         backgroundColor: Colors.white,
         body: Container(
           color: Colors.white,
@@ -49,14 +53,13 @@ class _OrderReviewState extends State<OrderReview> {
                               height: 80, width: 80, fit: BoxFit.fill),
                           Expanded(
                               child: Padding(
-                                  padding: EdgeInsets.all(15),
+                                  padding: EdgeInsets.fromLTRB(15, 0, 15, 10),
                                   child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        'Title',
+                                        widget.bodyprovider['name'],
                                         maxLines: 3,
                                         style: TextStyle(
                                             color: Colors.black,
@@ -67,7 +70,7 @@ class _OrderReviewState extends State<OrderReview> {
                                         height: 5,
                                       ),
                                       Text(
-                                        'Lorem Ipsum is simply dummy text of the printing and type setting industry. Lorem Ipsum has been the industry',
+                                        widget.bodyprovider['desc'],
                                         maxLines: 3,
                                         style: TextStyle(
                                             color: Colors.grey,
@@ -131,7 +134,7 @@ class _OrderReviewState extends State<OrderReview> {
                                           fontWeight: FontWeight.bold),
                                     ),
                                     Text(
-                                      'Order detail',
+                                      widget.bodyprovider['name'],
                                       style: TextStyle(
                                           color: Colors.grey,
                                           fontSize: 15,
@@ -143,7 +146,7 @@ class _OrderReviewState extends State<OrderReview> {
                                   width: 5,
                                 ),
                                 Text(
-                                  '\$100',
+                                  '\$' + widget.bodyprovider['price'],
                                   style: TextStyle(
                                       color: Colors.blue,
                                       fontSize: 15,
@@ -182,7 +185,7 @@ class _OrderReviewState extends State<OrderReview> {
                           Container(
                             padding: EdgeInsets.all(10),
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8),
+                              borderRadius: BorderRadius.circular(4),
                               color: Colors.grey.withOpacity(0.15),
                             ),
                             child: Column(
@@ -191,14 +194,14 @@ class _OrderReviewState extends State<OrderReview> {
                                   children: [
                                     Expanded(
                                         child: Text(
-                                      'Subtotal',
+                                      '\$' + widget.bodyprovider['price'],
                                       style: TextStyle(
                                           color: Colors.black,
                                           fontSize: 14,
                                           fontWeight: FontWeight.bold),
                                     )),
                                     Text(
-                                      '\$10',
+                                      '\$' + widget.bodyprovider['price'],
                                       style: TextStyle(
                                           color: Colors.blue,
                                           fontSize: 14,
@@ -236,7 +239,10 @@ class _OrderReviewState extends State<OrderReview> {
                     )),
                   ),
                   InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        placeOrder(StorageManager().accessToken,
+                            StorageManager().userId, context);
+                      },
                       child: Container(
                         padding: EdgeInsets.all(10),
                         margin: EdgeInsets.all(15),
@@ -255,5 +261,47 @@ class _OrderReviewState extends State<OrderReview> {
             ],
           ),
         ));
+  }
+
+  placeOrder(token, userId, context) {
+    HttpClient()
+        .addOrder(
+            widget.bodyprovider['location'],
+            'Bearer ' + token,
+            double.parse(widget.bodyprovider['price']).round().toString(),
+            widget.bodyprovider['provider_id'].toString(),
+            widget.bodyprovider['service_id'].toString(),
+            userId.toString(),
+            widget.bodyprovider['location'],
+            "USD",
+            "3")
+        .then((value) => {
+          print(value),
+      if (value.status) {
+          showSuccessDialog(context, value.message)
+    }
+        })
+        .catchError((e) {
+      BaseDio.getDioError(e);
+    });
+  }
+
+  showSuccessDialog(context, String message) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return WarningDialogBox(
+            title: 'Success',
+            descriptions: message,
+            buttonTitle:'ok',
+            buttonColor: AppColors.color_green,
+            icon: Icons.cancel,
+            onPressed: () {
+              print('ok');
+              Navigator.pop(context);
+              Navigator.pop(context);
+            },
+          );
+        });
   }
 }
