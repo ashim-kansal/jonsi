@@ -7,7 +7,7 @@ class AppColors {
   static const app_color = Color(0xFF4995EB);
   static const title_desc = Color(0xFF9A9A9A);
   static const divider = Color(0xFFEBEBEB);
-  static const red = Color(0xFFB3122F);
+  static const red = Color(0xFFFC0B00);
   static const app_rating = Color(0xFF70D2B9);
   static const home_bg = Color(0xFFFAFCFF);
   static const app_black = Color(0xFF282828);
