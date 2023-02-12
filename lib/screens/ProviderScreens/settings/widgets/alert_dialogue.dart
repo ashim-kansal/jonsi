@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:kappu/constants/storage_manager.dart';
 
 showAlertDialog(BuildContext context) {
   // set up the buttons
@@ -13,6 +14,8 @@ showAlertDialog(BuildContext context) {
   Widget continueButton = TextButton(
     child: const Text("OK"),
     onPressed: () {
+      Navigator.pop(context);
+      StorageManager().clear();
       Phoenix.rebirth(context);
     },
   );

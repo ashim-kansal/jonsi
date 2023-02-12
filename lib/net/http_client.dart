@@ -9,6 +9,7 @@ import 'package:kappu/models/serializable_model/TrendingServicesResponse.dart';
 import 'package:kappu/models/serializable_model/signup.dart';
 import 'package:retrofit/dio.dart';
 import 'package:retrofit/http.dart';
+import '../models/serializable_model/OrderListResponse.dart';
 import '../models/serializable_model/ServiceResponse.dart';
 import '../models/serializable_model/CategoryResponse.dart';
 import '../models/serializable_model/allchats.dart';
@@ -88,6 +89,24 @@ abstract class HttpClient {
   @POST('user/notifications')
   Future<List<NotificationModel>> getNotifications(userId, token);
 
+  @POST('orders/provider/completed')
+  Future<List<OrderListResponse>> getcompletedbooking(
+      String provider_id, String token);
+
+  @POST('orders/provider/cancelled')
+  Future<List<OrderListResponse>> getCancelledbooking(
+      String provider_id, String token);
+
+  @POST('orders/provider/requests')
+  Future<List<OrderListResponse>> getrequestedbookings(
+      String provider_id, String token);
+
+
+  @POST('orders/provider/accpeted')
+  Future<List<OrderListResponse>> getActivebookings(
+      String provider_id, String token);
+
+
   // @GET('category/{id}')
   // Future<Category> getservicecatagorynbyid(@Path('id') String id);
 
@@ -119,28 +138,6 @@ abstract class HttpClient {
   Future<List<Booking>> getbookingrequest(
       @Header("Authorization") String token);
 
-  @GET('booking/')
-  Future<List<Booking>> getactivebookingrequest(
-      @Query("is_cancelled") bool iscancelled,
-      @Query("is_accepted") bool isaccepted,
-      @Query("is_completed") bool iscompelte,
-      @Header("Authorization") String token);
-
-  @GET('booking/')
-  Future<List<Booking>> getrequestedbooking(
-      @Query("is_accepted") bool isaccepted,
-      @Query("is_rejected") bool isrejected,
-      @Header("Authorization") String token);
-
-  @GET('booking/')
-  Future<List<Booking>> getcancelledbooking(
-      @Query("is_cancelled") bool iscancelled,
-      @Header("Authorization") String token);
-
-  @GET('booking/')
-  Future<List<Booking>> getcompletedbooking(
-      @Query("is_completed") bool iscomplete,
-      @Header("Authorization") String token);
 
   @PATCH('booking-status/{id}/')
   Future<HttpResponse> acceptrejectbookingrequest(

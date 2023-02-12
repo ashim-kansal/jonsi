@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
 import 'package:kappu/components/AppColors.dart';
 import 'package:kappu/models/serializable_model/booking.dart';
 import 'package:kappu/provider/userprovider.dart';
@@ -8,6 +9,7 @@ import 'package:kappu/screens/booking_detail/widgets/service_provider_or_user_su
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
 
+import '../../../models/serializable_model/OrderListResponse.dart';
 import '../../add_review/add_review.dart';
 import '../../booking_detail/request_booking_detail.dart';
 import '../../booking_detail/widgets/order_summary.dart';
@@ -15,7 +17,7 @@ import '../../booking_detail/widgets/rating_widget.dart';
 
 class BookingWidget extends StatefulWidget {
   final String bookingstatus;
-  final Booking booking;
+  final OrderListResponse booking;
   final Function setbookingstate;
   const BookingWidget(
       {Key? key,
@@ -33,13 +35,13 @@ class _BookingWidgetState extends State<BookingWidget> {
   Widget build(BuildContext context) {
     return InkWell(
         onTap: () {
-          pushDynamicScreen(context,
-              screen: ServiceBookingDetail(
-                bookingstatus: widget.bookingstatus,
-                booking: widget.booking,
-                setbookingstate: widget.setbookingstate,
-              ),
-              withNavBar: false);
+          // pushDynamicScreen(context,
+          //     screen: ServiceBookingDetail(
+          //       bookingstatus: widget.bookingstatus,
+          //       booking: widget.booking,
+          //       setbookingstate: widget.setbookingstate,
+          //     ),
+          //     withNavBar: false);
         },
         child: Card(
           shape: RoundedRectangleBorder(
@@ -54,10 +56,7 @@ class _BookingWidgetState extends State<BookingWidget> {
                   Row(
                     children: [
                       Container(
-                        child: Image.asset('assets/images/barber.jpg',
-                            height: 80,
-                            width: 100,
-                            fit: BoxFit.fill),
+                        child: getImage(widget.booking),
                         decoration: new BoxDecoration(
                           color: Colors.white,
                           borderRadius: new BorderRadius.all(new Radius.circular(10)),
@@ -72,7 +71,7 @@ class _BookingWidgetState extends State<BookingWidget> {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             Text(
-                              widget.booking.servicetitle,
+                              widget.booking.serviceData!.title!,
                               textAlign: TextAlign.start,
                               style: TextStyle(
                                   color: Colors.black,
@@ -82,7 +81,7 @@ class _BookingWidgetState extends State<BookingWidget> {
                             Container(
                               width: 200,
                               child: Text(
-                                'I will provide you house cleaning services',
+                                widget.booking.serviceData!.description!,
                                 maxLines: 2,
                                 overflow: TextOverflow.ellipsis,
                                 softWrap: false,
@@ -92,7 +91,7 @@ class _BookingWidgetState extends State<BookingWidget> {
                             ),
 
                             Text(
-                              '\$44',
+                              '\$${widget.booking.totalPrice}',
                               style: TextStyle(
                                   color: AppColors.app_color,
                                   fontSize: 14.sp,
@@ -120,9 +119,13 @@ class _BookingWidgetState extends State<BookingWidget> {
                           backgroundImage: NetworkImage('https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',),
                         ),
                           10.horizontalSpace,
-                          Text(this.widget.booking.providerfname+" "+this.widget.booking.providerfname),
+                          Text(this.widget.booking.userData!.firstName!+" "+this.widget.booking.userData!.lastName!,
+                            style: TextStyle(fontSize: 16, fontFamily: "Montserrat-Bold", color: AppColors.text_desc),),
                         ],
-                      ),Text('Active')
+                      ),BookingLabel(widget.bookingstatus=="Active" ? 0 :
+                      widget.bookingstatus=="Request" ? 1:
+                      widget.bookingstatus=="Completed" ? 2 :
+                      3)
                     ],
                   ),
                   10.verticalSpace,
@@ -135,43 +138,95 @@ class _BookingWidgetState extends State<BookingWidget> {
                   10.verticalSpace,
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                          Text(this.widget.booking.time, style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w500, color: Colors.black),),
+                          Text(getDate(this.widget.booking.createdAt!), style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w500, color: Colors.black, fontFamily: "Montserrat-SemiBold"),),
                       Text('. . .', style: TextStyle(fontSize: 20.sp, color: Colors.black,fontWeight: FontWeight.bold),)
                     ],
                   ),
 
                   10.verticalSpace,
                   // ServiceProviderOrUserSummary(booking: widget.booking),
-                  widget.bookingstatus == "Completed" &&
-                      widget.booking.rating != 0
-                      ? BookingRatingWidget(booking: widget.booking)
-                      : Column(
-                    children: [
-                      10.verticalSpace,
-                      if (widget.bookingstatus == "Completed")
-                        Center(
-                          child: TextButton(
-                              onPressed: () {
-                                pushDynamicScreen(context,
-                                    screen: AddReview(
-                                        setbookingstate:
-                                        widget.setbookingstate,
-                                        booking: widget.booking),
-                                    withNavBar: false);
-                              },
-                              child: const Text("Add Feedback")),
-                        ),
-                    ],
-                  ),
-                  if (widget.bookingstatus != "Completed")
-                    ActionButtons(
-                      booking: widget.booking,
-                      setbookingstate: widget.setbookingstate,
-                      bookingstatus: widget.bookingstatus,
-                    ),
+                  // widget.bookingstatus == "Completed" &&
+                  //     widget.booking.rating != 0
+                  //     ? BookingRatingWidget(booking: widget.booking)
+                  //     : Column(
+                  //   children: [
+                  //     10.verticalSpace,
+                  //     if (widget.bookingstatus == "Completed")
+                  //       Center(
+                  //         child: TextButton(
+                  //             onPressed: () {
+                  //               // pushDynamicScreen(context,
+                  //               //     screen: AddReview(
+                  //               //         setbookingstate:
+                  //               //         widget.setbookingstate,
+                  //               //         booking: widget.booking),
+                  //               //     withNavBar: false);
+                  //             },
+                  //             child: const Text("Add Feedback")),
+                  //       ),
+                  //   ],
+                  // ),
+                  // if (widget.bookingstatus != "Completed")
+                    // ActionButtons(
+                    //   booking: widget.booking,
+                    //   setbookingstate: widget.setbookingstate,
+                    //   bookingstatus: widget.bookingstatus,
+                    // ),
                 ]),
           ),
         ));
+  }
+
+  String getDate(dateTime) => DateFormat('dd MMM yyyy').format(dateTime);
+}
+
+BookingLabel(int i) {
+  return SizedBox(
+    height: 30,
+    width: 100,
+    child: TextButton(
+      style: ButtonStyle(
+        backgroundColor: MaterialStateProperty.all(i==0 ? Color(0x4995EB40) : i==1 ? Color(0x70707040) : i==2 ? Color(0x34A85340) : Color(0xFF000040)),
+        shape: MaterialStateProperty.all(
+          RoundedRectangleBorder(
+            borderRadius:
+            BorderRadius.circular(14),
+          ),
+        ),
+      ),
+      child: Text(
+        i==0 ? "Active" : i==1 ? "Request" : i==2 ? "Completed" : "Cancel",
+        style: TextStyle(
+          color: i==0 ? AppColors.app_color : i==1 ? AppColors.color_707070 : i==2 ? AppColors.color_green : Color(0xFFFF0000),
+          fontSize: 14.sp,
+          fontFamily: 'Montserrat-SemiBold',
+        ),
+      ),
+      onPressed: ()  {
+        // Navigator.push(
+        //     context,
+        //     MaterialPageRoute(
+        //         builder: (context) =>
+        //             ProviderDetailScreen(id: item.id!)));
+
+      },
+    ),
+  );
+}
+
+getImage(OrderListResponse item) {
+  if(item.gigdocument!=null && item.gigdocument!.length>0 ){
+    return
+      Image.network("https://urbanmalta.com/public/users/user_${item.gigdocument![0].userid}/documents/${item.gigdocument![0].fileName}",
+          height: 80,
+          width: 100,
+          fit: BoxFit.fill);
+  }else{
+    return Image.asset('assets/images/barber.jpg',
+        height: 80,
+        width: 100,
+        fit: BoxFit.fill);
   }
 }

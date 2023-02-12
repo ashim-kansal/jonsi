@@ -3,8 +3,10 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kappu/models/serializable_model/booking.dart';
 
+import '../../../models/serializable_model/OrderListResponse.dart';
+
 class BookingRatingWidget extends StatelessWidget {
-  final Booking booking;
+  final OrderListResponse booking;
   const BookingRatingWidget({Key? key, required this.booking})
       : super(key: key);
 
@@ -50,7 +52,7 @@ class BookingRatingWidget extends StatelessWidget {
             Padding(
               padding: EdgeInsets.only(top: ScreenUtil().setHeight(5)),
               child: RatingBarIndicator(
-                rating: booking.rating,
+                rating: double.parse(booking.rating!),
                 itemCount: 5,
                 itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
                 itemBuilder: (context, _) => const Icon(

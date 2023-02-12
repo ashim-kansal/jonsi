@@ -8,6 +8,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:kappu/common/custom_progress_bar.dart';
 import 'package:kappu/common/dialogues.dart';
 import 'package:kappu/components/AppColors.dart';
+import 'package:kappu/constants/storage_manager.dart';
 import 'package:kappu/net/base_dio.dart';
 import 'package:kappu/provider/provider_provider.dart';
 import 'package:kappu/screens/submitdocument/add_photo.dart';
@@ -157,7 +158,6 @@ class _AddGigState extends State<AddGig> {
 
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<ProviderProvider>(context);
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -296,7 +296,7 @@ class _AddGigState extends State<AddGig> {
                             ],
                           ),
                           onPressed: () {
-                            doRegister(provider);
+                            doRegister();
                           },
                         ),
                       ),
@@ -311,7 +311,7 @@ class _AddGigState extends State<AddGig> {
     );
   }
 
-  void doRegister(provider) async {
+  void doRegister() async {
     if(images.isEmpty){
       showAlertDialog(
           error: "Please add gig image",
@@ -328,14 +328,15 @@ class _AddGigState extends State<AddGig> {
           isLoading = false;
         });
         if(value?.data['status']) {
-          provider.token = value?.data['token'];
-          provider.firstName = widget.bodyprovider['first_name'];
-          provider.lastName = widget.bodyprovider['last_name'];
+          var provider = StorageManager();
+          provider.accessToken = value?.data['token'];
+          provider.userId = value?.data['user']['id'];
+          provider.name = widget.bodyprovider['first_name']+" "+widget.bodyprovider['last_name'];
           provider.phone = widget.bodyprovider['phone_number'];
           provider.email = widget.bodyprovider['email'];
           provider.isProvider = true;
           provider.nationality = widget.bodyprovider['nationality'];
-          // provider.language = loginresponse.data['data']['user']['languages'];
+          provider.language = value?.data['user']['languages'];
         }
         Navigator.pushReplacement(
             context,

@@ -60,7 +60,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<ProviderProvider>(context);
     var children2 = [
       120.verticalSpace,
       returnLogo(context),
@@ -181,14 +180,16 @@ class _LoginScreenState extends State<LoginScreen> {
                   'password': passwordController.text,
                 };
                 await HttpClient().signin(body).then((loginresponse) async {
-                  if(loginresponse.data['isSuccess']) {
-                    StorageManager().accessToken = loginresponse.data['data']['token'];
+                  if(loginresponse.data['isSuccess']==true) {
+
+                    StorageManager().accessToken = ""+loginresponse.data['data']['token'];
                     StorageManager().userId = loginresponse.data['data']['user']['id'];
-                    StorageManager().name = loginresponse.data['data']['user']['first_name']+" "+loginresponse.data['data']['user']['last_name'];
-                    StorageManager().email = loginresponse.data['data']['user']['email'];
-                    StorageManager().isProvider = loginresponse.data['data']['user']['is_provider'];
-                    StorageManager().nationality = loginresponse.data['data']['user']['nationality'];
-                    StorageManager().language = loginresponse.data['data']['user']['languages'];
+                    StorageManager().name = ""+loginresponse.data['data']['user']['first_name']+" "+loginresponse.data['data']['user']['last_name'];
+                    StorageManager().email = ""+loginresponse.data['data']['user']['email'];
+                    StorageManager().isProvider = loginresponse.data['data']['user']['is_provider']?true : false;
+                    StorageManager().nationality = ""+loginresponse.data['data']['user']['nationality'];
+                    StorageManager().language = ""+loginresponse.data['data']['user']['languages'];
+                    // StorageManager().phone = ""+loginresponse.data['data']['user']['phone_number'];
                   }
                   signin = false;
                   isLoading = false;
@@ -198,6 +199,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       BottomNavBar(
                         isprovider: loginresponse.data['data']['user']['is_provider'],
                       ));
+                  Navigator.pop(context);
                 }).catchError((error) {
                   signin = false;
                   isLoading = false;

@@ -358,6 +358,100 @@ class _HttpClient implements HttpClient {
     return notificationModelFromJson(_result.data!);
   }
 
+
+
+  @override
+  Future<List<OrderListResponse>> getcompletedbooking(provider_id, token) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{'Authorization': token};
+    var formData = FormData.fromMap({
+      'provider_id': provider_id,
+    });
+    final _result = await _dio.fetch<String>(
+        _setStreamType<OrderListResponse>(
+            Options(method: 'POST', headers: _headers, extra: _extra)
+                .compose(_dio.options, 'orders/provider/completed',
+                queryParameters: queryParameters, data: formData)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    
+    return orderListResponseFromJson(_result.data!);
+  }
+
+  @override
+  Future<List<OrderListResponse>> getCancelledbooking(String provider_id, String  token) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{'Authorization': token};
+    var formData = FormData.fromMap({
+      'provider_id': provider_id,
+    });
+    final _result = await _dio.fetch<String>(
+        _setStreamType<OrderListResponse>(
+            Options(method: 'POST', headers: _headers, extra: _extra)
+                .compose(_dio.options, 'orders/provider/cancelled',
+                queryParameters: queryParameters, data: formData)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+
+    return orderListResponseFromJson(_result.data!);
+  }
+
+ @override
+  Future<List<OrderListResponse>> getrequestedbookings(String provider_id, String  token) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{'Authorization': token};
+    var formData = FormData.fromMap({
+      'provider_id': provider_id,
+    });
+    final _result = await _dio.fetch<String>(
+        _setStreamType<OrderListResponse>(
+            Options(method: 'POST', headers: _headers, extra: _extra)
+                .compose(_dio.options, 'orders/provider/requests',
+                queryParameters: queryParameters, data: formData)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+
+    return orderListResponseFromJson(_result.data!);
+  }
+
+@override
+  Future<List<OrderListResponse>> getActivebookings(String provider_id, String  token) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{'Authorization': token};
+    var formData = FormData.fromMap({
+      'provider_id': provider_id,
+    });
+    final _result = await _dio.fetch<String>(
+        _setStreamType<OrderListResponse>(
+            Options(method: 'POST', headers: _headers, extra: _extra)
+                .compose(_dio.options, 'orders/provider/accpeted',
+                queryParameters: queryParameters, data: formData)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+
+    return orderListResponseFromJson(_result.data!);
+  }
+
+
+  @override
+  Future<List<OrderListResponse>> getrequestsbooking(provider_id, token) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{'Authorization': token};
+    var formData = FormData.fromMap({
+      'provider_id': provider_id,
+    });
+    final _result = await _dio.fetch<String>(
+        _setStreamType<OrderListResponse>(
+            Options(method: 'POST', headers: _headers, extra: _extra)
+                .compose(_dio.options, 'orders/provider/cancelled',
+                queryParameters: queryParameters, data: formData)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+
+    return orderListResponseFromJson(_result.data!);
+  }
+
+
   // @override
   // Future<Category> getservicecatagorynbyid(id) async {
   //   const _extra = <String, dynamic>{};
@@ -514,90 +608,6 @@ class _HttpClient implements HttpClient {
     return value;
   }
 
-  @override
-  Future<List<Booking>> getactivebookingrequest(
-      iscancelled, isaccepted, iscompelte, token) async {
-    const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{
-      r'is_cancelled': iscancelled,
-      r'is_accepted': isaccepted,
-      r'is_completed': iscompelte
-    };
-    final _headers = <String, dynamic>{r'Authorization': token};
-    _headers.removeWhere((k, v) => v == null);
-    final _data = <String, dynamic>{};
-    final _result = await _dio.fetch<List<dynamic>>(
-        _setStreamType<List<Booking>>(
-            Options(method: 'GET', headers: _headers, extra: _extra)
-                .compose(_dio.options, 'booking/',
-                    queryParameters: queryParameters, data: _data)
-                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    var value = _result.data!
-        .map((dynamic i) => Booking.fromJson(i as Map<String, dynamic>))
-        .toList();
-    return value;
-  }
-
-  @override
-  Future<List<Booking>> getrequestedbooking(
-      isaccepted, isrejected, token) async {
-    const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{
-      r'is_accepted': isaccepted,
-      r'is_rejected': isrejected
-    };
-    final _headers = <String, dynamic>{r'Authorization': token};
-    _headers.removeWhere((k, v) => v == null);
-    final _data = <String, dynamic>{};
-    final _result = await _dio.fetch<List<dynamic>>(
-        _setStreamType<List<Booking>>(
-            Options(method: 'GET', headers: _headers, extra: _extra)
-                .compose(_dio.options, 'booking/',
-                    queryParameters: queryParameters, data: _data)
-                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    var value = _result.data!
-        .map((dynamic i) => Booking.fromJson(i as Map<String, dynamic>))
-        .toList();
-    return value;
-  }
-
-  @override
-  Future<List<Booking>> getcancelledbooking(iscancelled, token) async {
-    const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{r'is_cancelled': iscancelled};
-    final _headers = <String, dynamic>{r'Authorization': token};
-    _headers.removeWhere((k, v) => v == null);
-    final _data = <String, dynamic>{};
-    final _result = await _dio.fetch<List<dynamic>>(
-        _setStreamType<List<Booking>>(
-            Options(method: 'GET', headers: _headers, extra: _extra)
-                .compose(_dio.options, 'booking/',
-                    queryParameters: queryParameters, data: _data)
-                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    var value = _result.data!
-        .map((dynamic i) => Booking.fromJson(i as Map<String, dynamic>))
-        .toList();
-    return value;
-  }
-
-  @override
-  Future<List<Booking>> getcompletedbooking(iscomplete, token) async {
-    const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{r'is_completed': iscomplete};
-    final _headers = <String, dynamic>{r'Authorization': token};
-    _headers.removeWhere((k, v) => v == null);
-    final _data = <String, dynamic>{};
-    final _result = await _dio.fetch<List<dynamic>>(
-        _setStreamType<List<Booking>>(
-            Options(method: 'GET', headers: _headers, extra: _extra)
-                .compose(_dio.options, 'booking/',
-                    queryParameters: queryParameters, data: _data)
-                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    var value = _result.data!
-        .map((dynamic i) => Booking.fromJson(i as Map<String, dynamic>))
-        .toList();
-    return value;
-  }
 
   @override
   Future<HttpResponse<dynamic>> acceptrejectbookingrequest(id, params) async {
@@ -848,4 +858,5 @@ class _HttpClient implements HttpClient {
     }
     return requestOptions;
   }
+
 }

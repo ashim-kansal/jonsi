@@ -27,16 +27,21 @@ class StorageManager {
   }
 
 
-  String get userId => _userPreferences!.getString('userId') ?? '';
+  int get userId => _userPreferences!.getInt('userId') ?? -1;
 
-  set userId(String apiUrl) {
-    _userPreferences!.setString('userId', apiUrl);
+  set userId(int id) {
+    _userPreferences!.setInt('userId', id);
   }
 
   String get name => _userPreferences!.getString('name') ?? '';
+  String get phone => _userPreferences!.getString('phone') ?? '';
 
   set name(String s) {
     _userPreferences!.setString('name', s);
+  }
+
+  set phone(String s) {
+    _userPreferences!.setString('phone', s);
   }
 
   String get email => _userPreferences!.getString('email') ?? '';

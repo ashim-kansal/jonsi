@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kappu/components/AppColors.dart';
+import 'package:kappu/constants/storage_manager.dart';
 import 'package:kappu/helperfunctions/screen_nav.dart';
 import 'package:kappu/provider/provider_provider.dart';
 import 'package:kappu/screens/home_page/widgets/slider.dart';
@@ -25,7 +26,6 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<ProviderProvider>(context);
 
     return Scaffold(
       body: GestureDetector(
@@ -74,19 +74,16 @@ class _HomeScreenState extends State<HomeScreen> {
                             backgroundColor: Colors.white,
                             child: IconButton(
                               onPressed: () {
-                                print(provider.token);
-
-                                if (provider.token != null &&
-                                    provider.token.isNotEmpty) {
+                                if (StorageManager().accessToken.isNotEmpty) {
                                   pushDynamicScreen(context,
                                       screen: SettingsPage(),
                                       withNavBar: false);
                                 } else {
-                                  // Navigator.push(
+                                  // Navigator.pushReplacement(
                                   //     context,
                                   //     MaterialPageRoute(
-                                  //         builder: (context) =>
-                                  //         const LoginScreen()));
+                                  //         builder: (context) => const LoginScreen()));
+
                                   changeScreen(
                                       context: context,
                                       screen: const LoginScreen());

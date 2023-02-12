@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kappu/common/customtexts.dart';
 import 'package:kappu/components/AppColors.dart';
 import 'package:kappu/components/MyAppBar.dart';
+import 'package:kappu/constants/storage_manager.dart';
 import 'package:kappu/provider/provider_provider.dart';
 import 'package:kappu/provider/userprovider.dart';
 import 'package:kappu/screens/edit_profile/edit_profile.dart';
@@ -51,7 +52,7 @@ class SettingsPage extends ModalRoute<void> {
   late int cardViewed;
   bool alreadyowned = false;
   Widget _buildOverlayContent(BuildContext context) {
-    final provider = Provider.of<ProviderProvider>(context);
+    final provider = StorageManager();
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -74,10 +75,10 @@ class SettingsPage extends ModalRoute<void> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(provider.firstName+ " "+ provider.lastName, style: TextStyle(fontFamily: "Montserrat-Bold", fontSize: 18, color: Colors.black),),
+                      Text(provider.name, style: TextStyle(fontFamily: "Montserrat-Bold", fontSize: 18, color: Colors.black),),
                       Text(provider.email, style: TextStyle(fontFamily: "Montserrat-Regular", fontSize: 12, color: AppColors.text_desc),),
                       10.verticalSpace,
-                      Text("provider.phone", style: TextStyle(fontFamily: "Montserrat-Regular", fontSize: 12, color: AppColors.text_desc),),
+                      Text(provider.phone, style: TextStyle(fontFamily: "Montserrat-Regular", fontSize: 12, color: AppColors.text_desc),),
                     ],
                   ),
                   Spacer(),
@@ -96,16 +97,19 @@ class SettingsPage extends ModalRoute<void> {
                   )
                 ],
               ),),
-              ProfileItemTitle(label: "Account Setting"),
+              ProfileItemTitle(label: "Account Setting", context: context),
               ProfileItem(label: "Change Password", iconPath: 'assets/icons/loc.png', onTap: (){
                 print("change pasworhhh   jd");
               }),
               ProfileItem(label: "Logout", iconPath: 'assets/icons/loc.png', onTap:(){
                 showAlertDialog(context);
               }),
-              ProfileItemTitle(label: "General"),
-              ProfileItem(label: "Add GIG", iconPath: 'assets/icons/loc.png'),
-              ProfileItem(label: "GIGs Offered", iconPath: 'assets/icons/loc.png'),
+              ProfileItemTitle(label: "General", context: context),
+              if(provider.isProvider)
+                ProfileItem(label: "Add GIG", iconPath: 'assets/icons/loc.png'),
+              if(provider.isProvider)
+                ProfileItem(label: "GIGs Offered", iconPath: 'assets/icons/loc.png'),
+
               ProfileItem(label: "Faq’s", iconPath: 'assets/icons/loc.png', onTap: (){
                     changeScreen(
                     context: context,
@@ -113,9 +117,14 @@ class SettingsPage extends ModalRoute<void> {
               }),
               ProfileItem(label: "Notifications", iconPath: 'assets/icons/loc.png'),
               ProfileItem(label: "Privacy Policy", iconPath: 'assets/icons/loc.png'),
-              ProfileItem(label: "Services Completed", iconPath: 'assets/icons/loc.png'),
-              ProfileItem(label: "Total Ratings and Reviews", iconPath: 'assets/icons/loc.png'),
-              ProfileItemTitle(label: "Support"),
+
+              if(provider.isProvider)
+                ProfileItem(label: "Services Completed", iconPath: 'assets/icons/loc.png'),
+
+              if(provider.isProvider)
+                ProfileItem(label: "Total Ratings and Reviews", iconPath: 'assets/icons/loc.png'),
+
+              ProfileItemTitle(label: "Support", context: context),
               ProfileItem(label: "Help Center", iconPath: 'assets/icons/loc.png'),
 
               const SizedBox(height: 60.0),
