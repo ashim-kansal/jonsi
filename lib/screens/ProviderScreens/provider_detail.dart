@@ -1,16 +1,10 @@
-import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kappu/components/AppColors.dart';
-import 'package:kappu/components/MyAppBar.dart';
 import 'package:kappu/screens/ProviderScreens/order_review.dart';
 
-import '../../common/button.dart';
-import '../../common/validation_dialogbox.dart';
-import '../../models/serializable_model/RecommendedServiceProvidersResponse.dart';
 import '../../models/serializable_model/provider_detail_model.dart';
 import '../../net/http_client.dart';
 
@@ -50,8 +44,8 @@ class _ProviderDetailScreenState extends State<ProviderDetailScreen> {
                         children: [
                           Container(
                             width: double.infinity,
-                            height: 280,
-                            color: Colors.grey,
+                            height: 250,
+                            child: getDataImage(response.data![0].gigdocument!),
                           ),
                           Container(
                               margin: EdgeInsets.only(left: 20, top: 50),
@@ -264,7 +258,7 @@ class _ProviderDetailScreenState extends State<ProviderDetailScreen> {
                                                 Icon(Icons.arrow_forward_ios),
                                           ),
                                           Text(
-                                            "Proceed",
+                                            "Continue",
                                             style: TextStyle(
                                               fontWeight: FontWeight.w500,
                                               color: Colors.white,
@@ -304,8 +298,11 @@ class _ProviderDetailScreenState extends State<ProviderDetailScreen> {
                             child: Row(
                               children: [
                                 RatingBar.builder(
-                                  initialRating: double.parse(
-                                      response.data![0].ratingCount!),
+                                  initialRating:
+                                      response.data![0].ratingCount != null
+                                          ? double.parse(
+                                              response.data![0].ratingCount!)
+                                          : 0,
                                   minRating: 1,
                                   direction: Axis.horizontal,
                                   allowHalfRating: true,
@@ -473,161 +470,171 @@ class _ProviderDetailScreenState extends State<ProviderDetailScreen> {
                                   ),
                                 ],
                               )),
-                          Container(
-                            padding: EdgeInsets.only(
-                                left: 20, right: 20, bottom: 5, top: 10),
-                            child: Text(
-                              response.data![0].reviewCount!.toString(),
-                              style: TextStyle(
-                                  color: Color(0xffF79E1F),
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold),
+                          if (response.data![0].reviewCount! > 0)
+                            Container(
+                              padding: EdgeInsets.only(
+                                  left: 20, right: 20, bottom: 5, top: 10),
+                              child: Text(
+                                response.data![0].reviewCount!.toString(),
+                                style: TextStyle(
+                                    color: Color(0xffF79E1F),
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold),
+                              ),
                             ),
-                          ),
-                          Container(
-                            padding: const EdgeInsets.only(
-                                left: 20, right: 20, top: 0, bottom: 0),
-                            height: 145,
-                            child: SizedBox(
-                                height: 100,
-                                width: 250,
-                                child: ListView.builder(
-                                  padding: EdgeInsets.zero,
-                                  shrinkWrap: true,
-                                  scrollDirection: Axis.horizontal,
-                                  itemCount: response.data![0].reviews!.length,
-                                  itemBuilder: (context, index) {
-                                    return Column(
-                                      children: [
-                                        Row(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          children: [
-                                            Container(
-                                                width: 250,
-                                                child: Card(
-                                                    child: Padding(
-                                                  padding: EdgeInsets.all(15),
-                                                  child: Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.start,
-                                                    children: [
-                                                      Row(
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .start,
-                                                        children: [
-                                                          CircleAvatar(
-                                                            radius: ScreenUtil()
-                                                                .setHeight(15),
-                                                            backgroundImage:
-                                                                NetworkImage(
-                                                                    'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500'),
-                                                          ),
-                                                          SizedBox(
-                                                            width: 5,
-                                                          ),
-                                                          Column(
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .start,
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .start,
-                                                            children: const [
-                                                              Text(
-                                                                'Name',
-                                                                style: TextStyle(
-                                                                    color: Colors
-                                                                        .black,
-                                                                    fontSize:
-                                                                        15,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold),
-                                                              ),
-                                                              Text(
-                                                                'Location',
-                                                                style: TextStyle(
-                                                                    color: Colors
-                                                                        .grey,
-                                                                    fontSize:
-                                                                        15,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .normal),
-                                                              ),
-                                                            ],
-                                                          )
-                                                        ],
-                                                      ),
-                                                      Row(
-                                                        children: [
-                                                          RatingBar.builder(
-                                                            initialRating: double
-                                                                .parse(response
-                                                                    .data![0]
-                                                                    .reviews![
-                                                                        index]
-                                                                    .rating!),
-                                                            minRating: 1,
-                                                            direction:
-                                                                Axis.horizontal,
-                                                            allowHalfRating:
-                                                                true,
-                                                            itemCount: 5,
-                                                            itemSize: 20,
-                                                            ignoreGestures:
-                                                                true,
-                                                            itemPadding:
-                                                                EdgeInsets.only(
-                                                                    right: 0.1),
-                                                            itemBuilder: (context,
-                                                                    _) =>
-                                                                Icon(Icons.star,
-                                                                    color: Colors
-                                                                        .amber),
-                                                            onRatingUpdate:
-                                                                (rating) {
-                                                              print(rating);
-                                                            },
-                                                          )
-                                                        ],
-                                                      ),
-                                                      Text(
-                                                        response
-                                                            .data![0]
-                                                            .reviews![index]
-                                                            .review!,
-                                                        maxLines: 3,
-                                                        style: TextStyle(
-                                                            color: Colors.grey,
-                                                            fontSize: 12,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .normal),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ))),
-                                            SizedBox(
-                                              width: 10,
-                                            )
-                                          ],
-                                        ),
-                                      ],
-                                    );
-                                  },
-                                )),
-                          ),
+                          if (response.data![0].reviewCount! > 0)
+                            Container(
+                              padding: const EdgeInsets.only(
+                                  left: 20, right: 20, top: 0, bottom: 0),
+                              height: 145,
+                              child: SizedBox(
+                                  height: 100,
+                                  width: 250,
+                                  child: ListView.builder(
+                                    padding: EdgeInsets.zero,
+                                    shrinkWrap: true,
+                                    scrollDirection: Axis.horizontal,
+                                    itemCount:
+                                        response.data![0].reviews!.length,
+                                    itemBuilder: (context, index) {
+                                      return Column(
+                                        children: [
+                                          Row(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            children: [
+                                              Container(
+                                                  width: 250,
+                                                  child: Card(
+                                                      child: Padding(
+                                                    padding: EdgeInsets.all(15),
+                                                    child: Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Row(
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .start,
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .start,
+                                                          children: [
+                                                            CircleAvatar(
+                                                              radius:
+                                                                  ScreenUtil()
+                                                                      .setHeight(
+                                                                          15),
+                                                              backgroundImage:
+                                                                  NetworkImage(
+                                                                      'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500'),
+                                                            ),
+                                                            SizedBox(
+                                                              width: 5,
+                                                            ),
+                                                            Column(
+                                                              crossAxisAlignment:
+                                                                  CrossAxisAlignment
+                                                                      .start,
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .start,
+                                                              children: const [
+                                                                Text(
+                                                                  'Name',
+                                                                  style: TextStyle(
+                                                                      color: Colors
+                                                                          .black,
+                                                                      fontSize:
+                                                                          15,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold),
+                                                                ),
+                                                                Text(
+                                                                  'Location',
+                                                                  style: TextStyle(
+                                                                      color: Colors
+                                                                          .grey,
+                                                                      fontSize:
+                                                                          15,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .normal),
+                                                                ),
+                                                              ],
+                                                            )
+                                                          ],
+                                                        ),
+                                                        Row(
+                                                          children: [
+                                                            RatingBar.builder(
+                                                              initialRating: double
+                                                                  .parse(response
+                                                                      .data![0]
+                                                                      .reviews![
+                                                                          index]
+                                                                      .rating!),
+                                                              minRating: 1,
+                                                              direction: Axis
+                                                                  .horizontal,
+                                                              allowHalfRating:
+                                                                  true,
+                                                              itemCount: 5,
+                                                              itemSize: 20,
+                                                              ignoreGestures:
+                                                                  true,
+                                                              itemPadding:
+                                                                  EdgeInsets.only(
+                                                                      right:
+                                                                          0.1),
+                                                              itemBuilder: (context,
+                                                                      _) =>
+                                                                  Icon(
+                                                                      Icons
+                                                                          .star,
+                                                                      color: Colors
+                                                                          .amber),
+                                                              onRatingUpdate:
+                                                                  (rating) {
+                                                                print(rating);
+                                                              },
+                                                            )
+                                                          ],
+                                                        ),
+                                                        Text(
+                                                          response
+                                                              .data![0]
+                                                              .reviews![index]
+                                                              .review!,
+                                                          maxLines: 3,
+                                                          style: TextStyle(
+                                                              color:
+                                                                  Colors.grey,
+                                                              fontSize: 12,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .normal),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ))),
+                                              SizedBox(
+                                                width: 10,
+                                              )
+                                            ],
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  )),
+                            ),
                           Container(
                             padding: EdgeInsets.only(left: 20, right: 20),
                             child: const Text(
@@ -692,5 +699,19 @@ class _ProviderDetailScreenState extends State<ProviderDetailScreen> {
                 );
               }
             }));
+  }
+
+  Widget getDataImage(List<Gigdocument> item) {
+    if (item.isNotEmpty) {
+      print(item[0].fileName);
+      return Image.network(
+          "https://urbanmalta.com/public/users/user_${item[0].userid}/documents/${item[0].fileName}",
+          height: double.infinity,
+          width: 150,
+          fit: BoxFit.fill);
+    } else {
+      return Image.asset('assets/images/barber.jpg',
+          height: 120, width: 150, fit: BoxFit.fill);
+    }
   }
 }
