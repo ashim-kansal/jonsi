@@ -16,43 +16,6 @@ class _OurBestServicesState extends State<OurBestServices> {
     return Column(
       children: [
         Container(
-          color: Colors.white,
-          child: Center(
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.all(
-                          MediaQuery.of(context).size.width * 0.03),
-                      child: Text(
-                        'Our Best Services',
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                            fontSize: ScreenUtil().setSp(21)),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(right: 20),
-                      child: Text(
-                        'See all',
-                        style: TextStyle(
-                            color: Colors.blue,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: "Radomir Tinkov",
-                            fontSize: ScreenUtil().setSp(20)),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ),
-        Container(
-          color: Colors.white,
           child: Padding(
             padding: const EdgeInsets.only(left: 6),
             child: Column(
@@ -95,7 +58,7 @@ class _OurBestServicesState extends State<OurBestServices> {
                                                             .start,
                                                     children: [
                                                       const SizedBox(
-                                                        height: 20,
+                                                        height: 10,
                                                       ),
                                                       Text(
                                                         item.description,
@@ -111,59 +74,7 @@ class _OurBestServicesState extends State<OurBestServices> {
                                                                 FontWeight
                                                                     .bold),
                                                       ),
-                                                    ]),
-                                                subtitle: Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              top: 2.0),
-                                                      child: Text(
-                                                        "Service At home",
-                                                        style: TextStyle(
-                                                          color: Colors.grey,
-                                                          fontSize: ScreenUtil()
-                                                              .setSp(14),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              top: 8.0),
-                                                      child: Row(
-                                                        children: [
-                                                          Text(
-                                                            "Starts At ",
-                                                            style: TextStyle(
-                                                              color:
-                                                                  Colors.grey,
-                                                              fontSize:
-                                                                  ScreenUtil()
-                                                                      .setSp(
-                                                                          14),
-                                                            ),
-                                                          ),
-                                                          Text(
-                                                            r"$" +
-                                                                item.price
-                                                                    .toString(),
-                                                            style: TextStyle(
-                                                              color:
-                                                                  Colors.green,
-                                                              fontSize:
-                                                                  ScreenUtil()
-                                                                      .setSp(
-                                                                          14),
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    )
-                                                  ],
-                                                )),
+                                                    ]),),
                                           ],
                                         ),
                                       ),

@@ -199,7 +199,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       BottomNavBar(
                         isprovider: loginresponse.data['data']['user']['is_provider'],
                       ));
-                  Navigator.pop(context);
+                  // Navigator.pop(context);
                 }).catchError((error) {
                   signin = false;
                   isLoading = false;

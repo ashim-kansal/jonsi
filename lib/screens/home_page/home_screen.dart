@@ -4,6 +4,7 @@ import 'package:kappu/components/AppColors.dart';
 import 'package:kappu/constants/storage_manager.dart';
 import 'package:kappu/helperfunctions/screen_nav.dart';
 import 'package:kappu/provider/provider_provider.dart';
+import 'package:kappu/screens/home_page/widgets/best_services.dart';
 import 'package:kappu/screens/home_page/widgets/slider.dart';
 import 'package:kappu/screens/login/login_screen.dart';
 import 'package:kappu/screens/settings/settings_screen.dart';
@@ -115,37 +116,50 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             Expanded(
-                child: MediaQuery.removePadding(
-                    context: context,
-                    removeTop: true,
-                    child:ListView(
-                      padding: EdgeInsets.zero,
-                      shrinkWrap: true,
-                      children: [
-                        const SliderWidget(),
-                        Padding(
-                          padding: EdgeInsets.only(left: 20, right: 20, bottom: 5),
-                          child: Text(
-                            'Services',
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                                fontSize: ScreenUtil().setSp(21)),
+                child: Container(
+                  color: AppColors.color_f2f7fd,
+                  child: MediaQuery.removePadding(
+                      context: context,
+                      removeTop: true,
+                      child:ListView(
+                        padding: EdgeInsets.zero,
+                        shrinkWrap: true,
+                        children: [
+                          20.verticalSpace,
+                          const SliderWidget(),
+                          Padding(
+                            padding: EdgeInsets.only(left: 20, right: 20, bottom: 5),
+                            child: Text(
+                              'Popular Services',
+                              style: TextStyle(
+                                  color: AppColors.app_color,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: ScreenUtil().setSp(21)),
+                            ),
                           ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.all(10),
-                          child: const Servicescontainer(),
-                        ),
-                        // Divider(
-                        //   thickness: 5,
-                        //   color: Colors.grey.shade300,
-                        // ),
-                        // const ServicesSliderHorizontal(),
-                        // const OurBestServices(),
-                        const SizedBox(height: 45)
-                      ],
-                    ))),
+                          Padding(
+                            padding: EdgeInsets.all(10),
+                            child: const OurBestServices(),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(left: 20, right: 20, bottom: 5),
+                            child: Text(
+                              'Best Services',
+                              style: TextStyle(
+                                  color: AppColors.app_color,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: ScreenUtil().setSp(21)),
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.all(10),
+                            child: const Servicescontainer(),
+                          ),
+
+                          const SizedBox(height: 45)
+                        ],
+                      )),
+                )),
           ],
         ),
       ),

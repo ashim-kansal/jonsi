@@ -36,14 +36,22 @@ class _ServicescontainerState extends State<Servicescontainer> {
                   shrinkWrap: true,
                   crossAxisCount: 4,
                   physics: NeverScrollableScrollPhysics(),
-                  children: List.generate(response.data!.data.length, (index) {
+                  children: List.generate(response.data!.data.length>7 ? 8 :response.data!.data.length, (index) {
                     return Card(
                       color: Colors.white,
                       child: GestureDetector(
                         onTap: () {
+                          response.data!.data.length>7 && index==7 ?
                           pushDynamicScreen(context,
                               screen: ProviderOffersFromHomePage(
-                                  serviceid: 6,
+                                  serviceid: response.data!.data[index].id,
+                                  name: response.data!.data[index].name,
+                                  desc: response.data!.data[index].description),
+                              withNavBar: false)
+                          :
+                          pushDynamicScreen(context,
+                              screen: ProviderOffersFromHomePage(
+                                  serviceid: response.data!.data[index].id,
                                   name: response.data!.data[index].name,
                                   desc: response.data!.data[index].description),
                               withNavBar: false);
@@ -51,22 +59,33 @@ class _ServicescontainerState extends State<Servicescontainer> {
                         child: Container(
                           height: ScreenUtil().setHeight(60),
                           decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5)),
+                              borderRadius: BorderRadius.circular(5),
+                            color: Colors.white,
+                          ),
                           child: Column(
                             children: [
                               Padding(
                                 padding: const EdgeInsets.only(top: 8.0),
-                                child: Image.network(
-                                  response.data!.baseUrl +
-                                      "/" +
-                                      response.data!.data[index].image,
+                                child: response.data!.data.length>7 && index==7 ?
+                                Image.asset('assets/icons/ct-8.png',
                                   height: ScreenUtil().setHeight(30),
-                                ),
+                                )
+                                :
+                                  Image.network(
+                                  response.data!.baseUrl +
+                              "/" +
+                              response.data!.data[index].image,
+                              height: ScreenUtil().setHeight(30),
+                            ),
                               ),
                               Padding(
                                 padding: const EdgeInsets.only(top: 4.0),
                                 child: Center(
-                                  child: Text(response.data!.data[index].name,
+                                  child: Text(response.data!.data.length>7 && index==7 ? "More" : response.data!.data[index].name,
+                                      textAlign: TextAlign.center,
+                                      maxLines: 1,
+                                      overflow: TextOverflow
+                                          .ellipsis,
                                       style: TextStyle(
                                         color: AppColors.text_desc,
                                         fontSize: ScreenUtil().setSp(12),
