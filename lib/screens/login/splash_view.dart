@@ -46,9 +46,7 @@ class _SplashViewState extends State<SplashView> {
         child: Stack(
           //alignment:new Alignment(x, y)
           children: <Widget>[
-            Flexible(
-                flex: 7,
-                child: controller.value.isInitialized
+            controller.value.isInitialized
                     ? Container(
                         margin: const EdgeInsets.only(bottom: 140),
                         width: double.infinity,
@@ -58,11 +56,8 @@ class _SplashViewState extends State<SplashView> {
                           child: VideoPlayer(controller),
                         ),
                       )
-                    : Container()),
-            Flexible(
-              flex: 3,
-              child: signInView(context),
-            )
+                    : Container(),
+            signInView(context),
           ],
         ),
       ),
@@ -209,10 +204,11 @@ class _SplashViewState extends State<SplashView> {
     );
   }
 
-  Column returnButtonWithTextImage(
+  SizedBox returnButtonWithTextImage(
       BuildContext context, String imageName, String titleStr) {
-    return Column(
+    return SizedBox(height:140,child:Column(
       crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         SizedBox(
           height: 15.h,
@@ -239,7 +235,7 @@ class _SplashViewState extends State<SplashView> {
           height: 15.h,
         ),
       ],
-    );
+    ));
   }
 
   Text returnMarketPlaceText() {

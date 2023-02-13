@@ -18,6 +18,7 @@ class CustomTextFormField extends StatefulWidget {
   final Color? bordercolor;
   final int? maxlines;
   final bool? enabled;
+  final bool? isValid;
 
   CustomTextFormField(
       {Key? key,
@@ -30,6 +31,7 @@ class CustomTextFormField extends StatefulWidget {
       this.readOnly = false,
       required this.keyboardType,
       this.showPassword = false,
+      this.isValid = false,
       this.bordercolor,
       this.maxlines = 1,
       this.enabled = true})
@@ -104,7 +106,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
                   onChanged: (value){
                     widget.onChanged!(value);
                   })),
-          if (widget.controller.text != null && widget.controller.text.isEmpty)
+          if (!widget.isValid!)
             Text(
               'Please enter your ' + widget.hintText.toLowerCase(),
               style: const TextStyle(color: AppColors.red),
