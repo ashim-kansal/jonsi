@@ -34,7 +34,6 @@ class ItemServicesCardState extends State<ItemServicesCard> {
 
         },
         child: Container(
-      height: 120,
       child: DecoratedBox(
         decoration: BoxDecoration(
             borderRadius: const BorderRadius.all(Radius.circular(6)),
@@ -49,20 +48,19 @@ class ItemServicesCardState extends State<ItemServicesCard> {
               ),
             ),
             Expanded(child: Padding(
-              padding: EdgeInsets.all(10),
+              padding: EdgeInsets.all(15),
               child: Column(
-                mainAxisSize: MainAxisSize.max,
                 crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Text(
                     this.widget.data.title!,
                     textAlign: TextAlign.start,
                     style: TextStyle(
                         color: AppColors.app_color,
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.values[4]),
+                        fontSize: 16.sp,
+                        fontFamily: "Montserrat-bold"),
                   ),
+                  5.verticalSpace,
                   Container(
                     width: 200,
                     child: Text(
@@ -71,19 +69,27 @@ class ItemServicesCardState extends State<ItemServicesCard> {
                       overflow: TextOverflow.ellipsis,
                       softWrap: false,
                       style: TextStyle(
-                          color: AppColors.text_desc, fontSize: 10.sp),
+                          color: AppColors.text_desc, fontSize: 12.sp,
+                          fontFamily: "Montserrat-regular"
+                      ),
                     ),
                   ),
+                  10.verticalSpace,
                   Row(
                     children: [
                       Icon(
                         Icons.star,
                         size: 14.0,
-                        color: Colors.yellow,
+                        color: AppColors.app_yellow,
                       ),
                       Text(
-                        ' ${this.widget.data.rating} (0 Rating)',
-                        style: TextStyle(fontSize: 10.sp, color: Colors.black),
+                        ' ${this.widget.data.rating}',
+                        style: TextStyle(fontSize: 14.sp, color: AppColors.app_yellow, fontFamily: "Montserrat-bold"),
+                      ),Text(
+                        ' (0 Rating)',
+                        style: TextStyle(fontSize: 12.sp, color: AppColors.text_desc,
+                            fontFamily: "Montserrat-regular"
+                        ),
                       ),
                     ],
                   ),
@@ -92,6 +98,7 @@ class ItemServicesCardState extends State<ItemServicesCard> {
                   //   textAlign: TextAlign.start,
                   //   style: TextStyle(color: Colors.black, fontSize: 10.sp),
                   // ),
+                  10.verticalSpace,
                   Container(
                     child: Row(
                       mainAxisSize: MainAxisSize.max,
@@ -100,14 +107,18 @@ class ItemServicesCardState extends State<ItemServicesCard> {
                         Text(
                           'Hourly Price  :  ',
                           style:
-                              TextStyle(color: Colors.black, fontSize: 10.sp),
+                              TextStyle(color: Colors.black, fontSize: 12.sp,
+                                  fontFamily: "Montserrat-regular"
+                              ),
+
                         ),
                         Text(
                           this.widget.data.servicepackages?.price==null ? "\$0" : "\$${this.widget.data.servicepackages?.price}" ,
                           style: TextStyle(
                               color: Colors.black,
-                              fontSize: 10.sp,
-                              fontWeight: FontWeight.bold),
+                              fontSize: 14.sp,
+                              fontFamily: "Montserrat-bold"
+                          ),
                         ),
                       ],
                     ),

@@ -92,8 +92,7 @@ class _OurBestServicesState extends State<OurBestServices> {
                                                               .text_desc,
                                                           fontSize: ScreenUtil()
                                                               .setSp(14),
-                                                          fontWeight:
-                                                              FontWeight.bold),
+                                                          fontFamily: "Montserrat-bold",),
                                                     ),
                                                   )
                                                 ],

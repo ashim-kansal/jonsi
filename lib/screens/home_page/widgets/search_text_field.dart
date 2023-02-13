@@ -76,9 +76,9 @@ class _SearchTextFieldState extends State<SearchTextField> {
             ),
             hintText: widget.hintext,
             hintStyle: TextStyle(
-              color: Colors.grey,
-              fontSize: ScreenUtil().setSp(16),
-              fontWeight: FontWeight.normal,
+              color: AppColors.text_desc,
+              fontSize: ScreenUtil().setSp(14),
+              fontFamily: "Montserrat-Regular",
             ),
             prefixIcon: Transform.scale(
               scale: 0.45,

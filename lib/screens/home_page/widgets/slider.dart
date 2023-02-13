@@ -109,7 +109,7 @@ class _SliderWidgetState extends State<SliderWidget> {
                                     // ),
                                     SizedBox(
                                       height: 35,
-                                      width: 125,
+                                      width: 130,
                                       child: TextButton(
                                         style: ButtonStyle(
                                           backgroundColor: MaterialStateProperty.all(Colors.blue),
@@ -123,16 +123,17 @@ class _SliderWidgetState extends State<SliderWidget> {
                                         child: Row(
                                           crossAxisAlignment: CrossAxisAlignment.center,
                                           children: [
+                                            5.horizontalSpace,
                                             Text(
                                               "Book Now",
                                               style: TextStyle(
                                                 fontWeight: FontWeight.w500,
                                                 color: Colors.white,
                                                 fontSize: 14,
-                                                fontFamily: 'Montserrat-Light',
+                                                fontFamily: 'Montserrat-bold',
                                               ),
                                             ),
-                                            15.horizontalSpace,
+                                            10.horizontalSpace,
                                             Image.asset('assets/icons/arw.png', scale: 2,fit: BoxFit.cover),
                                           ],
                                         ),

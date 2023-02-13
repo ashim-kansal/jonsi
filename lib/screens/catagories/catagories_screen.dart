@@ -69,7 +69,7 @@ Widget _buildOverlayContent(BuildContext context, bool showBackButton) {
                                 Radius.circular(10)),
                             child: Image.network(
                               response.data!.baseUrl+"/"+item.image,
-                              width: ScreenUtil().setWidth(100),
+                              width: ScreenUtil().setWidth(50),
                             )),
                       ),
                       SizedBox(
@@ -81,7 +81,7 @@ Widget _buildOverlayContent(BuildContext context, bool showBackButton) {
                             crossAxisAlignment:
                             CrossAxisAlignment.start,
                             mainAxisAlignment:
-                            MainAxisAlignment.start,
+                            MainAxisAlignment.center,
                             children: [
                               Text(
                                 item.name,
@@ -94,7 +94,7 @@ Widget _buildOverlayContent(BuildContext context, bool showBackButton) {
                                 padding:
                                 const EdgeInsets.only(top: 8.0),
                                 child: Text(
-                                  "",
+                                  "abcd abcd",
                                   style: TextStyle(
                                       color: Colors.grey,
                                       fontSize:
