@@ -6,6 +6,8 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kappu/components/AppColors.dart';
 import 'package:kappu/components/MyAppBar.dart';
+import 'package:kappu/screens/ProviderScreens/item_recommended.dart';
+import 'package:kappu/screens/ProviderScreens/item_review.dart';
 import 'package:kappu/screens/ProviderScreens/order_review.dart';
 
 import '../../models/serializable_model/provider_detail_model.dart';
@@ -207,6 +209,8 @@ class _ProviderDetailScreenState extends State<ProviderDetailScreen> {
                                   color: Colors.white,
                                   borderRadius: BorderRadius.circular(8)),
                               child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
                                     'desc',
@@ -230,7 +234,7 @@ class _ProviderDetailScreenState extends State<ProviderDetailScreen> {
                                       Text(
                                           response.data![0].servicepackages !=
                                                   null
-                                              ? '${response.data![0].servicepackages!.price!}'
+                                              ? '\$ ${response.data![0].servicepackages!.price!}'
                                               : '',
                                           style: TextStyle(
                                               color: Colors.black,
@@ -482,171 +486,35 @@ class _ProviderDetailScreenState extends State<ProviderDetailScreen> {
                                   ),
                                 ],
                               )),
-                          if (response.data![0].reviewCount! > 0)
-                            Container(
-                              padding: EdgeInsets.only(
-                                  left: 20, right: 20, bottom: 5, top: 10),
-                              child: Text(
-                                response.data![0].reviewCount!.toString(),
-                                style: TextStyle(
-                                    color: Color(0xffF79E1F),
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold),
-                              ),
+                          Container(
+                            padding: EdgeInsets.only(
+                                left: 20, right: 20, bottom: 5, top: 10),
+                            child: Text(
+                              '123 Reviews',
+                              style: TextStyle(
+                                  color: Color(0xffF79E1F),
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold),
                             ),
-                          if (response.data![0].reviewCount! > 0)
-                            Container(
-                              padding: const EdgeInsets.only(
-                                  left: 20, right: 20, top: 0, bottom: 0),
-                              height: 145,
-                              child: SizedBox(
-                                  height: 100,
-                                  width: 250,
-                                  child: ListView.builder(
-                                    padding: EdgeInsets.zero,
-                                    shrinkWrap: true,
-                                    scrollDirection: Axis.horizontal,
-                                    itemCount:
-                                        response.data![0].reviews!.length,
-                                    itemBuilder: (context, index) {
-                                      return Column(
-                                        children: [
-                                          Row(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            children: [
-                                              Container(
-                                                  width: 250,
-                                                  child: Card(
-                                                      child: Padding(
-                                                    padding: EdgeInsets.all(15),
-                                                    child: Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        Row(
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .start,
-                                                          children: [
-                                                            CircleAvatar(
-                                                              radius:
-                                                                  ScreenUtil()
-                                                                      .setHeight(
-                                                                          15),
-                                                              backgroundImage:
-                                                                  NetworkImage(
-                                                                      'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500'),
-                                                            ),
-                                                            SizedBox(
-                                                              width: 5,
-                                                            ),
-                                                            Column(
-                                                              crossAxisAlignment:
-                                                                  CrossAxisAlignment
-                                                                      .start,
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .start,
-                                                              children: const [
-                                                                Text(
-                                                                  'Name',
-                                                                  style: TextStyle(
-                                                                      color: Colors
-                                                                          .black,
-                                                                      fontSize:
-                                                                          15,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .bold),
-                                                                ),
-                                                                Text(
-                                                                  'Location',
-                                                                  style: TextStyle(
-                                                                      color: Colors
-                                                                          .grey,
-                                                                      fontSize:
-                                                                          15,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .normal),
-                                                                ),
-                                                              ],
-                                                            )
-                                                          ],
-                                                        ),
-                                                        Row(
-                                                          children: [
-                                                            RatingBar.builder(
-                                                              initialRating: double
-                                                                  .parse(response
-                                                                      .data![0]
-                                                                      .reviews![
-                                                                          index]
-                                                                      .rating!),
-                                                              minRating: 1,
-                                                              direction: Axis
-                                                                  .horizontal,
-                                                              allowHalfRating:
-                                                                  true,
-                                                              itemCount: 5,
-                                                              itemSize: 20,
-                                                              ignoreGestures:
-                                                                  true,
-                                                              itemPadding:
-                                                                  EdgeInsets.only(
-                                                                      right:
-                                                                          0.1),
-                                                              itemBuilder: (context,
-                                                                      _) =>
-                                                                  Icon(
-                                                                      Icons
-                                                                          .star,
-                                                                      color: Colors
-                                                                          .amber),
-                                                              onRatingUpdate:
-                                                                  (rating) {
-                                                                print(rating);
-                                                              },
-                                                            )
-                                                          ],
-                                                        ),
-                                                        Text(
-                                                          response
-                                                              .data![0]
-                                                              .reviews![index]
-                                                              .review!,
-                                                          maxLines: 3,
-                                                          style: TextStyle(
-                                                              color:
-                                                                  Colors.grey,
-                                                              fontSize: 12,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .normal),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ))),
-                                              SizedBox(
-                                                width: 10,
-                                              )
-                                            ],
-                                          ),
-                                        ],
-                                      );
-                                    },
-                                  )),
-                            ),
+                          ),
+                          Container(
+                            padding: const EdgeInsets.only(
+                                left: 20, right: 20, top: 0, bottom: 0),
+                            height: 145,
+                            child: SizedBox(
+                                height: 100,
+                                width: 250,
+                                child: ListView.builder(
+                                  padding: EdgeInsets.zero,
+                                  shrinkWrap: true,
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount:
+                                  3,
+                                  itemBuilder: (context, index) {
+                                    return ReviewItem(reviewItem: null);
+                                  },
+                                )),
+                          ),
                           Container(
                             padding: EdgeInsets.only(left: 20, right: 20),
                             child: const Text(
@@ -657,53 +525,24 @@ class _ProviderDetailScreenState extends State<ProviderDetailScreen> {
                                   fontWeight: FontWeight.bold),
                             ),
                           ),
+
                           Container(
-                            padding: const EdgeInsets.all(20),
-                            height: 250,
-                            child: ListView(
-                              shrinkWrap: true,
-                              scrollDirection: Axis.horizontal,
-                              children: [
-                                Container(
-                                  width: 120,
-                                  height: 200,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(5),
-                                      color: Colors.black),
-                                ),
-                                const SizedBox(
-                                  width: 10,
-                                ),
-                                Container(
-                                  width: 120,
-                                  height: 200,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(5),
-                                      color: Colors.black),
-                                ),
-                                const SizedBox(
-                                  width: 10,
-                                ),
-                                Container(
-                                  width: 120,
-                                  height: 200,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(5),
-                                      color: Colors.black),
-                                ),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                Container(
-                                  width: 120,
-                                  height: 200,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(5),
-                                      color: Colors.black),
-                                ),
-                              ],
-                            ),
-                          )
+                            padding: const EdgeInsets.only(
+                                left: 20, right: 20, top: 0, bottom: 0),
+                            height: 200,
+                            child: SizedBox(
+                                height: 100,
+                                child: ListView.builder(
+                                  padding: EdgeInsets.zero,
+                                  shrinkWrap: true,
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount:
+                                  3,
+                                  itemBuilder: (context, index) {
+                                    return RecommendedItem(item: null);
+                                  },
+                                )),
+                          ),
                         ],
                       ))
                     ],
