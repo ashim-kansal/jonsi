@@ -71,7 +71,7 @@ class _AddGigState extends State<AddGig> {
 
   Future source(BuildContext mContext, bool isVideo) async {
     return showDialog(
-        context: context,
+        context: mContext,
         builder: (BuildContext context) {
           return CupertinoAlertDialog(
               title: const Text("Choose Option"),
@@ -201,9 +201,8 @@ class _AddGigState extends State<AddGig> {
                       10.verticalSpace,
                       AddPhotoWidget(
                         isUploading: false,
-                        onTap: () {
-                          print('inside>>>>>>>>>');
-                          source(context, false);
+                        onTap: () async {
+                          await source(context, false);
                         },
                         icon: Icons.upload,
                         progress: progress,
@@ -346,7 +345,7 @@ class _AddGigState extends State<AddGig> {
         setState(() {
           isLoading = false;
         });
-        if(e.response !=null && e.response.data['data'].length>0){
+        if(e.response !=null && e.response.data['errors'].length>0){
           showAlertDialog(
               error: "Please check your email address",
               errorType: "Alert");

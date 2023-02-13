@@ -62,6 +62,7 @@ class _ServicescontainerState extends State<Servicescontainer> {
                             color: Colors.white,
                           ),
                           child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Padding(
                                 padding: const EdgeInsets.only(top: 8.0),
