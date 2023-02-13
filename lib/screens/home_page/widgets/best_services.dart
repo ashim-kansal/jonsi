@@ -64,7 +64,8 @@ class _OurBestServicesState extends State<OurBestServices> {
                                               child: Column(
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment
-                                                        .stretch, // add this
+                                                        .stretch,
+                                                mainAxisAlignment: MainAxisAlignment.center, // add this
                                                 children: <Widget>[
                                                   ClipRRect(
                                                     borderRadius:

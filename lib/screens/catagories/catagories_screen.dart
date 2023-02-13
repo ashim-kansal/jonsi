@@ -91,7 +91,10 @@ Widget _buildOverlayContent(BuildContext context, bool showBackButton) {
                             padding:
                             const EdgeInsets.only(top: 8.0),
                             child: Text(
-                              "",
+                              item.description,
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              softWrap: false,
                               style: TextStyle(
                                   color: Colors.grey,
                                   fontSize:

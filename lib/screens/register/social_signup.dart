@@ -191,7 +191,7 @@ class SocailSignUpScreen extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        "Skip",
+                        "",
                         style: TextStyle(
                           color: Color(0xFF4995EB),
                           fontSize: 14,
