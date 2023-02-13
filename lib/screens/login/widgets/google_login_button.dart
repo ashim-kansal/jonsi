@@ -68,10 +68,10 @@ class _GoogleLoginButtonState extends State<GoogleLoginButton> {
 }
 
 class FacebookLoginButton extends StatefulWidget {
-  final bool action;
+  Function()? onTap;
   final String text;
-  const FacebookLoginButton(
-      {Key? key, required this.action, required this.text})
+  FacebookLoginButton(
+      {Key? key, this.onTap, required this.text})
       : super(key: key);
 
   @override
@@ -79,20 +79,6 @@ class FacebookLoginButton extends StatefulWidget {
 }
 
 class _FacebookLoginButtonState extends State<FacebookLoginButton> {
-  Future<void> signInWithFacebook(BuildContext context) async {
-    try {
-      final authService = FacebookAuthService();
-      final user = await authService.fblogin();
-      print('uid: ${user?.token}');
-      Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-              builder: (context) => const BottomNavBar(isprovider: false)));
-    } catch (e) {
-      // TODO: Show alert here
-      print(e);
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -126,9 +112,7 @@ class _FacebookLoginButtonState extends State<FacebookLoginButton> {
             Image.asset('assets/icons/f.png', scale: 1.0),
           ],
         ),
-        onPressed: () async {
-          signInWithFacebook(context);
-        },
+        onPressed: widget.onTap,
       ),
     );
   }

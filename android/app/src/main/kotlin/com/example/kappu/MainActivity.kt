@@ -1,4 +1,4 @@
-package com.thefifthsolution.io.jonsi
+package com.urbanmalta
 
 import io.flutter.embedding.android.FlutterActivity
 

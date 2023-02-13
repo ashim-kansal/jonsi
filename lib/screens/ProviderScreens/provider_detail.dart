@@ -42,7 +42,7 @@ class _ProviderDetailScreenState extends State<ProviderDetailScreen> {
                 );
               } else {
                 return Container(
-                  color: AppColors.app_bg,
+                  color: AppColors.color_f2f7fd,
                   child: Column(
                     children: [
                       Stack(
@@ -106,8 +106,8 @@ class _ProviderDetailScreenState extends State<ProviderDetailScreen> {
                                           : '',
                                       style: const TextStyle(
                                           color: Colors.black,
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold),
+                                          fontSize: 16,
+                                          fontFamily: 'Montserrat-Bold'),
                                     ),
                                     Row(
                                       children: [
@@ -124,11 +124,20 @@ class _ProviderDetailScreenState extends State<ProviderDetailScreen> {
                                               EdgeInsets.only(right: 0.1),
                                           itemBuilder: (context, _) => Icon(
                                               Icons.star,
-                                              color: Colors.amber),
+                                              color: AppColors.app_yellow),
                                           onRatingUpdate: (rating) {
                                             print(rating);
                                           },
-                                        )
+                                        ),
+                                        Text(
+                                          ' ${response.data![0].rating}',
+                                          style: TextStyle(fontSize: 14.sp, color: AppColors.app_yellow, fontFamily: "Montserrat-bold"),
+                                        ),Text(
+                                          ' (0 Rating)',
+                                          style: TextStyle(fontSize: 10.sp, color: AppColors.text_desc,
+                                              fontFamily: "Montserrat-regular"
+                                          ),
+                                        ),
                                       ],
                                     )
                                   ],
@@ -136,6 +145,7 @@ class _ProviderDetailScreenState extends State<ProviderDetailScreen> {
                               ],
                             ),
                           ),
+                          5.verticalSpace,
                           Container(
                               padding: EdgeInsets.all(10),
                               child: Text(
@@ -143,16 +153,16 @@ class _ProviderDetailScreenState extends State<ProviderDetailScreen> {
                                 style: TextStyle(
                                     color: Colors.black,
                                     fontSize: 18,
-                                    fontWeight: FontWeight.bold),
+                                    fontFamily: 'Montserrat-Bold'),
                               )),
                           Container(
-                              padding: EdgeInsets.all(10),
+                              padding: EdgeInsets.fromLTRB(10,0,10,10),
                               child: Text(
                                 response.data![0].description!,
                                 style: TextStyle(
-                                    color: Colors.grey,
+                                    color: AppColors.text_desc,
                                     fontSize: 14,
-                                    fontWeight: FontWeight.normal),
+                                    fontFamily: 'Montserrat-Regular'),
                               )),
                           Container(
                               padding: EdgeInsets.all(15),
@@ -164,39 +174,39 @@ class _ProviderDetailScreenState extends State<ProviderDetailScreen> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
                                 children: [
-                                  Row(
+                                  Column(
                                     children: [
                                       Text(
                                         'Location',
                                         style: TextStyle(
-                                            color: Colors.grey,
+                                            color: AppColors.text_desc,
                                             fontSize: 12,
-                                            fontWeight: FontWeight.normal),
+                                            fontFamily: 'Montserrat-Regular'),
                                       ),
                                       Text(
-                                        '',
+                                        response.data![0].servicepackages!=null ? response.data![0].servicepackages!.location ?? "" : "",
                                         style: TextStyle(
                                             color: Colors.black,
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.bold),
+                                            fontSize: 18,
+                                            fontFamily: 'Montserrat-SemiBold'),
                                       )
                                     ],
                                   ),
-                                  Row(
+                                  Column(
                                     children: [
                                       Text(
                                         'Member Joined',
                                         style: TextStyle(
-                                            color: Colors.grey,
+                                            color: AppColors.text_desc,
                                             fontSize: 12,
-                                            fontWeight: FontWeight.normal),
+                                            fontFamily: 'Montserrat-Regular'),
                                       ),
                                       Text(
                                         'Dec 2020',
                                         style: TextStyle(
                                             color: Colors.black,
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.bold),
+                                            fontSize: 18,
+                                            fontFamily: 'Montserrat-SemiBold'),
                                       )
                                     ],
                                   ),
@@ -212,25 +222,24 @@ class _ProviderDetailScreenState extends State<ProviderDetailScreen> {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(
-                                    'desc',
-                                    style: TextStyle(
-                                        color: Colors.grey,
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.normal),
-                                  ),
-                                  SizedBox(
-                                    height: 15,
-                                  ),
+                                  // Text(
+                                  //   'desc',
+                                  //   style: TextStyle(
+                                  //       color: Colors.grey,
+                                  //       fontSize: 14,
+                                  //       fontWeight: FontWeight.normal),
+                                  // ),
+                                  // SizedBox(
+                                  //   height: 15,
+                                  // ),
                                   Row(
                                     children: [
                                       Expanded(
                                           child: Text('Hourly Price',
                                               style: TextStyle(
                                                   color: Colors.black,
-                                                  fontSize: 16,
-                                                  fontWeight:
-                                                      FontWeight.bold))),
+                                                  fontSize: 20,
+                                                  fontFamily: "Montserrat-Bold"))),
                                       Text(
                                           response.data![0].servicepackages !=
                                                   null
@@ -238,8 +247,8 @@ class _ProviderDetailScreenState extends State<ProviderDetailScreen> {
                                               : '',
                                           style: TextStyle(
                                               color: Colors.black,
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.bold)),
+                                              fontSize: 20,
+                                              fontFamily: "Montserrat-Bold")),
                                     ],
                                   ),
                                   SizedBox(
@@ -318,7 +327,7 @@ class _ProviderDetailScreenState extends State<ProviderDetailScreen> {
                                       response.data![0].ratingCount != null
                                           ? double.parse(
                                               response.data![0].ratingCount!)
-                                          : 0,
+                                          : 3,
                                   minRating: 1,
                                   direction: Axis.horizontal,
                                   allowHalfRating: true,
@@ -327,10 +336,17 @@ class _ProviderDetailScreenState extends State<ProviderDetailScreen> {
                                   ignoreGestures: true,
                                   itemPadding: EdgeInsets.only(right: 0.1),
                                   itemBuilder: (context, _) =>
-                                      Icon(Icons.star, color: Colors.amber),
+                                      Icon(Icons.star, color: AppColors.app_yellow),
                                   onRatingUpdate: (rating) {
                                     print(rating);
                                   },
+                                ),
+                                Text(
+                                  ' ${response.data![0].ratingCount != null
+                                      ? double.parse(
+                                      response.data![0].ratingCount!)
+                                      : 3}',
+                                  style: TextStyle(fontSize: 14.sp, color: AppColors.app_yellow, fontFamily: "Montserrat-bold"),
                                 )
                               ],
                             ),
@@ -351,17 +367,16 @@ class _ProviderDetailScreenState extends State<ProviderDetailScreen> {
                                               style: TextStyle(
                                                   color: Colors.black,
                                                   fontSize: 14,
-                                                  fontWeight:
-                                                      FontWeight.bold))),
+                                                  fontFamily:'Montserrat-Bold'))),
                                       Text('20 Reviews',
                                           style: TextStyle(
-                                              color: Colors.grey,
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.normal)),
+                                            color: AppColors.text_desc,
+                                            fontSize: 10,
+                                            fontFamily: 'Montserrat-Regular')),
                                     ],
                                   ),
                                   const SizedBox(
-                                    height: 5,
+                                    height: 2,
                                   ),
                                   const LinearProgressIndicator(
                                     backgroundColor: Colors.white,
@@ -370,7 +385,7 @@ class _ProviderDetailScreenState extends State<ProviderDetailScreen> {
                                     value: 20,
                                   ),
                                   const SizedBox(
-                                    height: 10,
+                                    height: 5,
                                   ),
                                   Row(
                                     children: [
@@ -379,17 +394,16 @@ class _ProviderDetailScreenState extends State<ProviderDetailScreen> {
                                               style: TextStyle(
                                                   color: Colors.black,
                                                   fontSize: 14,
-                                                  fontWeight:
-                                                      FontWeight.bold))),
+                                                  fontFamily:'Montserrat-Bold'))),
                                       Text('20 Reviews',
                                           style: TextStyle(
-                                              color: Colors.grey,
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.normal)),
+                                              color: AppColors.text_desc,
+                                              fontSize: 10,
+                                              fontFamily: 'Montserrat-Regular')),
                                     ],
                                   ),
                                   const SizedBox(
-                                    height: 5,
+                                    height: 2,
                                   ),
                                   const LinearProgressIndicator(
                                     backgroundColor: Colors.white,
@@ -398,7 +412,7 @@ class _ProviderDetailScreenState extends State<ProviderDetailScreen> {
                                     value: 0.8,
                                   ),
                                   const SizedBox(
-                                    height: 10,
+                                    height: 5,
                                   ),
                                   Row(
                                     children: [
@@ -407,13 +421,66 @@ class _ProviderDetailScreenState extends State<ProviderDetailScreen> {
                                               style: TextStyle(
                                                   color: Colors.black,
                                                   fontSize: 14,
-                                                  fontWeight:
-                                                      FontWeight.bold))),
+                                                  fontFamily:'Montserrat-Bold'))),
                                       Text('20 Reviews',
                                           style: TextStyle(
-                                              color: Colors.grey,
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.normal)),
+                                              color: AppColors.text_desc,
+                                              fontSize: 10,
+                                              fontFamily: 'Montserrat-Regular')),
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    height: 2,
+                                  ),
+                                  const LinearProgressIndicator(
+                                    backgroundColor: Colors.white,
+                                    valueColor: AlwaysStoppedAnimation<Color>(
+                                        Colors.blue),
+                                    value: 20,
+                                  ),
+                                  const SizedBox(
+                                    height: 5,
+                                  ),
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                          child: Text('5 Stars',
+                                              style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 14,
+                                                  fontFamily:'Montserrat-Bold'))),
+                                      Text('20 Reviews',
+                                          style: TextStyle(
+                                              color: AppColors.text_desc,
+                                              fontSize: 10,
+                                              fontFamily: 'Montserrat-Regular')),
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    height: 2,
+                                  ),
+                                  const LinearProgressIndicator(
+                                    backgroundColor: Colors.white,
+                                    valueColor: AlwaysStoppedAnimation<Color>(
+                                        Colors.blue),
+                                    value: 20,
+                                  ),
+                                  const SizedBox(
+                                    height: 5,
+                                  ),
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                          child: Text('5 Stars',
+                                              style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 14,
+                                                  fontFamily:'Montserrat-Bold'))),
+                                      Text('20 Reviews',
+                                          style: TextStyle(
+                                              color: AppColors.text_desc,
+                                              fontSize: 10,
+                                              fontFamily: 'Montserrat-Regular')),
                                     ],
                                   ),
                                   const SizedBox(
@@ -425,72 +492,16 @@ class _ProviderDetailScreenState extends State<ProviderDetailScreen> {
                                         Colors.blue),
                                     value: 20,
                                   ),
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
-                                  Row(
-                                    children: [
-                                      Expanded(
-                                          child: Text('5 Stars',
-                                              style: TextStyle(
-                                                  color: Colors.black,
-                                                  fontSize: 14,
-                                                  fontWeight:
-                                                      FontWeight.bold))),
-                                      Text('20 Reviews',
-                                          style: TextStyle(
-                                              color: Colors.grey,
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.normal)),
-                                    ],
-                                  ),
-                                  const SizedBox(
-                                    height: 5,
-                                  ),
-                                  const LinearProgressIndicator(
-                                    backgroundColor: Colors.white,
-                                    valueColor: AlwaysStoppedAnimation<Color>(
-                                        Colors.blue),
-                                    value: 20,
-                                  ),
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
-                                  Row(
-                                    children: [
-                                      Expanded(
-                                          child: Text('5 Stars',
-                                              style: TextStyle(
-                                                  color: Colors.black,
-                                                  fontSize: 14,
-                                                  fontWeight:
-                                                      FontWeight.bold))),
-                                      Text('20 Reviews',
-                                          style: TextStyle(
-                                              color: Colors.grey,
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.normal)),
-                                    ],
-                                  ),
-                                  const SizedBox(
-                                    height: 5,
-                                  ),
-                                  const LinearProgressIndicator(
-                                    backgroundColor: Colors.white,
-                                    valueColor: AlwaysStoppedAnimation<Color>(
-                                        Colors.blue),
-                                    value: 20,
-                                  ),
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
+                                  // const SizedBox(
+                                  //   height: 10,
+                                  // ),
                                 ],
                               )),
                           Container(
                             padding: EdgeInsets.only(
                                 left: 20, right: 20, bottom: 5, top: 10),
                             child: Text(
-                              '123 Reviews',
+                              response.data![0].reviewCount!.toString(),
                               style: TextStyle(
                                   color: Color(0xffF79E1F),
                                   fontSize: 18,

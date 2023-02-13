@@ -82,7 +82,8 @@ class _BookingScreenState extends State<BookingScreen> {
                 FutureBuilder(
                     future: HttpClient().getActivebookings(
                         StorageManager().userId.toString(),
-                        "Bearer "+StorageManager().accessToken),
+                        "Bearer "+StorageManager().accessToken,
+                    StorageManager().isProvider ? "provider" : "user"),
                     builder: (context, AsyncSnapshot<List<OrderListResponse>> snapshot) {
                       if (snapshot.connectionState != ConnectionState.done) {
                         return const Center(
@@ -124,7 +125,8 @@ class _BookingScreenState extends State<BookingScreen> {
                 FutureBuilder(
                     future: HttpClient().getrequestedbookings(
                         StorageManager().userId.toString(),
-                        "Bearer "+StorageManager().accessToken ),
+                        "Bearer "+StorageManager().accessToken,
+                        StorageManager().isProvider ? "provider" : "user" ),
                     builder: (context, AsyncSnapshot<List<OrderListResponse>> snapshot) {
                       if (snapshot.connectionState != ConnectionState.done) {
                         return const Center(
@@ -166,7 +168,8 @@ class _BookingScreenState extends State<BookingScreen> {
                 FutureBuilder(
                     future: HttpClient().getcompletedbooking(
                         StorageManager().userId.toString(),
-                        "Bearer "+StorageManager().accessToken ),
+                        "Bearer "+StorageManager().accessToken,
+                        StorageManager().isProvider ? "provider" : "user" ),
                     builder: (context, AsyncSnapshot<List<OrderListResponse>> snapshot) {
                       if (snapshot.connectionState != ConnectionState.done) {
                         return const Center(
@@ -208,7 +211,8 @@ class _BookingScreenState extends State<BookingScreen> {
                 FutureBuilder(
                     future: HttpClient().getCancelledbooking(
                         StorageManager().userId.toString(),
-                        "Bearer "+StorageManager().accessToken ),
+                        "Bearer "+StorageManager().accessToken,
+                        StorageManager().isProvider ? "provider" : "user" ),
                     builder: (context, AsyncSnapshot<List<OrderListResponse>> snapshot) {
                       if (snapshot.connectionState != ConnectionState.done) {
                         return const Center(

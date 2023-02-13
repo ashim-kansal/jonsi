@@ -95,22 +95,22 @@ abstract class HttpClient {
   @POST('user/notifications')
   Future<List<NotificationModel>> getNotifications(userId, token);
 
-  @POST('orders/provider/completed')
+  @POST('orders/completed')
   Future<List<OrderListResponse>> getcompletedbooking(
-      String provider_id, String token);
+      String provider_id, String token, String by);
 
-  @POST('orders/provider/cancelled')
+  @POST('orders/cancelled')
   Future<List<OrderListResponse>> getCancelledbooking(
-      String provider_id, String token);
+      String provider_id, String token, String by);
 
-  @POST('orders/provider/requests')
+  @POST('orders/requests')
   Future<List<OrderListResponse>> getrequestedbookings(
-      String provider_id, String token);
+      String provider_id, String token, String by);
 
 
-  @POST('orders/provider/accpeted')
+  @POST('orders/accpeted')
   Future<List<OrderListResponse>> getActivebookings(
-      String provider_id, String token);
+      String provider_id, String token, String by);
 
 
   @POST('order/add')
