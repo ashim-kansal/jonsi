@@ -555,7 +555,7 @@ class _SignUpState extends State<SignUp> {
                           isLoading: loading,
                           onPressed: () {
                             widget.isprovider
-                                ? onregisterpressedprovider()
+                                ? onregisterpressedprovider
                                 : onregisterpressed();
                           }),
                       10.verticalSpace,
