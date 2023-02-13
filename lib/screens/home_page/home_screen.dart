@@ -47,26 +47,28 @@ class _HomeScreenState extends State<HomeScreen> {
                   Padding(
                     padding: EdgeInsets.only(left: ScreenUtil().setWidth(10)),
                     child: Row(children: [
-                      Image.asset('assets/icons/location.png', scale: 1.0),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(5, 2, 2, 2.0),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text("Current Location",
-                                style: TextStyle(
-                                    color: AppColors.title_desc,
-                                    fontSize: ScreenUtil().setSp(10),
-                                    fontWeight: FontWeight.w500)),
-                            Text("Germany",
-                                style: TextStyle(
-                                    color: AppColors.text_desc,
-                                    fontSize: ScreenUtil().setSp(14),
-                                    fontWeight: FontWeight.w500))
-                          ],
-                        ),
-                      ),
+                      Image.asset('assets/images/colorfulLogo.png',
+                        width: MediaQuery.of(context).size.width * 0.17,
+                        height: MediaQuery.of(context).size.height * 0.06,),
+                      // Padding(
+                      //   padding: const EdgeInsets.fromLTRB(5, 2, 2, 2.0),
+                      //   child: Column(
+                      //     mainAxisAlignment: MainAxisAlignment.center,
+                      //     crossAxisAlignment: CrossAxisAlignment.center,
+                      //     children: [
+                      //       Text("Current Location",
+                      //           style: TextStyle(
+                      //               color: AppColors.title_desc,
+                      //               fontSize: ScreenUtil().setSp(10),
+                      //               fontWeight: FontWeight.w500)),
+                      //       Text("Germany",
+                      //           style: TextStyle(
+                      //               color: AppColors.text_desc,
+                      //               fontSize: ScreenUtil().setSp(14),
+                      //               fontWeight: FontWeight.w500))
+                      //     ],
+                      //   ),
+                      // ),
                       Spacer(),
                       Padding(
                         padding: const EdgeInsets.only(left: 8.0),

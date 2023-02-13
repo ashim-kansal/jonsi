@@ -64,7 +64,8 @@ class _OurBestServicesState extends State<OurBestServices> {
                                               child: Column(
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment
-                                                        .stretch, // add this
+                                                        .stretch,
+                                                mainAxisAlignment: MainAxisAlignment.center, // add this
                                                 children: <Widget>[
                                                   ClipRRect(
                                                     borderRadius:
@@ -92,8 +93,7 @@ class _OurBestServicesState extends State<OurBestServices> {
                                                               .text_desc,
                                                           fontSize: ScreenUtil()
                                                               .setSp(14),
-                                                          fontWeight:
-                                                              FontWeight.bold),
+                                                          fontFamily: "Montserrat-bold",),
                                                     ),
                                                   )
                                                 ],
@@ -115,7 +115,6 @@ class _OurBestServicesState extends State<OurBestServices> {
   getImage(String image) {
     return Image.network(
         "https://urbanmalta.com/public/uploads/servicecategory/$image",
-        // width: 300,
         height: 40,
         width: 40,
         fit: BoxFit.contain);

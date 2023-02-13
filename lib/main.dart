@@ -238,7 +238,7 @@ class _InitialScreenState extends State<InitialScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: AppColors.app_bg,
-        body: StorageManager().accessToken!=null&& StorageManager().accessToken.isNotEmpty
+        body: StorageManager().accessToken.isNotEmpty
             ? BottomNavBar(
                 isprovider: false,
               )

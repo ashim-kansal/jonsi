@@ -68,16 +68,19 @@ class ProviderOffersFromHomePage extends ModalRoute<void> {
                           style: TextStyle(
                               fontSize: 20.sp,
                               color: Colors.black,
-                              fontWeight: FontWeight.bold)),
+                              fontFamily: "Montserrat-bold")),
                       SizedBox(
                         height: 10,
                       ),
                       Text(
                         this.desc,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        softWrap: false,
                         style: TextStyle(
                             fontSize: 12.sp,
                             color: AppColors.title_desc,
-                            fontWeight: FontWeight.bold),
+                            fontFamily: "Montserrat-regular"),
                         textAlign: TextAlign.center,
                       )
                     ],
@@ -85,13 +88,13 @@ class ProviderOffersFromHomePage extends ModalRoute<void> {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.all(10),
+                padding: EdgeInsets.fromLTRB(10,25,5,10),
                 child: Text(
                   "Recommended for you",
                   style: TextStyle(
                       color: Colors.black,
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.bold
+                      fontSize: 16.sp,
+                      fontFamily: "Montserrat-bold"
                   ),
                 ),
               ),

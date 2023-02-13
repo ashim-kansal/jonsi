@@ -273,7 +273,7 @@ class _RegisterMoreState extends State<RegisterMore> {
                           CustomButton(
                               buttontext: "Next",
                               isLoading: loading,
-                              onPressed: onregisterpressedprovider),
+                              onPressed: onregisterpressedprovider()),
                           10.verticalSpace,
 
                           // const OrSignUpWith()
