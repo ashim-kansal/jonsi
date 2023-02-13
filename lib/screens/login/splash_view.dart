@@ -204,10 +204,11 @@ class _SplashViewState extends State<SplashView> {
     );
   }
 
-  Column returnButtonWithTextImage(
+  SizedBox returnButtonWithTextImage(
       BuildContext context, String imageName, String titleStr) {
-    return Column(
+    return SizedBox(height:140,child:Column(
       crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         SizedBox(
           height: 15.h,
@@ -234,7 +235,7 @@ class _SplashViewState extends State<SplashView> {
           height: 15.h,
         ),
       ],
-    );
+    ));
   }
 
   Text returnMarketPlaceText() {

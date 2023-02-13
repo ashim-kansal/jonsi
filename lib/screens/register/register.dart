@@ -45,17 +45,22 @@ class _SignUpState extends State<SignUp> {
   final _formState = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _nationalityController = TextEditingController();
-  final TextEditingController _descController = TextEditingController();
   final TextEditingController _phnocontroller = TextEditingController();
   final TextEditingController _ageController = TextEditingController();
-  final TextEditingController _rateController = TextEditingController();
-  final TextEditingController _extraRateController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _addresscontoller = TextEditingController();
   final TextEditingController _checkPasswordController =
       TextEditingController();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _lastnameController = TextEditingController();
+  bool isVaildFirstName = true;
+  bool isVaildLastName = true;
+  bool isVaildEmail = true;
+  bool isVaildPhone = true;
+  bool isVaildAge = true;
+  bool isVaildNati = true;
+  bool isVaildPassword = true;
+  bool isVaildConfirm = true;
 
   List<Language> languages = [
     Language(id: -1, name: 'English'),
@@ -85,31 +90,10 @@ class _SignUpState extends State<SignUp> {
   @override
   void initState() {
     super.initState();
-    print('bbbb');
-    // if (widget.isprovider) {
-    //   getcatagory();
-    // }
   }
-
-  // getcatagory() async {
-  //   await HttpClient()
-  //       .getCatagory()
-  //       .then((value) => {
-  //             if (value.status)
-  //               {
-  //                 setState(() {
-  //                   this.catagories = value.data;
-  //                 })
-  //               }
-  //           })
-  //       .catchError((e) {
-  //     BaseDio.getDioError(e);
-  //   });
-  // }
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -150,7 +134,13 @@ class _SignUpState extends State<SignUp> {
                         keyboardType: TextInputType.text,
                         prefixIcon: profileIcon,
                         hintText: 'First Name',
-                        onChanged: (value){
+                        isValid: isVaildFirstName,
+                        onChanged: (value) {
+                          if (value.isNotEmpty) {
+                            isVaildFirstName = true;
+                          } else {
+                            isVaildFirstName = false;
+                          }
                           setState(() {});
                         },
                       ),
@@ -161,7 +151,13 @@ class _SignUpState extends State<SignUp> {
                         keyboardType: TextInputType.text,
                         prefixIcon: profileIcon,
                         hintText: 'Last Name',
-                        onChanged: (value){
+                        isValid: isVaildLastName,
+                        onChanged: (value) {
+                          if (value.isNotEmpty) {
+                            isVaildLastName = true;
+                          } else {
+                            isVaildLastName = false;
+                          }
                           setState(() {});
                         },
                       ),
@@ -173,8 +169,13 @@ class _SignUpState extends State<SignUp> {
                         prefixIcon: emailIcon,
                         suffixIcon: isEmail(email) ? checkIcon : null,
                         hintText: 'Email',
+                        isValid: isVaildEmail,
                         onChanged: (value) {
-                          email = value;
+                          if (value.isNotEmpty && isEmail(value)) {
+                            isVaildEmail = true;
+                          } else {
+                            isVaildEmail = false;
+                          }
                           setState(() {});
                         },
                       ),
@@ -183,18 +184,25 @@ class _SignUpState extends State<SignUp> {
                         hintText: 'Phone Number',
                         keyboardType: TextInputType.number,
                         prefixIcon: profileIcon,
-                        onChanged: (value){
+                        isValid: isVaildPhone,
+                        onChanged: (value) {
+                          if (value.isNotEmpty && value.length == 10) {
+                            isVaildPhone = true;
+                          } else {
+                            isVaildPhone = false;
+                          }
                           setState(() {});
                         },
-                        validator: (value) =>
-                            value!.length!=10 ? "Phone Number should be 10 digit long" : null,
+                        validator: (value) => value!.length != 10
+                            ? "Phone Number should be 10 digit long"
+                            : null,
                       ),
                       if (!widget.isprovider)
                         CustomTextFormField(
                           controller: _addresscontoller,
                           hintText: 'Address',
                           keyboardType: TextInputType.text,
-                          onChanged: (value){
+                          onChanged: (value) {
                             setState(() {});
                           },
                           prefixIcon: const Icon(Icons.location_on),
@@ -203,7 +211,7 @@ class _SignUpState extends State<SignUp> {
                         ),
                       if (widget.isprovider)
                         InkWell(
-                          onTap: ()async{
+                          onTap: () async {
                             print('ssss');
                             DateTime? pickedDate = await showDatePicker(
                                 context: context,
@@ -216,35 +224,47 @@ class _SignUpState extends State<SignUp> {
                               print(
                                   pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
                               String formattedDate =
-                              DateFormat('dd/MM/yyyy').format(pickedDate);
+                                  DateFormat('dd/MM/yyyy').format(pickedDate);
                               print(
                                   formattedDate); //formatted date output using intl package =>  2021-03-16
                               setState(() {
-                                _ageController.text =
-                                    formattedDate;
+                                _ageController.text = formattedDate;
                                 //set output date to TextField value.
                               });
                             } else {}
                           },
                           child: CustomTextFormField(
-                          controller: _ageController,
-                          hintText: 'Age',
-                          readOnly: true,
-                          enabled: false,
-                            onChanged: (value){
+                            controller: _ageController,
+                            hintText: 'Age',
+                            readOnly: true,
+                            enabled: false,
+                            isValid: isVaildAge,
+                            onChanged: (value) {
+                              if (value.isNotEmpty) {
+                                isVaildAge = true;
+                              } else {
+                                isVaildAge = false;
+                              }
                               setState(() {});
                             },
-                          keyboardType: TextInputType.none,
-                          prefixIcon: profileIcon,
-                          validator: (value) => null,
-                        ),),
+                            keyboardType: TextInputType.none,
+                            prefixIcon: profileIcon,
+                            validator: (value) => null,
+                          ),
+                        ),
                       if (widget.isprovider)
                         CustomTextFormField(
                           controller: _nationalityController,
                           hintText: 'Nationality',
                           keyboardType: TextInputType.text,
                           prefixIcon: profileIcon,
-                          onChanged: (value){
+                          isValid: isVaildNati,
+                          onChanged: (value) {
+                            if (value.isNotEmpty) {
+                              isVaildNati = true;
+                            } else {
+                              isVaildNati = false;
+                            }
                             setState(() {});
                           },
                           validator: (value) =>
@@ -452,9 +472,17 @@ class _SignUpState extends State<SignUp> {
                                 ? passwordEyeIcon
                                 : passwordGreenEyeIcon),
                         hintText: "Password",
+                        isValid: isVaildPassword,
                         onChanged: (value) {
                           password = value;
                           passwordStrength = vaidatePassword(value);
+                          setState(() {});
+                          if (value.isNotEmpty &&
+                              vaidatePassword(value) == 'Strong') {
+                            isVaildPassword = true;
+                          } else {
+                            isVaildPassword = false;
+                          }
                           setState(() {});
                         },
                       ),
@@ -489,7 +517,13 @@ class _SignUpState extends State<SignUp> {
                         showPassword: _showCheckPassword,
                         controller: _checkPasswordController,
                         keyboardType: TextInputType.visiblePassword,
+                        isValid: isVaildConfirm,
                         onChanged: (value) {
+                          if (value.isNotEmpty && value == password) {
+                            isVaildConfirm = true;
+                          } else {
+                            isVaildConfirm = false;
+                          }
                           checkPassword = value;
                           setState(() {});
                         },
@@ -519,9 +553,11 @@ class _SignUpState extends State<SignUp> {
                       CustomButton(
                           buttontext: "Next",
                           isLoading: loading,
-                          onPressed: (){widget.isprovider
-                              ? onregisterpressedprovider
-                              : onregisterpressed();}),
+                          onPressed: () {
+                            widget.isprovider
+                                ? onregisterpressedprovider()
+                                : onregisterpressed();
+                          }),
                       10.verticalSpace,
 
                       // const OrSignUpWith()
@@ -537,70 +573,90 @@ class _SignUpState extends State<SignUp> {
   }
 
   onregisterpressedprovider() async {
-    if (_formState.currentState!.validate()) {
-
-      Map<String, dynamic> bodyprovider = {
-        'first_name': _nameController.text,
-        'last_name': _lastnameController.text,
-        'username': _lastnameController.text,
-        'email': _emailController.text,
-        'phone_number': _phnocontroller.text,
-        'password': _passwordController.text,
-        "Age": _ageController.text,
-        "nationality": _nationalityController.text,
-        "language": selectedLanguage.name,
-        "service_title": "proidehoubroufo-770",
-      };
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => RegisterMore(bodyprovider: bodyprovider)));
+    print("inside>>>>>>>>>>>>");
+    if (_nameController.text.isEmpty ||
+        _lastnameController.text.isEmpty ||
+        _emailController.text.isEmpty ||
+        !isEmail(_emailController.text) ||
+        _phnocontroller.text.isEmpty ||
+        _phnocontroller.text.length != 10 ||
+        _passwordController.text.isEmpty ||
+        passwordStrength == 'Weak' ||
+        _checkPasswordController.text.isEmpty ||
+        _checkPasswordController.text != _passwordController.text) {
+      return;
     }
+    Map<String, dynamic> bodyprovider = {
+      'first_name': _nameController.text,
+      'last_name': _lastnameController.text,
+      'username': _lastnameController.text,
+      'email': _emailController.text,
+      'phone_number': _phnocontroller.text,
+      'password': _passwordController.text,
+      "Age": _ageController.text,
+      "nationality": _nationalityController.text,
+      "language": selectedLanguage.name,
+      "service_title": "proidehoubroufo-770",
+    };
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => RegisterMore(bodyprovider: bodyprovider)));
+
   }
 
   onregisterpressed() async {
-    if (_formState.currentState!.validate()) {
-      if (!loading) {
+    if (_nameController.text.isEmpty ||
+        _lastnameController.text.isEmpty ||
+        _emailController.text.isEmpty ||
+        !isEmail(_emailController.text) ||
+        _phnocontroller.text.isEmpty ||
+        _phnocontroller.text.length != 10 ||
+        _passwordController.text.isEmpty ||
+        passwordStrength == 'Weak' ||
+        _checkPasswordController.text.isEmpty ||
+        _checkPasswordController.text != _passwordController.text) {
+      return;
+    }
+    if (!loading) {
+      setState(() {
+        this.loading = true;
+      });
+      Map<String, dynamic> body = {
+        'first_name': _nameController.text,
+        'username': _nameController.text + "_" + _lastnameController.text,
+        'last_name': _lastnameController.text,
+        'email': _emailController.text,
+        'phone_number': _phnocontroller.text,
+        'password': _passwordController.text,
+        'language': 'english',
+        'nationality': countryValue,
+      };
+
+      await HttpClient().userSignup(body, new File("path")).then((value) {
+        loading = false;
+
+        if (value?.data['status']) {
+          var provider = StorageManager();
+          provider.accessToken = value?.data['token'];
+          provider.name = _nameController.text + " " + _lastnameController.text;
+          provider.phone = _phnocontroller.text;
+          provider.email = _emailController.text;
+          provider.isProvider = false;
+          provider.nationality = value?.data['user']['nationality'];
+          provider.language = value?.data['user']['languages'];
+        }
+        setState(() {});
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+                builder: (context) => const BottomNavBar(isprovider: false)));
+      }).catchError((e) {
         setState(() {
-          this.loading = true;
+          this.loading = false;
         });
-        Map<String, dynamic> body = {
-          'first_name': _nameController.text,
-          'username': _nameController.text+"_"+_lastnameController.text,
-          'last_name': _lastnameController.text,
-          'email': _emailController.text,
-          'phone_number': _phnocontroller.text,
-          'password': _passwordController.text,
-          'language': 'english',
-          'nationality': countryValue,
-        };
-
-        await HttpClient().userSignup(body, new File("path")).then((value) {
-          loading = false;
-
-          if(value?.data['status']) {
-            var provider = StorageManager();
-            provider.accessToken = value?.data['token'];
-            provider.name = _nameController.text+ " "+_lastnameController.text;
-            provider.phone = _phnocontroller.text;
-            provider.email = _emailController.text;
-            provider.isProvider = false;
-            provider.nationality = value?.data['user']['nationality'];
-            provider.language = value?.data['user']['languages'];
-          }
-          setState(() {});
-          Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => const BottomNavBar(isprovider: false)));
-
-        }).catchError((e) {
-          setState(() {
-            this.loading = false;
-          });
-          BaseDio.getDioError(e);
-        });
-      }
+        BaseDio.getDioError(e);
+      });
     }
   }
 }

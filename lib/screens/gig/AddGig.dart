@@ -42,7 +42,6 @@ class _AddGigState extends State<AddGig> {
 
   Future getImage(ImageSource imageSource, context, bool isVideo) async {
     XFile? image;
-
     image = await ImagePicker().pickImage(source: imageSource);
     ImageCropper imageCropper = ImageCropper();
     if (image != null && !isVideo) {
@@ -70,7 +69,7 @@ class _AddGigState extends State<AddGig> {
     Navigator.pop(context);
   }
 
-  Future source(BuildContext context, bool isVideo) async {
+  Future source(BuildContext mContext, bool isVideo) async {
     return showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -203,6 +202,7 @@ class _AddGigState extends State<AddGig> {
                       AddPhotoWidget(
                         isUploading: false,
                         onTap: () {
+                          print('inside>>>>>>>>>');
                           source(context, false);
                         },
                         icon: Icons.upload,

@@ -27,6 +27,9 @@ class _RegisterMoreState extends State<RegisterMore> {
   final TextEditingController _descController = TextEditingController();
   final TextEditingController _rateController = TextEditingController();
   final TextEditingController _extraRateController = TextEditingController();
+  bool isValidDesc= true;
+  bool isValidRate= true;
+  bool isValidExtraRate= true;
 
   List<Category> catagories = [
     Category(id: 1, name: "Select a Service", createdAt: "",image: "", description: "")
@@ -211,6 +214,15 @@ class _RegisterMoreState extends State<RegisterMore> {
                             keyboardType: TextInputType.text,
                             prefixIcon: profileIcon,
                             maxlines: 5,
+                            isValid: isValidDesc,
+                            onChanged: (value) {
+                              if (value.isNotEmpty) {
+                                isValidDesc = true;
+                              } else {
+                                isValidDesc = false;
+                              }
+                              setState(() {});
+                            },
                             validator: (value) => value!.isEmpty
                                 ? "Enter Your Description"
                                 : null,
@@ -221,6 +233,15 @@ class _RegisterMoreState extends State<RegisterMore> {
                             hintText: '\$ per hour',
                             keyboardType: TextInputType.number,
                             prefixIcon: profileIcon,
+                            isValid: isValidRate,
+                            onChanged: (value) {
+                              if (value.isNotEmpty) {
+                                isValidRate = true;
+                              } else {
+                                isValidRate = false;
+                              }
+                              setState(() {});
+                            },
                             validator: (value) => value!.isEmpty
                                 ? "Enter \$ per hour"
                                 : value!.length > 2
@@ -232,6 +253,15 @@ class _RegisterMoreState extends State<RegisterMore> {
                             hintText: 'Extra \$ for urgent need',
                             keyboardType: TextInputType.number,
                             prefixIcon: profileIcon,
+                            isValid: isValidExtraRate,
+                            onChanged: (value) {
+                              if (value.isNotEmpty) {
+                                isValidExtraRate = true;
+                              } else {
+                                isValidExtraRate = false;
+                              }
+                              setState(() {});
+                            },
                             validator: (value) => value!.isEmpty
                                 ? "Enter extra \$"
                                 : value!.length > 2
@@ -243,7 +273,7 @@ class _RegisterMoreState extends State<RegisterMore> {
                           CustomButton(
                               buttontext: "Next",
                               isLoading: loading,
-                              onPressed: onregisterpressedprovider),
+                              onPressed: onregisterpressedprovider()),
                           10.verticalSpace,
 
                           // const OrSignUpWith()
@@ -262,33 +292,36 @@ class _RegisterMoreState extends State<RegisterMore> {
   }
 
   onregisterpressedprovider() async {
-    if (_formState.currentState!.validate()) {
-      Map<String, dynamic> bodyprovider1 = {
-        'first_name': widget.bodyprovider['first_name'],
-        'last_name': widget.bodyprovider['last_name'],
-        'username': widget.bodyprovider['username'],
-        'email': widget.bodyprovider['email'],
-        'category': selectedcatagory.id,
-        'phone_number': widget.bodyprovider['phone_number'],
-        'password': widget.bodyprovider['password'],
-        'is_provider': true,
-        "Age": widget.bodyprovider['Age'],
-        "nationality": widget.bodyprovider['nationality'],
-        "language": widget.bodyprovider['language'],
-        "service_title": "proidehoubroufo-770",
-        "description": _descController.text,
-        "Perhour": _rateController.text,
-        "Extra_for_urgent_need": _extraRateController.text
-      };
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => AddGig(bodyprovider: bodyprovider1)));
-
-      // Navigator.push(
-      //     context,
-      //     MaterialPageRoute(
-      //         builder: (context) => AddDocument(bodyprovider: bodyprovider1)));
+    if(_descController.text.isEmpty || _rateController.text.isEmpty || _extraRateController.text.isEmpty){
+      return;
     }
+    Map<String, dynamic> bodyprovider1 = {
+      'first_name': widget.bodyprovider['first_name'],
+      'last_name': widget.bodyprovider['last_name'],
+      'username': widget.bodyprovider['username'],
+      'email': widget.bodyprovider['email'],
+      'category': selectedcatagory.id,
+      'phone_number': widget.bodyprovider['phone_number'],
+      'password': widget.bodyprovider['password'],
+      'is_provider': true,
+      "Age": widget.bodyprovider['Age'],
+      "nationality": widget.bodyprovider['nationality'],
+      "language": widget.bodyprovider['language'],
+      "service_title": "proidehoubroufo-770",
+      "description": _descController.text,
+      "Perhour": _rateController.text,
+      "Extra_for_urgent_need": _extraRateController.text
+    };
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => AddGig(bodyprovider: bodyprovider1)));
+
+    // Navigator.push(
+    //     context,
+    //     MaterialPageRoute(
+    //         builder: (context) => AddDocument(bodyprovider: bodyprovider1)));
+
+
   }
 }
