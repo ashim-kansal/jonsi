@@ -116,7 +116,8 @@ class _OurBestServicesState extends State<OurBestServices> {
     return Image.network(
         "https://urbanmalta.com/public/uploads/servicecategory/$image",
         // width: 300,
-        height: ScreenUtil().setHeight(100),
-        fit: BoxFit.fill);
+        height: 40,
+        width: 40,
+        fit: BoxFit.contain);
   }
 }

@@ -69,46 +69,41 @@ Widget _buildOverlayContent(BuildContext context, bool showBackButton) {
                                 Radius.circular(10)),
                             child: Image.network(
                               response.data!.baseUrl+"/"+item.image,
-                              width: ScreenUtil().setWidth(100),
+                              width: 80,
                             )),
                       ),
-                      SizedBox(
-                        width: ScreenUtil().setWidth(200),
-                        child: Padding(
-                          padding: EdgeInsets.only(
-                              left: ScreenUtil().setWidth(10)),
-                          child: Column(
-                            crossAxisAlignment:
-                            CrossAxisAlignment.start,
-                            mainAxisAlignment:
-                            MainAxisAlignment.start,
-                            children: [
-                              Text(
-                                item.name,
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: ScreenUtil().setSp(16),
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              Padding(
-                                padding:
-                                const EdgeInsets.only(top: 8.0),
-                                child: Text(
-                                  "",
-                                  style: TextStyle(
-                                      color: Colors.grey,
-                                      fontSize:
-                                      ScreenUtil().setSp(14),
-                                      fontWeight: FontWeight.normal),
-                                ),
-                              ),
-                              const SizedBox(
-                                height: 25,
-                              )
-                            ],
+
+                      SizedBox(width: 10,),
+                      Expanded(child: Column(
+                        crossAxisAlignment:
+                        CrossAxisAlignment.start,
+                        mainAxisAlignment:
+                        MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            item.name,
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: ScreenUtil().setSp(16),
+                                fontWeight: FontWeight.bold),
                           ),
-                        ),
-                      ),
+                          Padding(
+                            padding:
+                            const EdgeInsets.only(top: 8.0),
+                            child: Text(
+                              "",
+                              style: TextStyle(
+                                  color: Colors.grey,
+                                  fontSize:
+                                  ScreenUtil().setSp(14),
+                                  fontWeight: FontWeight.normal),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 25,
+                          )
+                        ],
+                      ),),
                       SizedBox(
                         width: ScreenUtil().setWidth(40),
                       )
