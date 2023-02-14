@@ -224,13 +224,13 @@ class _ProviderHomeScreenState extends State<ProviderHomeScreen> {
                                 children: [
                                   Expanded(
                                       child: EarningItem(
-                                    title: '\$0',
+                                    title: '\€0',
                                     subTitle: 'Personal Balance',
                                     titleColor: AppColors.app_color,
                                   )),
                                   Expanded(
                                       child: EarningItem(
-                                    title: '\$0',
+                                    title: '\€0',
                                     subTitle: 'Total Bookings',
                                     titleColor: AppColors.app_black,
                                   ))
@@ -240,14 +240,14 @@ class _ProviderHomeScreenState extends State<ProviderHomeScreen> {
                                 children: [
                                   Expanded(
                                       child: EarningItem(
-                                    title: '\$0',
+                                    title: '\€0',
                                     subTitle: 'Earning this month',
                                     titleColor: AppColors.app_black,
                                   )),
                                   Expanded(
                                       child: Expanded(
                                           child: EarningItem(
-                                    title: '\$0',
+                                    title: '\€0',
                                     subTitle: 'Avg. Selling Price',
                                     titleColor: AppColors.app_black,
                                   )))
@@ -257,14 +257,14 @@ class _ProviderHomeScreenState extends State<ProviderHomeScreen> {
                                 children: [
                                   Expanded(
                                       child: EarningItem(
-                                    title: '\$0',
+                                    title: '\€0',
                                     showDivider: false,
                                     subTitle: 'Active Order',
                                     titleColor: AppColors.app_black,
                                   )),
                                   Expanded(
                                       child: EarningItem(
-                                    title: '\$0',
+                                    title: '\€0',
                                     showDivider: false,
                                     subTitle: 'Cancel Order',
                                     titleColor: AppColors.app_black,

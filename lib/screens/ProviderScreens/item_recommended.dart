@@ -65,7 +65,7 @@ class RecommendedItem extends StatelessWidget {
                             fontWeight:
                             FontWeight.bold))),
                 Text(
-                    '\$ 10',
+                    '\€ 10',
                     style: TextStyle(
                         color: Colors.black,
                         fontSize: 12,

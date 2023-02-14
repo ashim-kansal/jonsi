@@ -146,7 +146,7 @@ class _OrderReviewState extends State<OrderReview> {
                                   width: 5,
                                 ),
                                 Text(
-                                  '\$' + widget.bodyprovider['price'],
+                                  '\€' + widget.bodyprovider['price'],
                                   style: TextStyle(
                                       color: Colors.blue,
                                       fontSize: 15,
@@ -194,14 +194,14 @@ class _OrderReviewState extends State<OrderReview> {
                                   children: [
                                     Expanded(
                                         child: Text(
-                                      '\$' + widget.bodyprovider['price'],
+                                      '\€' + widget.bodyprovider['price'],
                                       style: TextStyle(
                                           color: Colors.black,
                                           fontSize: 14,
                                           fontWeight: FontWeight.bold),
                                     )),
                                     Text(
-                                      '\$' + widget.bodyprovider['price'],
+                                      '\€' + widget.bodyprovider['price'],
                                       style: TextStyle(
                                           color: Colors.blue,
                                           fontSize: 14,
@@ -223,7 +223,7 @@ class _OrderReviewState extends State<OrderReview> {
                                           fontWeight: FontWeight.bold),
                                     )),
                                     Text(
-                                      '\$10',
+                                      '\€10',
                                       style: TextStyle(
                                           color: Colors.blue,
                                           fontSize: 14,

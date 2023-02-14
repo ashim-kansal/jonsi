@@ -2,16 +2,20 @@ import 'dart:collection';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kappu/components/AppColors.dart';
 import 'package:kappu/components/MyAppBar.dart';
+import 'package:kappu/constants/storage_manager.dart';
 import 'package:kappu/screens/ProviderScreens/item_recommended.dart';
 import 'package:kappu/screens/ProviderScreens/item_review.dart';
 import 'package:kappu/screens/ProviderScreens/order_review.dart';
 
+import '../../common/validation_dialogbox.dart';
 import '../../models/serializable_model/provider_detail_model.dart';
 import '../../net/http_client.dart';
+import '../login/login_screen.dart';
 
 class ProviderDetailScreen extends StatefulWidget {
   final int id;
@@ -243,7 +247,7 @@ class _ProviderDetailScreenState extends State<ProviderDetailScreen> {
                                       Text(
                                           response.data![0].servicepackages !=
                                                   null
-                                              ? '\$ ${response.data![0].servicepackages!.price!}'
+                                              ? '\€ ${response.data![0].servicepackages!.price!}'
                                               : '',
                                           style: TextStyle(
                                               color: Colors.black,
@@ -293,26 +297,32 @@ class _ProviderDetailScreenState extends State<ProviderDetailScreen> {
                                         ],
                                       ),
                                       onPressed: () {
-                                        Map<String, dynamic> map = {
-                                          'name': response.data![0].title,
-                                          'desc': response.data![0].description,
-                                          'price': response
-                                              .data![0].servicepackages!.price,
-                                          // 'image': response.data![0].gigdocument![0].fileName ?? "",
-                                          'location': response.data![0]
-                                              .servicepackages!.location,
-                                          'provider_id':
-                                              response.data![0].userId,
-                                          'service_id': response.data![0].id,
-                                        };
+                                        if(StorageManager().accessToken.isNotEmpty) {
+                                          Map<String, dynamic> map = {
+                                            'name': response.data![0].title,
+                                            'desc': response.data![0]
+                                                .description,
+                                            'price': response
+                                                .data![0].servicepackages!
+                                                .price,
+                                            // 'image': response.data![0].gigdocument![0].fileName ?? "",
+                                            'location': response.data![0]
+                                                .servicepackages!.location,
+                                            'provider_id':
+                                            response.data![0].userId,
+                                            'service_id': response.data![0].id,
+                                          };
 
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    OrderReview(
-                                                      bodyprovider: map,
-                                                    )));
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      OrderReview(
+                                                        bodyprovider: map,
+                                                      )));
+                                        }else{
+                                          showLoginDialog(context, "Please login to continue");
+                                        }
                                       },
                                     ),
                                   ),
@@ -575,5 +585,30 @@ class _ProviderDetailScreenState extends State<ProviderDetailScreen> {
       return Image.asset('assets/images/barber.jpg',
           height: 120, width: 150, fit: BoxFit.fill);
     }
+  }
+
+  showLoginDialog(context, String message) {
+
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return WarningDialogBox(
+            title: 'Alert',
+            descriptions: message,
+            buttonTitle:'ok',
+            buttonColor: AppColors.color_green,
+            icon: Icons.cancel,
+            onPressed: () {
+              Navigator.pop(context);
+              SchedulerBinding.instance.addPostFrameCallback((_) async {
+                final result = await Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen(isFromOtherScreen: true)));
+                if(result=="1"){
+
+                }
+
+              });
+            },
+          );
+        });
   }
 }

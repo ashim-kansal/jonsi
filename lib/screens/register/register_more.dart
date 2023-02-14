@@ -230,7 +230,7 @@ class _RegisterMoreState extends State<RegisterMore> {
                           10.verticalSpace,
                           CustomTextFormField(
                             controller: _rateController,
-                            hintText: '\$ per hour',
+                            hintText: '\€ per hour',
                             keyboardType: TextInputType.number,
                             prefixIcon: profileIcon,
                             isValid: isValidRate,
@@ -243,14 +243,14 @@ class _RegisterMoreState extends State<RegisterMore> {
                               setState(() {});
                             },
                             validator: (value) => value!.isEmpty
-                                ? "Enter \$ per hour"
+                                ? "Enter \€ per hour"
                                 : value!.length > 2
-                                    ? "Enter valid \$ per hour"
+                                    ? "Enter valid \€ per hour"
                                     : null,
                           ),
                           CustomTextFormField(
                             controller: _extraRateController,
-                            hintText: 'Extra \$ for urgent need',
+                            hintText: 'Extra \€ for urgent need',
                             keyboardType: TextInputType.number,
                             prefixIcon: profileIcon,
                             isValid: isValidExtraRate,
@@ -263,9 +263,9 @@ class _RegisterMoreState extends State<RegisterMore> {
                               setState(() {});
                             },
                             validator: (value) => value!.isEmpty
-                                ? "Enter extra \$"
+                                ? "Enter extra \€"
                                 : value!.length > 2
-                                    ? "Enter valid extra \$"
+                                    ? "Enter valid extra \€"
                                     : null,
                           ),
 

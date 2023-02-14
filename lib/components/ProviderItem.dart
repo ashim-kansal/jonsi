@@ -113,7 +113,7 @@ class ItemServicesCardState extends State<ItemServicesCard> {
 
                         ),
                         Text(
-                          this.widget.data.servicepackages?.price==null ? "\$0" : "\$${this.widget.data.servicepackages?.price}" ,
+                          this.widget.data.servicepackages?.price==null ? "\€0" : "\€${this.widget.data.servicepackages?.price}" ,
                           style: TextStyle(
                               color: Colors.black,
                               fontSize: 14.sp,

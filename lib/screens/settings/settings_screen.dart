@@ -113,31 +113,31 @@ class SettingsPage extends ModalRoute<void> {
               ProfileItem(label: "Change Password", iconPath: 'assets/icons/loc.png', onTap: (){
                 print("change pasworhhh   jd");
               }),
-              ProfileItem(label: "Logout", iconPath: 'assets/icons/loc.png', onTap:(){
+              ProfileItem(label: "Logout", iconPath: 'assets/icons/exit.png', onTap:(){
                 showAlertDialog(context);
               }),
               ProfileItemTitle(label: "General", context: context),
               if(provider.isProvider)
-                ProfileItem(label: "Add GIG", iconPath: 'assets/icons/loc.png'),
+                ProfileItem(label: "Add GIG", iconPath: 'assets/icons/addgig.png'),
               if(provider.isProvider)
-                ProfileItem(label: "GIGs Offered", iconPath: 'assets/icons/loc.png'),
+                ProfileItem(label: "GIGs Offered", iconPath: 'assets/icons/savegig.png'),
 
               ProfileItem(label: "Faq’s", iconPath: 'assets/icons/loc.png', onTap: (){
                     changeScreen(
                     context: context,
                 screen: FrequentlyAskedQuestions(title: "Faq's",));
               }),
-              ProfileItem(label: "Notifications", iconPath: 'assets/icons/loc.png'),
-              ProfileItem(label: "Privacy Policy", iconPath: 'assets/icons/loc.png'),
+              ProfileItem(label: "Notifications", iconPath: 'assets/icons/nt.png'),
+              ProfileItem(label: "Privacy Policy", iconPath: 'assets/icons/pl.png'),
 
               if(provider.isProvider)
-                ProfileItem(label: "Services Completed", iconPath: 'assets/icons/loc.png'),
+                ProfileItem(label: "Services Completed", iconPath: 'assets/icons/chk.png'),
 
               if(provider.isProvider)
-                ProfileItem(label: "Total Ratings and Reviews", iconPath: 'assets/icons/loc.png'),
+                ProfileItem(label: "Total Ratings and Reviews", iconPath: 'assets/icons/rv.png'),
 
               ProfileItemTitle(label: "Support", context: context),
-              ProfileItem(label: "Help Center", iconPath: 'assets/icons/loc.png'),
+              ProfileItem(label: "Help Center", iconPath: 'assets/icons/help.png'),
 
               const SizedBox(height: 60.0),
             ],
