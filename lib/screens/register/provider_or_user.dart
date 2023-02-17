@@ -6,7 +6,17 @@ import '../../common/painter.dart';
 import 'register.dart';
 
 class ProviderOrUser extends StatelessWidget {
-  const ProviderOrUser({Key? key}) : super(key: key);
+  const ProviderOrUser(
+      {Key? key,
+      this.loginType = '',
+      this.socialId = '',
+      this.name = '',
+      this.email = ''})
+      : super(key: key);
+  final String loginType;
+  final String socialId;
+  final String name;
+  final String email;
 
   @override
   Widget build(BuildContext context) {
@@ -39,8 +49,12 @@ class ProviderOrUser extends StatelessWidget {
                     onPressed: () {
                       changeScreen(
                           context: context,
-                          screen: const SignUp(
+                          screen: SignUp(
                             isprovider: true,
+                            loginType: loginType,
+                            name: name,
+                            socialId: socialId,
+                            email: email,
                           ));
                     },
                   ),
@@ -51,8 +65,12 @@ class ProviderOrUser extends StatelessWidget {
                     onPressed: () {
                       changeScreen(
                           context: context,
-                          screen: const SignUp(
+                          screen: SignUp(
                             isprovider: false,
+                            loginType: loginType,
+                            name: name,
+                            socialId: socialId,
+                            email: email,
                           ));
                     },
                   ),

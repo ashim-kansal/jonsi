@@ -25,7 +25,18 @@ import 'email_otp.dart';
 class SignUp extends StatefulWidget {
   final bool isprovider;
 
-  const SignUp({Key? key, required this.isprovider}) : super(key: key);
+  const SignUp(
+      {Key? key,
+      required this.isprovider,
+      this.loginType = '',
+      this.socialId = '',
+      this.name = '',
+      this.email = ''})
+      : super(key: key);
+  final String loginType;
+  final String socialId;
+  final String name;
+  final String email;
 
   @override
   _SignUpState createState() => _SignUpState();
@@ -90,6 +101,8 @@ class _SignUpState extends State<SignUp> {
   @override
   void initState() {
     super.initState();
+    _emailController.text = widget.email;
+    _nameController.text = widget.name;
   }
 
   @override
@@ -170,6 +183,7 @@ class _SignUpState extends State<SignUp> {
                         suffixIcon: isEmail(email) ? checkIcon : null,
                         hintText: 'Email',
                         isValid: isVaildEmail,
+                        enabled: widget.socialId.isEmpty,
                         onChanged: (value) {
                           if (value.isNotEmpty && isEmail(value)) {
                             isVaildEmail = true;
@@ -455,37 +469,39 @@ class _SignUpState extends State<SignUp> {
                       //             : null,
                       //   ),
 
-                      CustomTextFormField(
-                        controller: _passwordController,
-                        validator: (value) => vaidatePassword(value!) == 'Weak'
-                            ? "Must contain at least one Capital letter and a number"
-                            : null,
-                        keyboardType: TextInputType.visiblePassword,
-                        prefixIcon: passwordIcon,
-                        showPassword: _showPassword,
-                        suffixIcon: GestureDetector(
-                            onTap: () {
-                              _showPassword = !_showPassword;
-                              setState(() {});
-                            },
-                            child: _showPassword
-                                ? passwordEyeIcon
-                                : passwordGreenEyeIcon),
-                        hintText: "Password",
-                        isValid: isVaildPassword,
-                        onChanged: (value) {
-                          password = value;
-                          passwordStrength = vaidatePassword(value);
-                          setState(() {});
-                          if (value.isNotEmpty &&
-                              vaidatePassword(value) == 'Strong') {
-                            isVaildPassword = true;
-                          } else {
-                            isVaildPassword = false;
-                          }
-                          setState(() {});
-                        },
-                      ),
+                      if (widget.socialId.isEmpty)
+                        CustomTextFormField(
+                          controller: _passwordController,
+                          validator: (value) => vaidatePassword(value!) ==
+                                  'Weak'
+                              ? "Must contain at least one Capital letter and a number"
+                              : null,
+                          keyboardType: TextInputType.visiblePassword,
+                          prefixIcon: passwordIcon,
+                          showPassword: _showPassword,
+                          suffixIcon: GestureDetector(
+                              onTap: () {
+                                _showPassword = !_showPassword;
+                                setState(() {});
+                              },
+                              child: _showPassword
+                                  ? passwordEyeIcon
+                                  : passwordGreenEyeIcon),
+                          hintText: "Password",
+                          isValid: isVaildPassword,
+                          onChanged: (value) {
+                            password = value;
+                            passwordStrength = vaidatePassword(value);
+                            setState(() {});
+                            if (value.isNotEmpty &&
+                                vaidatePassword(value) == 'Strong') {
+                              isVaildPassword = true;
+                            } else {
+                              isVaildPassword = false;
+                            }
+                            setState(() {});
+                          },
+                        ),
                       passwordStrength == ''
                           ? SizedBox(height: ScreenUtil().setHeight(0))
                           : Padding(
@@ -513,42 +529,43 @@ class _SignUpState extends State<SignUp> {
                                 ],
                               ),
                             ),
-                      CustomTextFormField(
-                        showPassword: _showCheckPassword,
-                        controller: _checkPasswordController,
-                        keyboardType: TextInputType.visiblePassword,
-                        isValid: isVaildConfirm,
-                        onChanged: (value) {
-                          if (value.isNotEmpty && value == password) {
-                            isVaildConfirm = true;
-                          } else {
-                            isVaildConfirm = false;
-                          }
-                          checkPassword = value;
-                          setState(() {});
-                        },
-                        validator: (value) {
-                          if (value!.isNotEmpty) {
-                            if (value != _passwordController.value.text) {
-                              return "Passwords do not match";
+                      if (widget.socialId.isEmpty)
+                        CustomTextFormField(
+                          showPassword: _showCheckPassword,
+                          controller: _checkPasswordController,
+                          keyboardType: TextInputType.visiblePassword,
+                          isValid: isVaildConfirm,
+                          onChanged: (value) {
+                            if (value.isNotEmpty && value == password) {
+                              isVaildConfirm = true;
                             } else {
-                              return null;
+                              isVaildConfirm = false;
                             }
-                          } else {
-                            return "Enter Your password";
-                          }
-                        },
-                        prefixIcon: passwordIcon,
-                        suffixIcon: GestureDetector(
-                            onTap: () {
-                              _showCheckPassword = !_showCheckPassword;
-                              setState(() {});
-                            },
-                            child: _showCheckPassword
-                                ? passwordEyeIcon
-                                : passwordGreenEyeIcon),
-                        hintText: "Confirm Password",
-                      ),
+                            checkPassword = value;
+                            setState(() {});
+                          },
+                          validator: (value) {
+                            if (value!.isNotEmpty) {
+                              if (value != _passwordController.value.text) {
+                                return "Passwords do not match";
+                              } else {
+                                return null;
+                              }
+                            } else {
+                              return "Enter Your password";
+                            }
+                          },
+                          prefixIcon: passwordIcon,
+                          suffixIcon: GestureDetector(
+                              onTap: () {
+                                _showCheckPassword = !_showCheckPassword;
+                                setState(() {});
+                              },
+                              child: _showCheckPassword
+                                  ? passwordEyeIcon
+                                  : passwordGreenEyeIcon),
+                          hintText: "Confirm Password",
+                        ),
                       SizedBox(height: ScreenUtil().setHeight(10)),
                       CustomButton(
                           buttontext: "Next",
@@ -574,19 +591,32 @@ class _SignUpState extends State<SignUp> {
 
   onregisterpressedprovider() async {
     print("inside>>>>>>>>>>>>");
+    if (widget.socialId.isEmpty) {
+      if (_nameController.text.isEmpty ||
+          _lastnameController.text.isEmpty ||
+          _emailController.text.isEmpty ||
+          !isEmail(_emailController.text) ||
+          _phnocontroller.text.isEmpty ||
+          _phnocontroller.text.length != 10 ||
+          _passwordController.text.isEmpty ||
+          passwordStrength == 'Weak' ||
+          _checkPasswordController.text.isEmpty ||
+          _checkPasswordController.text != _passwordController.text) {
+        return;
+      }
+    }
+
     if (_nameController.text.isEmpty ||
         _lastnameController.text.isEmpty ||
         _emailController.text.isEmpty ||
         !isEmail(_emailController.text) ||
         _phnocontroller.text.isEmpty ||
-        _phnocontroller.text.length != 10 ||
-        _passwordController.text.isEmpty ||
-        passwordStrength == 'Weak' ||
-        _checkPasswordController.text.isEmpty ||
-        _checkPasswordController.text != _passwordController.text) {
+        _phnocontroller.text.length != 10) {
       return;
     }
-    Map<String, dynamic> bodyprovider = {
+
+    Map<String, dynamic> bodyprovider = widget.socialId.isEmpty
+        ? {
       'first_name': _nameController.text,
       'last_name': _lastnameController.text,
       'username': _lastnameController.text,
@@ -597,45 +627,79 @@ class _SignUpState extends State<SignUp> {
       "nationality": _nationalityController.text,
       "language": selectedLanguage.name,
       "service_title": "proidehoubroufo-770",
+    }:{
+      'first_name': _nameController.text,
+      'last_name': _lastnameController.text,
+      'username': _lastnameController.text,
+      'email': _emailController.text,
+      'phone_number': _phnocontroller.text,
+      'password': '',
+      'login_src': widget.loginType,
+      'social_login_id': widget.socialId,
+      "Age": _ageController.text,
+      "nationality": _nationalityController.text,
+      "language": selectedLanguage.name,
+      "service_title": "proidehoubroufo-770",
     };
     Navigator.push(
         context,
         MaterialPageRoute(
             builder: (context) => RegisterMore(bodyprovider: bodyprovider)));
-
   }
 
   onregisterpressed() async {
+    if (widget.socialId.isEmpty) {
+      if (_nameController.text.isEmpty ||
+          _lastnameController.text.isEmpty ||
+          _emailController.text.isEmpty ||
+          !isEmail(_emailController.text) ||
+          _phnocontroller.text.isEmpty ||
+          _phnocontroller.text.length != 10 ||
+          _passwordController.text.isEmpty ||
+          passwordStrength == 'Weak' ||
+          _checkPasswordController.text.isEmpty ||
+          _checkPasswordController.text != _passwordController.text) {
+        return;
+      }
+    }
     if (_nameController.text.isEmpty ||
         _lastnameController.text.isEmpty ||
         _emailController.text.isEmpty ||
         !isEmail(_emailController.text) ||
         _phnocontroller.text.isEmpty ||
-        _phnocontroller.text.length != 10 ||
-        _passwordController.text.isEmpty ||
-        passwordStrength == 'Weak' ||
-        _checkPasswordController.text.isEmpty ||
-        _checkPasswordController.text != _passwordController.text) {
+        _phnocontroller.text.length != 10) {
       return;
     }
     if (!loading) {
       setState(() {
         this.loading = true;
       });
-      Map<String, dynamic> body = {
-        'first_name': _nameController.text,
-        'username': _nameController.text + "_" + _lastnameController.text,
-        'last_name': _lastnameController.text,
-        'email': _emailController.text,
-        'phone_number': _phnocontroller.text,
-        'password': _passwordController.text,
-        'language': 'english',
-        'nationality': countryValue,
-      };
+      Map<String, dynamic> body = widget.socialId.isEmpty
+          ? {
+              'first_name': _nameController.text,
+              'username': _nameController.text + "_" + _lastnameController.text,
+              'last_name': _lastnameController.text,
+              'email': _emailController.text,
+              'phone_number': _phnocontroller.text,
+              'password': _passwordController.text,
+              'language': 'english',
+              'nationality': countryValue,
+            }
+          : {
+              'first_name': _nameController.text,
+              'username': _nameController.text + "_" + _lastnameController.text,
+              'last_name': _lastnameController.text,
+              'email': _emailController.text,
+              'phone_number': _phnocontroller.text,
+              'password': '',
+              'login_src': widget.loginType,
+              'social_login_id': widget.socialId,
+              'language': 'english',
+              'nationality': countryValue,
+            };
 
       await HttpClient().userSignup(body, new File("path")).then((value) {
         loading = false;
-
         if (value?.data['status']) {
           var provider = StorageManager();
           provider.accessToken = value?.data['token'];

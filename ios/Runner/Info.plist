@@ -7,7 +7,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>Urban Malta</string>
+	<string>Kappu</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -29,24 +29,12 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>com.googleusercontent.apps.901928020060-7t3vps2d7v8e5s9h7oktuu48sd561rnb</string>
-				<string>fb492326519408564</string>
+				<string>com.googleusercontent.apps.371154591114-8d2us6dpha7jc6qj8qevoc3lmp6ihdmb</string>
 			</array>
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
-	<key>FacebookAppID</key>
-	<string>492326519408564</string>
-	<key>FacebookClientToken</key>
-	<string>a2f382e5e1d75deb959acec06c1258aa</string>
-	<key>FacebookDisplayName</key>
-	<string>Urban Malta</string>
-	<key>LSApplicationQueriesSchemes</key>
-	<array>
-		<string>fbapi</string>
-		<string>fb-messenger-share-api</string>
-	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
@@ -59,6 +47,8 @@
 	<string>Main</string>
 	<key>UIStatusBarHidden</key>
 	<false/>
+	<key>SERVER_CLIENT_ID</key>
+    <string>594393075069-6htdkrplja80tjfgnrf9u6p5vrgrihv0.apps.googleusercontent.com</string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>

@@ -45,6 +45,9 @@ abstract class HttpClient {
   @POST('auth/login')
   Future<HttpResponse> signin(@Body() Map<String, dynamic> params);
 
+  @POST('auth/login/social')
+  Future<HttpResponse> signinSocial(@Body() Map<String, dynamic> params);
+
   @PATCH('provider/send-otp-email/{id}/')
   Future<HttpResponse> sendotpemail(@Path('id') String id);
 

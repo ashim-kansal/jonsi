@@ -1,12 +1,16 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import '../../../common/bottom_nav_bar.dart';
 import '../google_signin.dart';
 
 class GoogleLoginButton extends StatefulWidget {
   final bool action;
   final String text;
-  const GoogleLoginButton({Key? key, required this.action, required this.text})
+  final Function(GoogleSignInAccount) onTap;
+  const GoogleLoginButton({Key? key, required this.action, required this.text,required this.onTap})
       : super(key: key);
 
   @override
@@ -20,10 +24,10 @@ class _GoogleLoginButtonState extends State<GoogleLoginButton> {
       ScaffoldMessenger.of(context)
           .showSnackBar(const SnackBar(content: Text('Error signing in')));
     } else {
-      Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-              builder: (context) => const BottomNavBar(isprovider: false)));
+      print(user.id);
+      print(user.displayName);
+      print(user.email);
+      widget.onTap(user);
     }
   }
 

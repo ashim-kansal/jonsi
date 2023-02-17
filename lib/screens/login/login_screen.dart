@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:kappu/common/custom_progress_bar.dart';
 import 'package:kappu/common/customtexts.dart';
 import 'package:kappu/common/dialogues.dart';
@@ -24,6 +25,7 @@ import '../register/widgets/text_field.dart';
 import '../register/provider_or_user.dart';
 import 'google_signin.dart';
 import 'package:the_apple_sign_in/the_apple_sign_in.dart' hide ButtonStyle;
+import 'package:flutter_login_facebook/flutter_login_facebook.dart';
 
 class LoginScreen extends StatefulWidget {
   bool isFromOtherScreen;
@@ -43,6 +45,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final _formState = GlobalKey<FormState>();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  final plugin = FacebookLogin(debug: true);
 
   Future<void> signInWithApple(BuildContext context) async {
     try {
@@ -182,27 +185,38 @@ class _LoginScreenState extends State<LoginScreen> {
                   'password': passwordController.text,
                 };
                 await HttpClient().signin(body).then((loginresponse) async {
-                  if(loginresponse.data['isSuccess']==true) {
-
-                    StorageManager().accessToken = ""+loginresponse.data['data']['token'];
-                    StorageManager().userId = loginresponse.data['data']['user']['id'];
-                    StorageManager().name = ""+loginresponse.data['data']['user']['first_name']+" "+loginresponse.data['data']['user']['last_name'];
-                    StorageManager().email = ""+loginresponse.data['data']['user']['email'];
-                    StorageManager().isProvider = loginresponse.data['data']['user']['is_provider']?true : false;
-                    StorageManager().nationality = ""+loginresponse.data['data']['user']['nationality'];
-                    StorageManager().language = ""+loginresponse.data['data']['user']['languages'];
+                  if (loginresponse.data['isSuccess'] == true) {
+                    StorageManager().accessToken =
+                        "" + loginresponse.data['data']['token'];
+                    StorageManager().userId =
+                        loginresponse.data['data']['user']['id'];
+                    StorageManager().name = "" +
+                        loginresponse.data['data']['user']['first_name'] +
+                        " " +
+                        loginresponse.data['data']['user']['last_name'];
+                    StorageManager().email =
+                        "" + loginresponse.data['data']['user']['email'];
+                    StorageManager().isProvider = loginresponse.data['data']
+                            ['user']['is_provider']
+                        ? true
+                        : false;
+                    StorageManager().nationality =
+                        "" + loginresponse.data['data']['user']['nationality'];
+                    StorageManager().language =
+                        "" + loginresponse.data['data']['user']['languages'];
                     // StorageManager().phone = ""+loginresponse.data['data']['user']['phone_number'];
                   }
                   signin = false;
                   isLoading = false;
                   print('aaaaa');
                   widget.isFromOtherScreen
-                    ? Navigator.pop(context, "1")
-                   : changeScreenReplacement(
-                      context,
-                      BottomNavBar(
-                        isprovider: loginresponse.data['data']['user']['is_provider'],
-                      ));
+                      ? Navigator.pop(context, "1")
+                      : changeScreenReplacement(
+                          context,
+                          BottomNavBar(
+                            isprovider: loginresponse.data['data']['user']
+                                ['is_provider'],
+                          ));
                   // Navigator.pop(context);
                 }).catchError((error) {
                   signin = false;
@@ -263,10 +277,21 @@ class _LoginScreenState extends State<LoginScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Expanded(
-              child: FacebookLoginButton(text: 'Facebook', onTap: (){},)),
+              child: FacebookLoginButton(
+            text: 'Facebook',
+            onTap: () {
+              doFbLogin(context);
+            },
+          )),
           15.horizontalSpace,
-          const Expanded(
-              child: GoogleLoginButton(action: false, text: 'Google')),
+          Expanded(
+              child: GoogleLoginButton(
+            action: false,
+            text: 'Google',
+            onTap: (user) {
+              socialLogin('facebook', user.id, user.email, user.displayName!);
+            },
+          )),
         ],
       ),
       20.verticalSpace,
@@ -309,8 +334,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       children: children2,
                     ),
                   )),
-              if(isLoading)
-                const CustomProgressBar()
+              if (isLoading) const CustomProgressBar()
             ],
           ),
         ),
@@ -360,5 +384,100 @@ class _LoginScreenState extends State<LoginScreen> {
       height: MediaQuery.of(context).size.height * 0.1,
       fit: BoxFit.fill,
     );
+  }
+
+  Future<void> socialLogin(
+      String type, String id, String email, String displayName) async {
+    isLoading = true;
+    setState(() {});
+    Map<String, dynamic> body = {
+      'login_src': type,
+      'social_login_id': id,
+    };
+    await HttpClient().signinSocial(body).then((loginresponse) async {
+      if (loginresponse.data['isSuccess'] == true) {
+        StorageManager().accessToken = "" + loginresponse.data['data']['token'];
+        StorageManager().userId = loginresponse.data['data']['user']['id'];
+        StorageManager().name = "" +
+            loginresponse.data['data']['user']['first_name'] +
+            " " +
+            loginresponse.data['data']['user']['last_name'];
+        StorageManager().email =
+            "" + loginresponse.data['data']['user']['email'];
+        StorageManager().isProvider =
+            loginresponse.data['data']['user']['is_provider'] ? true : false;
+        StorageManager().nationality =
+            "" + loginresponse.data['data']['user']['nationality'];
+        StorageManager().language =
+            "" + loginresponse.data['data']['user']['languages'];
+        // StorageManager().phone = ""+loginresponse.data['data']['user']['phone_number'];
+      }
+      signin = false;
+      isLoading = false;
+      print('aaaaa');
+      widget.isFromOtherScreen
+          ? Navigator.pop(context, "1")
+          : changeScreenReplacement(
+              context,
+              BottomNavBar(
+                isprovider: loginresponse.data['data']['user']['is_provider'],
+              ));
+      // Navigator.pop(context);
+    }).catchError((error) {
+      signin = false;
+      isLoading = false;
+      setState(() {});
+      changeScreen(
+          context: context,
+          screen: ProviderOrUser(
+            loginType: type,
+            name: displayName,
+            socialId: id,
+            email: email,
+          ));
+    });
+  }
+
+  doFbLogin(context) async{
+    final result = await FacebookLogin(debug: true).logIn(permissions: [
+      FacebookPermission.publicProfile,
+      FacebookPermission.email,
+    ]);
+    await _updateLoginInfo();
+    print("result.status");
+    print(result.status);
+    if (result.status == FacebookLoginStatus.success) {
+      // final OAuthCredential credential =
+      // FacebookAuthProvider.credential(result.accessToken!.token);
+      // final a = await _auth.signInWithCredential(credential);
+      // await _instance.getUserData().then((userData) async {
+      //   await _auth.currentUser!.updateEmail(userData['email']);
+      // });
+      return null;
+    } else if (result.status == FacebookLoginStatus.cancel) {
+      return 'Login cancelled';
+    } else {
+      return 'Error';
+    }
+  }
+
+  Future<void> _updateLoginInfo() async {
+    print('_updateLoginInfo');
+    final token = await plugin.accessToken;
+    FacebookUserProfile? profile;
+    String? email;
+    String? imageUrl;
+
+    if (token != null) {
+      profile = await plugin.getUserProfile();
+      if (token.permissions.contains(FacebookPermission.email.name)) {
+        email = await plugin.getUserEmail();
+      }
+      imageUrl = await plugin.getProfileImageUrl(width: 100);
+      print('token -->'+token.userId);
+
+    }
+
+
   }
 }

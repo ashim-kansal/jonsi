@@ -192,8 +192,10 @@ class LoginOrRegistration extends StatelessWidget {
                       )),
                   const SizedBox(height: 20.0),
                   // const Or("or continue with"),
-                  const GoogleLoginButton(
-                      action: false, text: 'Sign in With Google'),
+                  GoogleLoginButton(
+                      action: false, text: 'Sign in With Google',onTap: (user){
+
+                  },),
                   // Row(
                   //   mainAxisAlignment: MainAxisAlignment.center,
                   //   children: <Widget>[
