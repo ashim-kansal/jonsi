@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:kappu/constants/storage_manager.dart';
 import 'package:kappu/models/serializable_model/FaqModel.dart';
 import 'package:kappu/models/serializable_model/Language.dart';
 import 'package:kappu/models/serializable_model/NotificationModel.dart';
@@ -10,6 +11,7 @@ import 'package:kappu/models/serializable_model/signup.dart';
 import 'package:retrofit/dio.dart';
 import 'package:retrofit/http.dart';
 import '../models/serializable_model/AddOrderResponse.dart';
+import '../models/serializable_model/HelpCenterResponse.dart';
 import '../models/serializable_model/OrderListResponse.dart';
 import '../models/serializable_model/PopularServiceListResponse.dart';
 import '../models/serializable_model/ServiceResponse.dart';
@@ -41,6 +43,9 @@ abstract class HttpClient {
 
   @POST('auth/customerregister')
   Future<HttpResponse?> userSignup(@Body() Map<String, dynamic> params, File file);
+
+  @POST('user/changepassword')
+  Future<HttpResponse?> changePassword(String password);
 
   @POST('auth/login')
   Future<HttpResponse> signin(@Body() Map<String, dynamic> params);
@@ -79,6 +84,9 @@ abstract class HttpClient {
 
   @GET('faqs')
   Future<List<FaqModel>> getFaqs();
+
+  @GET('helpcenter')
+  Future<List<HelpCenterResponse>> getHelpCenter();
 
   @GET('getpopuplerservices')
   Future<List<PopularServiceListResponse>> getPopularServices();

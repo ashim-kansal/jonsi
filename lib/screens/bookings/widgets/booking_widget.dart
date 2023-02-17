@@ -94,7 +94,7 @@ class _BookingWidgetState extends State<BookingWidget> {
                           ),
                         ),
                         Text(
-                          '\$${widget.booking.totalPrice}',
+                          '\€${widget.booking.totalPrice}',
                           style: TextStyle(
                               color: AppColors.app_color,
                               fontSize: 14.sp,

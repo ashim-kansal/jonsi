@@ -112,6 +112,30 @@ class _HttpClient implements HttpClient {
   }
 
   @override
+  Future<HttpResponse<dynamic>?> changePassword(String password) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = {
+      'Content-Type': 'multipart/form-data',
+      'Authorization': "Bearer "+StorageManager().accessToken
+    };
+
+    var formData = FormData.fromMap({
+      'password': password,
+      'id': StorageManager().userId
+    });
+
+    final _result = await _dio.fetch(_setStreamType<HttpResponse<dynamic>>(
+        Options(method: 'POST', headers: _headers, extra: _extra)
+            .compose(_dio.options, 'user/changepassword',
+                queryParameters: queryParameters, data: formData)
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = _result.data;
+    final httpResponse = HttpResponse(value, _result);
+    return httpResponse;
+  }
+
+  @override
   Future<HttpResponse<dynamic>> signin(params) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -288,6 +312,21 @@ class _HttpClient implements HttpClient {
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     return faqModelFromJson(_result.data!);
+  }
+
+  @override
+  Future<List<HelpCenterResponse>> getHelpCenter() async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<String>(
+        _setStreamType<HelpCenterResponse>(
+            Options(method: 'GET', headers: _headers, extra: _extra)
+                .compose(_dio.options, 'helpcenter',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    return helpCenterResponseFromJson(_result.data!);
   }
 
   @override

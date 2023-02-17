@@ -9,12 +9,16 @@ import 'package:kappu/provider/provider_provider.dart';
 import 'package:kappu/provider/userprovider.dart';
 import 'package:kappu/screens/edit_profile/edit_profile.dart';
 import 'package:kappu/screens/faqs/frequently_asked_questions.dart';
+import 'package:kappu/screens/notification/notification_screen.dart';
 import 'package:kappu/screens/privacy_policy/privacy_policy.dart';
+import 'package:kappu/screens/reset_password/create_new_password.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
 
 import '../../../helperfunctions/screen_nav.dart';
 import '../ProviderScreens/settings/widgets/alert_dialogue.dart';
+import '../bookings/booking_screen.dart';
+import '../change_password/ChangePasswordPage.dart';
 import '../login/login_screen.dart';
 
 class SettingsPage extends ModalRoute<void> {
@@ -111,33 +115,49 @@ class SettingsPage extends ModalRoute<void> {
               ),),
               ProfileItemTitle(label: "Account Setting", context: context),
               ProfileItem(label: "Change Password", iconPath: 'assets/icons/loc.png', onTap: (){
-                print("change pasworhhh   jd");
+                changeScreen(context: context, screen: ChangePasswordPage());
               }),
-              ProfileItem(label: "Logout", iconPath: 'assets/icons/loc.png', onTap:(){
+              ProfileItem(label: "Logout", iconPath: 'assets/icons/exit.png', onTap:(){
                 showAlertDialog(context);
               }),
               ProfileItemTitle(label: "General", context: context),
               if(provider.isProvider)
-                ProfileItem(label: "Add GIG", iconPath: 'assets/icons/loc.png'),
+                ProfileItem(label: "Add GIG", iconPath: 'assets/icons/addgig.png'),
               if(provider.isProvider)
-                ProfileItem(label: "GIGs Offered", iconPath: 'assets/icons/loc.png'),
+                ProfileItem(label: "GIGs Offered", iconPath: 'assets/icons/savegig.png'),
 
               ProfileItem(label: "Faq’s", iconPath: 'assets/icons/loc.png', onTap: (){
                     changeScreen(
                     context: context,
-                screen: FrequentlyAskedQuestions(title: "Faq's",));
+                screen: FrequentlyAskedQuestions());
               }),
-              ProfileItem(label: "Notifications", iconPath: 'assets/icons/loc.png'),
-              ProfileItem(label: "Privacy Policy", iconPath: 'assets/icons/loc.png'),
+              ProfileItem(label: "Notifications", iconPath: 'assets/icons/nt.png', onTap: (){
+                changeScreen(
+                    context: context,
+                    screen: NotificationScreen());
+              }),
+              ProfileItem(label: "Privacy Policy", iconPath: 'assets/icons/pl.png', onTap: (){
+                changeScreen(
+                    context: context,
+                    screen: PrivacyPolicyPage());
+              }),
 
               if(provider.isProvider)
-                ProfileItem(label: "Services Completed", iconPath: 'assets/icons/loc.png'),
+                ProfileItem(label: "Services Completed", iconPath: 'assets/icons/chk.png', onTap:(){
+                  changeScreen(
+                      context: context,
+                      screen: BookingScreen());
+                }),
 
               if(provider.isProvider)
-                ProfileItem(label: "Total Ratings and Reviews", iconPath: 'assets/icons/loc.png'),
+                ProfileItem(label: "Total Ratings and Reviews", iconPath: 'assets/icons/rv.png'),
 
               ProfileItemTitle(label: "Support", context: context),
-              ProfileItem(label: "Help Center", iconPath: 'assets/icons/loc.png'),
+              ProfileItem(label: "Help Center", iconPath: 'assets/icons/help.png', onTap: (){
+                changeScreen(
+                    context: context,
+                    screen: HelpCenterQuestions());
+              }),
 
               const SizedBox(height: 60.0),
             ],

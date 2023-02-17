@@ -288,7 +288,7 @@ class _BookingScreenState extends State<BookingScreen> {
     });
     if (value == 'complete') {
       await HttpClient()
-          .completeOrder(bookingId.toString(), StorageManager().accessToken)
+          .completeOrder(bookingId.toString(), "Bearer "+StorageManager().accessToken)
           .then((value) {
         if (value.status) {
           setState(() {
@@ -304,7 +304,7 @@ class _BookingScreenState extends State<BookingScreen> {
       });
     } else if (value == 'accept') {
       await HttpClient()
-          .acceptOrder(bookingId.toString(), StorageManager().accessToken)
+          .acceptOrder(bookingId.toString(), "Bearer "+StorageManager().accessToken)
           .then((value) {
         if (value.status) {
           setState(() {
@@ -320,7 +320,7 @@ class _BookingScreenState extends State<BookingScreen> {
       });
     } else if (value == 'cancel') {
       await HttpClient()
-          .cancelOrder(bookingId.toString(), StorageManager().accessToken)
+          .cancelOrder(bookingId.toString(), "Bearer "+StorageManager().accessToken)
           .then((value) {
         if (value.status) {
           setState(() {
