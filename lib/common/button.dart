@@ -22,7 +22,8 @@ class _CustomButtonState extends State<CustomButton> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async {
-        widget.onPressed();
+        if(!widget.isLoading)
+          widget.onPressed();
       },
       child: Container(
         height: 50,
