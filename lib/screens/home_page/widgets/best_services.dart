@@ -23,7 +23,7 @@ class _OurBestServicesState extends State<OurBestServices> {
           child: Column(
             children: [
               SizedBox(
-                height: MediaQuery.of(context).size.height * 0.25,
+                height: 130,
                 child: Padding(
                     padding: const EdgeInsets.fromLTRB(0, 8, 16, 8),
                     child: FutureBuilder(
@@ -47,11 +47,8 @@ class _OurBestServicesState extends State<OurBestServices> {
                                         child: Card(
                                           elevation: 2,
                                           child: SizedBox(
-                                            width: ScreenUtil().setWidth(
-                                                MediaQuery.of(context)
-                                                        .size
-                                                        .width *
-                                                    0.4),
+                                            width: 110,
+                                            height: 100,
                                             child: InkWell(
                                               onTap: () => {
                                                 pushDynamicScreen(context,

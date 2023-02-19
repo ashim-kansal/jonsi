@@ -249,7 +249,7 @@ class _BookingWidgetState extends State<BookingWidget> {
 
 BookingLabel(int i) {
   return SizedBox(
-    height: 30,
+    height: 40,
     width: 100,
     child: TextButton(
       style: ButtonStyle(
@@ -282,7 +282,7 @@ BookingLabel(int i) {
                   : i == 2
                       ? AppColors.color_green
                       : Color(0xFFFF0000),
-          fontSize: 14.sp,
+          fontSize: 14,
           fontFamily: 'Montserrat-SemiBold',
         ),
       ),

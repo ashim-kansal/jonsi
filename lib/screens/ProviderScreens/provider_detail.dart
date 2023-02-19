@@ -85,8 +85,8 @@ class _ProviderDetailScreenState extends State<ProviderDetailScreen> {
                             color: Colors.white,
                             padding: EdgeInsets.all(10),
                             child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 CircleAvatar(
                                   radius: ScreenUtil().setHeight(30),
@@ -97,8 +97,8 @@ class _ProviderDetailScreenState extends State<ProviderDetailScreen> {
                                 ),
                                 Expanded(
                                     child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Text(
                                       response.data![0].userData != null &&
