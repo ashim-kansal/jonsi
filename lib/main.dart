@@ -172,6 +172,7 @@ class _MyAppState extends State<MyApp> {
 
   getToken() async {
     token = (await widget.messaging.getToken())!;
+    StorageManager().fcmToken =token;
     print("!!!!!!!!!!!!!!!");
     print(token);
   }

@@ -617,30 +617,35 @@ class _SignUpState extends State<SignUp> {
 
     Map<String, dynamic> bodyprovider = widget.socialId.isEmpty
         ? {
-      'first_name': _nameController.text,
-      'last_name': _lastnameController.text,
-      'username': _lastnameController.text,
-      'email': _emailController.text,
-      'phone_number': _phnocontroller.text,
-      'password': _passwordController.text,
-      "Age": _ageController.text,
-      "nationality": _nationalityController.text,
-      "language": selectedLanguage.name,
-      "service_title": "proidehoubroufo-770",
-    }:{
-      'first_name': _nameController.text,
-      'last_name': _lastnameController.text,
-      'username': _lastnameController.text,
-      'email': _emailController.text,
-      'phone_number': _phnocontroller.text,
-      'password': '',
-      'login_src': widget.loginType,
-      'social_login_id': widget.socialId,
-      "Age": _ageController.text,
-      "nationality": _nationalityController.text,
-      "language": selectedLanguage.name,
-      "service_title": "proidehoubroufo-770",
-    };
+            'first_name': _nameController.text,
+            'last_name': _lastnameController.text,
+            'username': _lastnameController.text,
+            'email': _emailController.text,
+            'phone_number': _phnocontroller.text,
+            'password': _passwordController.text,
+            "Age": _ageController.text,
+            "nationality": _nationalityController.text,
+            'fcm_token': StorageManager().fcmToken,
+            'os': Platform.isAndroid ? 'android' : 'ios',
+            "language": selectedLanguage.name,
+            "service_title": "proidehoubroufo-770",
+          }
+        : {
+            'first_name': _nameController.text,
+            'last_name': _lastnameController.text,
+            'username': _lastnameController.text,
+            'email': _emailController.text,
+            'phone_number': _phnocontroller.text,
+            'password': '',
+            'login_src': widget.loginType,
+            'social_login_id': widget.socialId,
+            'fcm_token': StorageManager().fcmToken,
+            'os': Platform.isAndroid ? 'android' : 'ios',
+            "Age": _ageController.text,
+            "nationality": _nationalityController.text,
+            "language": selectedLanguage.name,
+            "service_title": "proidehoubroufo-770",
+          };
     Navigator.push(
         context,
         MaterialPageRoute(
@@ -682,6 +687,8 @@ class _SignUpState extends State<SignUp> {
               'email': _emailController.text,
               'phone_number': _phnocontroller.text,
               'password': _passwordController.text,
+              'fcm_token': StorageManager().fcmToken,
+              'os': Platform.isAndroid ? 'android' : 'ios',
               'language': 'english',
               'nationality': countryValue,
             }
@@ -694,6 +701,8 @@ class _SignUpState extends State<SignUp> {
               'password': '',
               'login_src': widget.loginType,
               'social_login_id': widget.socialId,
+              'fcm_token': StorageManager().fcmToken,
+              'os': Platform.isAndroid ? 'android' : 'ios',
               'language': 'english',
               'nationality': countryValue,
             };

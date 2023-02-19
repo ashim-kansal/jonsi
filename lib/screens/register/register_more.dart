@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kappu/common/custom_progress_bar.dart';
@@ -9,6 +11,7 @@ import 'package:kappu/screens/submitdocument/submit_doc.dart';
 import '../../common/button.dart';
 import '../../common/painter.dart';
 import '../../constants/icons.dart';
+import '../../constants/storage_manager.dart';
 import '../../net/base_dio.dart';
 import '../../net/http_client.dart';
 
@@ -310,6 +313,8 @@ class _RegisterMoreState extends State<RegisterMore> {
       "service_title": "proidehoubroufo-770",
       "description": _descController.text,
       "Perhour": _rateController.text,
+      'fcm_token': StorageManager().fcmToken,
+      'os': Platform.isAndroid?'android':'ios',
       "Extra_for_urgent_need": _extraRateController.text
     };
     Navigator.push(

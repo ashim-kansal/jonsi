@@ -5,10 +5,10 @@ import 'package:kappu/screens/login/widgets/google_login_button.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'register.dart';
-import 'package:flutter_login_facebook/flutter_login_facebook.dart';
+
+
 
 class SocailSignUpScreen extends StatelessWidget {
-  final plugin = FacebookLogin(debug: true);
 
   @override
   Widget build(BuildContext context) {
@@ -101,7 +101,7 @@ class SocailSignUpScreen extends StatelessWidget {
                   FacebookLoginButton(
                       text: 'Connect with Facebook', onTap: (){
                         print('fb click');
-                        doFbLogin(context);
+                        //doFbLogin(context);
                   },),
                   const SizedBox(height: 10),
                   GoogleLoginButton(action: false, text: 'Connect with Google',onTap: (user){
@@ -216,46 +216,5 @@ class SocailSignUpScreen extends StatelessWidget {
       ),
     ));
   }
-
-  doFbLogin(context) async{
-    final result = await this.plugin.logIn(permissions: [
-      FacebookPermission.publicProfile,
-      FacebookPermission.email,
-    ]);
-    if (result.status == FacebookLoginStatus.success) {
-      // final OAuthCredential credential =
-      // FacebookAuthProvider.credential(result.accessToken!.token);
-      // final a = await _auth.signInWithCredential(credential);
-      // await _instance.getUserData().then((userData) async {
-      //   await _auth.currentUser!.updateEmail(userData['email']);
-      // });
-      return null;
-    } else if (result.status == FacebookLoginStatus.cancel) {
-      return 'Login cancelled';
-    } else {
-      return 'Error';
-    }
-    await _updateLoginInfo();
-  }
-
-  Future<void> _updateLoginInfo() async {
-    print('_updateLoginInfo');
-    final token = await plugin.accessToken;
-    FacebookUserProfile? profile;
-    String? email;
-    String? imageUrl;
-
-    if (token != null) {
-      profile = await plugin.getUserProfile();
-      if (token.permissions.contains(FacebookPermission.email.name)) {
-        email = await plugin.getUserEmail();
-      }
-      imageUrl = await plugin.getProfileImageUrl(width: 100);
-    print('token -->'+token.userId);
-
-    }
-
-
-}
 
 }

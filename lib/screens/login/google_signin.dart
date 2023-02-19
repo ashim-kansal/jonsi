@@ -3,7 +3,6 @@ import 'package:the_apple_sign_in/the_apple_sign_in.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'dart:async';
-import 'package:flutter_login_facebook/flutter_login_facebook.dart';
 
 class GoogleSignInApi {
   static final _googlesignin = GoogleSignIn();
@@ -59,41 +58,3 @@ class AppleAuthService {
   }
 }
 
-class FacebookAuthService {
-  static final FacebookLogin facebookSignIn = FacebookLogin();
-
-  Future<FacebookAccessToken?> fblogin() async {
-    final FacebookLoginResult result =
-        await facebookSignIn.logIn(customPermissions: ['email']);
-
-    switch (result.status) {
-      case FacebookLoginStatus.success:
-        final FacebookAccessToken? accessToken = result.accessToken;
-        // _showMessage('''
-        //  Logged in!
-
-        //  Token: ${accessToken.token}
-        //  User id: ${accessToken.userId}
-        //  Expires: ${accessToken.expires}
-        //  Permissions: ${accessToken.permissions}
-        //  Declined permissions: ${accessToken.declinedPermissions}
-        //  ''');
-        return accessToken;
-      case FacebookLoginStatus.cancel:
-        // _showMessage('Login cancelled by the user.');
-        throw PlatformException(
-          code: 'ERROR_ABORTED_BY_USER',
-          message: 'Sign in aborted by user',
-        );
-      case FacebookLoginStatus.error:
-        // _showMessage('Something went wrong with the login process.\n'
-        // 'Here\'s the error Facebook gave us: ${result.errorMessage}');
-        throw PlatformException(
-          code: 'ERROR_AUTHORIZATION_DENIED',
-          message: FacebookLoginStatus.error.toString(),
-        );
-      default:
-        throw UnimplementedError();
-    }
-  }
-}

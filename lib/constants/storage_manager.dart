@@ -73,4 +73,9 @@ class StorageManager {
   set accessToken(String data) {
     _userPreferences!.setString('accessToken', data);
   }
+  String get fcmToken => _userPreferences!.getString('fcmToken') ?? '';
+
+  set fcmToken(String data) {
+    _userPreferences!.setString('fcmToken', data);
+  }
 }
