@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:kappu/components/AppColors.dart';
 import '../../models/serializable_model/offer.dart';
 import '../date_time_selection/service_datetime.dart';
 
@@ -39,7 +40,7 @@ class _SelectServiceLocationState extends State<SelectServiceLocation> {
                       left: ScreenUtil().setWidth(15),
                     ),
                     child: CircleAvatar(
-                      backgroundColor: Colors.blue,
+                      backgroundColor: AppColors.app_color,
                       child: IconButton(
                         onPressed: () {
                           Navigator.pop(context);

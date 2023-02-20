@@ -68,7 +68,7 @@ class _ProviderDetailScreenState extends State<ProviderDetailScreen> {
                                       },
                                       icon: const Icon(
                                         Icons.arrow_back_ios,
-                                        color: Colors.blue,
+                                        color: AppColors.app_color,
                                         size: 15,
                                       ),
                                     ),
@@ -264,7 +264,7 @@ class _ProviderDetailScreenState extends State<ProviderDetailScreen> {
                                       style: ButtonStyle(
                                         backgroundColor:
                                             MaterialStateProperty.all(
-                                                Colors.blue),
+                                                AppColors.app_color),
                                         shape: MaterialStateProperty.all(
                                           RoundedRectangleBorder(
                                               borderRadius:
@@ -391,7 +391,7 @@ class _ProviderDetailScreenState extends State<ProviderDetailScreen> {
                                   const LinearProgressIndicator(
                                     backgroundColor: Colors.white,
                                     valueColor: AlwaysStoppedAnimation<Color>(
-                                        Colors.blue),
+                                        AppColors.app_color),
                                     value: 20,
                                   ),
                                   const SizedBox(
@@ -418,7 +418,7 @@ class _ProviderDetailScreenState extends State<ProviderDetailScreen> {
                                   const LinearProgressIndicator(
                                     backgroundColor: Colors.white,
                                     valueColor: AlwaysStoppedAnimation<Color>(
-                                        Colors.blue),
+                                        AppColors.app_color),
                                     value: 0.8,
                                   ),
                                   const SizedBox(
@@ -445,7 +445,7 @@ class _ProviderDetailScreenState extends State<ProviderDetailScreen> {
                                   const LinearProgressIndicator(
                                     backgroundColor: Colors.white,
                                     valueColor: AlwaysStoppedAnimation<Color>(
-                                        Colors.blue),
+                                        AppColors.app_color),
                                     value: 20,
                                   ),
                                   const SizedBox(
@@ -472,7 +472,7 @@ class _ProviderDetailScreenState extends State<ProviderDetailScreen> {
                                   const LinearProgressIndicator(
                                     backgroundColor: Colors.white,
                                     valueColor: AlwaysStoppedAnimation<Color>(
-                                        Colors.blue),
+                                        AppColors.app_color),
                                     value: 20,
                                   ),
                                   const SizedBox(
@@ -499,7 +499,7 @@ class _ProviderDetailScreenState extends State<ProviderDetailScreen> {
                                   const LinearProgressIndicator(
                                     backgroundColor: Colors.white,
                                     valueColor: AlwaysStoppedAnimation<Color>(
-                                        Colors.blue),
+                                        AppColors.app_color),
                                     value: 20,
                                   ),
                                   // const SizedBox(

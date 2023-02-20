@@ -88,6 +88,7 @@
 // }
 
 import 'package:flutter/material.dart';
+import 'package:kappu/components/AppColors.dart';
 
 import '../../helperfunctions/screen_nav.dart';
 import '../login/login_screen.dart';
@@ -108,7 +109,7 @@ class LoginOrRegistration extends StatelessWidget {
                 Container(
                     width: double.infinity,
                     decoration: const BoxDecoration(
-                      color: Colors.blue,
+                      color: AppColors.app_color,
                     )),
                 Container(
                   padding: const EdgeInsets.all(16.0),
@@ -141,7 +142,7 @@ class LoginOrRegistration extends StatelessWidget {
                           child: const Text(
                             "Login",
                             style: TextStyle(
-                              color: Colors.blue,
+                              color: AppColors.app_color,
                               fontFamily: 'Montserrat-Bold',
                             ),
                           ),
@@ -178,7 +179,7 @@ class LoginOrRegistration extends StatelessWidget {
                           ),
                         ),
                         style: ElevatedButton.styleFrom(
-                          primary: Colors.blue, // Background color
+                          primary: AppColors.app_color, // Background color
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(5.0),
                           ),

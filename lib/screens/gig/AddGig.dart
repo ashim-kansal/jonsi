@@ -53,7 +53,7 @@ class _AddGigState extends State<AddGig> {
           ],
           androidUiSettings: const AndroidUiSettings(
               toolbarTitle: 'Crop',
-              toolbarColor: Colors.blue,
+              toolbarColor: AppColors.app_color,
               toolbarWidgetColor: Colors.white,
               initAspectRatio: CropAspectRatioPreset.square,
               lockAspectRatio: true),
@@ -268,7 +268,7 @@ class _AddGigState extends State<AddGig> {
                         child: TextButton(
                           style: ButtonStyle(
                             backgroundColor:
-                            MaterialStateProperty.all(Colors.blue),
+                            MaterialStateProperty.all(AppColors.app_color),
                             shape: MaterialStateProperty.all(
                               RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(

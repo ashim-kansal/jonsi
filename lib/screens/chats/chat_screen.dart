@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:kappu/components/AppColors.dart';
 import 'package:kappu/provider/provider_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:web_socket_channel/io.dart';
@@ -117,7 +118,7 @@ class ChattingScreen extends ModalRoute<void> {
                                             },
                                             icon: const Icon(
                                               Icons.arrow_back_ios,
-                                              color: Colors.blue,
+                                              color: AppColors.app_color,
                                             ),
                                           ),
                                         ),
@@ -170,7 +171,7 @@ class ChattingScreen extends ModalRoute<void> {
                                                                   .senderid !=
                                                               id
                                                           ? Colors.grey.shade200
-                                                          : Colors.blue[200]),
+                                                          : AppColors.app_color),
                                                     ),
                                                     padding:
                                                         const EdgeInsets.all(
@@ -241,7 +242,7 @@ class ChattingScreen extends ModalRoute<void> {
                                             color: Colors.white,
                                             size: 18,
                                           ),
-                                          backgroundColor: Colors.blue,
+                                          backgroundColor: AppColors.app_color,
                                         ),
                                       ),
                                     ],

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:kappu/components/AppColors.dart';
 import 'package:kappu/helperfunctions/screen_nav.dart';
 import 'package:kappu/screens/register/social_signup.dart';
 import 'register.dart';
@@ -20,7 +21,7 @@ class ProviderSignupFirstScreen extends StatelessWidget {
         leading: Padding(
           padding: const EdgeInsets.all(10),
           child: CircleAvatar(
-              backgroundColor: Colors.blue,
+              backgroundColor: AppColors.app_color,
               child: Center(
                 child: IconButton(
                   onPressed: () {
@@ -84,7 +85,7 @@ class ProviderSignupFirstScreen extends StatelessWidget {
                                 "5 Sec",
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
-                                  color: Colors.blue,
+                                  color: AppColors.app_color,
                                   fontSize: 16,
                                   fontFamily: 'Montserrat-Bold',
                                 ),
@@ -113,7 +114,7 @@ class ProviderSignupFirstScreen extends StatelessWidget {
                                 "50 M+",
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
-                                  color: Colors.blue,
+                                  color: AppColors.app_color,
                                   fontSize: 16,
                                   fontFamily: 'Montserrat-Bold',
                                 ),
@@ -144,7 +145,7 @@ class ProviderSignupFirstScreen extends StatelessWidget {
                                   '\u{20AC}${5}-\u{20AC}${10}',
                                   textAlign: TextAlign.justify,
                                   style: TextStyle(
-                                    color: Colors.blue,
+                                    color: AppColors.app_color,
                                     fontSize: 16,
                                     fontFamily: 'Montserrat-Bold',
                                   ),
@@ -326,7 +327,7 @@ class ProviderSignupFirstScreen extends StatelessWidget {
               margin: EdgeInsets.all(15),
               child: TextButton(
                 style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(Colors.blue),
+                  backgroundColor: MaterialStateProperty.all(AppColors.app_color),
                   shape: MaterialStateProperty.all(
                     RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(

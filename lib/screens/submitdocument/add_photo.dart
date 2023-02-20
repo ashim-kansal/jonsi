@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:kappu/components/AppColors.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
 class AddPhotoWidget extends StatefulWidget {
@@ -73,7 +74,7 @@ class _AddPhotoWidgetState extends State<AddPhotoWidget> {
                               radius: 30.0,
                               lineWidth: 3.0,
                               percent: widget.progress!,
-                              progressColor: Colors.blue,
+                              progressColor: AppColors.app_color,
                             ),
                           ),
                           Align(

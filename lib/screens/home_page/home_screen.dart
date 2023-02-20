@@ -89,7 +89,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               },
                               icon: const Icon(
                                 Icons.account_circle_outlined,
-                                color: Colors.blue,
+                                color: AppColors.app_color,
                               ),
                             )),
                       ),

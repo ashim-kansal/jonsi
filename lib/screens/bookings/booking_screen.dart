@@ -50,8 +50,8 @@ class _BookingScreenState extends State<BookingScreen> {
           child: AppBar(
             bottom: TabBar(
               indicatorWeight: 4,
-              indicatorColor: Colors.blue,
-              labelColor: Colors.blue,
+              indicatorColor: AppColors.app_color,
+              labelColor: AppColors.app_color,
               unselectedLabelColor: Colors.black,
               tabs: [
                 Tab(

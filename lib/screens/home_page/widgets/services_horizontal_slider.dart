@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:kappu/components/AppColors.dart';
 
 import '../../../models/serializable_model/offer.dart';
 import '../../../net/http_client.dart';
@@ -43,7 +44,7 @@ class _ServicesSliderHorizontalState extends State<ServicesSliderHorizontal> {
                         style: TextStyle(
                             //   ,
 
-                            color: Colors.blue,
+                            color: AppColors.app_color,
                             fontWeight: FontWeight.bold,
                             fontSize: ScreenUtil().setSp(20)),
                       ),

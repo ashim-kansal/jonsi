@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:kappu/common/bottom_nav_bar.dart';
+import 'package:kappu/constants/storage_manager.dart';
 import 'package:kappu/helperfunctions/screen_nav.dart';
+import 'package:kappu/net/http_client.dart';
+import 'dart:io';
 import 'package:kappu/screens/login/widgets/google_login_button.dart';
+import 'package:path/path.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'register.dart';
@@ -55,49 +60,49 @@ class SocailSignUpScreen extends StatelessWidget {
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 20),
-                  SizedBox(
-                    height: ScreenUtil().screenHeight * 0.05,
-                    child: TextButton(
-                      style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.all(Colors.white),
-                        shape: MaterialStateProperty.all(
-                          RoundedRectangleBorder(
-                            side: new BorderSide(color: Colors.black),
-                            borderRadius: BorderRadius.circular(
-                                ScreenUtil().screenHeight * 0.025),
-                          ),
-                        ),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Opacity(
-                            opacity: 0,
-                            child: Icon(Icons.arrow_forward_ios),
-                          ),
-                          Text(
-                            "Connect with Apple",
-                            style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              color: Colors.black,
-                              fontSize: 14.sp,
-                              fontFamily: 'Montserrat-Medium',
-                            ),
-                          ),
-                          Image.asset('assets/icons/app.png', scale: 1.0),
-                        ],
-                      ),
-                      onPressed: () {
-                        changeScreen(
-                            context: context,
-                            screen: const SignUp(
-                              isprovider: true,
-                            ));
-                      },
-                    ),
-                  ),
-                  const SizedBox(height: 10),
+                  // SizedBox(
+                  //   height: ScreenUtil().screenHeight * 0.05,
+                  //   child: TextButton(
+                  //     style: ButtonStyle(
+                  //       backgroundColor:
+                  //           MaterialStateProperty.all(Colors.white),
+                  //       shape: MaterialStateProperty.all(
+                  //         RoundedRectangleBorder(
+                  //           side: new BorderSide(color: Colors.black),
+                  //           borderRadius: BorderRadius.circular(
+                  //               ScreenUtil().screenHeight * 0.025),
+                  //         ),
+                  //       ),
+                  //     ),
+                  //     child: Row(
+                  //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //       children: [
+                  //         const Opacity(
+                  //           opacity: 0,
+                  //           child: Icon(Icons.arrow_forward_ios),
+                  //         ),
+                  //         Text(
+                  //           "Connect with Apple",
+                  //           style: TextStyle(
+                  //             fontWeight: FontWeight.w500,
+                  //             color: Colors.black,
+                  //             fontSize: 14.sp,
+                  //             fontFamily: 'Montserrat-Medium',
+                  //           ),
+                  //         ),
+                  //         Image.asset('assets/icons/app.png', scale: 1.0),
+                  //       ],
+                  //     ),
+                  //     onPressed: () {
+                  //       changeScreen(
+                  //           context: context,
+                  //           screen: const SignUp(
+                  //             isprovider: true,
+                  //           ));
+                  //     },
+                  //   ),
+                  // ),
+                  // const SizedBox(height: 10),
                   FacebookLoginButton(
                       text: 'Connect with Facebook', onTap: (){
                         print('fb click');
@@ -105,7 +110,7 @@ class SocailSignUpScreen extends StatelessWidget {
                   },),
                   const SizedBox(height: 10),
                   GoogleLoginButton(action: false, text: 'Connect with Google',onTap: (user){
-
+                    socialLogin('google', user.id, user.email, user.displayName!, context);
                   },),
                   const SizedBox(
                     height: 10,
@@ -190,14 +195,24 @@ class SocailSignUpScreen extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        "Sign up",
-                        style: TextStyle(
-                          color: Color(0xFF4995EB),
-                          fontSize: 14,
-                          fontFamily: 'Montserrat-Bold',
+                      GestureDetector(
+                        onTap: (){
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                  const BottomNavBar(isprovider: false)));
+                        },
+                        child:   Text(
+                          "Skip",
+                          style: TextStyle(
+                            color: Color(0xFF4995EB),
+                            fontSize: 14,
+                            fontFamily: 'Montserrat-Bold',
+                          ),
                         ),
                       ),
+
                       Text(
                         "",
                         style: TextStyle(
@@ -216,5 +231,46 @@ class SocailSignUpScreen extends StatelessWidget {
       ),
     ));
   }
+
+  Future<void> socialLogin(
+      String type, String id, String email, String displayName, BuildContext context) async {
+    // isLoading = true;
+    // setState(() {});
+    Map<String, dynamic> body = {
+      'login_src': type,
+      'social_login_id': id,
+      'fcm_token': StorageManager().fcmToken,
+      'os': Platform.isAndroid?'android':'ios',
+    };
+    await HttpClient().signinSocial(body).then((loginresponse) async {
+      if (loginresponse.data['isSuccess'] == true) {
+        StorageManager().accessToken = "" + loginresponse.data['data']['token'];
+        StorageManager().userId = loginresponse.data['data']['user']['id'];
+        StorageManager().name = "" +
+            loginresponse.data['data']['user']['first_name'] +
+            " " +
+            loginresponse.data['data']['user']['last_name'];
+        StorageManager().email =
+            "" + loginresponse.data['data']['user']['email'];
+        StorageManager().isProvider =
+        loginresponse.data['data']['user']['is_provider'] ? true : false;
+        StorageManager().nationality =
+            "" + loginresponse.data['data']['user']['nationality'];
+        StorageManager().language =
+            "" + loginresponse.data['data']['user']['languages'];
+        // StorageManager().phone = ""+loginresponse.data['data']['user']['phone_number'];
+      }
+
+      changeScreenReplacement(
+          context,
+          BottomNavBar(
+            isprovider: loginresponse.data['data']['user']['is_provider'],
+          ));
+      // Navigator.pop(context);
+    }).catchError((error) {
+    });
+  }
+
+
 
 }

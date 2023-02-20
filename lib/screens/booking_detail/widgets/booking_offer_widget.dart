@@ -1,6 +1,7 @@
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:kappu/components/AppColors.dart';
 import 'package:kappu/models/serializable_model/booking.dart';
 
 import '../../../common/customtexts.dart';
@@ -19,7 +20,7 @@ class BookingOffer extends StatelessWidget {
         15.verticalSpace,
         customtext(
           buttontext: 'This Booking is Related to offer',
-          color: Colors.blue,
+          color: AppColors.app_color,
           fontWeight: FontWeight.bold,
           fontSize: 16,
         ),
@@ -33,13 +34,13 @@ class BookingOffer extends StatelessWidget {
                 );
               }
               return DottedBorder(
-                color: Colors.blue,
+                color: AppColors.app_color,
                 borderType: BorderType.RRect,
                 strokeWidth: 1,
                 radius: const Radius.circular(20),
                 child: Container(
                     decoration: BoxDecoration(
-                        color: Colors.blue.shade50,
+                        color: AppColors.app_color,
                         borderRadius: BorderRadius.circular(20)),
                     child: Padding(
                       padding: const EdgeInsets.all(12.0),

@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:kappu/components/AppColors.dart';
 import 'package:kappu/models/serializable_model/TrendingServicesResponse.dart';
 import 'package:kappu/net/http_client.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
@@ -112,7 +113,7 @@ class _SliderWidgetState extends State<SliderWidget> {
                                       width: 130,
                                       child: TextButton(
                                         style: ButtonStyle(
-                                          backgroundColor: MaterialStateProperty.all(Colors.blue),
+                                          backgroundColor: MaterialStateProperty.all(AppColors.app_color),
                                           shape: MaterialStateProperty.all(
                                             RoundedRectangleBorder(
                                               borderRadius:

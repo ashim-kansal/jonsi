@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:kappu/components/AppColors.dart';
 import 'package:kappu/screens/ProviderScreens/dashboard/provider_home.dart';
 import 'package:kappu/screens/bookings/booking_screen.dart';
 import 'package:kappu/screens/catagories/catagories_screen.dart';
@@ -64,19 +65,19 @@ class _BottomNavBarState extends State<BottomNavBar> {
         ),
         title: "Home",
         textStyle: const TextStyle(),
-        activeColorPrimary: Colors.blue,
+        activeColorPrimary: AppColors.app_color,
         inactiveColorPrimary: Colors.grey,
       ),
       PersistentBottomNavBarItem(
         icon: const Icon(Icons.messenger),
         title: ("Chats"),
-        activeColorPrimary: Colors.blue,
+        activeColorPrimary: AppColors.app_color,
         inactiveColorPrimary: Colors.grey,
       ),
       PersistentBottomNavBarItem(
         icon: const Icon(Icons.notifications),
         title: ("Notification"),
-        activeColorPrimary: Colors.blue,
+        activeColorPrimary: AppColors.app_color,
         inactiveColorPrimary: Colors.grey,
       ),
       PersistentBottomNavBarItem(
@@ -84,7 +85,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
           Icons.book_rounded,
         ),
         title: "Bookings",
-        activeColorPrimary: Colors.blue,
+        activeColorPrimary: AppColors.app_color,
         inactiveColorPrimary: Colors.grey,
       ),
     ];
@@ -98,27 +99,27 @@ class _BottomNavBarState extends State<BottomNavBar> {
         ),
         title: "Home",
         textStyle: const TextStyle(),
-        activeColorPrimary: Colors.blue,
+        activeColorPrimary: AppColors.app_color,
         inactiveColorPrimary: Colors.grey,
       ),
       PersistentBottomNavBarItem(
         icon: const Icon(Icons.article_outlined),
         title: ("Catagories"),
         textStyle: const TextStyle(),
-        activeColorPrimary: Colors.blue,
+        activeColorPrimary: AppColors.app_color,
         inactiveColorPrimary: Colors.grey,
       ),
       PersistentBottomNavBarItem(
         icon: const Icon(Icons.notifications),
         title: ("Notification"),
-        activeColorPrimary: Colors.blue,
+        activeColorPrimary: AppColors.app_color,
         inactiveColorPrimary: Colors.grey,
       ),
       PersistentBottomNavBarItem(
         icon: const Icon(Icons.book_rounded),
         title: ("Bookings"),
         textStyle: const TextStyle(),
-        activeColorPrimary: Colors.blue,
+        activeColorPrimary: AppColors.app_color,
         inactiveColorPrimary: Colors.grey,
       ),
 

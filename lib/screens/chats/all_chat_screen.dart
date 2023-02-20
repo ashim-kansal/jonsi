@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:kappu/components/AppColors.dart';
 import 'package:provider/provider.dart';
 import '../../models/serializable_model/allchats.dart';
 import '../../net/http_client.dart';
@@ -102,7 +103,7 @@ class AllChatScreen extends ModalRoute<void> {
                       color: Colors.white,
                       size: 18,
                     ),
-                    backgroundColor: Colors.blue,
+                    backgroundColor: AppColors.app_color,
                   ),
                 ),
               ],

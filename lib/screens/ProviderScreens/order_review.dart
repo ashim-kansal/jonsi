@@ -115,7 +115,7 @@ class _OrderReviewState extends State<OrderReview> {
                               children: [
                                 Icon(
                                   Icons.check_circle,
-                                  color: Colors.blue,
+                                  color: AppColors.app_color,
                                   size: 18,
                                 ),
                                 SizedBox(
@@ -148,7 +148,7 @@ class _OrderReviewState extends State<OrderReview> {
                                 Text(
                                   '\€' + widget.bodyprovider['price'],
                                   style: TextStyle(
-                                      color: Colors.blue,
+                                      color: AppColors.app_color,
                                       fontSize: 15,
                                       fontWeight: FontWeight.bold),
                                 ),
@@ -203,7 +203,7 @@ class _OrderReviewState extends State<OrderReview> {
                                     Text(
                                       '\€' + widget.bodyprovider['price'],
                                       style: TextStyle(
-                                          color: Colors.blue,
+                                          color: AppColors.app_color,
                                           fontSize: 14,
                                           fontWeight: FontWeight.bold),
                                     )
@@ -225,7 +225,7 @@ class _OrderReviewState extends State<OrderReview> {
                                     Text(
                                       '\€10',
                                       style: TextStyle(
-                                          color: Colors.blue,
+                                          color: AppColors.app_color,
                                           fontSize: 14,
                                           fontWeight: FontWeight.bold),
                                     )
@@ -248,7 +248,7 @@ class _OrderReviewState extends State<OrderReview> {
                         margin: EdgeInsets.all(15),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(25),
-                          color: Colors.blue,
+                          color: AppColors.app_color,
                         ),
                         child: Text(
                           'Add Payment Method',

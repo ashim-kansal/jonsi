@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:kappu/common/bottom_nav_bar.dart';
+import 'package:kappu/components/AppColors.dart';
 import 'package:kappu/constants/storage_manager.dart';
 import 'package:kappu/models/serializable_model/Language.dart';
 import 'package:kappu/models/serializable_model/CategoryResponse.dart';
@@ -111,7 +112,7 @@ class _SignUpState extends State<SignUp> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         leading: const BackButton(
-          color: Colors.blue,
+          color: AppColors.app_color,
         ),
         shadowColor: Colors.white,
         elevation: 0,
@@ -629,6 +630,8 @@ class _SignUpState extends State<SignUp> {
             'os': Platform.isAndroid ? 'android' : 'ios',
             "language": selectedLanguage.name,
             "service_title": "proidehoubroufo-770",
+            "login_src": "",
+            "social_login_id": "",
           }
         : {
             'first_name': _nameController.text,
@@ -691,6 +694,8 @@ class _SignUpState extends State<SignUp> {
               'os': Platform.isAndroid ? 'android' : 'ios',
               'language': 'english',
               'nationality': countryValue,
+        'login_src': '',
+        'social_login_id':''
             }
           : {
               'first_name': _nameController.text,
