@@ -180,7 +180,7 @@ class _BookingWidgetState extends State<BookingWidget> {
                                 'Request Accept',
                                 style: TextStyle(
                                     fontWeight: FontWeight.w500,
-                                    color: Colors.blue),
+                                    color: AppColors.app_color),
                               ),
                             ),
                           const PopupMenuItem(

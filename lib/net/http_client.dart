@@ -14,6 +14,7 @@ import '../models/serializable_model/AddOrderResponse.dart';
 import '../models/serializable_model/HelpCenterResponse.dart';
 import '../models/serializable_model/OrderListResponse.dart';
 import '../models/serializable_model/PopularServiceListResponse.dart';
+import '../models/serializable_model/PrivacyPolicyResponse.dart';
 import '../models/serializable_model/ServiceResponse.dart';
 import '../models/serializable_model/CategoryResponse.dart';
 import '../models/serializable_model/allchats.dart';
@@ -87,6 +88,9 @@ abstract class HttpClient {
 
   @GET('helpcenter')
   Future<List<HelpCenterResponse>> getHelpCenter();
+
+  @GET('privacypolicy')
+  Future<PrivacyPolicyResponse> getPrivayPolicy();
 
   @GET('getpopuplerservices')
   Future<List<PopularServiceListResponse>> getPopularServices();

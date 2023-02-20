@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kappu/common/button.dart';
+import 'package:kappu/components/AppColors.dart';
 import 'package:kappu/helperfunctions/screen_nav.dart';
 import '../../common/painter.dart';
 import 'register.dart';
@@ -30,7 +31,7 @@ class ProviderOrUser extends StatelessWidget {
             Padding(
               padding: EdgeInsets.only(left: 15.w),
               child: const BackButton(
-                color: Colors.blue,
+                color: AppColors.app_color,
               ),
             ),
             Spacer(),

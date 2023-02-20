@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:kappu/components/AppColors.dart';
 
 import '../../../models/serializable_model/offer.dart';
 
@@ -47,7 +48,7 @@ class OfferDetail extends ModalRoute<void> {
           child: Row(
             children: [
               CircleAvatar(
-                backgroundColor: Colors.blue,
+                backgroundColor: AppColors.app_color,
                 child: IconButton(
                   onPressed: () {
                     Navigator.pop(context);

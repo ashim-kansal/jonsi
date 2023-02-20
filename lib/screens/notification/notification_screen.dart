@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
+import 'package:kappu/components/AppColors.dart';
 import 'package:kappu/components/MyAppBar.dart';
 import 'package:kappu/constants/storage_manager.dart';
 import 'package:kappu/helperfunctions/screen_nav.dart';
@@ -61,7 +62,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Card(
-                          color: Colors.blue,
+                          color: AppColors.app_color,
                           child: Padding(
                             padding: EdgeInsets.all(10),
                             child: Column(

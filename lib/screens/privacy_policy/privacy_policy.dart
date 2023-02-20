@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:kappu/components/AppColors.dart';
 
 class PrivacyPolicy extends StatefulWidget {
   const PrivacyPolicy({Key? key}) : super(key: key);
@@ -21,7 +22,7 @@ class _PrivacyPolicyState extends State<PrivacyPolicy> {
               child: Row(
                 children: [
                   CircleAvatar(
-                    backgroundColor: Colors.blue,
+                    backgroundColor: AppColors.app_color,
                     child: IconButton(
                       onPressed: () {
                         Navigator.pop(context);

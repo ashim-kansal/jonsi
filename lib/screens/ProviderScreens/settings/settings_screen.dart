@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kappu/components/AppColors.dart';
 import 'package:kappu/provider/provider_provider.dart';
 import 'package:kappu/screens/privacy_policy/privacy_policy.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
@@ -41,7 +42,7 @@ class _SettingsPageProviderState extends State<SettingsPageProvider> {
                     elevation: 8.0,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10.0)),
-                    color: Colors.blue,
+                    color: AppColors.app_color,
                     child: ListTile(
                       onTap: () {
                         changeScreen(
@@ -81,7 +82,7 @@ class _SettingsPageProviderState extends State<SettingsPageProvider> {
                         ListTile(
                           leading: const Icon(
                             Icons.lock_outline,
-                            color: Colors.blue,
+                            color: AppColors.app_color,
                           ),
                           title: const Text("Change Password"),
                           trailing: const Icon(Icons.keyboard_arrow_right),
@@ -93,7 +94,7 @@ class _SettingsPageProviderState extends State<SettingsPageProvider> {
                         ListTile(
                           leading: const Icon(
                             Icons.local_offer,
-                            color: Colors.blue,
+                            color: AppColors.app_color,
                           ),
                           title: const Text("My Offers"),
                           trailing: const Icon(Icons.keyboard_arrow_right),
@@ -108,7 +109,7 @@ class _SettingsPageProviderState extends State<SettingsPageProvider> {
                         ListTile(
                           leading: const Icon(
                             Icons.privacy_tip,
-                            color: Colors.blue,
+                            color: AppColors.app_color,
                           ),
                           title: const Text("Privacy Policy"),
                           trailing: const Icon(Icons.keyboard_arrow_right),
@@ -123,7 +124,7 @@ class _SettingsPageProviderState extends State<SettingsPageProvider> {
                         ListTile(
                           leading: const Icon(
                             Icons.logout,
-                            color: Colors.blue,
+                            color: AppColors.app_color,
                           ),
                           title: const Text("Logout"),
                           trailing: const Icon(Icons.keyboard_arrow_right),
@@ -140,32 +141,32 @@ class _SettingsPageProviderState extends State<SettingsPageProvider> {
                     style: TextStyle(
                       fontSize: 20.0,
                       fontWeight: FontWeight.bold,
-                      color: Colors.blue,
+                      color: AppColors.app_color,
                     ),
                   ),
                   SwitchListTile(
-                    activeColor: Colors.blue,
+                    activeColor: AppColors.app_color,
                     contentPadding: const EdgeInsets.all(0),
                     value: true,
                     title: const Text("Received notification"),
                     onChanged: (val) {},
                   ),
                   const SwitchListTile(
-                    activeColor: Colors.blue,
+                    activeColor: AppColors.app_color,
                     contentPadding: EdgeInsets.all(0),
                     value: false,
                     title: Text("Received newsletter"),
                     onChanged: null,
                   ),
                   SwitchListTile(
-                    activeColor: Colors.blue,
+                    activeColor: AppColors.app_color,
                     contentPadding: const EdgeInsets.all(0),
                     value: true,
                     title: const Text("Received Offer Notification"),
                     onChanged: (val) {},
                   ),
                   const SwitchListTile(
-                    activeColor: Colors.blue,
+                    activeColor: AppColors.app_color,
                     contentPadding: EdgeInsets.all(0),
                     value: true,
                     title: Text("Received App Updates"),

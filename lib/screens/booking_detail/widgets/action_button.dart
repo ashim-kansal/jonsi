@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kappu/common/flushbar.dart';
+import 'package:kappu/components/AppColors.dart';
 import 'package:kappu/models/serializable_model/booking.dart';
 import 'package:kappu/net/http_client.dart';
 import 'package:kappu/provider/provider_provider.dart';
@@ -84,7 +85,7 @@ class _ActionButtonsState extends State<ActionButtons> {
                 ),
               if (user.token == '' && !accepted)
                 CustomBookingButton(
-                  color: Colors.blue,
+                  color: AppColors.app_color,
                   buttontext: 'Accept Request',
                   isLoading: acceptingrequest,
                   onPressed: () async {

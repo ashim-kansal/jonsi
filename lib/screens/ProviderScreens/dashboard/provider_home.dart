@@ -27,7 +27,7 @@ class _ProviderHomeScreenState extends State<ProviderHomeScreen> {
             Container(
                 padding:
                     EdgeInsets.only(top: 50, left: 10, right: 10, bottom: 15),
-                color: Colors.blue,
+                color: AppColors.app_color,
                 child: Row(
                   children: [
                     CircleAvatar(
@@ -40,7 +40,7 @@ class _ProviderHomeScreenState extends State<ProviderHomeScreen> {
                             },
                             icon: const Icon(
                               Icons.arrow_back_ios,
-                              color: Colors.blue,
+                              color: AppColors.app_color,
                               size: 15,
                             ),
                           ),
@@ -63,7 +63,7 @@ class _ProviderHomeScreenState extends State<ProviderHomeScreen> {
               color: Colors.white,
             ),
             Container(
-              color: Colors.blue,
+              color: AppColors.app_color,
               child: Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: Row(children: [

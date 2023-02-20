@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kappu/common/custom_progress_bar.dart';
+import 'package:kappu/components/AppColors.dart';
 import 'package:kappu/models/serializable_model/CategoryResponse.dart';
 import 'package:kappu/screens/gig/AddGig.dart';
 import 'package:kappu/screens/register/widgets/text_field.dart';
@@ -80,7 +81,7 @@ class _RegisterMoreState extends State<RegisterMore> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         leading: const BackButton(
-          color: Colors.blue,
+          color: AppColors.app_color,
         ),
         shadowColor: Colors.white,
         elevation: 0,

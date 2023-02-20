@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:kappu/components/AppColors.dart';
 import 'package:kappu/helperfunctions/screen_nav.dart';
 import 'package:kappu/provider/provider_provider.dart';
 import 'package:kappu/screens/register/provider_signup_first.dart';
@@ -150,8 +151,8 @@ class _SplashViewState extends State<SplashView> {
                     },
                     style: OutlinedButton.styleFrom(
                         backgroundColor: Colors.white,
-                        primary: Colors.blue,
-                        side: const BorderSide(color: Colors.blue, width: 1),
+                        primary: AppColors.app_color,
+                        side: const BorderSide(color: AppColors.app_color, width: 1),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30.0),
                         )),
@@ -161,7 +162,7 @@ class _SplashViewState extends State<SplashView> {
                           fontWeight: FontWeight.w500,
                           fontSize: 14.0,
                           fontFamily: 'Montserrat-Bold',
-                          color: Colors.blue),
+                          color: AppColors.app_color),
                       textAlign: TextAlign.center,
                     ))),
             SizedBox(
@@ -178,8 +179,8 @@ class _SplashViewState extends State<SplashView> {
                     },
                     style: OutlinedButton.styleFrom(
                         backgroundColor: Colors.white,
-                        primary: Colors.blue,
-                        side: const BorderSide(color: Colors.blue, width: 1),
+                        primary: AppColors.app_color,
+                        side: const BorderSide(color: AppColors.app_color, width: 1),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30.0),
                         )),
@@ -189,7 +190,7 @@ class _SplashViewState extends State<SplashView> {
                           fontWeight: FontWeight.w500,
                           fontSize: 14.0,
                           fontFamily: 'Montserrat-Bold',
-                          color: Colors.blue),
+                          color: AppColors.app_color),
                       textAlign: TextAlign.center,
                     ))),
             SizedBox(

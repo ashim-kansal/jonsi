@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:kappu/components/AppColors.dart';
 
 class CustomButton extends StatefulWidget {
   final dynamic onPressed;
@@ -29,7 +30,7 @@ class _CustomButtonState extends State<CustomButton> {
         height: 50,
         width: double.infinity,
         decoration: const BoxDecoration(
-          color: Colors.blue,
+          color: AppColors.app_color,
           borderRadius: BorderRadius.all(Radius.circular(5)),
         ),
         child: Center(

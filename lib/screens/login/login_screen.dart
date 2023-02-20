@@ -8,6 +8,7 @@ import 'package:kappu/common/custom_progress_bar.dart';
 import 'package:kappu/common/customtexts.dart';
 import 'package:kappu/common/dialogues.dart';
 import 'package:kappu/common/painter.dart';
+import 'package:kappu/components/AppColors.dart';
 import 'package:kappu/constants/storage_manager.dart';
 import 'package:kappu/helperfunctions/screen_nav.dart';
 import 'package:kappu/models/serializable_model/signedinprovider.dart';
@@ -168,7 +169,7 @@ class _LoginScreenState extends State<LoginScreen> {
           child: customtext(
             buttontext: 'Forgot Your Password?',
             fontWeight: FontWeight.w500,
-            color: Colors.blue,
+            color: AppColors.app_color,
             fontSize: 10,
           ),
         ),
@@ -178,7 +179,7 @@ class _LoginScreenState extends State<LoginScreen> {
         height: ScreenUtil().screenHeight * 0.05,
         child: TextButton(
           style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all(Colors.blue),
+            backgroundColor: MaterialStateProperty.all(AppColors.app_color),
             shape: MaterialStateProperty.all(
               RoundedRectangleBorder(
                 borderRadius:
@@ -320,7 +321,7 @@ class _LoginScreenState extends State<LoginScreen> {
             action: false,
             text: 'Google',
             onTap: (user) {
-              socialLogin('facebook', user.id, user.email, user.displayName!);
+              socialLogin('google', user.id, user.email, user.displayName!);
             },
           )),
         ],
@@ -345,7 +346,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   decoration: TextDecoration.underline,
                   fontWeight: FontWeight.normal,
                   fontSize: 14,
-                  color: Colors.blue),
+                  color: AppColors.app_color),
             ),
           )
         ],

@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kappu/common/CircleButton.dart';
 import 'package:kappu/components/AppColors.dart';
 import 'package:kappu/components/MyAppBar.dart';
+import 'package:kappu/models/serializable_model/PrivacyPolicyResponse.dart';
 import 'package:kappu/net/http_client.dart';
 
 import '../../common/ExpandableQuestionWidget.dart';
@@ -157,6 +158,8 @@ class HelpCenterQuestions extends StatelessWidget {
 
 class PrivacyPolicyPage extends StatelessWidget {
 
+  String time = "";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -174,7 +177,7 @@ class PrivacyPolicyPage extends StatelessWidget {
                   SizedBox(height: 20,),
                   Text("Urban Malta Privacy Policy", style: TextStyle(color: Colors.black, fontSize: 22, fontFamily: "Montserrat-Bold"),),
                   SizedBox(height: 5,),
-                  Text("Last update: December 05, 2022", style: TextStyle(color: AppColors.text_desc, fontSize: 14, fontFamily: "Montserrat-regular"),),
+                  Text("Last update: $time", style: TextStyle(color: AppColors.text_desc, fontSize: 14, fontFamily: "Montserrat-regular"),),
                   SizedBox(height: 20,),],
               ),
             ),),
@@ -187,36 +190,18 @@ class PrivacyPolicyPage extends StatelessWidget {
               Container(
                   child: FutureBuilder(
                       future: HttpClient()
-                          .getHelpCenter(),
+                          .getPrivayPolicy(),
                       builder: (context,
-                          AsyncSnapshot<List<HelpCenterResponse>>
+                          AsyncSnapshot<PrivacyPolicyResponse>
                           response) {
+
                         if (response.connectionState != ConnectionState.done) {
                           return const Center(
                             child: CircularProgressIndicator(),
                           );
                         }
-                        return ListView(
-                          shrinkWrap: true,
-                          padding: EdgeInsets.zero,
-                          children: response.data!
-                              .map((item) =>
-                              Column(
-                                  children:[
-                                    Text(item.heading??""),
-                                    ListView(
-                                      shrinkWrap: true,
-                                      padding: EdgeInsets.zero,
-                                      children: item.body!
-                                          .map((item1) =>
-                                          ExpandableQuestionWidget(question: item1.question, answer:item1.answer,),
-                                      )
-                                          .toList(),
-                                    )]
-                              )
-                          )
-                              .toList(),
-                        );
+                        time = response.data!.updatedAt!.toString()??"";
+                        return Text(response.data!.text??"");
                       })),
 
             ),

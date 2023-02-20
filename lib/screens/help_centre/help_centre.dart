@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:kappu/components/AppColors.dart';
 import 'package:kappu/screens/help_centre/widgets/alert_dialogue.dart';
 
 class HelpCentre extends StatefulWidget {
@@ -22,7 +23,7 @@ class _HelpCentreState extends State<HelpCentre> {
               child: Row(
                 children: [
                   CircleAvatar(
-                    backgroundColor: Colors.blue,
+                    backgroundColor: AppColors.app_color,
                     child: IconButton(
                       onPressed: () {
                         Navigator.pop(context);
@@ -84,7 +85,7 @@ class _HelpCentreState extends State<HelpCentre> {
               width: double.infinity,
               decoration: const BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(15)),
-                  color: Colors.blue
+                  color: AppColors.app_color
                   // gradient: LinearGradient(
                   //   colors: [
                   //     Color.fromARGB(255, 50, 125, 196),

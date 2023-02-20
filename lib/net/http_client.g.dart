@@ -59,6 +59,11 @@ class _HttpClient implements HttpClient {
       "Perhour":params['Perhour'],
       "description":params["description"],
       "Extra_for_urgent_need":params['Extra_for_urgent_need'],
+      "fcm_token":params['fcm_token'],
+      "os":params['os'],
+      "os":params['os'],
+      "login_src":params['login_src'],
+      "social_login_id":params['social_login_id'],
       // "profileFileUpload" :  await MultipartFile.fromFile(gigImage.path, filename: gigImage.path.split('/').last),
       // 'additionaldocuments[]': [
       //   await MultipartFile.fromFile(doc.path, filename: doc.path.split('/').last),
@@ -88,23 +93,27 @@ class _HttpClient implements HttpClient {
       'Content-Type': 'multipart/form-data',
     };
 
-    var formData = FormData.fromMap({
-      'first_name': params['first_name'],
-      'last_name': params['last_name'],
-      'username': params['username'],
-      'email': params['email'],
-      'phone_number': params['phone_number'],
-      'password': params['password'],
-      "nationality":params['nationality'],
-      "language": params['language'],
-      // 'fileUpload': await MultipartFile.fromFile(profilePic.path, filename: profilePic.path.split('/').last),
-
-    });
+    // var formData = FormData.fromMap({
+    //   'first_name': params['first_name'],
+    //   'last_name': params['last_name'],
+    //   'username': params['username'],
+    //   'email': params['email'],
+    //   'phone_number': params['phone_number'],
+    //   'password': params['password'],
+    //   "nationality":params['nationality'],
+    //   "language": params['language'],
+    //   "os": params['os'],
+    //   "fcm_token": params['fcm_token'],
+    //   "login_src": params['login_src'],
+    //   "social_login_id": params['social_login_id'],
+    //   // 'fileUpload': await MultipartFile.fromFile(profilePic.path, filename: profilePic.path.split('/').last),
+    //
+    // });
 
     final _result = await _dio.fetch(_setStreamType<HttpResponse<dynamic>>(
         Options(method: 'POST', headers: _headers, extra: _extra)
             .compose(_dio.options, 'auth/customerregister',
-                queryParameters: queryParameters, data: formData)
+                queryParameters: queryParameters, data: params)
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = _result.data;
     final httpResponse = HttpResponse(value, _result);
@@ -327,6 +336,21 @@ class _HttpClient implements HttpClient {
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     return helpCenterResponseFromJson(_result.data!);
+  }
+
+  @override
+  Future<PrivacyPolicyResponse> getPrivayPolicy() async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<String>(
+        _setStreamType<PrivacyPolicyResponse>(
+            Options(method: 'GET', headers: _headers, extra: _extra)
+                .compose(_dio.options, 'privacypolicy',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    return privacyPolicyResponseFromJson(_result.data!);
   }
 
   @override

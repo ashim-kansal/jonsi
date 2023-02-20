@@ -138,7 +138,7 @@ class AddReview extends ModalRoute<void> {
                 height: ScreenUtil().screenHeight * 0.05,
                 child: TextButton(
                   style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(Colors.blue),
+                    backgroundColor: MaterialStateProperty.all(AppColors.app_color),
                     shape: MaterialStateProperty.all(
                       RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(
@@ -305,7 +305,7 @@ class AddReview extends ModalRoute<void> {
                             height: ScreenUtil().screenHeight * 0.05,
                             child: TextButton(
                               style: ButtonStyle(
-                                backgroundColor: MaterialStateProperty.all(Colors.blue),
+                                backgroundColor: MaterialStateProperty.all(AppColors.app_color),
                                 shape: MaterialStateProperty.all(
                                   RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(

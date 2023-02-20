@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:kappu/components/AppColors.dart';
 import 'package:kappu/models/notification.dart';
 
 // import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -47,7 +48,7 @@ class NotificationsPage extends ModalRoute<void> {
         child: Column(children: [
           Container(
             height: ScreenUtil().setHeight(90),
-            color: Colors.blue,
+            color: AppColors.app_color,
             child: Padding(
               padding: EdgeInsets.only(
                   left: ScreenUtil().setWidth(15),
