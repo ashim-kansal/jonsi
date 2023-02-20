@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
 import 'package:kappu/common/CircleButton.dart';
+import 'package:kappu/common/custom_progress_bar.dart';
 import 'package:kappu/components/AppColors.dart';
 import 'package:kappu/components/MyAppBar.dart';
 import 'package:kappu/models/serializable_model/PrivacyPolicyResponse.dart';
+import 'package:kappu/net/base_dio.dart';
 import 'package:kappu/net/http_client.dart';
 
 import '../../common/ExpandableQuestionWidget.dart';
@@ -156,60 +160,93 @@ class HelpCenterQuestions extends StatelessWidget {
   }
 }
 
-class PrivacyPolicyPage extends StatelessWidget {
+class PrivacyPolicyPage extends StatefulWidget{
+
+  @override
+  State<StatefulWidget> createState() {
+    return PrivacyPolicyPageState();
+  }
+
+}
+
+class PrivacyPolicyPageState extends State<PrivacyPolicyPage> {
 
   String time = "";
+  String textDesc = "";
+  bool loading = false;
+
+  @override
+  void initState() {
+    super.initState();
+
+    getPrivacyPolicy();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.color_f2f7fd,
       appBar: MyAppBar(title: "Privacy Policy",),
-      body: Column(
+      body: Stack(
         children: [
-          Container(
-            color: Colors.white,
-            width: MediaQuery.of(context).size.width,
-            child: Center(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  SizedBox(height: 20,),
-                  Text("Urban Malta Privacy Policy", style: TextStyle(color: Colors.black, fontSize: 22, fontFamily: "Montserrat-Bold"),),
-                  SizedBox(height: 5,),
-                  Text("Last update: $time", style: TextStyle(color: AppColors.text_desc, fontSize: 14, fontFamily: "Montserrat-regular"),),
-                  SizedBox(height: 20,),],
-              ),
-            ),),
-          Padding(
-            padding: EdgeInsets.fromLTRB(
-                ScreenUtil().setWidth(18), 40.h, ScreenUtil().setWidth(18), 0),
-            child:
-            SingleChildScrollView(
-              child:
+          Column(
+            children: [
               Container(
-                  child: FutureBuilder(
-                      future: HttpClient()
-                          .getPrivayPolicy(),
-                      builder: (context,
-                          AsyncSnapshot<PrivacyPolicyResponse>
-                          response) {
+                color: Colors.white,
+                width: MediaQuery.of(context).size.width,
+                child: Center(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SizedBox(height: 20,),
+                      Text("Urban Malta Privacy Policy", style: TextStyle(color: Colors.black, fontSize: 22, fontFamily: "Montserrat-Bold"),),
+                      SizedBox(height: 5,),
+                      Text("Last update: $time", style: TextStyle(color: AppColors.text_desc, fontSize: 14, fontFamily: "Montserrat-regular"),),
+                      SizedBox(height: 20,),
+                      Container(height: 1,color: AppColors.title_desc,),
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(
+                            ScreenUtil().setWidth(18), 40.h, ScreenUtil().setWidth(18), 0),
+                        child:
+                        SingleChildScrollView(
+                            child: Text(textDesc)
 
-                        if (response.connectionState != ConnectionState.done) {
-                          return const Center(
-                            child: CircularProgressIndicator(),
-                          );
-                        }
-                        time = response.data!.updatedAt!.toString()??"";
-                        return Text(response.data!.text??"");
-                      })),
+                        ),
 
-            ),
+                      )],
+                  ),
+                ),),
 
-          )
+            ],
+          ),
+          if(loading)
+            CustomProgressBar(),
+
+
         ],
-      ),
+      )
     );
+  }
+
+  Future<void> getPrivacyPolicy() async {
+    setState(() {
+      this.loading = true;
+    });
+    await HttpClient()
+        .getPrivayPolicy()
+        .then((value) => {
+      setState(() {
+        this.loading = false;
+        this.textDesc = value.text!;
+        this.time = DateFormat("MMMM dd, yyyy").format(value.updatedAt!);
+      }),
+    })
+        .catchError((e) {
+      setState(() {
+        this.loading = true;
+      });
+      BaseDio.getDioError(e);
+    });
   }
 }
 
