@@ -27,7 +27,6 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       body: GestureDetector(
         onTap: () {
@@ -36,7 +35,93 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(top: 40, left: 10, right: 10),
+                  child: Row(
+                    children: [
+                      const Icon(
+                        Icons.location_on,
+                        size: 35,
+                        color: AppColors.app_color,
+                      ),
+                      Expanded(
+                          child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: const [
+                          Text(
+                            'Current location',
+                            style: TextStyle(
+                                fontSize: 12, color: Color(0xff7B7D83)),
+                          ),
+                          Text(
+                            'Malta',
+                            style: TextStyle(
+                                fontSize: 16, color: Color(0xff7B7D83)),
+                          )
+                        ],
+                      )),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 8.0),
+                        child: CircleAvatar(
+                            // radius: 30,
+                            backgroundColor: Colors.white,
+                            child: IconButton(
+                              onPressed: () {
+                                // if (StorageManager().accessToken.isNotEmpty) {
+                                pushDynamicScreen(context,
+                                    screen: SettingsPage(), withNavBar: false);
+                                // } else {
+                                //   changeScreen(
+                                //       context: context,
+                                //       screen: LoginScreen(isFromOtherScreen: true));
+                                // }
+                              },
+                              icon: const Icon(
+                                Icons.account_circle_outlined,
+                                color: AppColors.app_color,
+                                size: 35,
+                              ),
+                            )),
+                      )
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 5,),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      'assets/images/colorfulLogo.png',
+                      width: MediaQuery.of(context).size.width * 0.14,
+                      height: MediaQuery.of(context).size.height * 0.05,
+                    ),
+                    Text(
+                      'URBAN MALTA',
+                      style: TextStyle(
+                          fontSize: 22,
+                          color: AppColors.app_color,
+                          fontWeight: FontWeight.bold),
+                    )
+                  ],
+                ),
+                const SizedBox(height: 5,),
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: ScreenUtil().setWidth(6)),
+                  child: SearchTextField(
+                    hintext: "Search Services",
+                    onSearchingComplete: () {},
+                  ),
+                ),
+                const SizedBox(height: 10,),
+              ],
+            ),
+
+            /*Container(
               height: ScreenUtil().setHeight(160),
               color: Colors.white,
               child: Column(
@@ -47,9 +132,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   Padding(
                     padding: EdgeInsets.only(left: ScreenUtil().setWidth(10)),
                     child: Row(children: [
-                      Image.asset('assets/images/colorfulLogo.png',
+                      Image.asset(
+                        'assets/images/colorfulLogo.png',
                         width: MediaQuery.of(context).size.width * 0.14,
-                        height: MediaQuery.of(context).size.height * 0.05,),
+                        height: MediaQuery.of(context).size.height * 0.05,
+                      ),
                       // Padding(
                       //   padding: const EdgeInsets.fromLTRB(5, 2, 2, 2.0),
                       //   child: Column(
@@ -73,14 +160,13 @@ class _HomeScreenState extends State<HomeScreen> {
                       Padding(
                         padding: const EdgeInsets.only(left: 8.0),
                         child: CircleAvatar(
-                          // radius: 30,
+                            // radius: 30,
                             backgroundColor: Colors.white,
                             child: IconButton(
                               onPressed: () {
                                 // if (StorageManager().accessToken.isNotEmpty) {
-                                  pushDynamicScreen(context,
-                                      screen: SettingsPage(),
-                                      withNavBar: false);
+                                pushDynamicScreen(context,
+                                    screen: SettingsPage(), withNavBar: false);
                                 // } else {
                                 //   changeScreen(
                                 //       context: context,
@@ -90,7 +176,6 @@ class _HomeScreenState extends State<HomeScreen> {
                               icon: const Icon(
                                 Icons.account_circle_outlined,
                                 color: AppColors.app_color,
-
                               ),
                             )),
                       ),
@@ -112,52 +197,53 @@ class _HomeScreenState extends State<HomeScreen> {
                   )
                 ],
               ),
-            ),
+            ),*/
             Expanded(
                 child: Container(
-                  color: AppColors.color_f2f7fd,
-                  child: MediaQuery.removePadding(
-                      context: context,
-                      removeTop: true,
-                      child:ListView(
-                        padding: EdgeInsets.zero,
-                        shrinkWrap: true,
-                        children: [
-                          20.verticalSpace,
-                          const SliderWidget(),
-                          Padding(
-                            padding: EdgeInsets.only(left: 10, right: 20, bottom: 5),
-                            child: Text(
-                              'Popular Services',
-                              style: TextStyle(
-                                  color: AppColors.app_color,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: ScreenUtil().setSp(21)),
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.all(10),
-                            child: const OurBestServices(),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(left: 10, right: 20, bottom: 5),
-                            child: Text(
-                              'Best Services',
-                              style: TextStyle(
-                                  color: AppColors.app_color,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: ScreenUtil().setSp(21)),
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.all(10),
-                            child: const Servicescontainer(),
-                          ),
-
-                          const SizedBox(height: 45)
-                        ],
-                      )),
-                )),
+              color: AppColors.color_f2f7fd,
+              child: MediaQuery.removePadding(
+                  context: context,
+                  removeTop: true,
+                  child: ListView(
+                    padding: EdgeInsets.zero,
+                    shrinkWrap: true,
+                    children: [
+                      20.verticalSpace,
+                      const SliderWidget(),
+                      Padding(
+                        padding:
+                            EdgeInsets.only(left: 10, right: 20, bottom: 5),
+                        child: Text(
+                          'Popular Services',
+                          style: TextStyle(
+                              color: AppColors.app_color,
+                              fontWeight: FontWeight.bold,
+                              fontSize: ScreenUtil().setSp(21)),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(10),
+                        child: const OurBestServices(),
+                      ),
+                      Padding(
+                        padding:
+                            EdgeInsets.only(left: 10, right: 20, bottom: 5),
+                        child: Text(
+                          'Best Services',
+                          style: TextStyle(
+                              color: AppColors.app_color,
+                              fontWeight: FontWeight.bold,
+                              fontSize: ScreenUtil().setSp(21)),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(10),
+                        child: const Servicescontainer(),
+                      ),
+                      const SizedBox(height: 45)
+                    ],
+                  )),
+            )),
           ],
         ),
       ),

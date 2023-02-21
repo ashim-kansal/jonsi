@@ -1,15 +1,13 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:kappu/components/AppColors.dart';
 import 'package:kappu/screens/ProviderScreens/dashboard/provider_home.dart';
 import 'package:kappu/screens/bookings/booking_screen.dart';
 import 'package:kappu/screens/catagories/catagories_screen.dart';
 import 'package:kappu/screens/notification/notification_screen.dart';
-import 'package:kappu/screens/notification/notifications.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
+
+import '../../common/bmnav.dart' as bmnav;
 import '../screens/ProviderScreens/all_chats.dart';
 import '../screens/ProviderScreens/notification/notifications.dart';
-import '../screens/ProviderScreens/settings/settings_screen.dart';
 import '../screens/home_page/home_screen.dart';
 
 class BottomNavBar extends StatefulWidget {
@@ -29,11 +27,16 @@ class _BottomNavBarState extends State<BottomNavBar> {
   late bool _hideNavBar;
   late BuildContext testContext;
 
+  int currentTab = 1;
+  List<Widget> screens = [];
+  Widget? currentScreen;
+
+  final PageStorageBucket bucket = PageStorageBucket();
+
   @override
   void initState() {
     super.initState();
-    _controller = PersistentTabController(initialIndex: 0);
-    _hideNavBar = false;
+    _buildHome();
   }
 
   Future<void> uidisnull() async {}
@@ -56,126 +59,55 @@ class _BottomNavBarState extends State<BottomNavBar> {
     ];
   }
 
-  List<PersistentBottomNavBarItem> _navBarsItemsprovider() {
-    return [
-
-      PersistentBottomNavBarItem(
-        icon: const Icon(
-          Icons.home_outlined,
-        ),
-        title: "Home",
-        textStyle: const TextStyle(),
-        activeColorPrimary: AppColors.app_color,
-        inactiveColorPrimary: Colors.grey,
-      ),
-      PersistentBottomNavBarItem(
-        icon: const Icon(Icons.messenger),
-        title: ("Chats"),
-        activeColorPrimary: AppColors.app_color,
-        inactiveColorPrimary: Colors.grey,
-      ),
-      PersistentBottomNavBarItem(
-        icon: const Icon(Icons.notifications),
-        title: ("Notification"),
-        activeColorPrimary: AppColors.app_color,
-        inactiveColorPrimary: Colors.grey,
-      ),
-      PersistentBottomNavBarItem(
-        icon: const Icon(
-          Icons.book_rounded,
-        ),
-        title: "Bookings",
-        activeColorPrimary: AppColors.app_color,
-        inactiveColorPrimary: Colors.grey,
-      ),
-    ];
-  }
-
-  List<PersistentBottomNavBarItem> _navBarsItems() {
-    return [
-      PersistentBottomNavBarItem(
-        icon: const Icon(
-          Icons.home_outlined,
-        ),
-        title: "Home",
-        textStyle: const TextStyle(),
-        activeColorPrimary: AppColors.app_color,
-        inactiveColorPrimary: Colors.grey,
-      ),
-      PersistentBottomNavBarItem(
-        icon: const Icon(Icons.article_outlined),
-        title: ("Catagories"),
-        textStyle: const TextStyle(),
-        activeColorPrimary: AppColors.app_color,
-        inactiveColorPrimary: Colors.grey,
-      ),
-      PersistentBottomNavBarItem(
-        icon: const Icon(Icons.notifications),
-        title: ("Notification"),
-        activeColorPrimary: AppColors.app_color,
-        inactiveColorPrimary: Colors.grey,
-      ),
-      PersistentBottomNavBarItem(
-        icon: const Icon(Icons.book_rounded),
-        title: ("Bookings"),
-        textStyle: const TextStyle(),
-        activeColorPrimary: AppColors.app_color,
-        inactiveColorPrimary: Colors.grey,
-      ),
-
-    ];
-  }
-
   @override
   Widget build(BuildContext context) {
-    return PersistentTabView(
-      context,
-      controller: _controller,
-      screens: widget.isprovider ? _buildScreensprovider() : _buildScreens(),
-      items: widget.isprovider ? _navBarsItemsprovider() : _navBarsItems(),
-      handleAndroidBackButtonPress: true,
-      resizeToAvoidBottomInset: true,
-      stateManagement: true,
-      navBarHeight: MediaQuery.of(context).viewInsets.bottom > 0
-          ? 0.0
-          : kBottomNavigationBarHeight,
-      hideNavigationBarWhenKeyboardShows: true,
-      popActionScreens: PopActionScreensType.all,
-      onWillPop: (context) async {
-        await showDialog(
-          context: context!,
-          useSafeArea: true,
-          builder: (context) => Container(
-            height: 50.0,
-            width: 50.0,
-            color: Colors.white,
-            child: ElevatedButton(
-              child: const Text("Close"),
-              onPressed: () {
-                exit(0);
-              },
-            ),
-          ),
-        );
-        return false;
-      },
-      selectedTabScreenContext: (context) {
-        testContext = context!;
-      },
-      hideNavigationBar: _hideNavBar,
-      decoration: NavBarDecoration(
-          colorBehindNavBar: Colors.indigo,),
-      popAllScreensOnTapOfSelectedTab: true,
-      itemAnimationProperties: const ItemAnimationProperties(
-        duration: Duration(milliseconds: 400),
-        curve: Curves.ease,
+    return Scaffold(
+      extendBodyBehindAppBar: true,
+      extendBody: true,
+      backgroundColor: Colors.white,
+      body: PageStorage(child: currentScreen!, bucket: bucket),
+      bottomNavigationBar: bmnav.BottomNav(
+        index: currentTab,
+        labelStyle: bmnav.LabelStyle(visible: true),
+        onTap: (i) {
+          setState(() {
+            currentTab = i;
+            currentScreen = screens[i];
+          });
+        },
+        items: widget.isprovider
+            ? [
+                bmnav.BottomNavItem('assets/icons/home.png', label: ''),
+                bmnav.BottomNavItem('assets/icons/notification.png', label: ''),
+                bmnav.BottomNavItem('assets/icons/booking.png', label: ''),
+              ]
+            : [
+                bmnav.BottomNavItem('assets/icons/home.png', label: ''),
+                bmnav.BottomNavItem('assets/icons/catagory.png', label: ''),
+                bmnav.BottomNavItem('assets/icons/notification.png', label: ''),
+                bmnav.BottomNavItem('assets/icons/booking.png', label: ''),
+              ],
       ),
-      screenTransitionAnimation: const ScreenTransitionAnimation(
-        animateTabTransition: true,
-        curve: Curves.ease,
-        duration: Duration(milliseconds: 200),
-      ),
-      navBarStyle: NavBarStyle.style6,
     );
+  }
+
+  void _buildHome() {
+    setState(() {
+      screens = widget.isprovider
+          ? [
+              const ProviderHomeScreen(),
+              const AllChatsScreenProvider(),
+              const NotificationsPageProvider(),
+              const BookingScreen(),
+            ]
+          : [
+              const HomeScreen(),
+              const CatagoriesScreen(),
+              const NotificationScreen(),
+              const BookingScreen(),
+            ];
+      currentScreen =
+          widget.isprovider ? const ProviderHomeScreen() : const HomeScreen();
+    });
   }
 }

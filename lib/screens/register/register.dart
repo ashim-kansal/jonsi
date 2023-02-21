@@ -317,7 +317,7 @@ class _SignUpState extends State<SignUp> {
                             countryDropdownLabel: "Country",
                             stateDropdownLabel: "State",
                             cityDropdownLabel: "City",
-                            defaultCountry: DefaultCountry.Malta,
+                            defaultCountry: CscCountry.Malta,
                             selectedItemStyle: TextStyle(
                               fontWeight: FontWeight.w500,
                               fontSize: ScreenUtil().setSp(15),
