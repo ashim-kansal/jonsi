@@ -26,11 +26,11 @@ class _SearchTextFieldState extends State<SearchTextField> {
         horizontal: size.width * 0.02,
       ),
       child: Container(
-        height: 40.h,
+        height: 40,
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(25),
-          border: Border.all(color: Colors.grey),
+          border: Border.all(color: Color(0xffEBEBEB),width: 1),
         ),
         child: TextFormField(
           onTap: () {
