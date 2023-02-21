@@ -565,16 +565,45 @@ class _SignUpState extends State<SignUp> {
                                   : passwordGreenEyeIcon),
                           hintText: "Confirm Password",
                         ),
-                      SizedBox(height: ScreenUtil().setHeight(10)),
-                      CustomButton(
-                          buttontext: "Next",
-                          isLoading: loading,
+                      SizedBox(height: 20),
+                      Container(
+                        height: ScreenUtil().screenHeight * 0.06,
+                        child: TextButton(
+                          style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all(AppColors.app_color),
+                            shape: MaterialStateProperty.all(
+                              RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(
+                                      ScreenUtil().screenHeight * 0.03)),
+                            ),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const Opacity(
+                                opacity: 0,
+                                child: Icon(Icons.arrow_forward_ios),
+                              ),
+                              Text(
+                                "Continue",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.white,
+                                  fontSize: 14.sp,
+                                  fontFamily: 'Montserrat-Medium',
+                                ),
+                              ),
+                              Image.asset('assets/icons/arw.png', scale: 1.0),
+                            ],
+                          ),
                           onPressed: () {
                             widget.isprovider
                                 ? onregisterpressedprovider
-                                : onregisterpressed();
-                          }),
-                      10.verticalSpace,
+                                : onregisterpressed;
+                          },
+                        ),
+                      ),
+                      20.verticalSpace,
 
                       // const OrSignUpWith()
                     ],
