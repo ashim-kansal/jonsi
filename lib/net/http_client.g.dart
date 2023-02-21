@@ -61,7 +61,6 @@ class _HttpClient implements HttpClient {
       "Extra_for_urgent_need":params['Extra_for_urgent_need'],
       "fcm_token":params['fcm_token'],
       "os":params['os'],
-      "os":params['os'],
       "login_src":params['login_src'],
       "social_login_id":params['social_login_id'],
       // "profileFileUpload" :  await MultipartFile.fromFile(gigImage.path, filename: gigImage.path.split('/').last),
@@ -93,31 +92,31 @@ class _HttpClient implements HttpClient {
       'Content-Type': 'multipart/form-data',
     };
 
-    // var formData = FormData.fromMap({
-    //   'first_name': params['first_name'],
-    //   'last_name': params['last_name'],
-    //   'username': params['username'],
-    //   'email': params['email'],
-    //   'phone_number': params['phone_number'],
-    //   'password': params['password'],
-    //   "nationality":params['nationality'],
-    //   "language": params['language'],
-    //   "os": params['os'],
-    //   "fcm_token": params['fcm_token'],
-    //   "login_src": params['login_src'],
-    //   "social_login_id": params['social_login_id'],
-    //   // 'fileUpload': await MultipartFile.fromFile(profilePic.path, filename: profilePic.path.split('/').last),
-    //
-    // });
+    var formData = FormData.fromMap({
+      'first_name': params['first_name'],
+      'last_name': params['last_name'],
+      'username': params['username'],
+      'email': params['email'],
+      'phone_number': params['phone_number'],
+      'password': params['password'],
+      "nationality":params['nationality'],
+      "language": params['language'],
+      "os": params['os'],
+      "fcm_token": params['fcm_token'],
+      "login_src": params['login_src'],
+      "social_login_id": params['social_login_id'],
+
+    });
 
     final _result = await _dio.fetch(_setStreamType<HttpResponse<dynamic>>(
         Options(method: 'POST', headers: _headers, extra: _extra)
             .compose(_dio.options, 'auth/customerregister',
-                queryParameters: queryParameters, data: params)
+                queryParameters: queryParameters, data: formData)
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = _result.data;
     final httpResponse = HttpResponse(value, _result);
     return httpResponse;
+
   }
 
   @override

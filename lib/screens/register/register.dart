@@ -355,7 +355,7 @@ class _SignUpState extends State<SignUp> {
                                 children: [
                                   SizedBox(
                                     height: ScreenUtil().setHeight(40),
-                                    width: ScreenUtil().setHeight(300),
+                                    width: ScreenUtil().setHeight(317),
                                     child: DropdownButtonFormField<Language>(
                                       decoration: InputDecoration(
                                           border: InputBorder.none,

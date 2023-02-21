@@ -107,7 +107,7 @@ class SocailSignUpScreen extends StatelessWidget {
                   },),
                   const SizedBox(height: 10),
                   GoogleLoginButton(action: false, text: 'Connect with Google',onTap: (user){
-                    socialLogin('google', user.id, user.email, user.displayName!, context);
+                    socialLogin('google', user.id!, user.email!, user.displayName!, context);
                   },),
                   const SizedBox(
                     height: 10,
@@ -230,7 +230,7 @@ class SocailSignUpScreen extends StatelessWidget {
   }
 
   Future<void> socialLogin(
-      String type, String id, String email, String displayName, BuildContext context) async {
+      String type,String id, String _email, String displayName, BuildContext context) async {
     // isLoading = true;
     // setState(() {});
     Map<String, dynamic> body = {
@@ -265,6 +265,16 @@ class SocailSignUpScreen extends StatelessWidget {
           ));
       // Navigator.pop(context);
     }).catchError((error) {
+      changeScreen(
+          context: context,
+          screen: SignUp(
+            isprovider: true,
+            loginType: type,
+            name: displayName,
+            socialId: id,
+            email: _email,
+          ));
+
     });
   }
 

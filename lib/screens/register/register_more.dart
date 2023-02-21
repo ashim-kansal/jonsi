@@ -87,8 +87,7 @@ class _RegisterMoreState extends State<RegisterMore> {
         elevation: 0,
       ),
       body: SingleChildScrollView(
-        child: CustomPaint(
-          painter: SignUpPainter(),
+        child: Container(
           child: Stack(
             children: [
               Column(
@@ -102,13 +101,10 @@ class _RegisterMoreState extends State<RegisterMore> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Center(
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(100),
-                              child: Image.asset(
-                                "assets/images/cheese-logo-trasparente.png",
-                                height: 120.h,
-                                fit: BoxFit.cover,
-                              ),
+                            child: Image.asset(
+                              "assets/icons/logo.png",
+                              height: 90.h,
+                              fit: BoxFit.cover,
                             ),
                           ),
                           30.verticalSpace,
@@ -174,19 +170,24 @@ class _RegisterMoreState extends State<RegisterMore> {
                           Material(
                               borderRadius: BorderRadius.circular(
                                   ScreenUtil().screenHeight * 0.03),
-                              elevation: 20,
+                              elevation: 3,
+                              shadowColor: Colors.black.withOpacity(0.14),
                               child: Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     SizedBox(
-                                      height: ScreenUtil().setHeight(50),
+                                      height: ScreenUtil().setHeight(40),
                                       width: ScreenUtil().setWidth(317),
                                       child: DropdownButtonFormField<Category>(
                                         decoration: InputDecoration(
                                             border: InputBorder.none,
-                                            contentPadding: EdgeInsets.only(
-                                                left: 15, right: 15, top: 5),
+                                            prefixIcon: Padding(
+                                              padding:
+                                              const EdgeInsetsDirectional.only(start: 15, end: 10),
+                                              child: ImageIcon(AssetImage('assets/icons/service.png'), color: AppColors.app_color,),
+                                            ),
+
                                             hintStyle: TextStyle(
                                                 color: Colors.grey[100]),
                                             hintText: "Choose catagory",
@@ -273,10 +274,39 @@ class _RegisterMoreState extends State<RegisterMore> {
                           ),
 
                           SizedBox(height: ScreenUtil().setHeight(10)),
-                          CustomButton(
-                              buttontext: "Next",
-                              isLoading: loading,
-                              onPressed: onregisterpressedprovider()),
+                          Container(
+                            height: ScreenUtil().screenHeight * 0.06,
+                            child: TextButton(
+                              style: ButtonStyle(
+                                backgroundColor: MaterialStateProperty.all(AppColors.app_color),
+                                shape: MaterialStateProperty.all(
+                                  RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(
+                                          ScreenUtil().screenHeight * 0.03)),
+                                ),
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  const Opacity(
+                                    opacity: 0,
+                                    child: Icon(Icons.arrow_forward_ios),
+                                  ),
+                                  Text(
+                                    "Continue",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      color: Colors.white,
+                                      fontSize: 14.sp,
+                                      fontFamily: 'Montserrat-Medium',
+                                    ),
+                                  ),
+                                  Image.asset('assets/icons/arw.png', scale: 1.0),
+                                ],
+                              ),
+                              onPressed: onregisterpressedprovider,
+                            ),
+                          ),
                           10.verticalSpace,
 
                           // const OrSignUpWith()
