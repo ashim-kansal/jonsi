@@ -158,7 +158,9 @@ class HelpCenterQuestions extends StatelessWidget {
                           child: CircularProgressIndicator(),
                         );
                       }
-                      return Expanded(child: ListView.builder(
+                      return SizedBox(
+                        height: MediaQuery.of(context).size.height-207,
+                          child: ListView.builder(
                         itemCount: response.data!.length,
                         shrinkWrap: true,
                         physics: AlwaysScrollableScrollPhysics(),

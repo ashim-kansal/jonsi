@@ -22,63 +22,54 @@ class ProviderOrUser extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: CustomPaint(
-        painter: SignUpPainter(),
+      body: Container(
+        alignment: Alignment.center,
+        height: double.infinity,
+        padding: EdgeInsets.all(25),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Center(
+              child: Image.asset(
+                "assets/icons/logo.png",
+                height: 90.h,
+                fit: BoxFit.cover,
+              ),
+            ),
             30.verticalSpace,
-            Padding(
-              padding: EdgeInsets.only(left: 15.w),
-              child: const BackButton(
-                color: AppColors.app_color,
-              ),
+            CustomButton(
+              buttontext: 'Register as Provider',
+              isLoading: false,
+              onPressed: () {
+                changeScreen(
+                    context: context,
+                    screen: SignUp(
+                      isprovider: true,
+                      loginType: loginType,
+                      name: name,
+                      socialId: socialId,
+                      email: email,
+                    ));
+              },
             ),
-            Spacer(),
-            Image.asset(
-              'assets/images/MainHandyman.png',
-              fit: BoxFit.fill,
+            SizedBox(height: ScreenUtil().setHeight(0.02.sh)),
+            CustomButton(
+              buttontext: 'Register as User',
+              isLoading: false,
+              onPressed: () {
+                changeScreen(
+                    context: context,
+                    screen: SignUp(
+                      isprovider: false,
+                      loginType: loginType,
+                      name: name,
+                      socialId: socialId,
+                      email: email,
+                    ));
+              },
             ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 60.w),
-              child: Column(
-                children: [
-                  10.verticalSpace,
-                  CustomButton(
-                    buttontext: 'Register as Provider',
-                    isLoading: false,
-                    onPressed: () {
-                      changeScreen(
-                          context: context,
-                          screen: SignUp(
-                            isprovider: true,
-                            loginType: loginType,
-                            name: name,
-                            socialId: socialId,
-                            email: email,
-                          ));
-                    },
-                  ),
-                  SizedBox(height: ScreenUtil().setHeight(0.02.sh)),
-                  CustomButton(
-                    buttontext: 'Register as User',
-                    isLoading: false,
-                    onPressed: () {
-                      changeScreen(
-                          context: context,
-                          screen: SignUp(
-                            isprovider: false,
-                            loginType: loginType,
-                            name: name,
-                            socialId: socialId,
-                            email: email,
-                          ));
-                    },
-                  ),
-                ],
-              ),
-            ),
-            10.verticalSpace
+            SizedBox(height: 30,)
           ],
         ),
       ),

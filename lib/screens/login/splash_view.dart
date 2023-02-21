@@ -98,7 +98,14 @@ class _SplashViewState extends State<SplashView> {
                 flex: 1,
                 fit: FlexFit.tight,
                 child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                              const BottomNavBar(isprovider: false)));
+
+                    },
                     child: returnButtonWithTextImage(context,
                         'assets/images/find_icon.png', "Find a service\n"),
                     style: ElevatedButton.styleFrom(
