@@ -281,17 +281,7 @@ class _SignUpState extends State<SignUp> {
                           validator: (value) =>
                           value!.isEmpty ? "Enter Your Nationality" : null,
                         ),
-                      // if (widget.isprovider)
-                      //   CustomTextFormField(
-                      //     controller: _descController,
-                      //     hintText:
-                      //         'Description | Cover letter – why should user hire you?',
-                      //     keyboardType: TextInputType.text,
-                      //     prefixIcon: profileIcon,
-                      //     maxlines: 3,
-                      //     validator: (value) =>
-                      //         value!.isEmpty ? "Enter Your Description" : null,
-                      //   ),
+
                       if (!widget.isprovider)
                         Padding(
                           padding: EdgeInsets.only(top: 10.h),
@@ -350,46 +340,7 @@ class _SignUpState extends State<SignUp> {
                             },
                           ),
                         ),
-                      // if (widget.isprovider)
-                      //   Material(
-                      //       borderRadius: BorderRadius.circular(
-                      //           ScreenUtil().screenHeight * 0.03),
-                      //       elevation: 20,
-                      //       child: Row(
-                      //           mainAxisAlignment:
-                      //               MainAxisAlignment.spaceBetween,
-                      //           children: [
-                      //             SizedBox(
-                      //               height: ScreenUtil().setHeight(50),
-                      //               width: ScreenUtil().setWidth(317),
-                      //               child: DropdownButtonFormField<Category>(
-                      //                 decoration: InputDecoration(
-                      //                     border: InputBorder.none,
-                      //                     contentPadding: EdgeInsets.only(
-                      //                         left: 15, right: 15, top: 5),
-                      //                     hintStyle: TextStyle(
-                      //                         color: Colors.grey[100]),
-                      //                     hintText: "Choose catagory",
-                      //                     fillColor: Colors.red[100]),
-                      //                 style: TextStyle(
-                      //                   color: Colors.grey.shade600,
-                      //                   fontWeight: FontWeight.w500,
-                      //                   fontSize: ScreenUtil().setSp(15),
-                      //                 ),
-                      //                 value: catagories.first,
-                      //                 onChanged: (value) {
-                      //                   setState(() {
-                      //                     selectedcatagory = value!;
-                      //                   });
-                      //                 },
-                      //                 items: catagories
-                      //                     .map((value) => DropdownMenuItem(
-                      //                         value: value,
-                      //                         child: Text(value.name)))
-                      //                     .toList(),
-                      //               ),
-                      //             )
-                      //           ])),
+
                       10.verticalSpace,
                       if (widget.isprovider)
                         Material(
@@ -405,74 +356,44 @@ class _SignUpState extends State<SignUp> {
                                   SizedBox(
                                     height: ScreenUtil().setHeight(50),
                                     width: ScreenUtil().setWidth(317),
-                                    child: Row(
-                                      children: [
-                                        ImageIcon(AssetImage('assets/icons/flag.png'), color: AppColors.app_color,),
+                                    child: DropdownButtonFormField<Language>(
+                                      decoration: InputDecoration(
+                                          border: InputBorder.none,
+                                          contentPadding: EdgeInsets.only(
+                                              left: 15, right: 15, top: 5),
+                                          hintStyle: TextStyle(
+                                              color: Colors.grey[100]),
+                                          hintText: "Language known",
+                                          fillColor: Colors.red[100]),
+                                      style: TextStyle(
+                                        color: Colors.grey.shade600,
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: ScreenUtil().setSp(15),
+                                      ),
+                                      value: languages.first,
+                                      onChanged: (value) {
+                                        setState(() {
+                                          selectedLanguage = value!;
+                                        });
+                                      },
+                                      items: languages
+                                          .map((value) => DropdownMenuItem(
+                                          value: value,
+                                          child: Text(
+                                            value.name,
+                                            style: TextStyle(
+                                              color: Colors.grey.shade600,
+                                              fontWeight: FontWeight.w500,
+                                              fontSize:
+                                              ScreenUtil().setSp(15),
+                                            ),
+                                          )))
+                                          .toList(),
+                                    ),
 
-                                        DropdownButtonFormField<Language>(
-                                          decoration: InputDecoration(
-                                              border: InputBorder.none,
-                                              contentPadding: EdgeInsets.only(
-                                                  left: 15, right: 15, top: 5),
-                                              hintStyle: TextStyle(
-                                                  color: Colors.grey[100]),
-                                              hintText: "Language known",
-                                              fillColor: Colors.red[100]),
-                                          style: TextStyle(
-                                            color: Colors.grey.shade600,
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: ScreenUtil().setSp(15),
-                                          ),
-                                          value: languages.first,
-                                          onChanged: (value) {
-                                            setState(() {
-                                              selectedLanguage = value!;
-                                            });
-                                          },
-                                          items: languages
-                                              .map((value) => DropdownMenuItem(
-                                              value: value,
-                                              child: Text(
-                                                value.name,
-                                                style: TextStyle(
-                                                  color: Colors.grey.shade600,
-                                                  fontWeight: FontWeight.w500,
-                                                  fontSize:
-                                                  ScreenUtil().setSp(15),
-                                                ),
-                                              )))
-                                              .toList(),
-                                        ),
-                                      ],
-                                    )
                                   ),
                                 ])),
                       10.verticalSpace,
-                      // if (widget.isprovider)
-                      //   CustomTextFormField(
-                      //     controller: _rateController,
-                      //     hintText: '\$ per hour',
-                      //     keyboardType: TextInputType.number,
-                      //     prefixIcon: profileIcon,
-                      //     validator: (value) => value!.isEmpty
-                      //         ? "Enter \$ per hour"
-                      //         : value!.length > 2
-                      //             ? "Enter valid \$ per hour"
-                      //             : null,
-                      //   ),
-                      // if (widget.isprovider)
-                      //   CustomTextFormField(
-                      //     controller: _extraRateController,
-                      //     hintText: 'Extra \$ for urgent need',
-                      //     keyboardType: TextInputType.number,
-                      //     prefixIcon: profileIcon,
-                      //     validator: (value) => value!.isEmpty
-                      //         ? "Enter extra \$"
-                      //         : value!.length > 2
-                      //             ? "Enter valid extra \$"
-                      //             : null,
-                      //   ),
-
                       if (widget.socialId.isEmpty)
                         CustomTextFormField(
                           controller: _passwordController,
@@ -570,16 +491,45 @@ class _SignUpState extends State<SignUp> {
                                   : passwordGreenEyeIcon),
                           hintText: "Confirm Password",
                         ),
-                      SizedBox(height: ScreenUtil().setHeight(10)),
-                      CustomButton(
-                          buttontext: "Next",
-                          isLoading: loading,
+                      SizedBox(height: 20),
+                      Container(
+                        height: ScreenUtil().screenHeight * 0.06,
+                        child: TextButton(
+                          style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all(AppColors.app_color),
+                            shape: MaterialStateProperty.all(
+                              RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(
+                                      ScreenUtil().screenHeight * 0.03)),
+                            ),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const Opacity(
+                                opacity: 0,
+                                child: Icon(Icons.arrow_forward_ios),
+                              ),
+                              Text(
+                                "Continue",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.white,
+                                  fontSize: 14.sp,
+                                  fontFamily: 'Montserrat-Medium',
+                                ),
+                              ),
+                              Image.asset('assets/icons/arw.png', scale: 1.0),
+                            ],
+                          ),
                           onPressed: () {
                             widget.isprovider
-                                ? onregisterpressedprovider
+                                ? onregisterpressedprovider()
                                 : onregisterpressed();
-                          }),
-                      10.verticalSpace,
+                          },
+                        ),
+                      ),
+                      20.verticalSpace,
 
                       // const OrSignUpWith()
                     ],
@@ -597,11 +547,8 @@ class _SignUpState extends State<SignUp> {
     print("inside>>>>>>>>>>>>");
     if (widget.socialId.isEmpty) {
       if (_nameController.text.isEmpty ||
-          _lastnameController.text.isEmpty ||
           _emailController.text.isEmpty ||
           !isEmail(_emailController.text) ||
-          _phnocontroller.text.isEmpty ||
-          _phnocontroller.text.length < 8 ||
           _passwordController.text.isEmpty ||
           passwordStrength == 'Weak' ||
           _checkPasswordController.text.isEmpty ||
@@ -611,19 +558,16 @@ class _SignUpState extends State<SignUp> {
     }
 
     if (_nameController.text.isEmpty ||
-        _lastnameController.text.isEmpty ||
         _emailController.text.isEmpty ||
-        !isEmail(_emailController.text) ||
-        _phnocontroller.text.isEmpty ||
-        _phnocontroller.text.length < 8) {
+        !isEmail(_emailController.text) ) {
       return;
     }
 
     Map<String, dynamic> bodyprovider = widget.socialId.isEmpty
         ? {
             'first_name': _nameController.text,
-            'last_name': _lastnameController.text,
-            'username': _lastnameController.text,
+            'last_name': "",
+            'username': "",
             'email': _emailController.text,
             'phone_number': '11',
             'password': _passwordController.text,
@@ -638,8 +582,8 @@ class _SignUpState extends State<SignUp> {
           }
         : {
             'first_name': _nameController.text,
-            'last_name': _lastnameController.text,
-            'username': _lastnameController.text,
+            'last_name': "",
+            'username': "",
             'email': _emailController.text,
             'phone_number': '111',
             'password': '',
@@ -659,13 +603,11 @@ class _SignUpState extends State<SignUp> {
   }
 
   onregisterpressed() async {
+    print('aacccdddddd');
     if (widget.socialId.isEmpty) {
       if (_nameController.text.isEmpty ||
-          _lastnameController.text.isEmpty ||
           _emailController.text.isEmpty ||
           !isEmail(_emailController.text) ||
-          _phnocontroller.text.isEmpty ||
-          _phnocontroller.text.length != 10 ||
           _passwordController.text.isEmpty ||
           passwordStrength == 'Weak' ||
           _checkPasswordController.text.isEmpty ||
@@ -674,11 +616,8 @@ class _SignUpState extends State<SignUp> {
       }
     }
     if (_nameController.text.isEmpty ||
-        _lastnameController.text.isEmpty ||
         _emailController.text.isEmpty ||
-        !isEmail(_emailController.text) ||
-        _phnocontroller.text.isEmpty ||
-        _phnocontroller.text.length != 10) {
+        !isEmail(_emailController.text)) {
       return;
     }
     if (!loading) {
@@ -688,24 +627,24 @@ class _SignUpState extends State<SignUp> {
       Map<String, dynamic> body = widget.socialId.isEmpty
           ? {
               'first_name': _nameController.text,
-              'username': _nameController.text + "_" + _lastnameController.text,
-              'last_name': _lastnameController.text,
+              'username': "_" ,
+              'last_name': "",
               'email': _emailController.text,
-              'phone_number': _phnocontroller.text,
+              'phone_number': "11",
               'password': _passwordController.text,
               'fcm_token': StorageManager().fcmToken,
               'os': Platform.isAndroid ? 'android' : 'ios',
               'language': 'english',
               'nationality': countryValue,
-        'login_src': '',
-        'social_login_id':''
+              'login_src': '',
+              'social_login_id':''
             }
           : {
               'first_name': _nameController.text,
-              'username': _nameController.text + "_" + _lastnameController.text,
-              'last_name': _lastnameController.text,
+              'username': "--",
+              'last_name': "",
               'email': _emailController.text,
-              'phone_number': _phnocontroller.text,
+              'phone_number': "11",
               'password': '',
               'login_src': widget.loginType,
               'social_login_id': widget.socialId,
