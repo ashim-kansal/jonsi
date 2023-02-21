@@ -224,7 +224,7 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
           onPressed: () async {
             if (passwordController.text.isEmpty ||
-                emailController.text.isEmpty) {
+                emailController.text.isEmpty || !isEmail(emailController.text)) {
               return;
             }
             if (!signin) {
