@@ -25,7 +25,7 @@ class ExpandableQuestionWidgetState extends State<ExpandableQuestionWidget> {
       child: Column(
         children: [
           Container(
-            color: Colors.white,
+            color: showanser ? Color(0xff4995EB).withOpacity(0.2) : Colors.white,
             child: Row(
               children: [
                 // Container(width: 5, height: 30, color: Colors.black),
@@ -33,8 +33,8 @@ class ExpandableQuestionWidgetState extends State<ExpandableQuestionWidget> {
                 Text(
                   widget.question!,
                   style: TextStyle(
-                      color: AppColors.text_desc,
-                      fontFamily: "Montserrat-Regular",
+                      color: showanser ? AppColors.color_161616 : AppColors.text_desc,
+                      fontFamily: showanser ? "Montserrat-Medium" : "Montserrat-Regular",
                       fontSize: 12),
                 ),
                 Spacer(),
@@ -53,10 +53,10 @@ class ExpandableQuestionWidgetState extends State<ExpandableQuestionWidget> {
               ],
             ),
           ),
-          if (showanser)
-            const SizedBox(
-              height: 10,
-            ),
+          // if (showanser)
+          //   const SizedBox(
+          //     height: 10,
+          //   ),
           if (showanser)
             Container(
                 color: Color(0xff4995EB).withOpacity(0.2),

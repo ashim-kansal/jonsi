@@ -34,8 +34,8 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget{
           ), shape: CircleBorder(),
         ),
       ),
-      shadowColor: Colors.white,
-      elevation: 2,
+      shadowColor: Colors.black.withOpacity(0.14),
+      elevation: 1,
     );
   }
 

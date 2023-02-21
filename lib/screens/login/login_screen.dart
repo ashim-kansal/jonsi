@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_credit_card/extension.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -101,80 +102,129 @@ class _LoginScreenState extends State<LoginScreen> {
         fontSize: 16,
       ),
       15.verticalSpace,
-      ElevatedTextFormField(
+      CustomTextFormField(
         controller: emailController,
-        isValid: isVaildEmail,
+        validator: (value) =>
+        isEmail(value!) ? null : "Check your email",
         keyboardType: TextInputType.emailAddress,
-        prefixIcon: emailIcon,
+        prefixIcon:  ImageIcon(AssetImage('assets/icons/ft-4.png'), color: AppColors.app_color,),
         suffixIcon: isEmail(email) ? checkIcon : null,
-        showPassword: false,
         hintText: 'Enter Email',
+        isValid: isVaildEmail,
         onChanged: (value) {
-          if (isEmail(value)) {
+          if (value.isNotEmpty && isEmail(value)) {
             isVaildEmail = true;
           } else {
             isVaildEmail = false;
           }
-          email = value;
           setState(() {});
         },
       ),
+
+      // ElevatedTextFormField(
+      //   controller: emailController,
+      //   isValid: isVaildEmail,
+      //   keyboardType: TextInputType.emailAddress,
+      //   prefixIcon: emailIcon,
+      //   suffixIcon: isEmail(email) ? checkIcon : null,
+      //   showPassword: false,
+      //   hintText: 'Enter Email',
+      //   onChanged: (value) {
+      //     if (isEmail(value)) {
+      //       isVaildEmail = true;
+      //     } else {
+      //       isVaildEmail = false;
+      //     }
+      //     email = value;
+      //     setState(() {});
+      //   },
+      // ),
       15.verticalSpace,
-      Material(
-          borderRadius: BorderRadius.circular(25),
-          elevation: 3,
-          shadowColor: Colors.black.withOpacity(0.14),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              TextFormField(
-                controller: passwordController,
-                textAlignVertical: TextAlignVertical.center,
-                onChanged: (value) {
-                  if (value.isNotEmpty) {
-                    isValidPassword = true;
-                  } else {
-                    isValidPassword = false;
-                  }
-                  setState(() {});
-                },
-                decoration: InputDecoration(
-                  prefixIcon: Padding(
-                    padding:
-                        const EdgeInsetsDirectional.only(start: 20, end: 15),
-                    child: passwordIcon,
-                  ),
-                  // prefixIconConstraints:
-                  //     BoxConstraints(maxHeight: ScreenUtil().setWidth(20)),
-                  suffixIcon: Padding(
-                    padding: const EdgeInsets.only(right: 12.0),
-                    child: GestureDetector(
-                        onTap: () {
-                          _showPassword = !_showPassword;
-                          setState(() {});
-                        },
-                        child: _showPassword
-                            ? passwordEyeIcon
-                            : passwordGreenEyeIcon),
-                  ),
-                  suffixIconConstraints: const BoxConstraints(maxHeight: 25),
-                  suffixIconColor: Colors.green,
-                  hintText: 'Enter Password',
-                  hintStyle: const TextStyle(
-                    fontWeight: FontWeight.w500,
-                  ),
-                  border: InputBorder.none,
-                ),
-                obscureText: _showPassword,
-                obscuringCharacter: '*',
-              ),
-              if (!isValidPassword)
-                const Text(
-                  'Please enter your password',
-                  style: TextStyle(color: AppColors.red),
-                )
-            ],
-          )),
+      CustomTextFormField(
+        showPassword: _showPassword,
+        controller: passwordController,
+        keyboardType: TextInputType.visiblePassword,
+        isValid: isValidPassword,
+        onChanged: (value) {
+          if (value.isNotEmpty) {
+            isValidPassword = true;
+          } else {
+            isValidPassword = false;
+          }
+          setState(() {});
+        },
+        validator: (value) {
+          if (value.isNullOrEmpty) {
+            return "Enter Your password";
+          }
+        },
+        prefixIcon: passwordIcon,
+        suffixIcon: GestureDetector(
+            onTap: () {
+              _showPassword = !_showPassword;
+              setState(() {});
+            },
+            child: _showPassword
+                ? passwordEyeIcon
+                : passwordGreenEyeIcon),
+        hintText: "Enter Password",
+      ),
+
+      // Material(
+      //     borderRadius: BorderRadius.circular(25),
+      //     elevation: 3,
+      //     shadowColor: Colors.black.withOpacity(0.14),
+      //     child: Column(
+      //       crossAxisAlignment: CrossAxisAlignment.start,
+      //       children: [
+      //         TextFormField(
+      //           controller: passwordController,
+      //           textAlignVertical: TextAlignVertical.center,
+      //           onChanged: (value) {
+      //             if (value.isNotEmpty) {
+      //               isValidPassword = true;
+      //             } else {
+      //               isValidPassword = false;
+      //             }
+      //             setState(() {});
+      //           },
+      //           decoration: InputDecoration(
+      //             prefixIcon: Padding(
+      //               padding:
+      //                   const EdgeInsetsDirectional.only(start: 20, end: 15),
+      //               child: passwordIcon,
+      //             ),
+      //             // prefixIconConstraints:
+      //             //     BoxConstraints(maxHeight: ScreenUtil().setWidth(20)),
+      //             suffixIcon: Padding(
+      //               padding: const EdgeInsets.only(right: 12.0),
+      //               child: GestureDetector(
+      //                   onTap: () {
+      //                     _showPassword = !_showPassword;
+      //                     setState(() {});
+      //                   },
+      //                   child: _showPassword
+      //                       ? passwordEyeIcon
+      //                       : passwordGreenEyeIcon),
+      //             ),
+      //             suffixIconConstraints: const BoxConstraints(maxHeight: 25),
+      //             suffixIconColor: Colors.green,
+      //             hintText: 'Enter Password',
+      //             hintStyle: const TextStyle(
+      //               fontWeight: FontWeight.w500,
+      //             ),
+      //             border: InputBorder.none,
+      //           ),
+      //           obscureText: _showPassword,
+      //           obscuringCharacter: '*',
+      //         ),
+      //         if (!isValidPassword)
+      //           const Text(
+      //             'Please enter your password',
+      //             style: TextStyle(color: AppColors.red),
+      //           )
+      //       ],
+      //     )),
       10.verticalSpace,
       Align(
         alignment: Alignment.centerRight,
@@ -372,8 +422,7 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     ];
     return Scaffold(
-      body: CustomPaint(
-        painter: SignUpPainter(),
+      body: Container(
         child: SingleChildScrollView(
           child: Stack(
             children: [

@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:csc_picker/csc_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_credit_card/extension.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:kappu/common/bottom_nav_bar.dart';
@@ -208,18 +209,18 @@ class _SignUpState extends State<SignUp> {
                       //       ? "Phone Number should be 10 digit long"
                       //       : null,
                       // ),
-                      if (!widget.isprovider)
-                        CustomTextFormField(
-                          controller: _addresscontoller,
-                          hintText: 'Address',
-                          keyboardType: TextInputType.text,
-                          onChanged: (value) {
-                            setState(() {});
-                          },
-                          prefixIcon: const Icon(Icons.location_on),
-                          validator: (value) =>
-                          value!.isEmpty ? "Enter Your Address" : null,
-                        ),
+                      // if (!widget.isprovider)
+                      //   CustomTextFormField(
+                      //     controller: _addresscontoller,
+                      //     hintText: 'Address',
+                      //     keyboardType: TextInputType.text,
+                      //     onChanged: (value) {
+                      //       setState(() {});
+                      //     },
+                      //     prefixIcon: const Icon(Icons.location_on),
+                      //     validator: (value) =>
+                      //     value!.isEmpty ? "Enter Your Address" : null,
+                      //   ),
                       if (widget.isprovider)
                         InkWell(
                           onTap: () async {
@@ -263,7 +264,7 @@ class _SignUpState extends State<SignUp> {
                             validator: (value) => null,
                           ),
                         ),
-                      if (widget.isprovider)
+
                         CustomTextFormField(
                           controller: _nationalityController,
                           hintText: 'Nationality',
@@ -282,67 +283,66 @@ class _SignUpState extends State<SignUp> {
                           value!.isEmpty ? "Enter Your Nationality" : null,
                         ),
 
-                      if (!widget.isprovider)
-                        Padding(
-                          padding: EdgeInsets.only(top: 10.h),
-                          child: CSCPicker(
-                            showStates: true,
-                            showCities: true,
-                            flagState: CountryFlag.DISABLE,
-                            dropdownDecoration: BoxDecoration(
-                                borderRadius:
-                                const BorderRadius.all(Radius.circular(10)),
-                                color: Colors.white,
-                                border:
-                                Border.all(color: Colors.grey, width: 1)),
-                            disabledDropdownDecoration: BoxDecoration(
-                                borderRadius:
-                                const BorderRadius.all(Radius.circular(10)),
-                                color: Colors.grey.shade300,
-                                border: Border.all(
-                                    color: Colors.grey.shade300, width: 1)),
-                            countrySearchPlaceholder: "Country",
-                            stateSearchPlaceholder: "State",
-                            citySearchPlaceholder: "City",
-                            countryDropdownLabel: "Country",
-                            stateDropdownLabel: "State",
-                            cityDropdownLabel: "City",
-                            defaultCountry: CscCountry.Malta,
-                            selectedItemStyle: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: ScreenUtil().setSp(15),
-                            ),
-                            dropdownHeadingStyle: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: ScreenUtil().setSp(15),
-                            ),
-                            dropdownItemStyle: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: ScreenUtil().setSp(15),
-                            ),
-                            dropdownDialogRadius: 15.0,
-                            searchBarRadius: 10.0,
-                            onCountryChanged: (value) {
-                              countryValue = value;
-                              setState(() {});
-                            },
-                            onStateChanged: (value) {
-                              if (value != null) {
-                                stateValue = value;
-                              }
-                              setState(() {});
-                            },
-                            onCityChanged: (value) {
-                              if (value != null) {
-                                cityValue = value;
-                              }
-                              setState(() {});
-                            },
-                          ),
-                        ),
+                      // if (!widget.isprovider)
+                      //   Padding(
+                      //     padding: EdgeInsets.only(top: 10.h),
+                      //     child: CSCPicker(
+                      //       showStates: true,
+                      //       showCities: true,
+                      //       flagState: CountryFlag.DISABLE,
+                      //       dropdownDecoration: BoxDecoration(
+                      //           borderRadius:
+                      //           const BorderRadius.all(Radius.circular(10)),
+                      //           color: Colors.white,
+                      //           border:
+                      //           Border.all(color: Colors.grey, width: 1)),
+                      //       disabledDropdownDecoration: BoxDecoration(
+                      //           borderRadius:
+                      //           const BorderRadius.all(Radius.circular(10)),
+                      //           color: Colors.grey.shade300,
+                      //           border: Border.all(
+                      //               color: Colors.grey.shade300, width: 1)),
+                      //       countrySearchPlaceholder: "Country",
+                      //       stateSearchPlaceholder: "State",
+                      //       citySearchPlaceholder: "City",
+                      //       countryDropdownLabel: "Country",
+                      //       stateDropdownLabel: "State",
+                      //       cityDropdownLabel: "City",
+                      //       defaultCountry: CscCountry.Malta,
+                      //       selectedItemStyle: TextStyle(
+                      //         fontWeight: FontWeight.w500,
+                      //         fontSize: ScreenUtil().setSp(15),
+                      //       ),
+                      //       dropdownHeadingStyle: TextStyle(
+                      //         fontWeight: FontWeight.w500,
+                      //         fontSize: ScreenUtil().setSp(15),
+                      //       ),
+                      //       dropdownItemStyle: TextStyle(
+                      //         fontWeight: FontWeight.w500,
+                      //         fontSize: ScreenUtil().setSp(15),
+                      //       ),
+                      //       dropdownDialogRadius: 15.0,
+                      //       searchBarRadius: 10.0,
+                      //       onCountryChanged: (value) {
+                      //         countryValue = value;
+                      //         setState(() {});
+                      //       },
+                      //       onStateChanged: (value) {
+                      //         if (value != null) {
+                      //           stateValue = value;
+                      //         }
+                      //         setState(() {});
+                      //       },
+                      //       onCityChanged: (value) {
+                      //         if (value != null) {
+                      //           cityValue = value;
+                      //         }
+                      //         setState(() {});
+                      //       },
+                      //     ),
+                      //   ),
 
-                      10.verticalSpace,
-                      if (widget.isprovider)
+                      // 10.verticalSpace,
                         Material(
                             borderRadius: BorderRadius.circular(
                                 ScreenUtil().screenHeight * 0.03),
@@ -354,13 +354,16 @@ class _SignUpState extends State<SignUp> {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   SizedBox(
-                                    height: ScreenUtil().setHeight(50),
-                                    width: ScreenUtil().setWidth(317),
+                                    height: ScreenUtil().setHeight(40),
+                                    width: ScreenUtil().setHeight(300),
                                     child: DropdownButtonFormField<Language>(
                                       decoration: InputDecoration(
                                           border: InputBorder.none,
-                                          contentPadding: EdgeInsets.only(
-                                              left: 15, right: 15, top: 5),
+                                          prefixIcon: Padding(
+                                          padding:
+                                          const EdgeInsetsDirectional.only(start: 15, end: 10),
+                                          child: ImageIcon(AssetImage('assets/icons/language.png'), color: AppColors.app_color,),
+                                          ),
                                           hintStyle: TextStyle(
                                               color: Colors.grey[100]),
                                           hintText: "Language known",
@@ -545,10 +548,20 @@ class _SignUpState extends State<SignUp> {
 
   onregisterpressedprovider() async {
     print("inside>>>>>>>>>>>>");
+    isVaildFirstName = !_nameController.text.isNullOrEmpty;
+    isVaildEmail = !_emailController.text.isNullOrEmpty && isEmail(_emailController.text);
+    isVaildAge = !_ageController.text.isNullOrEmpty;
+    isVaildNati = !_nationalityController.text.isNullOrEmpty;
+    isVaildPassword = !_passwordController.text.isNullOrEmpty;
+    isVaildConfirm = !_checkPasswordController.text.isNullOrEmpty && _passwordController.text == _checkPasswordController.text;
+    setState(() {
+
+    });
     if (widget.socialId.isEmpty) {
       if (_nameController.text.isEmpty ||
           _emailController.text.isEmpty ||
           !isEmail(_emailController.text) ||
+          _ageController.text.isEmpty ||
           _passwordController.text.isEmpty ||
           passwordStrength == 'Weak' ||
           _checkPasswordController.text.isEmpty ||
@@ -559,6 +572,7 @@ class _SignUpState extends State<SignUp> {
 
     if (_nameController.text.isEmpty ||
         _emailController.text.isEmpty ||
+        _ageController.text.isEmpty ||
         !isEmail(_emailController.text) ) {
       return;
     }
@@ -604,10 +618,21 @@ class _SignUpState extends State<SignUp> {
 
   onregisterpressed() async {
     print('aacccdddddd');
+    isVaildFirstName = !_nameController.text.isNullOrEmpty;
+    isVaildEmail = !_emailController.text.isNullOrEmpty && isEmail(_emailController.text);
+    isVaildNati = !_nationalityController.text.isNullOrEmpty;
+    isVaildPassword = !_passwordController.text.isNullOrEmpty;
+    isVaildConfirm = !_checkPasswordController.text.isNullOrEmpty && _passwordController.text == _checkPasswordController.text;
+
+    setState(() {
+
+    });
+    // isVaildFirstName = !_nationalityController.text.isNullOrEmpty;
     if (widget.socialId.isEmpty) {
       if (_nameController.text.isEmpty ||
           _emailController.text.isEmpty ||
           !isEmail(_emailController.text) ||
+          _nationalityController.text.isEmpty ||
           _passwordController.text.isEmpty ||
           passwordStrength == 'Weak' ||
           _checkPasswordController.text.isEmpty ||
@@ -617,7 +642,8 @@ class _SignUpState extends State<SignUp> {
     }
     if (_nameController.text.isEmpty ||
         _emailController.text.isEmpty ||
-        !isEmail(_emailController.text)) {
+        !isEmail(_emailController.text) ||
+        _nationalityController.text.isEmpty) {
       return;
     }
     if (!loading) {
@@ -627,31 +653,31 @@ class _SignUpState extends State<SignUp> {
       Map<String, dynamic> body = widget.socialId.isEmpty
           ? {
               'first_name': _nameController.text,
-              'username': "_" ,
+              'username': "" ,
               'last_name': "",
               'email': _emailController.text,
-              'phone_number': "11",
+              'phone_number': "",
               'password': _passwordController.text,
               'fcm_token': StorageManager().fcmToken,
               'os': Platform.isAndroid ? 'android' : 'ios',
-              'language': 'english',
-              'nationality': countryValue,
+              'language': selectedLanguage.name,
+              'nationality': _nationalityController.text,
               'login_src': '',
               'social_login_id':''
             }
           : {
               'first_name': _nameController.text,
-              'username': "--",
+              'username': "",
               'last_name': "",
               'email': _emailController.text,
-              'phone_number': "11",
+              'phone_number': "",
               'password': '',
               'login_src': widget.loginType,
               'social_login_id': widget.socialId,
               'fcm_token': StorageManager().fcmToken,
               'os': Platform.isAndroid ? 'android' : 'ios',
-              'language': 'english',
-              'nationality': countryValue,
+              'language': selectedLanguage.name,
+              'nationality': _nationalityController.text,
             };
 
       await HttpClient().userSignup(body, new File("path")).then((value) {

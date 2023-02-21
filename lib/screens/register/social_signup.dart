@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kappu/common/bottom_nav_bar.dart';
+import 'package:kappu/components/AppColors.dart';
 import 'package:kappu/constants/storage_manager.dart';
 import 'package:kappu/helperfunctions/screen_nav.dart';
 import 'package:kappu/net/http_client.dart';
@@ -30,32 +31,28 @@ class SocailSignUpScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Center(
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(100),
-                      child: Image.asset(
-                        "assets/images/colorfulLogo.png",
-                        height: 80.h,
-                        fit: BoxFit.cover,
-                      ),
+                    child: Image.asset(
+                      "assets/icons/logo.png",
+                      height: 80.h,
+                      fit: BoxFit.cover,
                     ),
                   ),
-                  const SizedBox(height: 5),
-                  Text(
-                    "URBAN MALTA",
-                    style: TextStyle(
-                      color: Color(0xFF4995EB),
-                      fontSize: 18,
-                      fontFamily: 'Montserrat-Bold',
-                    ),
-                  ),
-                  const SizedBox(height: 5),
+                  // const SizedBox(height: 5),
+                  // Text(
+                  //   "URBAN MALTA",
+                  //   style: TextStyle(
+                  //     color: Color(0xFF4995EB),
+                  //     fontSize: 18,
+                  //     fontFamily: 'Montserrat-Bold',
+                  //   ),
+                  // ),
+                  const SizedBox(height: 10),
                   const Text(
                     "Create an account and discover thousands of relevant services, connet with freelancers, and check out easily on Urban Malta trusted platform.",
                     style: TextStyle(
                       fontSize: 14,
-                      fontWeight: FontWeight.w400,
                       fontFamily: 'Montserrat-Regular',
-                      color: Color(0xFF7B7D83),
+                      color: AppColors.text_desc,
                     ),
                     textAlign: TextAlign.center,
                   ),
@@ -165,7 +162,7 @@ class SocailSignUpScreen extends StatelessWidget {
                         'You agree to Urban Malta ',
                         style: TextStyle(
                             color: const Color(0xFF7b7d83),
-                            fontSize: ScreenUtil().setWidth(13),
+                            fontSize: 14,
                             fontFamily: 'Montserrat-Medium'),
                       ),
                       GestureDetector(
@@ -182,7 +179,7 @@ class SocailSignUpScreen extends StatelessWidget {
                           'Terms of Service',
                           style: TextStyle(
                               decoration: TextDecoration.underline,
-                              fontWeight: FontWeight.normal,
+                              fontFamily: "Montserrat-Medium",
                               fontSize: 14,
                               color: Color(0xFF4995EB)),
                         ),

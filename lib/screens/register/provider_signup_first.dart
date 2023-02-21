@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kappu/components/AppColors.dart';
+import 'package:kappu/components/MyAppBar.dart';
 import 'package:kappu/helperfunctions/screen_nav.dart';
 import 'package:kappu/screens/register/social_signup.dart';
 import 'register.dart';
@@ -11,27 +12,7 @@ class ProviderSignupFirstScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'Service Provider Signup',
-          style: TextStyle(
-              color: Colors.black, fontWeight: FontWeight.bold, fontSize: 22),
-        ),
-        backgroundColor: Colors.white,
-        leading: Padding(
-          padding: const EdgeInsets.all(10),
-          child: CircleAvatar(
-              backgroundColor: AppColors.app_color,
-              child: Center(
-                child: IconButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  icon: const Icon(Icons.arrow_back),
-                ),
-              )),
-        ),
-      ),
+      appBar: MyAppBar(title: "Service Provider Signup"),
       body: Container(
         color: Colors.white,
         height: MediaQuery.of(context).size.height,

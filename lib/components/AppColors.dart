@@ -27,6 +27,7 @@ class AppColors {
   static const color_fafafa = Color(0xFFFAFAFA);
   static const color_f2f7fd = Color(0xFFF2F7FD);
   static const color_707070 = Color(0xFF707070);
+  static const color_161616 = Color(0xFF161616);
   static const app_yellow = Color(0xFFF79E1F);
   static const shadow = Color(0xff000000);
 }

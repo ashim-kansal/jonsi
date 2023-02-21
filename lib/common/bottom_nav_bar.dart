@@ -27,7 +27,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
   late bool _hideNavBar;
   late BuildContext testContext;
 
-  int currentTab = 1;
+  int currentTab = 0;
   List<Widget> screens = [];
   Widget? currentScreen;
 
