@@ -293,7 +293,6 @@ class AddReview extends ModalRoute<void> {
                           10.verticalSpace,
                           ElevatedTextFormField(
                             controller: amountController,
-                            validator: (value) => null,
                             keyboardType: TextInputType.text,
                             hintText: 'Enter Custom Amount',
                             onChanged: (value) {

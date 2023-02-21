@@ -46,11 +46,11 @@ class _LoginScreenState extends State<LoginScreen> {
   final _formState = GlobalKey<FormState>();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  bool isVaildEmail = true;
+  bool isValidPassword = true;
 
   @override
-  initState() {
-  }
-
+  initState() {}
 
   Future<String?> facebookSignin() async {
     try {
@@ -103,56 +103,78 @@ class _LoginScreenState extends State<LoginScreen> {
       15.verticalSpace,
       ElevatedTextFormField(
         controller: emailController,
-        validator: (value) =>
-            isEmail(value!) ? null : "       Check your email",
+        isValid: isVaildEmail,
         keyboardType: TextInputType.emailAddress,
         prefixIcon: emailIcon,
         suffixIcon: isEmail(email) ? checkIcon : null,
         showPassword: false,
         hintText: 'Enter Email',
         onChanged: (value) {
+          if (isEmail(value)) {
+            isVaildEmail = true;
+          } else {
+            isVaildEmail = false;
+          }
           email = value;
           setState(() {});
         },
       ),
       15.verticalSpace,
       Material(
-        borderRadius: BorderRadius.circular(ScreenUtil().screenHeight * 0.03),
-        elevation: 20,
-        child: TextFormField(
-          validator: (value) =>
-              value!.isEmpty ? "       Enter Your Password" : null,
-          controller: passwordController,
-          textAlignVertical: TextAlignVertical.center,
-          decoration: InputDecoration(
-            prefixIcon: Padding(
-              padding: const EdgeInsetsDirectional.only(start: 20, end: 15),
-              child: passwordIcon,
-            ),
-            // prefixIconConstraints:
-            //     BoxConstraints(maxHeight: ScreenUtil().setWidth(20)),
-            suffixIcon: Padding(
-              padding: const EdgeInsets.only(right: 12.0),
-              child: GestureDetector(
-                  onTap: () {
-                    _showPassword = !_showPassword;
-                    setState(() {});
-                  },
-                  child:
-                      _showPassword ? passwordEyeIcon : passwordGreenEyeIcon),
-            ),
-            suffixIconConstraints: const BoxConstraints(maxHeight: 25),
-            suffixIconColor: Colors.green,
-            hintText: 'Enter Password',
-            hintStyle: const TextStyle(
-              fontWeight: FontWeight.w500,
-            ),
-            border: InputBorder.none,
-          ),
-          obscureText: _showPassword,
-          obscuringCharacter: '*',
-        ),
-      ),
+          borderRadius: BorderRadius.circular(25),
+          elevation: 3,
+          shadowColor: Colors.black.withOpacity(0.14),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              TextFormField(
+                controller: passwordController,
+                textAlignVertical: TextAlignVertical.center,
+                onChanged: (value) {
+                  if (value.isNotEmpty) {
+                    isValidPassword = true;
+                  } else {
+                    isValidPassword = false;
+                  }
+                  setState(() {});
+                },
+                decoration: InputDecoration(
+                  prefixIcon: Padding(
+                    padding:
+                        const EdgeInsetsDirectional.only(start: 20, end: 15),
+                    child: passwordIcon,
+                  ),
+                  // prefixIconConstraints:
+                  //     BoxConstraints(maxHeight: ScreenUtil().setWidth(20)),
+                  suffixIcon: Padding(
+                    padding: const EdgeInsets.only(right: 12.0),
+                    child: GestureDetector(
+                        onTap: () {
+                          _showPassword = !_showPassword;
+                          setState(() {});
+                        },
+                        child: _showPassword
+                            ? passwordEyeIcon
+                            : passwordGreenEyeIcon),
+                  ),
+                  suffixIconConstraints: const BoxConstraints(maxHeight: 25),
+                  suffixIconColor: Colors.green,
+                  hintText: 'Enter Password',
+                  hintStyle: const TextStyle(
+                    fontWeight: FontWeight.w500,
+                  ),
+                  border: InputBorder.none,
+                ),
+                obscureText: _showPassword,
+                obscuringCharacter: '*',
+              ),
+              if (!isValidPassword)
+                const Text(
+                  'Please enter your password',
+                  style: TextStyle(color: AppColors.red),
+                )
+            ],
+          )),
       10.verticalSpace,
       Align(
         alignment: Alignment.centerRight,
@@ -201,60 +223,61 @@ class _LoginScreenState extends State<LoginScreen> {
             ],
           ),
           onPressed: () async {
-            if (_formState.currentState!.validate()) {
-              if (!signin) {
-                signin = true;
-                isLoading = true;
+            if (passwordController.text.isEmpty ||
+                emailController.text.isEmpty) {
+              return;
+            }
+            if (!signin) {
+              signin = true;
+              isLoading = true;
+              setState(() {});
+              Map<String, dynamic> body = {
+                'email': emailController.text.trim(),
+                'password': passwordController.text,
+                'fcm_token': StorageManager().fcmToken,
+                'os': Platform.isAndroid ? 'android' : 'ios',
+              };
+              await HttpClient().signin(body).then((loginresponse) async {
+                if (loginresponse.data['isSuccess'] == true) {
+                  StorageManager().accessToken =
+                      "" + loginresponse.data['data']['token'];
+                  StorageManager().userId =
+                      loginresponse.data['data']['user']['id'];
+                  StorageManager().name = "" +
+                      loginresponse.data['data']['user']['first_name'] +
+                      " " +
+                      loginresponse.data['data']['user']['last_name'];
+                  StorageManager().email =
+                      "" + loginresponse.data['data']['user']['email'];
+                  StorageManager().isProvider = loginresponse.data['data']
+                          ['user']['is_provider']
+                      ? true
+                      : false;
+                  StorageManager().nationality =
+                      "" + loginresponse.data['data']['user']['nationality'];
+                  StorageManager().language =
+                      "" + loginresponse.data['data']['user']['languages'];
+                  // StorageManager().phone = ""+loginresponse.data['data']['user']['phone_number'];
+                }
+                signin = false;
+                isLoading = false;
+                print('aaaaa');
+                widget.isFromOtherScreen
+                    ? Navigator.pop(context, "1")
+                    : changeScreenReplacement(
+                        context,
+                        BottomNavBar(
+                          isprovider: loginresponse.data['data']['user']
+                              ['is_provider'],
+                        ));
+                // Navigator.pop(context);
+              }).catchError((error) {
+                signin = false;
+                isLoading = false;
                 setState(() {});
-                Map<String, dynamic> body = {
-                  'email': emailController.text.trim(),
-                  'password': passwordController.text,
-                  'fcm_token': StorageManager().fcmToken,
-                  'os': Platform.isAndroid?'android':'ios',
-                };
-                await HttpClient().signin(body).then((loginresponse) async {
-                  if (loginresponse.data['isSuccess'] == true) {
-                    StorageManager().accessToken =
-                        "" + loginresponse.data['data']['token'];
-                    StorageManager().userId =
-                        loginresponse.data['data']['user']['id'];
-                    StorageManager().name = "" +
-                        loginresponse.data['data']['user']['first_name'] +
-                        " " +
-                        loginresponse.data['data']['user']['last_name'];
-                    StorageManager().email =
-                        "" + loginresponse.data['data']['user']['email'];
-                    StorageManager().isProvider = loginresponse.data['data']
-                            ['user']['is_provider']
-                        ? true
-                        : false;
-                    StorageManager().nationality =
-                        "" + loginresponse.data['data']['user']['nationality'];
-                    StorageManager().language =
-                        "" + loginresponse.data['data']['user']['languages'];
-                    // StorageManager().phone = ""+loginresponse.data['data']['user']['phone_number'];
-                  }
-                  signin = false;
-                  isLoading = false;
-                  print('aaaaa');
-                  widget.isFromOtherScreen
-                      ? Navigator.pop(context, "1")
-                      : changeScreenReplacement(
-                          context,
-                          BottomNavBar(
-                            isprovider: loginresponse.data['data']['user']
-                                ['is_provider'],
-                          ));
-                  // Navigator.pop(context);
-                }).catchError((error) {
-                  signin = false;
-                  isLoading = false;
-                  setState(() {});
-                  showAlertDialog(
-                      error: "Please check the credentials",
-                      errorType: "Alert");
-                });
-              }
+                showAlertDialog(
+                    error: "Please check the credentials", errorType: "Alert");
+              });
             }
           },
         ),
@@ -307,7 +330,9 @@ class _LoginScreenState extends State<LoginScreen> {
           Expanded(
               child: FacebookLoginButton(
             text: 'Facebook',
-            onTap:(){ facebookSignin();},
+            onTap: () {
+              facebookSignin();
+            },
           )),
           15.horizontalSpace,
           Expanded(
@@ -420,7 +445,7 @@ class _LoginScreenState extends State<LoginScreen> {
       'login_src': type,
       'social_login_id': id,
       'fcm_token': StorageManager().fcmToken,
-      'os': Platform.isAndroid?'android':'ios',
+      'os': Platform.isAndroid ? 'android' : 'ios',
     };
     await HttpClient().signinSocial(body).then((loginresponse) async {
       if (loginresponse.data['isSuccess'] == true) {
@@ -465,6 +490,4 @@ class _LoginScreenState extends State<LoginScreen> {
           ));
     });
   }
-
-
 }

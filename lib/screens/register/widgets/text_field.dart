@@ -90,21 +90,9 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
                     ),
                     contentPadding: EdgeInsets.only(
                         left: 15, right: 3, top: 10, bottom: 10),
-                    // focusedBorder: OutlineInputBorder(
-                    //     borderRadius: const BorderRadius.all(Radius.circular(15)),
-                    //     borderSide:
-                    //         BorderSide(color: widget.bordercolor ?? Colors.grey)),
-                    // enabledBorder: OutlineInputBorder(
-                    //     borderRadius: const BorderRadius.all(Radius.circular(15)),
-                    //     borderSide:
-                    //         BorderSide(color: widget.bordercolor ?? Colors.grey)),
-                    // disabledBorder: OutlineInputBorder(
-                    //     borderRadius: const BorderRadius.all(Radius.circular(15)),
-                    //     borderSide:
-                    //         BorderSide(color: widget.bordercolor ?? Colors.grey)),
                     border: InputBorder.none,
                   ),
-                  onChanged: (value){
+                  onChanged: (value) {
                     widget.onChanged!(value);
                   })),
           if (!widget.isValid!)
@@ -119,7 +107,6 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
 class ElevatedTextFormField extends StatefulWidget {
   final TextEditingController controller;
   final String hintText;
-  final String? Function(String?) validator;
   final Function(String)? onChanged;
   final Widget? prefixIcon;
   final Widget? suffixIcon;
@@ -128,17 +115,18 @@ class ElevatedTextFormField extends StatefulWidget {
   final Color? bordercolor;
   final int? maxlines;
   final bool? enabled;
+  final bool? isValid;
 
   ElevatedTextFormField(
       {Key? key,
       required this.controller,
       required this.hintText,
-      required this.validator,
       this.onChanged,
       this.prefixIcon,
       this.suffixIcon,
       required this.keyboardType,
       this.showPassword = false,
+      this.isValid = false,
       this.bordercolor,
       this.maxlines = 1,
       this.enabled = true})
@@ -151,40 +139,53 @@ class ElevatedTextFormField extends StatefulWidget {
 class _ElevatedTextFormFieldState extends State<ElevatedTextFormField> {
   @override
   Widget build(BuildContext context) {
-    return Material(
-      borderRadius: BorderRadius.circular(ScreenUtil().screenHeight * 0.03),
-      elevation: 20,
-      child: TextFormField(
-          enabled: widget.enabled,
-          cursorColor: widget.bordercolor ?? Colors.black,
-          maxLines: widget.maxlines,
-          autovalidateMode: AutovalidateMode.onUserInteraction,
-          controller: widget.controller,
-          validator: widget.validator,
-          keyboardType: widget.keyboardType,
-          obscuringCharacter: '*',
-          obscureText: widget.showPassword,
-          textAlignVertical: TextAlignVertical.center,
-          decoration: InputDecoration(
-              prefixIcon: Padding(
-                padding: const EdgeInsetsDirectional.only(start: 20, end: 15),
-                child: widget.prefixIcon,
-              ),
-              suffixIcon: Padding(
-                padding: const EdgeInsetsDirectional.only(start: 10, end: 10),
-                child: widget.suffixIcon,
-              ),
-              hintText: widget.hintText,
-              hintStyle: TextStyle(
-                color: widget.bordercolor,
-                fontWeight: FontWeight.w500,
-                fontSize: ScreenUtil().setSp(14),
-              ),
-              focusedBorder: InputBorder.none,
-              enabledBorder: InputBorder.none,
-              disabledBorder: InputBorder.none,
-              border: InputBorder.none),
-          onChanged: widget.onChanged),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Material(
+          borderRadius: BorderRadius.circular(25),
+          elevation: 3,
+          shadowColor: Colors.black.withOpacity(0.14),
+          child: TextFormField(
+              enabled: widget.enabled,
+              cursorColor: widget.bordercolor ?? Colors.black,
+              maxLines: widget.maxlines,
+              autovalidateMode: AutovalidateMode.onUserInteraction,
+              controller: widget.controller,
+              keyboardType: widget.keyboardType,
+              obscuringCharacter: '*',
+              obscureText: widget.showPassword,
+              textAlignVertical: TextAlignVertical.center,
+              decoration: InputDecoration(
+                  prefixIcon: Padding(
+                    padding:
+                        const EdgeInsetsDirectional.only(start: 20, end: 15),
+                    child: widget.prefixIcon,
+                  ),
+                  suffixIcon: Padding(
+                    padding:
+                        const EdgeInsetsDirectional.only(start: 10, end: 10),
+                    child: widget.suffixIcon,
+                  ),
+                  hintText: widget.hintText,
+                  hintStyle: TextStyle(
+                    color: widget.bordercolor,
+                    fontWeight: FontWeight.w500,
+                    fontSize: ScreenUtil().setSp(14),
+                  ),
+                  focusedBorder: InputBorder.none,
+                  enabledBorder: InputBorder.none,
+                  disabledBorder: InputBorder.none,
+                  border: InputBorder.none),
+              onChanged: widget.onChanged),
+        ),
+        if (!widget.isValid!)
+          Text(
+            'Please enter your ' + widget.hintText.toLowerCase(),
+            style: const TextStyle(color: AppColors.red),
+          )
+      ],
     );
   }
 }
