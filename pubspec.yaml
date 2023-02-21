@@ -72,6 +72,9 @@ dependencies:
   url_launcher: ^6.0.3
   flutter_facebook_auth: ^5.0.7
 
+dependency_overrides:
+  firebase_core_platform_interface: 4.5.3
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
