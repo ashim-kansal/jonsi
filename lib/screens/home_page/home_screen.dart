@@ -48,8 +48,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     padding: EdgeInsets.only(left: ScreenUtil().setWidth(10)),
                     child: Row(children: [
                       Image.asset('assets/images/colorfulLogo.png',
-                        width: MediaQuery.of(context).size.width * 0.17,
-                        height: MediaQuery.of(context).size.height * 0.06,),
+                        width: MediaQuery.of(context).size.width * 0.14,
+                        height: MediaQuery.of(context).size.height * 0.05,),
                       // Padding(
                       //   padding: const EdgeInsets.fromLTRB(5, 2, 2, 2.0),
                       //   child: Column(
@@ -90,6 +90,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               icon: const Icon(
                                 Icons.account_circle_outlined,
                                 color: AppColors.app_color,
+
                               ),
                             )),
                       ),

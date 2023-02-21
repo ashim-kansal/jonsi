@@ -118,8 +118,7 @@ class _SignUpState extends State<SignUp> {
         elevation: 0,
       ),
       body: SingleChildScrollView(
-        child: CustomPaint(
-          painter: SignUpPainter(),
+        child: Container(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -131,23 +130,20 @@ class _SignUpState extends State<SignUp> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Center(
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(100),
-                          child: Image.asset(
-                            "assets/images/colorfulLogo.png",
-                            height: 120.h,
-                            fit: BoxFit.cover,
-                          ),
+                        child: Image.asset(
+                          "assets/icons/logo.png",
+                          height: 90.h,
+                          fit: BoxFit.cover,
                         ),
                       ),
                       30.verticalSpace,
                       CustomTextFormField(
                         controller: _nameController,
                         validator: (value) =>
-                            value!.isEmpty ? "Enter Your Name" : null,
+                        value!.isEmpty ? "Enter Your Name" : null,
                         keyboardType: TextInputType.text,
-                        prefixIcon: profileIcon,
-                        hintText: 'First Name',
+                        prefixIcon: ImageIcon(AssetImage('assets/icons/prf.png'), color: AppColors.app_color,),
+                        hintText: 'Name',
                         isValid: isVaildFirstName,
                         onChanged: (value) {
                           if (value.isNotEmpty) {
@@ -158,29 +154,29 @@ class _SignUpState extends State<SignUp> {
                           setState(() {});
                         },
                       ),
-                      CustomTextFormField(
-                        controller: _lastnameController,
-                        validator: (value) =>
-                            value!.isEmpty ? "Enter Your Name" : null,
-                        keyboardType: TextInputType.text,
-                        prefixIcon: profileIcon,
-                        hintText: 'Last Name',
-                        isValid: isVaildLastName,
-                        onChanged: (value) {
-                          if (value.isNotEmpty) {
-                            isVaildLastName = true;
-                          } else {
-                            isVaildLastName = false;
-                          }
-                          setState(() {});
-                        },
-                      ),
+                      // CustomTextFormField(
+                      //   controller: _lastnameController,
+                      //   validator: (value) =>
+                      //   value!.isEmpty ? "Enter Your Name" : null,
+                      //   keyboardType: TextInputType.text,
+                      //   prefixIcon: profileIcon,
+                      //   hintText: 'Last Name',
+                      //   isValid: isVaildLastName,
+                      //   onChanged: (value) {
+                      //     if (value.isNotEmpty) {
+                      //       isVaildLastName = true;
+                      //     } else {
+                      //       isVaildLastName = false;
+                      //     }
+                      //     setState(() {});
+                      //   },
+                      // ),
                       CustomTextFormField(
                         controller: _emailController,
                         validator: (value) =>
-                            isEmail(value!) ? null : "Check your email",
+                        isEmail(value!) ? null : "Check your email",
                         keyboardType: TextInputType.emailAddress,
-                        prefixIcon: emailIcon,
+                        prefixIcon:  ImageIcon(AssetImage('assets/icons/ft-4.png'), color: AppColors.app_color,),
                         suffixIcon: isEmail(email) ? checkIcon : null,
                         hintText: 'Email',
                         isValid: isVaildEmail,
@@ -194,24 +190,24 @@ class _SignUpState extends State<SignUp> {
                           setState(() {});
                         },
                       ),
-                      CustomTextFormField(
-                        controller: _phnocontroller,
-                        hintText: 'Phone Number',
-                        keyboardType: TextInputType.number,
-                        prefixIcon: profileIcon,
-                        isValid: isVaildPhone,
-                        onChanged: (value) {
-                          if (value.isNotEmpty && value.length == 10) {
-                            isVaildPhone = true;
-                          } else {
-                            isVaildPhone = false;
-                          }
-                          setState(() {});
-                        },
-                        validator: (value) => value!.length != 10
-                            ? "Phone Number should be 10 digit long"
-                            : null,
-                      ),
+                      // CustomTextFormField(
+                      //   controller: _phnocontroller,
+                      //   hintText: 'Phone Number',
+                      //   keyboardType: TextInputType.number,
+                      //   prefixIcon: profileIcon,
+                      //   isValid: isVaildPhone,
+                      //   onChanged: (value) {
+                      //     if (value.isNotEmpty && value.length == 10) {
+                      //       isVaildPhone = true;
+                      //     } else {
+                      //       isVaildPhone = false;
+                      //     }
+                      //     setState(() {});
+                      //   },
+                      //   validator: (value) => value!.length != 10
+                      //       ? "Phone Number should be 10 digit long"
+                      //       : null,
+                      // ),
                       if (!widget.isprovider)
                         CustomTextFormField(
                           controller: _addresscontoller,
@@ -222,7 +218,7 @@ class _SignUpState extends State<SignUp> {
                           },
                           prefixIcon: const Icon(Icons.location_on),
                           validator: (value) =>
-                              value!.isEmpty ? "Enter Your Address" : null,
+                          value!.isEmpty ? "Enter Your Address" : null,
                         ),
                       if (widget.isprovider)
                         InkWell(
@@ -239,7 +235,7 @@ class _SignUpState extends State<SignUp> {
                               print(
                                   pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
                               String formattedDate =
-                                  DateFormat('dd/MM/yyyy').format(pickedDate);
+                              DateFormat('dd/MM/yyyy').format(pickedDate);
                               print(
                                   formattedDate); //formatted date output using intl package =>  2021-03-16
                               setState(() {
@@ -283,7 +279,7 @@ class _SignUpState extends State<SignUp> {
                             setState(() {});
                           },
                           validator: (value) =>
-                              value!.isEmpty ? "Enter Your Nationality" : null,
+                          value!.isEmpty ? "Enter Your Nationality" : null,
                         ),
                       // if (widget.isprovider)
                       //   CustomTextFormField(
@@ -305,13 +301,13 @@ class _SignUpState extends State<SignUp> {
                             flagState: CountryFlag.DISABLE,
                             dropdownDecoration: BoxDecoration(
                                 borderRadius:
-                                    const BorderRadius.all(Radius.circular(10)),
+                                const BorderRadius.all(Radius.circular(10)),
                                 color: Colors.white,
                                 border:
-                                    Border.all(color: Colors.grey, width: 1)),
+                                Border.all(color: Colors.grey, width: 1)),
                             disabledDropdownDecoration: BoxDecoration(
                                 borderRadius:
-                                    const BorderRadius.all(Radius.circular(10)),
+                                const BorderRadius.all(Radius.circular(10)),
                                 color: Colors.grey.shade300,
                                 border: Border.all(
                                     color: Colors.grey.shade300, width: 1)),
@@ -399,10 +395,11 @@ class _SignUpState extends State<SignUp> {
                         Material(
                             borderRadius: BorderRadius.circular(
                                 ScreenUtil().screenHeight * 0.03),
-                            elevation: 20,
+                            elevation: 3,
+                              shadowColor: Colors.black.withOpacity(0.14),
                             child: Row(
                                 mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                MainAxisAlignment.spaceBetween,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   SizedBox(
@@ -430,16 +427,16 @@ class _SignUpState extends State<SignUp> {
                                       },
                                       items: languages
                                           .map((value) => DropdownMenuItem(
-                                              value: value,
-                                              child: Text(
-                                                value.name,
-                                                style: TextStyle(
-                                                  color: Colors.grey.shade600,
-                                                  fontWeight: FontWeight.w500,
-                                                  fontSize:
-                                                      ScreenUtil().setSp(15),
-                                                ),
-                                              )))
+                                          value: value,
+                                          child: Text(
+                                            value.name,
+                                            style: TextStyle(
+                                              color: Colors.grey.shade600,
+                                              fontWeight: FontWeight.w500,
+                                              fontSize:
+                                              ScreenUtil().setSp(15),
+                                            ),
+                                          )))
                                           .toList(),
                                     ),
                                   ),
@@ -474,7 +471,7 @@ class _SignUpState extends State<SignUp> {
                         CustomTextFormField(
                           controller: _passwordController,
                           validator: (value) => vaidatePassword(value!) ==
-                                  'Weak'
+                              'Weak'
                               ? "Must contain at least one Capital letter and a number"
                               : null,
                           keyboardType: TextInputType.visiblePassword,
@@ -506,30 +503,30 @@ class _SignUpState extends State<SignUp> {
                       passwordStrength == ''
                           ? SizedBox(height: ScreenUtil().setHeight(0))
                           : Padding(
-                              padding: const EdgeInsets.only(top: 8, bottom: 8),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    'Password Strength:',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w500,
-                                        color: const Color(0xFF767F94),
-                                        fontSize: ScreenUtil().setSp(13)),
-                                  ),
-                                  Text(
-                                    passwordStrength,
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w500,
-                                        color: passwordStrength == 'Weak'
-                                            ? Colors.red
-                                            : const Color(0xFF05C46B),
-                                        fontSize: ScreenUtil().setSp(13)),
-                                  )
-                                ],
-                              ),
+                        padding: const EdgeInsets.only(top: 8, bottom: 8),
+                        child: Row(
+                          mainAxisAlignment:
+                          MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Password Strength:',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  color: const Color(0xFF767F94),
+                                  fontSize: ScreenUtil().setSp(13)),
                             ),
+                            Text(
+                              passwordStrength,
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  color: passwordStrength == 'Weak'
+                                      ? Colors.red
+                                      : const Color(0xFF05C46B),
+                                  fontSize: ScreenUtil().setSp(13)),
+                            )
+                          ],
+                        ),
+                      ),
                       if (widget.socialId.isEmpty)
                         CustomTextFormField(
                           showPassword: _showCheckPassword,
@@ -598,7 +595,7 @@ class _SignUpState extends State<SignUp> {
           _emailController.text.isEmpty ||
           !isEmail(_emailController.text) ||
           _phnocontroller.text.isEmpty ||
-          _phnocontroller.text.length != 10 ||
+          _phnocontroller.text.length < 8 ||
           _passwordController.text.isEmpty ||
           passwordStrength == 'Weak' ||
           _checkPasswordController.text.isEmpty ||
@@ -612,7 +609,7 @@ class _SignUpState extends State<SignUp> {
         _emailController.text.isEmpty ||
         !isEmail(_emailController.text) ||
         _phnocontroller.text.isEmpty ||
-        _phnocontroller.text.length != 10) {
+        _phnocontroller.text.length < 8) {
       return;
     }
 
@@ -622,7 +619,7 @@ class _SignUpState extends State<SignUp> {
             'last_name': _lastnameController.text,
             'username': _lastnameController.text,
             'email': _emailController.text,
-            'phone_number': _phnocontroller.text,
+            'phone_number': '11',
             'password': _passwordController.text,
             "Age": _ageController.text,
             "nationality": _nationalityController.text,
@@ -638,7 +635,7 @@ class _SignUpState extends State<SignUp> {
             'last_name': _lastnameController.text,
             'username': _lastnameController.text,
             'email': _emailController.text,
-            'phone_number': _phnocontroller.text,
+            'phone_number': '111',
             'password': '',
             'login_src': widget.loginType,
             'social_login_id': widget.socialId,

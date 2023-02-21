@@ -49,7 +49,8 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Material(
               borderRadius: BorderRadius.circular(25),
-              elevation: 5,
+              elevation: 3,
+              shadowColor: Colors.black.withOpacity(0.14),
               child: TextFormField(
                   enabled: widget.enabled,
                   cursorColor: widget.bordercolor ?? Colors.black,
