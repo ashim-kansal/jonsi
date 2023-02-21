@@ -24,13 +24,12 @@ class ProviderOrUser extends StatelessWidget {
     return Scaffold(
       body: Container(
         width: double.infinity,
-        height: 800,
         alignment: Alignment.center,
         child: Padding(
           padding: EdgeInsets.all(20),
           child: Column(
             children: [
-              SizedBox(height: 120,),
+              SizedBox(height: 20,),
               Center(
                 child: Image.asset(
                   "assets/icons/logo.png",
