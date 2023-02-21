@@ -259,7 +259,7 @@ class _SignUpState extends State<SignUp> {
                               setState(() {});
                             },
                             keyboardType: TextInputType.none,
-                            prefixIcon: profileIcon,
+                            prefixIcon: ImageIcon(AssetImage('assets/icons/age.png'), color: AppColors.app_color,),
                             validator: (value) => null,
                           ),
                         ),
@@ -268,7 +268,7 @@ class _SignUpState extends State<SignUp> {
                           controller: _nationalityController,
                           hintText: 'Nationality',
                           keyboardType: TextInputType.text,
-                          prefixIcon: profileIcon,
+                          prefixIcon: ImageIcon(AssetImage('assets/icons/flag.png'), color: AppColors.app_color,),
                           isValid: isVaildNati,
                           onChanged: (value) {
                             if (value.isNotEmpty) {
@@ -317,7 +317,7 @@ class _SignUpState extends State<SignUp> {
                             countryDropdownLabel: "Country",
                             stateDropdownLabel: "State",
                             cityDropdownLabel: "City",
-                            defaultCountry: DefaultCountry.Malta,
+                            defaultCountry: CscCountry.Malta,
                             selectedItemStyle: TextStyle(
                               fontWeight: FontWeight.w500,
                               fontSize: ScreenUtil().setSp(15),
@@ -405,40 +405,46 @@ class _SignUpState extends State<SignUp> {
                                   SizedBox(
                                     height: ScreenUtil().setHeight(50),
                                     width: ScreenUtil().setWidth(317),
-                                    child: DropdownButtonFormField<Language>(
-                                      decoration: InputDecoration(
-                                          border: InputBorder.none,
-                                          contentPadding: EdgeInsets.only(
-                                              left: 15, right: 15, top: 5),
-                                          hintStyle: TextStyle(
-                                              color: Colors.grey[100]),
-                                          hintText: "Language known",
-                                          fillColor: Colors.red[100]),
-                                      style: TextStyle(
-                                        color: Colors.grey.shade600,
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: ScreenUtil().setSp(15),
-                                      ),
-                                      value: languages.first,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          selectedLanguage = value!;
-                                        });
-                                      },
-                                      items: languages
-                                          .map((value) => DropdownMenuItem(
-                                          value: value,
-                                          child: Text(
-                                            value.name,
-                                            style: TextStyle(
-                                              color: Colors.grey.shade600,
-                                              fontWeight: FontWeight.w500,
-                                              fontSize:
-                                              ScreenUtil().setSp(15),
-                                            ),
-                                          )))
-                                          .toList(),
-                                    ),
+                                    child: Row(
+                                      children: [
+                                        ImageIcon(AssetImage('assets/icons/flag.png'), color: AppColors.app_color,),
+
+                                        DropdownButtonFormField<Language>(
+                                          decoration: InputDecoration(
+                                              border: InputBorder.none,
+                                              contentPadding: EdgeInsets.only(
+                                                  left: 15, right: 15, top: 5),
+                                              hintStyle: TextStyle(
+                                                  color: Colors.grey[100]),
+                                              hintText: "Language known",
+                                              fillColor: Colors.red[100]),
+                                          style: TextStyle(
+                                            color: Colors.grey.shade600,
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: ScreenUtil().setSp(15),
+                                          ),
+                                          value: languages.first,
+                                          onChanged: (value) {
+                                            setState(() {
+                                              selectedLanguage = value!;
+                                            });
+                                          },
+                                          items: languages
+                                              .map((value) => DropdownMenuItem(
+                                              value: value,
+                                              child: Text(
+                                                value.name,
+                                                style: TextStyle(
+                                                  color: Colors.grey.shade600,
+                                                  fontWeight: FontWeight.w500,
+                                                  fontSize:
+                                                  ScreenUtil().setSp(15),
+                                                ),
+                                              )))
+                                              .toList(),
+                                        ),
+                                      ],
+                                    )
                                   ),
                                 ])),
                       10.verticalSpace,
