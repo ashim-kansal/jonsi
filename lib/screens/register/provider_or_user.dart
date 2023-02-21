@@ -22,28 +22,22 @@ class ProviderOrUser extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: CustomPaint(
-        painter: SignUpPainter(),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+      body: Container(
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            30.verticalSpace,
-            Padding(
-              padding: EdgeInsets.only(left: 15.w),
-              child: const BackButton(
-                color: AppColors.app_color,
-              ),
-            ),
-            Spacer(),
-            Image.asset(
-              'assets/images/MainHandyman.png',
-              fit: BoxFit.fill,
-            ),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 60.w),
               child: Column(
                 children: [
-                  10.verticalSpace,
+                  Center(
+                    child: Image.asset(
+                      "assets/icons/logo.png",
+                      height: 90.h,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  30.verticalSpace,
                   CustomButton(
                     buttontext: 'Register as Provider',
                     isLoading: false,
@@ -78,7 +72,6 @@ class ProviderOrUser extends StatelessWidget {
                 ],
               ),
             ),
-            10.verticalSpace
           ],
         ),
       ),
