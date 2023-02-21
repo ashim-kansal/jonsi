@@ -216,7 +216,6 @@ class _RegisterMoreState extends State<RegisterMore> {
                             hintText:
                                 'Description | Cover letter – why should user hire you?',
                             keyboardType: TextInputType.text,
-                            prefixIcon: profileIcon,
                             maxlines: 5,
                             isValid: isValidDesc,
                             onChanged: (value) {
@@ -236,7 +235,7 @@ class _RegisterMoreState extends State<RegisterMore> {
                             controller: _rateController,
                             hintText: '\€ per hour',
                             keyboardType: TextInputType.number,
-                            prefixIcon: profileIcon,
+                            prefixIcon: ImageIcon(AssetImage('assets/icons/price.png'), color: AppColors.app_color,),
                             isValid: isValidRate,
                             onChanged: (value) {
                               if (value.isNotEmpty) {
@@ -256,7 +255,7 @@ class _RegisterMoreState extends State<RegisterMore> {
                             controller: _extraRateController,
                             hintText: 'Extra \€ for urgent need',
                             keyboardType: TextInputType.number,
-                            prefixIcon: profileIcon,
+                            prefixIcon: ImageIcon(AssetImage('assets/icons/price.png'), color: AppColors.app_color,),
                             isValid: isValidExtraRate,
                             onChanged: (value) {
                               if (value.isNotEmpty) {

@@ -259,7 +259,7 @@ class _SignUpState extends State<SignUp> {
                               setState(() {});
                             },
                             keyboardType: TextInputType.none,
-                            prefixIcon: profileIcon,
+                            prefixIcon: ImageIcon(AssetImage('assets/icons/age.png'), color: AppColors.app_color,),
                             validator: (value) => null,
                           ),
                         ),
@@ -268,7 +268,7 @@ class _SignUpState extends State<SignUp> {
                           controller: _nationalityController,
                           hintText: 'Nationality',
                           keyboardType: TextInputType.text,
-                          prefixIcon: profileIcon,
+                          prefixIcon: ImageIcon(AssetImage('assets/icons/flag.png'), color: AppColors.app_color,),
                           isValid: isVaildNati,
                           onChanged: (value) {
                             if (value.isNotEmpty) {
@@ -439,6 +439,7 @@ class _SignUpState extends State<SignUp> {
                                           )))
                                           .toList(),
                                     ),
+
                                   ),
                                 ])),
                       10.verticalSpace,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kappu/components/AppColors.dart';
 
 ImageIcon profileIcon =
     const ImageIcon(AssetImage('assets/images/Profile.png'));
@@ -9,7 +10,7 @@ ImageIcon checkIcon = const ImageIcon(
 );
 
 ImageIcon passwordIcon =
-    const ImageIcon(AssetImage('assets/images/Password.png'));
+    const ImageIcon(AssetImage('assets/images/Password.png'), color: AppColors.app_color,);
 
 ImageIcon passwordEyeIcon =
     const ImageIcon(AssetImage('assets/images/Password_Eye.png'));
