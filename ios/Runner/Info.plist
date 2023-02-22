@@ -29,7 +29,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>com.googleusercontent.apps.371154591114-8d2us6dpha7jc6qj8qevoc3lmp6ihdmb</string>
+				<string>com.googleusercontent.apps.594393075069-6hanjm0ritir7762tctivcppnu3af7mc</string>
 			</array>
 		</dict>
 	</array>
@@ -42,7 +42,7 @@
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>This app requires access to the photo library.</string>
 	<key>SERVER_CLIENT_ID</key>
-	<string>594393075069-6htdkrplja80tjfgnrf9u6p5vrgrihv0.apps.googleusercontent.com</string>
+	<string>594393075069-6hanjm0ritir7762tctivcppnu3af7mc.apps.googleusercontent.com</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
