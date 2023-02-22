@@ -171,13 +171,10 @@ class _AddGigState extends State<AddGig> {
                     children: [
                       SizedBox(height: ScreenUtil().setHeight(40)),
                       Center(
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(100),
-                          child: Image.asset(
-                            "assets/images/first-screen-logo.png",
-                            height: 80.h,
-                            fit: BoxFit.cover,
-                          ),
+                        child: Image.asset(
+                          "assets/icons/logo-no_shadow.png",
+                          height: 80.h,
+                          fit: BoxFit.cover,
                         ),
                       ),
                       SizedBox(height: ScreenUtil().setHeight(10)),
@@ -186,8 +183,7 @@ class _AddGigState extends State<AddGig> {
                           "Add GIG Profile",
                           style: TextStyle(
                               color: Colors.black,
-                              fontSize: ScreenUtil().setSp(28),
-                              fontWeight: FontWeight.w800),
+                              fontSize: ScreenUtil().setSp(24), fontFamily: "Montserrat-Bold"),
                         ),
                       ),
                       15.verticalSpace,
@@ -196,7 +192,7 @@ class _AddGigState extends State<AddGig> {
                         style: TextStyle(
                             color: AppColors.text_desc,
                             fontSize: ScreenUtil().setSp(14),
-                            fontWeight: FontWeight.w500),
+                            fontFamily: 'Montserrat-Medium'),
                       ),
                       10.verticalSpace,
                       AddPhotoWidget(

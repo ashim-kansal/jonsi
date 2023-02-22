@@ -41,6 +41,7 @@ class HomeItem extends StatelessWidget {
               style: TextStyle(
                 color: AppColors.text_desc,
                 fontSize: 12,
+                fontFamily: "Montserrat-Medium"
               ),
             )
           ],

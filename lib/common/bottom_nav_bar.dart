@@ -96,8 +96,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
       screens = widget.isprovider
           ? [
               const ProviderHomeScreen(),
-              const AllChatsScreenProvider(),
-              const NotificationsPageProvider(),
+              const NotificationScreen(),
               const BookingScreen(),
             ]
           : [

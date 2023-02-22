@@ -32,7 +32,7 @@ Widget _buildOverlayContent(BuildContext context, bool showBackButton) {
           children: [
             Text(
                 "Catagoies",
-                style: TextStyle(fontSize: 20.sp, color: Colors.black, fontWeight: FontWeight.bold)),
+                style: TextStyle(fontSize: 20.sp, color: Colors.black, fontFamily: "Montserrat-Bold")),
           ],
         ),
     ),
@@ -85,7 +85,7 @@ Widget _buildOverlayContent(BuildContext context, bool showBackButton) {
                             style: TextStyle(
                                 color: Colors.black,
                                 fontSize: ScreenUtil().setSp(16),
-                                fontWeight: FontWeight.bold),
+                                fontFamily: "Montserrat-Bold"),
                           ),
                           Padding(
                             padding:
@@ -99,7 +99,7 @@ Widget _buildOverlayContent(BuildContext context, bool showBackButton) {
                                   color: Colors.grey,
                                   fontSize:
                                   ScreenUtil().setSp(14),
-                                  fontWeight: FontWeight.normal),
+                                  fontFamily: "Montserrat-Regular"),
                             ),
                           ),
                           const SizedBox(

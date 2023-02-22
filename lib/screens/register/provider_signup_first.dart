@@ -142,7 +142,7 @@ class ProviderSignupFirstScreen extends StatelessWidget {
                   Row(
                     children: [
                       Image.asset(
-                        "assets/images/Servicesimage.png",
+                        "assets/icons/create-gig-icon.png",
                         height: ScreenUtil().setHeight(50),
                         width: ScreenUtil().setHeight(50),
                       ),
@@ -196,7 +196,7 @@ class ProviderSignupFirstScreen extends StatelessWidget {
                   Row(
                     children: [
                       Image.asset(
-                        "assets/images/Servicesimage.png",
+                        "assets/icons/deliver-icon.png",
                         height: ScreenUtil().setHeight(50),
                         width: ScreenUtil().setHeight(50),
                       ),
@@ -249,7 +249,7 @@ class ProviderSignupFirstScreen extends StatelessWidget {
                   Row(
                     children: [
                       Image.asset(
-                        "assets/images/Servicesimage.png",
+                        "assets/icons/get-paid.png",
                         height: ScreenUtil().setHeight(50),
                         width: ScreenUtil().setHeight(50),
                       ),

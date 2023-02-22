@@ -71,7 +71,7 @@ class _SearchTextFieldState extends State<SearchTextField> {
               ),
             ),
             contentPadding: const EdgeInsets.symmetric(
-              vertical: 10,
+              vertical: 5,
               horizontal: 5,
             ),
             hintText: widget.hintext,
@@ -81,7 +81,7 @@ class _SearchTextFieldState extends State<SearchTextField> {
               fontFamily: "Montserrat-Regular",
             ),
             prefixIcon: Transform.scale(
-              scale: 0.45,
+              scale: 0.35,
               child: Image.asset(
                 "assets/images/Search.png",
                 fit: BoxFit.cover,

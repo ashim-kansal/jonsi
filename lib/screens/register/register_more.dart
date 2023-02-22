@@ -189,7 +189,7 @@ class _RegisterMoreState extends State<RegisterMore> {
                                             ),
 
                                             hintStyle: TextStyle(
-                                                color: Colors.grey[100]),
+                                                color: Colors.grey[100], fontFamily: "Montserrat-Medium"),
                                             hintText: "Choose catagory",
                                             fillColor: Colors.red[100]),
                                         style: TextStyle(

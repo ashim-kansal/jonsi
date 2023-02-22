@@ -240,7 +240,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         padding: EdgeInsets.all(10),
                         child: const Servicescontainer(),
                       ),
-                      const SizedBox(height: 45)
+                      const SizedBox(height: 45),
+                      const SizedBox(height: 45),
                     ],
                   )),
             )),

@@ -3,14 +3,20 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_credit_card/extension.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:kappu/common/custom_progress_bar.dart';
 import 'package:kappu/common/customtexts.dart';
 import 'package:kappu/common/dialogues.dart';
+import 'package:kappu/common/painter.dart';
 import 'package:kappu/components/AppColors.dart';
 import 'package:kappu/constants/storage_manager.dart';
 import 'package:kappu/helperfunctions/screen_nav.dart';
+import 'package:kappu/models/serializable_model/signedinprovider.dart';
+import 'package:kappu/provider/provider_provider.dart';
+import 'package:kappu/provider/userprovider.dart';
 import 'package:kappu/screens/login/widgets/google_login_button.dart';
 import 'package:kappu/screens/reset_password/enter_email_screen.dart';
+import 'package:provider/provider.dart';
 import 'package:validators/validators.dart';
 import '../../common/bottom_nav_bar.dart';
 import '../../constants/icons.dart';
@@ -45,6 +51,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   initState() {}
+
 
   Future<void> signInWithApple(BuildContext context) async {
     try {
@@ -349,12 +356,14 @@ class _LoginScreenState extends State<LoginScreen> {
       Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Expanded(
-              child: FacebookLoginButton(
-            text: 'Facebook',
-            onTap: () {},
-          )),
-          15.horizontalSpace,
+          // Expanded(
+          //     child: FacebookLoginButton(
+          //   text: 'Facebook',
+          //   onTap: () {
+          //     facebookSignin();
+          //   },
+          // )),
+          // 15.horizontalSpace,
           Expanded(
               child: GoogleLoginButton(
             action: false,
