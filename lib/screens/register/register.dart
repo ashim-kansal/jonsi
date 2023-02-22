@@ -230,7 +230,7 @@ class _SignUpState extends State<SignUp> {
                                 initialDate: DateTime.now(),
                                 firstDate: DateTime(1950),
                                 //DateTime.now() - not to allow to choose before today.
-                                lastDate: DateTime(2100));
+                                lastDate: DateTime(DateTime.now().year-18));
 
                             if (pickedDate != null) {
                               print(
@@ -265,23 +265,24 @@ class _SignUpState extends State<SignUp> {
                           ),
                         ),
 
-                        CustomTextFormField(
-                          controller: _nationalityController,
-                          hintText: 'Nationality',
-                          keyboardType: TextInputType.text,
-                          prefixIcon: ImageIcon(AssetImage('assets/icons/flag.png'), color: AppColors.app_color,),
-                          isValid: isVaildNati,
-                          onChanged: (value) {
-                            if (value.isNotEmpty) {
-                              isVaildNati = true;
-                            } else {
-                              isVaildNati = false;
-                            }
-                            setState(() {});
-                          },
-                          validator: (value) =>
-                          value!.isEmpty ? "Enter Your Nationality" : null,
-                        ),
+                      CustomTextFormField(
+                        controller: _nationalityController,
+                        hintText: 'Nationality',
+                        keyboardType: TextInputType.text,
+                        prefixIcon: ImageIcon(AssetImage('assets/icons/flag.png'), color: AppColors.app_color,),
+                        isValid: isVaildNati,
+                        onChanged: (value) {
+                          if (value.isNotEmpty) {
+                            isVaildNati = true;
+                          } else {
+                            isVaildNati = false;
+                          }
+                          setState(() {});
+                        },
+                        validator: (value) =>
+                        value!.isEmpty ? "Enter Your Nationality" : null,
+                      ),
+
 
                       // if (!widget.isprovider)
                       //   Padding(
@@ -365,7 +366,7 @@ class _SignUpState extends State<SignUp> {
                                           child: ImageIcon(AssetImage('assets/icons/language.png'), color: AppColors.app_color,),
                                           ),
                                           hintStyle: TextStyle(
-                                              color: Colors.grey[100]),
+                                              color: Colors.grey[100], fontFamily: "Montserrat-Medium"),
                                           hintText: "Language known",
                                           fillColor: Colors.red[100]),
                                       style: TextStyle(

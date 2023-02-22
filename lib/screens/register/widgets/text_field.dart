@@ -78,7 +78,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
                     hintText: widget.hintText,
                     hintStyle: TextStyle(
                       color: widget.bordercolor,
-                      fontWeight: FontWeight.w500,
+                        fontFamily: "Montserrat-Medium",
                       fontSize: ScreenUtil().setSp(14),
                     ),
                     errorStyle: TextStyle(
