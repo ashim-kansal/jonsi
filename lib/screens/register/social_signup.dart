@@ -100,11 +100,11 @@ class SocailSignUpScreen extends StatelessWidget {
                   //   ),
                   // ),
                   // const SizedBox(height: 10),
-                  FacebookLoginButton(
-                      text: 'Connect with Facebook', onTap: (){
-                        print('fb click');
-                        //doFbLogin(context);
-                  },),
+                  // FacebookLoginButton(
+                  //     text: 'Connect with Facebook', onTap: (){
+                  //       print('fb click');
+                  //       //doFbLogin(context);
+                  // },),
                   const SizedBox(height: 10),
                   GoogleLoginButton(action: false, text: 'Connect with Google',onTap: (user){
                     socialLogin('google', user.id!, user.email!, user.displayName!, context);

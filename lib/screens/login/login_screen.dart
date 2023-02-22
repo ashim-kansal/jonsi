@@ -377,14 +377,14 @@ class _LoginScreenState extends State<LoginScreen> {
       Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Expanded(
-              child: FacebookLoginButton(
-            text: 'Facebook',
-            onTap: () {
-              facebookSignin();
-            },
-          )),
-          15.horizontalSpace,
+          // Expanded(
+          //     child: FacebookLoginButton(
+          //   text: 'Facebook',
+          //   onTap: () {
+          //     facebookSignin();
+          //   },
+          // )),
+          // 15.horizontalSpace,
           Expanded(
               child: GoogleLoginButton(
             action: false,
