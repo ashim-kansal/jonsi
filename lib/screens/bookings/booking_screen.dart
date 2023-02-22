@@ -53,6 +53,8 @@ class _BookingScreenState extends State<BookingScreen> {
               indicatorColor: AppColors.app_color,
               labelColor: AppColors.app_color,
               unselectedLabelColor: Colors.black,
+              isScrollable: true,
+              labelStyle: TextStyle(fontFamily: "Montserrat-Bold", fontSize: 14, color: Colors.black),
               tabs: [
                 Tab(
                   text: 'Active',
@@ -74,7 +76,7 @@ class _BookingScreenState extends State<BookingScreen> {
                         style: TextStyle(
                             fontSize: 20.sp,
                             color: Colors.black,
-                            fontWeight: FontWeight.bold)),
+                            fontFamily: "Montserrat-Bold")),
                   ],
                 ),
                 if (isLoading)
@@ -107,7 +109,7 @@ class _BookingScreenState extends State<BookingScreen> {
                           padding: EdgeInsets.only(top: 20.h),
                           child: Column(
                             children: [
-                              const Text("No Active Bookings "),
+                              const Text("No Active Bookings ", style: TextStyle(color: Colors.black, fontFamily: "Montserrat-Regular")),
                               TextButton(
                                   onPressed: () {
                                     setState(() {});

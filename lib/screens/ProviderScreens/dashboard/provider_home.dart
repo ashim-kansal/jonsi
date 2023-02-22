@@ -54,7 +54,7 @@ class _ProviderHomeScreenState extends State<ProviderHomeScreen> {
                       style: TextStyle(
                           fontSize: ScreenUtil().setSp(16),
                           color: Colors.white,
-                          fontWeight: FontWeight.w600,
+                          fontFamily: 'Montserrat-Bold',
                           height: 1.4),
                     ),
                   ],
@@ -85,7 +85,7 @@ class _ProviderHomeScreenState extends State<ProviderHomeScreen> {
                               style: TextStyle(
                                   fontSize: ScreenUtil().setSp(16),
                                   color: Colors.white,
-                                  fontWeight: FontWeight.w800,
+                                  fontFamily: 'Montserrat-Bold',
                                   height: 1.4),
                             ),
                             Text(
@@ -93,7 +93,7 @@ class _ProviderHomeScreenState extends State<ProviderHomeScreen> {
                               style: TextStyle(
                                   fontSize: ScreenUtil().setSp(12),
                                   color: Colors.white,
-                                  fontWeight: FontWeight.w500,
+                                  fontFamily: 'Montserrat-Regular',
                                   height: 1.4),
                             ),
                             RatingBar.builder(
@@ -119,7 +119,7 @@ class _ProviderHomeScreenState extends State<ProviderHomeScreen> {
                               style: TextStyle(
                                   fontSize: ScreenUtil().setSp(16),
                                   color: Colors.white,
-                                  fontWeight: FontWeight.w500,
+                                  fontFamily: 'Montserrat-Medium',
                                   height: 1.4),
                             ),
                           ],
@@ -148,7 +148,7 @@ class _ProviderHomeScreenState extends State<ProviderHomeScreen> {
                               style: TextStyle(
                                   color: Color(0xFF000000),
                                   fontSize: 16,
-                                  fontWeight: FontWeight.w700),
+                                  fontFamily: 'Montserrat-Bold'),
                             ),
                             CustomToggleButton(
                               isSelected: true,
@@ -212,7 +212,7 @@ class _ProviderHomeScreenState extends State<ProviderHomeScreen> {
                       style: TextStyle(
                           color: AppColors.app_color,
                           fontSize: 18,
-                          fontWeight: FontWeight.w700),
+                          fontFamily: "Montserrat-Bold"),
                     ),
                     const SizedBox(height: 10),
                     Card(
@@ -281,7 +281,7 @@ class _ProviderHomeScreenState extends State<ProviderHomeScreen> {
                       style: TextStyle(
                           color: AppColors.app_black,
                           fontSize: 18,
-                          fontWeight: FontWeight.w700),
+                          fontFamily: "Montserrat-Bold"),
                     ),
                     const SizedBox(height: 10),
                     Card(
@@ -296,7 +296,7 @@ class _ProviderHomeScreenState extends State<ProviderHomeScreen> {
                                 style: TextStyle(
                                     color: AppColors.app_black,
                                     fontSize: 12,
-                                    fontWeight: FontWeight.w700),
+                                    fontFamily: 'Montserrat-Bold'),
                               ),
 
                               Row(

@@ -48,7 +48,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
         children: [
           Text(
               "Notifications",
-              style: TextStyle(fontSize: 20.sp, color: Colors.black, fontWeight: FontWeight.bold)),
+              style: TextStyle(fontSize: 20.sp, color: Colors.black, fontFamily: "Montserrat-Bold")),
         ],
       )),
       body: SingleChildScrollView(

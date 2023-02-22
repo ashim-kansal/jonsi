@@ -34,7 +34,7 @@ class EarningItem extends StatelessWidget {
               title,
               textAlign: TextAlign.center,
               style: TextStyle(
-                  color: titleColor, fontSize: 16, fontWeight: FontWeight.bold),
+                  color: titleColor, fontSize: 16, fontFamily: "Montserrat-Bold"),
             ),
             SizedBox(
               height: 10,
@@ -45,6 +45,7 @@ class EarningItem extends StatelessWidget {
               style: const TextStyle(
                 color: AppColors.app_black,
                 fontSize: 12,
+                  fontFamily: "Montserrat-Medium"
               ),
             ),
 
