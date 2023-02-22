@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kappu/components/AppColors.dart';
+import 'package:kappu/constants/storage_manager.dart';
 import 'package:kappu/helperfunctions/screen_nav.dart';
 import 'package:kappu/screens/register/social_signup.dart';
 
@@ -80,7 +81,7 @@ class _ProviderHomeScreenState extends State<ProviderHomeScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "john wing",
+                              StorageManager().name,
                               style: TextStyle(
                                   fontSize: ScreenUtil().setSp(16),
                                   color: Colors.white,
@@ -88,7 +89,7 @@ class _ProviderHomeScreenState extends State<ProviderHomeScreen> {
                                   height: 1.4),
                             ),
                             Text(
-                              "johnwing@gmail.com",
+                              StorageManager().email,
                               style: TextStyle(
                                   fontSize: ScreenUtil().setSp(12),
                                   color: Colors.white,
@@ -163,13 +164,13 @@ class _ProviderHomeScreenState extends State<ProviderHomeScreen> {
                         Expanded(
                             child: HomeItem(
                           title: 'Earnings',
-                          imagePath: 'assets/images/ic_earning.jpg',
+                          imagePath: 'assets/images/earning.png',
                         )),
                         const SizedBox(width: 20),
                         Expanded(
                             child: HomeItem(
-                          title: 'Earnings',
-                          imagePath: 'assets/images/ic_earning.jpg',
+                          title: 'Buyer Requests',
+                          imagePath: 'assets/images/buyer-request.png',
                         )),
                       ],
                     ),
@@ -178,14 +179,14 @@ class _ProviderHomeScreenState extends State<ProviderHomeScreen> {
                       children: const [
                         Expanded(
                             child: HomeItem(
-                          title: 'Earnings',
-                          imagePath: 'assets/images/ic_earning.jpg',
+                          title: 'Availability',
+                          imagePath: 'assets/images/availability.png',
                         )),
                         const SizedBox(width: 20),
                         Expanded(
                             child: HomeItem(
-                          title: 'Earnings',
-                          imagePath: 'assets/images/ic_earning.jpg',
+                          title: 'Create GIG Offer',
+                          imagePath: 'assets/images/create-gig-offer.png',
                         )),
                       ],
                     ),
@@ -194,14 +195,14 @@ class _ProviderHomeScreenState extends State<ProviderHomeScreen> {
                       children: const [
                         Expanded(
                             child: HomeItem(
-                          title: 'Earnings',
-                          imagePath: 'assets/images/ic_earning.jpg',
+                          title: 'Total Reviews',
+                          imagePath: 'assets/images/rating.png',
                         )),
                         const SizedBox(width: 20),
                         Expanded(
                             child: HomeItem(
-                          title: 'Earnings',
-                          imagePath: 'assets/images/ic_earning.jpg',
+                          title: 'Help Center',
+                          imagePath: 'assets/images/help-support.png',
                         )),
                       ],
                     ),
