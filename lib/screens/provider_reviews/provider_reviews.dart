@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:kappu/components/AppColors.dart';
+import 'package:kappu/components/MyAppBar.dart';
 import 'package:kappu/models/serializable_model/review.dart';
+import 'package:kappu/screens/ProviderScreens/item_review.dart';
 
 import '../../net/http_client.dart';
 
 class ProviderReviewsPage extends StatefulWidget {
   final int providerid;
   final double averagerating;
+
   const ProviderReviewsPage(
       {Key? key, required this.providerid, required this.averagerating})
       : super(key: key);
@@ -19,69 +24,209 @@ class _ProviderReviewsPageState extends State<ProviderReviewsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.color_f2f7fd,
+      appBar: MyAppBar(
+        title: "Total Ratings and Reviews",
+      ),
       body: SingleChildScrollView(
         child: Column(children: [
-          Padding(
-              padding: EdgeInsets.only(
-                  top: ScreenUtil().setHeight(35),
-                  left: ScreenUtil().setWidth(20)),
-              child: Row(
+          Container(
+            color: Colors.white,
+            width: MediaQuery.of(context).size.width,
+            child: Center(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  CircleAvatar(
-                    backgroundColor: Colors.blue,
-                    child: IconButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      icon: const Icon(
-                        Icons.arrow_back,
-                        color: Colors.white,
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Text(
+                    "Reviews as Seller",
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 22,
+                        fontFamily: "Montserrat-Bold"),
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      RatingBar.builder(
+                        initialRating: 3,
+                        minRating: 1,
+                        direction: Axis.horizontal,
+                        allowHalfRating: true,
+                        itemCount: 5,
+                        itemSize: 20,
+                        itemPadding: EdgeInsets.only(right: 2),
+                        itemBuilder: (context, _) =>
+                            Icon(Icons.star, color: Colors.amber),
+                        onRatingUpdate: (rating) {
+                          print(rating);
+                        },
                       ),
-                    ),
+                      Text('3')
+                    ],
                   ),
-                  Padding(
-                    padding: EdgeInsets.only(left: ScreenUtil().setWidth(85)),
-                    child: Text(
-                      'Reviews',
-                      style: TextStyle(
-                          fontWeight: FontWeight.w400,
-                          fontSize: ScreenUtil().setSp(20)),
-                    ),
+                  SizedBox(
+                    height: 20,
                   ),
+                  Divider(
+                    height: 1,
+                    color: AppColors.shadow,
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Container(
+                      padding: const EdgeInsets.all(20),
+                      margin: const EdgeInsets.only(left: 20, right: 20),
+                      decoration: BoxDecoration(
+                          color: Color(0xff4995EB).withOpacity(0.2),
+                          borderRadius: BorderRadius.circular(10)),
+                      child: Column(
+                        children: [
+                          Row(
+                            children: [
+                              Expanded(
+                                  child: Text('5 Stars',
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 14,
+                                          fontFamily: 'Montserrat-Bold'))),
+                              Text('20 Reviews',
+                                  style: TextStyle(
+                                      color: AppColors.text_desc,
+                                      fontSize: 10,
+                                      fontFamily: 'Montserrat-Regular')),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 2,
+                          ),
+                          const LinearProgressIndicator(
+                            backgroundColor: Colors.white,
+                            valueColor: AlwaysStoppedAnimation<Color>(
+                                AppColors.app_color),
+                            value: 20,
+                          ),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          Row(
+                            children: [
+                              Expanded(
+                                  child: Text('5 Stars',
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 14,
+                                          fontFamily: 'Montserrat-Bold'))),
+                              Text('20 Reviews',
+                                  style: TextStyle(
+                                      color: AppColors.text_desc,
+                                      fontSize: 10,
+                                      fontFamily: 'Montserrat-Regular')),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 2,
+                          ),
+                          const LinearProgressIndicator(
+                            backgroundColor: Colors.white,
+                            valueColor: AlwaysStoppedAnimation<Color>(
+                                AppColors.app_color),
+                            value: 0.8,
+                          ),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          Row(
+                            children: [
+                              Expanded(
+                                  child: Text('5 Stars',
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 14,
+                                          fontFamily: 'Montserrat-Bold'))),
+                              Text('20 Reviews',
+                                  style: TextStyle(
+                                      color: AppColors.text_desc,
+                                      fontSize: 10,
+                                      fontFamily: 'Montserrat-Regular')),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 2,
+                          ),
+                          const LinearProgressIndicator(
+                            backgroundColor: Colors.white,
+                            valueColor: AlwaysStoppedAnimation<Color>(
+                                AppColors.app_color),
+                            value: 20,
+                          ),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          Row(
+                            children: [
+                              Expanded(
+                                  child: Text('5 Stars',
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 14,
+                                          fontFamily: 'Montserrat-Bold'))),
+                              Text('20 Reviews',
+                                  style: TextStyle(
+                                      color: AppColors.text_desc,
+                                      fontSize: 10,
+                                      fontFamily: 'Montserrat-Regular')),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 2,
+                          ),
+                          const LinearProgressIndicator(
+                            backgroundColor: Colors.white,
+                            valueColor: AlwaysStoppedAnimation<Color>(
+                                AppColors.app_color),
+                            value: 20,
+                          ),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          Row(
+                            children: [
+                              Expanded(
+                                  child: Text('5 Stars',
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 14,
+                                          fontFamily: 'Montserrat-Bold'))),
+                              Text('20 Reviews',
+                                  style: TextStyle(
+                                      color: AppColors.text_desc,
+                                      fontSize: 10,
+                                      fontFamily: 'Montserrat-Regular')),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          const LinearProgressIndicator(
+                            backgroundColor: Colors.white,
+                            valueColor: AlwaysStoppedAnimation<Color>(
+                                AppColors.app_color),
+                            value: 20,
+                          ),
+                          // const SizedBox(
+                          //   height: 10,
+                          // ),
+                        ],
+                      )),
                 ],
-              )),
-          SizedBox(
-            height: ScreenUtil().setHeight(15),
-          ),
-          const Divider(thickness: 1),
-          Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Overall Rating',
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.w400,
-                      fontSize: ScreenUtil().setSp(18)),
-                ),
-                Row(
-                  children: [
-                    Icon(
-                      Icons.star,
-                      color: Colors.yellow.shade800,
-                    ),
-                    Text(
-                      widget.averagerating.toString(),
-                      style: TextStyle(
-                          color: Colors.yellow.shade800,
-                          fontWeight: FontWeight.bold,
-                          fontSize: ScreenUtil().setSp(16)),
-                    ),
-                  ],
-                )
-              ],
+              ),
             ),
           ),
           Padding(
@@ -93,95 +238,119 @@ class _ProviderReviewsPageState extends State<ProviderReviewsPage> {
                   if (ratings.connectionState != ConnectionState.done) {
                     return const Center(child: CircularProgressIndicator());
                   }
-                  return ListView(
+                  return ListView.builder(
                     padding: EdgeInsets.only(
                       top: ScreenUtil().setHeight(12),
                     ),
                     scrollDirection: Axis.vertical,
                     shrinkWrap: true,
-                    children: ratings.data!
-                        .map((item) => Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    CircleAvatar(
-                                      backgroundImage: NetworkImage(
-                                        item.ratingGiverprofileurl != null
-                                            ? item.ratingGiverprofileurl!
-                                            : 'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: ScreenUtil().setWidth(150),
+                    itemCount: 3,
+                    itemBuilder: (context, index) {
+                      return Column(
+                        children: [
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Container(
+                                  child: Container(
                                       child: Padding(
-                                        padding: EdgeInsets.only(
-                                          left: ScreenUtil().setWidth(10),
-                                        ),
-                                        child: Text(
-                                          item.ratingGiverfname +
-                                              " " +
-                                              item.ratingGiverlname,
-                                          style: TextStyle(
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.w500,
-                                              fontSize: ScreenUtil().setSp(13)),
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: ScreenUtil().setWidth(80),
-                                    ),
-                                    Column(
-                                      // crossAxisAlignment: CrossAxisAlignment.start,
+                                    padding: EdgeInsets.all(15),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
                                       children: [
                                         Row(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
                                           children: [
-                                            Icon(
-                                              Icons.star,
-                                              color: Colors.yellow.shade800,
-                                              size: 14,
+                                            CircleAvatar(
+                                              radius:
+                                                  ScreenUtil().setHeight(15),
+                                              backgroundImage: NetworkImage(
+                                                  'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500'),
                                             ),
-                                            Text(
-                                              item.rating.toString(),
-                                              style: TextStyle(
-                                                  color: Colors.yellow.shade800,
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize:
-                                                      ScreenUtil().setSp(12)),
+                                            SizedBox(
+                                              width: 5,
                                             ),
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  'Name',
+                                                  style: TextStyle(
+                                                      color: Colors.black,
+                                                      fontSize: 15,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                                Text(
+                                                  'Location',
+                                                  style: TextStyle(
+                                                      color: Colors.grey,
+                                                      fontSize: 15,
+                                                      fontWeight:
+                                                          FontWeight.normal),
+                                                ),
+                                                Row(
+                                                  mainAxisSize: MainAxisSize.min,
+                                                  children: [
+                                                    RatingBar.builder(
+                                                      initialRating: 3,
+                                                      minRating: 1,
+                                                      direction: Axis.horizontal,
+                                                      allowHalfRating: true,
+                                                      itemCount: 5,
+                                                      itemSize: 20,
+                                                      ignoreGestures: true,
+                                                      itemPadding:
+                                                      EdgeInsets.only(right: 0.1),
+                                                      itemBuilder: (context, _) => Icon(
+                                                          Icons.star,
+                                                          color: Colors.amber),
+                                                      onRatingUpdate: (rating) {
+                                                        print(rating);
+                                                      },
+                                                    ),
+                                                    Text(' 5.0', style: TextStyle(color: AppColors.app_yellow, fontFamily: "Montserrat-Bold", fontSize: 10),),
+                                                    Text('  5 days ago', style: TextStyle(color: AppColors.text_desc, fontFamily: "Montserrat-Medium", fontSize: 10),),
+
+                                                  ],
+                                                ),
+                                               Flexible(
+                                                 fit: FlexFit.tight,
+                                                 child:  Text(
+                                                 'Lorem ispum Lorem ispum Lorem ispum Lorem ispum Lorem ispum',
+                                                 maxLines: 3,
+                                                 textAlign: TextAlign.justify,
+                                                 style: TextStyle(
+                                                     color: Colors.grey,
+                                                     fontSize: 12,
+                                                     fontWeight: FontWeight.normal),
+                                               ),),
+                                              ],
+                                            )
                                           ],
                                         ),
-                                        Text(
-                                          item.ratingpublishedDate,
-                                          style: TextStyle(
-                                              color: Colors.grey,
-                                              fontWeight: FontWeight.w500,
-                                              fontSize: ScreenUtil().setSp(10)),
-                                        ),
+
                                       ],
-                                    )
-                                  ],
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.only(
-                                      left: ScreenUtil().setWidth(55)),
-                                  child: Text(
-                                    item.ratingcomment,
-                                    style: TextStyle(
-                                        fontSize: ScreenUtil().setSp(12),
-                                        color: Colors.grey,
-                                        height: 1.4),
-                                  ),
-                                ),
-                                const SizedBox(
-                                  height: 30,
-                                )
-                              ],
-                            ))
-                        .toList(),
+                                    ),
+                                  ))),
+                              SizedBox(
+                                width: 10,
+                              )
+                            ],
+                          ),
+                        ],
+                      );
+                    },
                   );
                 }),
           ),

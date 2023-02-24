@@ -20,6 +20,7 @@ import '../ProviderScreens/settings/widgets/alert_dialogue.dart';
 import '../bookings/booking_screen.dart';
 import '../change_password/ChangePasswordPage.dart';
 import '../login/login_screen.dart';
+import '../provider_reviews/provider_reviews.dart';
 
 class SettingsPage extends ModalRoute<void> {
   @override
@@ -149,8 +150,12 @@ class SettingsPage extends ModalRoute<void> {
                       screen: BookingScreen());
                 }),
 
-              if(provider.isProvider)
-                ProfileItem(label: "Total Ratings and Reviews", iconPath: 'assets/icons/rv.png'),
+              // if(provider.isProvider)
+                ProfileItem(label: "Total Ratings and Reviews", iconPath: 'assets/icons/rv.png', onTap: (){
+                  changeScreen(
+                      context: context,
+                      screen: ProviderReviewsPage(providerid: provider.userId,averagerating: provider.rating,));
+                },),
 
               ProfileItemTitle(label: "Support", context: context),
               ProfileItem(label: "Help Center", iconPath: 'assets/icons/help.png', onTap: (){

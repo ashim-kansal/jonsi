@@ -28,9 +28,14 @@ class StorageManager {
 
 
   int get userId => _userPreferences!.getInt('userId') ?? -1;
+  double get rating => _userPreferences!.getDouble('rating') ?? 0.0;
 
   set userId(int id) {
     _userPreferences!.setInt('userId', id);
+  }
+
+  set rating(double rate) {
+    _userPreferences!.setDouble('rating', rate);
   }
 
   String get name => _userPreferences!.getString('name') ?? '';
