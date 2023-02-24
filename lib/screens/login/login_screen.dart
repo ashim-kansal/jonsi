@@ -2,7 +2,6 @@ import 'dart:io';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_credit_card/extension.dart';
-import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:kappu/common/custom_progress_bar.dart';
@@ -53,26 +52,6 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   initState() {}
 
-  Future<String?> facebookSignin() async {
-    try {
-      final _instance = FacebookAuth.instance;
-      final result = await _instance.login(permissions: ['email']);
-      if (result.status == LoginStatus.success) {
-        await _instance.getUserData().then((userData) async {
-          print("userData['email']");
-          print(userData['email']);
-        });
-        return null;
-      } else if (result.status == LoginStatus.cancelled) {
-        return 'Login cancelled';
-      } else {
-        return 'Error';
-      }
-    } catch (e) {
-      print(e.toString());
-      return e.toString();
-    }
-  }
 
   Future<void> signInWithApple(BuildContext context) async {
     try {
