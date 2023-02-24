@@ -39,7 +39,9 @@ class _SliderWidgetState extends State<SliderWidget> {
                 options: CarouselOptions(
                     autoPlay: true,
                     autoPlayCurve: Curves.easeInOutBack,
+                    enableInfiniteScroll: false,
                     autoPlayInterval: const Duration(seconds: 3)),
+
                 items: response.data!
                     .map((item) =>
                     Padding(

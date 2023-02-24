@@ -35,6 +35,9 @@ Widget _buildOverlayContent(BuildContext context, bool showBackButton) {
                 style: TextStyle(fontSize: 20.sp, color: Colors.black, fontFamily: "Montserrat-Bold")),
           ],
         ),
+      actions: [IconButton(
+        onPressed: (){},
+          icon: const Icon(Icons.search))],
     ),
     body: FutureBuilder(
         future: HttpClient().getCatagory(),

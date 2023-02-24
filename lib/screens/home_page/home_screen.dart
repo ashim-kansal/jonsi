@@ -1,21 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kappu/components/AppColors.dart';
-import 'package:kappu/constants/storage_manager.dart';
-import 'package:kappu/helperfunctions/screen_nav.dart';
-import 'package:kappu/provider/provider_provider.dart';
 import 'package:kappu/screens/home_page/widgets/best_services.dart';
 import 'package:kappu/screens/home_page/widgets/slider.dart';
-import 'package:kappu/screens/login/login_screen.dart';
 import 'package:kappu/screens/settings/settings_screen.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
-import 'package:provider/provider.dart';
 
-// import '../../constants/services.dart';
-import '../notification/notifications.dart';
 import 'widgets/search_text_field.dart';
 import 'widgets/services_container.dart';
-import 'widgets/services_horizontal_slider.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -44,7 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     children: [
                       const Icon(
                         Icons.location_on,
-                        size: 35,
+                        size: 30,
                         color: AppColors.app_color,
                       ),
                       Expanded(
@@ -82,32 +74,32 @@ class _HomeScreenState extends State<HomeScreen> {
                               icon: const Icon(
                                 Icons.account_circle_outlined,
                                 color: AppColors.app_color,
-                                size: 35,
+                                size: 30,
                               ),
                             )),
                       )
                     ],
                   ),
                 ),
-                const SizedBox(height: 5,),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Image.asset(
-                      'assets/images/colorfulLogo.png',
-                      width: MediaQuery.of(context).size.width * 0.14,
-                      height: MediaQuery.of(context).size.height * 0.05,
-                    ),
-                    Text(
-                      'URBAN MALTA',
-                      style: TextStyle(
-                          fontSize: 22,
-                          color: AppColors.app_color,
-                          fontWeight: FontWeight.bold),
-                    )
-                  ],
-                ),
+                // const SizedBox(height: 5,),
+                // Row(
+                //   crossAxisAlignment: CrossAxisAlignment.center,
+                //   mainAxisAlignment: MainAxisAlignment.center,
+                //   children: [
+                //     Image.asset(
+                //       'assets/images/colorfulLogo.png',
+                //       width: MediaQuery.of(context).size.width * 0.14,
+                //       height: MediaQuery.of(context).size.height * 0.05,
+                //     ),
+                //     Text(
+                //       'URBAN MALTA',
+                //       style: TextStyle(
+                //           fontSize: 22,
+                //           color: AppColors.app_color,
+                //           fontWeight: FontWeight.bold),
+                //     )
+                //   ],
+                // ),
                 const SizedBox(height: 5,),
                 Padding(
                   padding: EdgeInsets.symmetric(
@@ -222,7 +214,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.all(10),
+                        padding: EdgeInsets.only(left: 10, right: 20, bottom: 5),
                         child: const OurBestServices(),
                       ),
                       Padding(

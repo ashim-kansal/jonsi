@@ -326,7 +326,7 @@ class _AddGigState extends State<AddGig> {
           var provider = StorageManager();
           provider.accessToken = value?.data['token'];
           provider.userId = value?.data['user']['id'];
-          provider.name = widget.bodyprovider['first_name']+" "+widget.bodyprovider['last_name'];
+          provider.name = widget.bodyprovider['first_name'];
           provider.phone = widget.bodyprovider['phone_number'];
           provider.email = widget.bodyprovider['email'];
           provider.isProvider = true;

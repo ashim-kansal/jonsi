@@ -686,7 +686,7 @@ class _SignUpState extends State<SignUp> {
         if (value?.data['status']) {
           var provider = StorageManager();
           provider.accessToken = value?.data['token'];
-          provider.name = _nameController.text + " " + _lastnameController.text;
+          provider.name = _nameController.text;
           provider.phone = _phnocontroller.text;
           provider.email = _emailController.text;
           provider.isProvider = false;

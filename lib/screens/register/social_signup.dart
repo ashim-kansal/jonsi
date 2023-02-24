@@ -244,9 +244,7 @@ class SocailSignUpScreen extends StatelessWidget {
         StorageManager().accessToken = "" + loginresponse.data['data']['token'];
         StorageManager().userId = loginresponse.data['data']['user']['id'];
         StorageManager().name = "" +
-            loginresponse.data['data']['user']['first_name'] +
-            " " +
-            loginresponse.data['data']['user']['last_name'];
+            loginresponse.data['data']['user']['first_name'];
         StorageManager().email =
             "" + loginresponse.data['data']['user']['email'];
         StorageManager().isProvider =
