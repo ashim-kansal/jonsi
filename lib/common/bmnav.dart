@@ -52,7 +52,7 @@ class BottomNavState extends md.State<BottomNav> {
         elevation: widget.elevation,
         color: widget.color,
         child: md.Container(
-            height: 60,
+            height: 70,
             child: md.Row(
               mainAxisAlignment: md.MainAxisAlignment.spaceAround,
               mainAxisSize: md.MainAxisSize.max,
@@ -170,7 +170,7 @@ class BMNavItem extends md.StatelessWidget {
         child: md.InkResponse(
       key: key,
       child: md.Padding(
-          padding: EdgeInsets.all(5),
+          padding: EdgeInsets.only(top: 5,bottom: 25,left: 5,right: 5),
           child: md.Column(
               mainAxisSize: md.MainAxisSize.min,
               children: <md.Widget>[

@@ -110,23 +110,23 @@ class _SliderWidgetState extends State<SliderWidget> {
                                     //     ),
                                     //   ),
                                     // ),
-                                    SizedBox(
-                                      height: 35,
-                                      width: 130,
+                                    Container(
+                                      padding: EdgeInsets.only(left: 25,right: 15,top: 5,bottom: 5),
+                                      width: 160,
+                                      alignment: Alignment.center,
                                       child: TextButton(
                                         style: ButtonStyle(
                                           backgroundColor: MaterialStateProperty.all(AppColors.app_color),
                                           shape: MaterialStateProperty.all(
                                             RoundedRectangleBorder(
                                               borderRadius:
-                                              BorderRadius.circular(14),
+                                              BorderRadius.circular(20),
                                             ),
                                           ),
                                         ),
                                         child: Row(
                                           crossAxisAlignment: CrossAxisAlignment.center,
                                           children: [
-                                            5.horizontalSpace,
                                             Text(
                                               "Book Now",
                                               style: TextStyle(
@@ -136,7 +136,7 @@ class _SliderWidgetState extends State<SliderWidget> {
                                                 fontFamily: 'Montserrat-bold',
                                               ),
                                             ),
-                                            10.horizontalSpace,
+                                            SizedBox(width: 8,),
                                             Image.asset('assets/icons/arw.png', scale: 2,fit: BoxFit.cover),
                                           ],
                                         ),
