@@ -19,151 +19,172 @@ class SearchCatagoriesScreen extends StatefulWidget {
 
 class _SearchCatagoriesScreenState extends State<SearchCatagoriesScreen> {
   List<Category> data = [];
+  List<Category> tempData = [];
+  late CategoryResponse categoryResponse;
+
+  bool isLoading = false;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getCategories();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 2,
-        title: Column(
-          children: [
-            Text("Search services",
-                style: TextStyle(
-                    fontSize: 20.sp,
-                    color: Colors.black,
-                    fontFamily: "Montserrat-Bold")),
-          ],
-        ),
-      ),
-      body: Column(children: [
-        const SizedBox(
-          height: 15,
-        ),
-        Padding(
-          padding: EdgeInsets.symmetric(
-              horizontal: ScreenUtil().setWidth(6)),
-          child: SearchTextField(
-            hintext: "Search Services",
-            onSearchingComplete: (value) {
-              data = data
-                  .where(
-                      (element) => element.name.contains(value))
-                  .toList();
-              setState(() {});
-            },
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          elevation: 2,
+          title: Column(
+            children: [
+              Text("Search services",
+                  style: TextStyle(
+                      fontSize: 20.sp,
+                      color: Colors.black,
+                      fontFamily: "Montserrat-Bold")),
+            ],
           ),
         ),
-        const SizedBox(
-          height: 15,
-        ),
-        FutureBuilder(
-            future: HttpClient().getCatagory(),
-            builder: (context, AsyncSnapshot<CategoryResponse> response) {
-              if (response.connectionState != ConnectionState.done) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
-              data = response.data!.data;
-              return Expanded(
-                  child: ListView(
-                    padding:
-                    EdgeInsets.only(top: ScreenUtil().setHeight(12)),
+        body: isLoading
+            ? const Center(child:CircularProgressIndicator())
+            : Column(
+                children: [
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: ScreenUtil().setWidth(6)),
+                    child: SearchTextField(
+                      hintext: "Search Services",
+                      onSearchingComplete: (value) {
+                        print(value);
+                        if(value.length>1 ){
+                          tempData = tempData
+                              .where((element) => element.name.toLowerCase().contains(value.toLowerCase()))
+                              .toList();
+                        }else{
+                          tempData = data;
+                        }
+                        setState(() {});
+                      },
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  Expanded(
+                      child: ListView(
+                    padding: EdgeInsets.only(top: ScreenUtil().setHeight(12)),
                     scrollDirection: Axis.vertical,
                     shrinkWrap: true,
-                    children: data
+                    children: tempData
                         .map((item) => Column(
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            pushDynamicScreen(context,
-                                screen: ProviderOffersFromHomePage(
-                                    serviceid: item.id,
-                                    name: item.name,
-                                    desc: item.description),
-                                withNavBar: false);
-                          },
-                          child: Row(
-                            mainAxisAlignment:
-                            MainAxisAlignment.spaceBetween,
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.only(
-                                    left: ScreenUtil().setWidth(10),
-                                    bottom:
-                                    ScreenUtil().setHeight(8)),
-                                child: ClipRRect(
-                                    borderRadius:
-                                    const BorderRadius.all(
-                                        Radius.circular(10)),
-                                    child: Image.network(
-                                      response.data!.baseUrl +
-                                          "/" +
-                                          item.image,
-                                      width: 80,
-                                    )),
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment:
-                                  CrossAxisAlignment.start,
-                                  mainAxisAlignment:
-                                  MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      item.name,
-                                      style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: ScreenUtil()
-                                              .setSp(16),
-                                          fontFamily:
-                                          "Montserrat-Bold"),
-                                    ),
-                                    Padding(
-                                      padding:
-                                      const EdgeInsets.only(
-                                          top: 8.0),
-                                      child: Text(
-                                        item.description,
-                                        maxLines: 2,
-                                        overflow:
-                                        TextOverflow.ellipsis,
-                                        softWrap: false,
-                                        style: TextStyle(
-                                            color: Colors.grey,
-                                            fontSize: ScreenUtil()
-                                                .setSp(14),
-                                            fontFamily:
-                                            "Montserrat-Regular"),
+                              children: [
+                                GestureDetector(
+                                  onTap: () {
+                                    pushDynamicScreen(context,
+                                        screen: ProviderOffersFromHomePage(
+                                            serviceid: item.id,
+                                            name: item.name,
+                                            desc: item.description),
+                                        withNavBar: false);
+                                  },
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsets.only(
+                                            left: ScreenUtil().setWidth(10),
+                                            bottom: ScreenUtil().setHeight(8)),
+                                        child: ClipRRect(
+                                            borderRadius:
+                                                const BorderRadius.all(
+                                                    Radius.circular(10)),
+                                            child: Image.network(
+                                              categoryResponse.baseUrl +
+                                                  "/" +
+                                                  item.image,
+                                              width: 80,
+                                            )),
                                       ),
-                                    ),
-                                    const SizedBox(
-                                      height: 25,
-                                    )
-                                  ],
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Expanded(
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              item.name,
+                                              style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize:
+                                                      ScreenUtil().setSp(16),
+                                                  fontFamily:
+                                                      "Montserrat-Bold"),
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  top: 8.0),
+                                              child: Text(
+                                                item.description,
+                                                maxLines: 2,
+                                                overflow: TextOverflow.ellipsis,
+                                                softWrap: false,
+                                                style: TextStyle(
+                                                    color: Colors.grey,
+                                                    fontSize:
+                                                        ScreenUtil().setSp(14),
+                                                    fontFamily:
+                                                        "Montserrat-Regular"),
+                                              ),
+                                            ),
+                                            const SizedBox(
+                                              height: 25,
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: ScreenUtil().setWidth(40),
+                                      )
+                                    ],
+                                  ),
                                 ),
-                              ),
-                              SizedBox(
-                                width: ScreenUtil().setWidth(40),
-                              )
-                            ],
-                          ),
-                        ),
-                        const Divider(
-                          thickness: 1,
-                        )
-                      ],
-                    ))
+                                const Divider(
+                                  thickness: 1,
+                                )
+                              ],
+                            ))
                         .toList(),
-                  ));
-            }),
-      ],)
-    );
+                  ))
+                ],
+              ));
   }
 
+  Future<void> getCategories() async {
+    try {
+      setState(() {
+        isLoading = true;
+      });
+      CategoryResponse response = await HttpClient().getCatagory();
+      setState(() {
+        data = response.data;
+        tempData = response.data;
+        categoryResponse = response;
+        isLoading = false;
+      });
+    } catch (e) {
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
 }
-

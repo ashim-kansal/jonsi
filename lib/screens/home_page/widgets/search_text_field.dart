@@ -4,7 +4,7 @@ import 'package:kappu/components/AppColors.dart';
 import 'package:kappu/screens/search_screen/search_screen.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
-class SearchTextField extends StatefulWidget {
+class SearchTextField extends StatelessWidget {
   final String hintext;
 
   final Function(String) onSearchingComplete;
@@ -12,16 +12,8 @@ class SearchTextField extends StatefulWidget {
   const SearchTextField(
       {Key? key, required this.hintext, required this.onSearchingComplete,this.enable =true})
       : super(key: key);
-
-  @override
-  _SearchTextFieldState createState() => _SearchTextFieldState();
-}
-
-class _SearchTextFieldState extends State<SearchTextField> {
-  @override
+ @override
   Widget build(BuildContext context) {
-    TextEditingController controller = TextEditingController();
-    Size size = MediaQuery.of(context).size;
     return Container(
         height: 44,
         alignment: Alignment.center,
@@ -35,11 +27,10 @@ class _SearchTextFieldState extends State<SearchTextField> {
             // pushDynamicScreen(context,
             //     screen: SearchScreen(), withNavBar: false);
           },
-          controller: controller,
           onFieldSubmitted: (value) => {if (value.length > 2) {}},
-          onChanged: widget.onSearchingComplete,
+          onChanged: onSearchingComplete,
           cursorColor: Colors.black,
-          enabled: widget.enable,
+          enabled: enable,
           style: TextStyle(
             color: Colors.grey,
             fontSize: ScreenUtil().setSp(18),
@@ -63,7 +54,7 @@ class _SearchTextFieldState extends State<SearchTextField> {
                 color: Color(0xFFF6F6F6),
               ),
             ),
-            hintText: widget.hintext,
+            hintText: hintext,
 
             hintStyle: TextStyle(
               color: AppColors.text_desc,
@@ -79,6 +70,6 @@ class _SearchTextFieldState extends State<SearchTextField> {
             ),
           ),
         ),
-    ));
+        ));
   }
 }
