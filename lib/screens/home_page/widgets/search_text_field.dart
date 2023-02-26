@@ -7,9 +7,10 @@ import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 class SearchTextField extends StatefulWidget {
   final String hintext;
 
-  final Function onSearchingComplete;
+  final Function(String) onSearchingComplete;
+  final bool enable;
   const SearchTextField(
-      {Key? key, required this.hintext, required this.onSearchingComplete})
+      {Key? key, required this.hintext, required this.onSearchingComplete,this.enable =true})
       : super(key: key);
 
   @override
@@ -21,45 +22,37 @@ class _SearchTextFieldState extends State<SearchTextField> {
   Widget build(BuildContext context) {
     TextEditingController controller = TextEditingController();
     Size size = MediaQuery.of(context).size;
-    return Padding(
-      padding: EdgeInsets.symmetric(
-        horizontal: size.width * 0.02,
-      ),
-      child: Container(
-        height: 40,
+    return Container(
+        height: 44,
+        alignment: Alignment.center,
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(25),
           border: Border.all(color: Color(0xffEBEBEB),width: 1),
         ),
-        child: TextFormField(
+        child: Center(child: TextFormField(
           onTap: () {
             // pushDynamicScreen(context,
             //     screen: SearchScreen(), withNavBar: false);
           },
           controller: controller,
           onFieldSubmitted: (value) => {if (value.length > 2) {}},
+          onChanged: widget.onSearchingComplete,
           cursorColor: Colors.black,
+          enabled: widget.enable,
           style: TextStyle(
             color: Colors.grey,
             fontSize: ScreenUtil().setSp(18),
           ),
+          textAlign: TextAlign.start,
+          textAlignVertical: TextAlignVertical.center,
           decoration: InputDecoration(
-            border: const UnderlineInputBorder(
-              borderSide: BorderSide(
-                color: AppColors.color_3f3c3c,
-              ),
+            contentPadding: EdgeInsets.only(
+              bottom: 8,  // HERE THE IMPORTANT PART
             ),
-            focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(15),
-                borderSide: const BorderSide(
-                  color: Color(0xFFF6F6F6),
-                )),
-            enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(15),
-                borderSide: const BorderSide(
-                  color: Color(0xFFF6F6F6),
-                )),
+            border: InputBorder.none,
+            focusedBorder: InputBorder.none,
+            enabledBorder: InputBorder.none,
             errorBorder: const OutlineInputBorder(
               borderSide: BorderSide(
                 color: Color(0xFFF6F6F6),
@@ -70,11 +63,8 @@ class _SearchTextFieldState extends State<SearchTextField> {
                 color: Color(0xFFF6F6F6),
               ),
             ),
-            contentPadding: const EdgeInsets.symmetric(
-              vertical: 5,
-              horizontal: 5,
-            ),
             hintText: widget.hintext,
+
             hintStyle: TextStyle(
               color: AppColors.text_desc,
               fontSize: ScreenUtil().setSp(14),
@@ -89,7 +79,6 @@ class _SearchTextFieldState extends State<SearchTextField> {
             ),
           ),
         ),
-      ),
-    );
+    ));
   }
 }

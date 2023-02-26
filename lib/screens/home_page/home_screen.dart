@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kappu/components/AppColors.dart';
+import 'package:kappu/screens/catagories/search_catagories_screen.dart';
 import 'package:kappu/screens/home_page/widgets/best_services.dart';
 import 'package:kappu/screens/home_page/widgets/slider.dart';
 import 'package:kappu/screens/settings/settings_screen.dart';
@@ -100,16 +101,27 @@ class _HomeScreenState extends State<HomeScreen> {
                 //     )
                 //   ],
                 // ),
-                const SizedBox(height: 5,),
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: ScreenUtil().setWidth(6)),
-                  child: SearchTextField(
-                    hintext: "Search Services",
-                    onSearchingComplete: () {},
-                  ),
+                const SizedBox(
+                  height: 5,
                 ),
-                const SizedBox(height: 10,),
+                Padding(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: ScreenUtil().setWidth(6)),
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) =>
+                                const SearchCatagoriesScreen()));
+                      },
+                      child: SearchTextField(
+                        enable: false,
+                        hintext: "Search Services",
+                        onSearchingComplete: (value) {},
+                      ),
+                    )),
+                const SizedBox(
+                  height: 10,
+                ),
               ],
             ),
 
@@ -214,7 +226,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.only(left: 10, right: 20, bottom: 5),
+                        padding:
+                            EdgeInsets.only(left: 10, right: 20, bottom: 5),
                         child: const OurBestServices(),
                       ),
                       Padding(
