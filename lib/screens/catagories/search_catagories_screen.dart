@@ -34,19 +34,7 @@ class _SearchCatagoriesScreenState extends State<SearchCatagoriesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.white,
-          elevation: 2,
-          title: Column(
-            children: [
-              Text("Search services",
-                  style: TextStyle(
-                      fontSize: 20.sp,
-                      color: Colors.black,
-                      fontFamily: "Montserrat-Bold")),
-            ],
-          ),
-        ),
+        appBar: MyAppBar(title: 'Search Services'),
         body: isLoading
             ? const Center(child:CircularProgressIndicator())
             : Column(
