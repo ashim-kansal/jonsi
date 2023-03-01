@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
+// import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:kappu/common/validation_dialogbox.dart';
 import 'package:kappu/components/AppColors.dart';
 import 'package:kappu/net/base_dio.dart';
 import 'package:kappu/net/http_client.dart';
-import 'package:kappu/constants/storage_manager.dart';
 
 import '../../components/MyAppBar.dart';
 
@@ -21,7 +21,43 @@ class _OrderReviewState extends State<OrderReview> {
   @override
   void initState() {
     super.initState();
+    // initPaymentSheet();
   }
+
+  Future<void> initPaymentSheet() async {
+    try {
+  //     // 1. create payment intent on the server
+      final data = await _createTestPaymentSheet();
+  //
+  //     // 2. initialize the payment sheet
+      await Stripe.instance.initPaymentSheet(
+        paymentSheetParameters: SetupPaymentSheetParameters(
+          // Enable custom flow
+          customFlow: true,
+          // Main params
+          merchantDisplayName: 'Flutter Stripe Store Demo',
+          paymentIntentClientSecret: data['paymentIntent'],
+          // Customer keys
+          customerEphemeralKeySecret: data['ephemeralKey'],
+          customerId: data['customer'],
+          testEnv: true,
+          applePay: true,
+          googlePay: true,
+          style: ThemeMode.dark,
+          merchantCountryCode: 'DE',
+        ),
+      );
+  //     setState(() {
+  //       _ready = true;
+  //     });
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error: $e')),
+      );
+      rethrow;
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -236,12 +272,16 @@ class _OrderReviewState extends State<OrderReview> {
                           )
                         ],
                       ),
-                    )),
+                    )
+                    ),
                   ),
                   InkWell(
-                      onTap: () {
-                        placeOrder(StorageManager().accessToken,
-                            StorageManager().userId, context);
+                      onTap: () async{
+                        // await Stripe.instance.presentPaymentSheet();
+
+                        // placeOrder(StorageManager().accessToken,
+                        //     StorageManager().userId, context);
+
                       },
                       child: Container(
                         padding: EdgeInsets.all(10),
@@ -305,3 +345,9 @@ class _OrderReviewState extends State<OrderReview> {
         });
   }
 }
+
+
+  _createTestPaymentSheet() async{
+
+
+  }

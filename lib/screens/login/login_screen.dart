@@ -289,14 +289,21 @@ class _LoginScreenState extends State<LoginScreen> {
                 signin = false;
                 isLoading = false;
                 print('aaaaa');
-                widget.isFromOtherScreen
-                    ? Navigator.pop(context, "1")
-                    : changeScreenReplacement(
-                        context,
-                        BottomNavBar(
-                          isprovider: loginresponse.data['data']['user']
-                              ['is_provider'],
-                        ));
+                Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (BuildContext context){
+                  return BottomNavBar(
+                    isprovider: loginresponse.data['data']['user']['is_provider'],
+                  );
+                }), (r){
+                  return false;
+                });
+
+                // widget.isFromOtherScreen
+                //     ? Navigator.pop(context, "1")
+                //     : changeScreenReplacement(
+                //         context,
+                //         BottomNavBar(
+                //           isprovider: loginresponse.data['data']['user']['is_provider'],
+                //         ));
                 // Navigator.pop(context);
               }).catchError((error) {
                 BaseDio.getDioError(error);

@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:kappu/common/bottom_nav_bar.dart';
 import 'package:kappu/constants/storage_manager.dart';
 import 'package:kappu/provider/provider_provider.dart';
@@ -76,6 +77,7 @@ void main() async {
   //   badge: true,
   //   sound: true,
   // );
+  Stripe.publishableKey = "pk_test_51Lde8bIv5chsib1Pz9bXZPJbZcDZnozh8J4k0w13wI9UyvA9Oh5E7mRRm2uNatxGhIegAWpIWG08rRYJOrO6s68q00lYAdkoY6";
   runApp(Phoenix(child: MyApp(messaging: messaging)));
 }
 

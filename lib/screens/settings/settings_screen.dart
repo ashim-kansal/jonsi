@@ -150,7 +150,7 @@ class SettingsPage extends ModalRoute<void> {
                       screen: BookingScreen());
                 }),
 
-              // if(provider.isProvider)
+              if(provider.isProvider)
                 ProfileItem(label: "Total Ratings and Reviews", iconPath: 'assets/icons/rv.png', onTap: (){
                   changeScreen(
                       context: context,
