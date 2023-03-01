@@ -248,18 +248,21 @@ class _BookingWidgetState extends State<BookingWidget> {
 }
 
 BookingLabel(int i) {
+  if(i==3){
+    return const SizedBox();
+  }
   return SizedBox(
     height: 40,
     width: 100,
     child: TextButton(
       style: ButtonStyle(
         backgroundColor: MaterialStateProperty.all(i == 0
-            ? Color(0x4995EB40)
+            ? const Color(0x4995EB40)
             : i == 1
-                ? Color(0x70707040)
+                ? const Color(0x70707040)
                 : i == 2
-                    ? Color(0x34A85340)
-                    : Color(0xFF000040)),
+                    ? const Color(0x34A85340)
+                    : const Color(0xFF000040)),
         shape: MaterialStateProperty.all(
           RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(14),

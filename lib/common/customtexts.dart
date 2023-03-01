@@ -39,7 +39,7 @@ Widget ProfileItem(
       Function()? onTap,
       required String iconPath,
     Color color = AppColors.text_desc}) {
-  return GestureDetector(
+  return InkWell(
     onTap: onTap,
     child: Column(
       children: [

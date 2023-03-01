@@ -15,9 +15,6 @@ class BottomNavBar extends StatefulWidget {
 
   const BottomNavBar({Key? key, required this.isprovider}) : super(key: key);
 
-  // final BuildContext menuScreenContext;
-  // BottomNavBar({Key key, this.menuScreenContext}) : super(key: key);
-
   @override
   _BottomNavBarState createState() => _BottomNavBarState();
 }
@@ -37,26 +34,6 @@ class _BottomNavBarState extends State<BottomNavBar> {
   void initState() {
     super.initState();
     _buildHome();
-  }
-
-  Future<void> uidisnull() async {}
-
-  List<Widget> _buildScreens() {
-    return [
-      const HomeScreen(),
-      const CatagoriesScreen(),
-      const NotificationScreen(),
-      const BookingScreen(),
-    ];
-  }
-
-  List<Widget> _buildScreensprovider() {
-    return [
-      const ProviderHomeScreen(),
-      const AllChatsScreenProvider(),
-      const NotificationsPageProvider(),
-      const BookingScreen(),
-    ];
   }
 
   @override

@@ -28,6 +28,7 @@ Widget _buildOverlayContent(BuildContext context, bool showBackButton) {
   return Scaffold(
     appBar: showBackButton ? MyAppBar(title: "Catagoies") : AppBar(
         backgroundColor: Colors.white,
+        elevation: 0.5,
         title: Column(
           children: [
             Text(
