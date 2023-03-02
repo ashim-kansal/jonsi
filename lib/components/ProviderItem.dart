@@ -147,3 +147,9 @@ class ItemServicesCardState extends State<ItemServicesCard> {
     }
   }
 }
+
+Card getCard(mChild){
+
+  return Card(child: mChild);
+
+}

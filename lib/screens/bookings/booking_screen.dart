@@ -292,7 +292,7 @@ class _BookingScreenState extends State<BookingScreen> {
       await HttpClient()
           .completeOrder(bookingId.toString(), "Bearer "+StorageManager().accessToken)
           .then((value) {
-        if (value.status) {
+        if (value.status!) {
           setState(() {
             isLoading = false;
           });

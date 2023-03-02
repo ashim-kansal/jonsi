@@ -232,7 +232,7 @@ class _ProviderReviewsPageState extends State<ProviderReviewsPage> {
           ),
         ),
         FutureBuilder(
-            future: HttpClient().getproviderReviews(widget.providerid),
+            future: HttpClient().getUserReviews(),
             builder: (context, AsyncSnapshot<List<Rating>> ratings) {
               if (ratings.connectionState != ConnectionState.done) {
                 return const Center(child: CircularProgressIndicator());
@@ -242,14 +242,13 @@ class _ProviderReviewsPageState extends State<ProviderReviewsPage> {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(6)
                 ),
-                height: 145,
                 child: SizedBox(
                     height: 100,
                     child: ListView.builder(
                       padding: EdgeInsets.zero,
                       shrinkWrap: true,
-                      scrollDirection: Axis.horizontal,
-                      itemCount: 3,
+                      scrollDirection: Axis.vertical,
+                      itemCount: ratings.data!.length,
                       itemBuilder: (context, index) {
                         return ReviewItem(reviewItem: null);
                       },

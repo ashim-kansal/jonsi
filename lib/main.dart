@@ -77,7 +77,7 @@ void main() async {
   //   badge: true,
   //   sound: true,
   // );
-  Stripe.publishableKey = "pk_test_51Lde8bIv5chsib1Pz9bXZPJbZcDZnozh8J4k0w13wI9UyvA9Oh5E7mRRm2uNatxGhIegAWpIWG08rRYJOrO6s68q00lYAdkoY6";
+  Stripe.publishableKey = "pk_test_CIQbMuQMJcI1ySrnsX2OqJWa";
   runApp(Phoenix(child: MyApp(messaging: messaging)));
 }
 
@@ -243,7 +243,7 @@ class _InitialScreenState extends State<InitialScreen> {
         backgroundColor: AppColors.app_bg,
         body: StorageManager().accessToken.isNotEmpty
             ? BottomNavBar(
-                isprovider: false,
+                isprovider: StorageManager().isProvider,
               )
             : SplashView());
   }

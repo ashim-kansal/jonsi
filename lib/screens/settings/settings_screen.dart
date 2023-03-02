@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kappu/common/customtexts.dart';
+import 'package:kappu/common/validation_dialogbox.dart';
 import 'package:kappu/components/AppColors.dart';
 import 'package:kappu/components/MyAppBar.dart';
 import 'package:kappu/constants/storage_manager.dart';
@@ -9,6 +11,7 @@ import 'package:kappu/provider/provider_provider.dart';
 import 'package:kappu/provider/userprovider.dart';
 import 'package:kappu/screens/edit_profile/edit_profile.dart';
 import 'package:kappu/screens/faqs/frequently_asked_questions.dart';
+import 'package:kappu/screens/login/splash_view.dart';
 import 'package:kappu/screens/notification/notification_screen.dart';
 import 'package:kappu/screens/privacy_policy/privacy_policy.dart';
 import 'package:kappu/screens/reset_password/create_new_password.dart';
@@ -22,7 +25,33 @@ import '../change_password/ChangePasswordPage.dart';
 import '../login/login_screen.dart';
 import '../provider_reviews/provider_reviews.dart';
 
-class SettingsPage extends ModalRoute<void> {
+
+class SettingsPage extends StatefulWidget {
+
+  @override
+  State<StatefulWidget> createState() {
+    return SettingsPageState();
+  }
+}
+
+class SettingsPageState extends State<SettingsPage> {
+
+  @override
+  Widget build(BuildContext context) {
+    final provider = StorageManager();
+    if(provider.accessToken.isEmpty){
+      SchedulerBinding.instance.addPostFrameCallback((_) async {
+        final result = await Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen(isFromOtherScreen: true)));
+        if(result=="1"){
+          setState(() { });
+        }
+
+      });
+    }
+    return _buildOverlayContent(context);
+  }
+}
+class SettingsRoutePage extends ModalRoute<void> {
   @override
   Duration get transitionDuration => const Duration(milliseconds: 500);
 
@@ -50,16 +79,13 @@ class SettingsPage extends ModalRoute<void> {
     // This makes sure that text and other content follows the material style
     return Material(
       type: MaterialType.transparency,
-      child: _buildOverlayContent(context),
+      child: loadLayout(context),
     );
   }
 
-
-  TextEditingController searchController = TextEditingController();
-  late int cardViewed;
-  bool alreadyowned = false;
-  Widget _buildOverlayContent(BuildContext context) {
+  Widget loadLayout(BuildContext context){
     final provider = StorageManager();
+
     if(provider.accessToken.isEmpty){
       SchedulerBinding.instance.addPostFrameCallback((_) async {
         final result = await Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen(isFromOtherScreen: true)));
@@ -69,20 +95,28 @@ class SettingsPage extends ModalRoute<void> {
 
       });
     }
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: MyAppBar(title: 'Setting'),
-      body: SingleChildScrollView(
-        child: Consumer<UserProvider>(
-          builder: (context, loggedinuser, child) => Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
 
-              Padding(padding: EdgeInsets.all(15),
+    return _buildOverlayContent(context);
+  }
+
+}
+
+Widget _buildOverlayContent(BuildContext context) {
+  final provider = StorageManager();
+  return Scaffold(
+    backgroundColor: Colors.white,
+    appBar: MyAppBar(title: 'Setting'),
+    body: SingleChildScrollView(
+      child: Consumer<UserProvider>(
+        builder: (context, loggedinuser, child) => Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+
+            Padding(padding: EdgeInsets.all(15),
               child: Row(
                 children: [
                   CircleAvatar(
-                    radius: 40,
+                      radius: 40,
                       backgroundImage:  NetworkImage(
                           'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500')
                   ),
@@ -114,61 +148,76 @@ class SettingsPage extends ModalRoute<void> {
                   )
                 ],
               ),),
-              ProfileItemTitle(label: "Account Setting", context: context),
-              ProfileItem(label: "Change Password", iconPath: 'assets/icons/loc.png', onTap: (){
-                changeScreen(context: context, screen: ChangePasswordPage());
-              }),
-              ProfileItem(label: "Logout", iconPath: 'assets/icons/exit.png', onTap:(){
-                showAlertDialog(context);
-              }),
-              ProfileItemTitle(label: "General", context: context),
-              if(provider.isProvider)
-                ProfileItem(label: "Add GIG", iconPath: 'assets/icons/addgig.png'),
-              if(provider.isProvider)
-                ProfileItem(label: "GIGs Offered", iconPath: 'assets/icons/savegig.png'),
+            ProfileItemTitle(label: "Account Setting", context: context),
+            ProfileItem(label: "Change Password", iconPath: 'assets/icons/loc.png', onTap: (){
+              changeScreen(context: context, screen: ChangePasswordPage());
+            }),
+            ProfileItem(label: "Logout", iconPath: 'assets/icons/exit.png', onTap:(){
+              // showAlertDialog(context);
+              showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return WarningDialogBox(title: "Logout?",descriptions: "Are You sure You want to Logout?",buttonTitle: "ok",
+                  onPressed: (){
+                    Navigator.pop(context);
+                    StorageManager().clear();
+                    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (BuildContext context){
+                      return SplashView();
+                    }), (r){
+                      return false;
+                    });
+                    Phoenix.rebirth(context);
+                  },icon: Icons.cancel,);
+              });
 
-              ProfileItem(label: "Faq’s", iconPath: 'assets/icons/loc.png', onTap: (){
-                    changeScreen(
-                    context: context,
-                screen: FrequentlyAskedQuestions());
-              }),
-              ProfileItem(label: "Notifications", iconPath: 'assets/icons/nt.png', onTap: (){
+            }),
+            ProfileItemTitle(label: "General", context: context),
+            // if(provider.isProvider)
+            //   ProfileItem(label: "Add GIG", iconPath: 'assets/icons/addgig.png'),
+            // if(provider.isProvider)
+            //   ProfileItem(label: "GIGs Offered", iconPath: 'assets/icons/savegig.png'),
+
+            ProfileItem(label: "Faq’s", iconPath: 'assets/icons/loc.png', onTap: (){
+              changeScreen(
+                  context: context,
+                  screen: FrequentlyAskedQuestions());
+            }),
+            ProfileItem(label: "Notifications", iconPath: 'assets/icons/nt.png', onTap: (){
+              changeScreen(
+                  context: context,
+                  screen: NotificationScreen());
+            }),
+            ProfileItem(label: "Privacy Policy", iconPath: 'assets/icons/pl.png', onTap: (){
+              changeScreen(
+                  context: context,
+                  screen: PrivacyPolicyPage());
+            }),
+
+            if(provider.isProvider)
+              ProfileItem(label: "Services Completed", iconPath: 'assets/icons/chk.png', onTap:(){
                 changeScreen(
                     context: context,
-                    screen: NotificationScreen());
+                    screen: BookingScreen());
               }),
-              ProfileItem(label: "Privacy Policy", iconPath: 'assets/icons/pl.png', onTap: (){
+
+            if(provider.isProvider)
+              ProfileItem(label: "Total Ratings and Reviews", iconPath: 'assets/icons/rv.png', onTap: (){
                 changeScreen(
                     context: context,
-                    screen: PrivacyPolicyPage());
-              }),
+                    screen: ProviderReviewsPage(providerid: provider.userId,averagerating: provider.rating,));
+              },),
 
-              if(provider.isProvider)
-                ProfileItem(label: "Services Completed", iconPath: 'assets/icons/chk.png', onTap:(){
-                  changeScreen(
-                      context: context,
-                      screen: BookingScreen());
-                }),
+            ProfileItemTitle(label: "Support", context: context),
+            ProfileItem(label: "Help Center", iconPath: 'assets/icons/help.png', onTap: (){
+              changeScreen(
+                  context: context,
+                  screen: HelpCenterQuestions());
+            }),
 
-              if(provider.isProvider)
-                ProfileItem(label: "Total Ratings and Reviews", iconPath: 'assets/icons/rv.png', onTap: (){
-                  changeScreen(
-                      context: context,
-                      screen: ProviderReviewsPage(providerid: provider.userId,averagerating: provider.rating,));
-                },),
-
-              ProfileItemTitle(label: "Support", context: context),
-              ProfileItem(label: "Help Center", iconPath: 'assets/icons/help.png', onTap: (){
-                changeScreen(
-                    context: context,
-                    screen: HelpCenterQuestions());
-              }),
-
-              const SizedBox(height: 60.0),
-            ],
-          ),
+            const SizedBox(height: 80.0),
+          ],
         ),
       ),
-    );
-  }
+    ),
+  );
 }

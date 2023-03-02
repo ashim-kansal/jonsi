@@ -28,10 +28,15 @@ class StorageManager {
 
 
   int get userId => _userPreferences!.getInt('userId') ?? -1;
+  String get stripeId => _userPreferences!.getString('stripeId') ?? "";
   double get rating => _userPreferences!.getDouble('rating') ?? 0.0;
 
   set userId(int id) {
     _userPreferences!.setInt('userId', id);
+  }
+
+  set stripeId(String id) {
+    _userPreferences!.setString('stripeId', id);
   }
 
   set rating(double rate) {

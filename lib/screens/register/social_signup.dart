@@ -251,6 +251,8 @@ class SocailSignUpScreen extends StatelessWidget {
         loginresponse.data['data']['user']['is_provider'] ? true : false;
         StorageManager().nationality =
             "" + loginresponse.data['data']['user']['nationality'];
+        StorageManager().stripeId =
+            "" + loginresponse?.data['data']['user']['customer_stripe_id'];
         StorageManager().language =
             "" + loginresponse.data['data']['user']['languages'];
         // StorageManager().phone = ""+loginresponse.data['data']['user']['phone_number'];

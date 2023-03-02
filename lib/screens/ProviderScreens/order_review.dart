@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_stripe/flutter_stripe.dart';
-// import 'package:flutter_stripe/flutter_stripe.dart';
+import 'package:flutter_stripe/flutter_stripe.dart' hide Card;
 import 'package:kappu/common/validation_dialogbox.dart';
 import 'package:kappu/components/AppColors.dart';
+import 'package:kappu/components/ProviderItem.dart';
+import 'package:kappu/constants/storage_manager.dart';
+import 'package:kappu/models/serializable_model/AddOrderResponse.dart';
 import 'package:kappu/net/base_dio.dart';
 import 'package:kappu/net/http_client.dart';
 
@@ -24,32 +26,33 @@ class _OrderReviewState extends State<OrderReview> {
     // initPaymentSheet();
   }
 
-  Future<void> initPaymentSheet() async {
+  Future<void> initPaymentSheet(AddOrderResponse data) async {
     try {
-  //     // 1. create payment intent on the server
-      final data = await _createTestPaymentSheet();
-  //
-  //     // 2. initialize the payment sheet
+      print(data.stripeintent!.toJson().toString());
       await Stripe.instance.initPaymentSheet(
         paymentSheetParameters: SetupPaymentSheetParameters(
           // Enable custom flow
           customFlow: true,
+          setupIntentClientSecret: "sk_test_5ypI6Jx08NgWsTjG4WvlpK4d",
           // Main params
           merchantDisplayName: 'Flutter Stripe Store Demo',
-          paymentIntentClientSecret: data['paymentIntent'],
+          paymentIntentClientSecret: data.stripeintent!.toJson().toString(),
           // Customer keys
-          customerEphemeralKeySecret: data['ephemeralKey'],
-          customerId: data['customer'],
-          testEnv: true,
-          applePay: true,
-          googlePay: true,
+          // customerEphemeralKeySecret: data['ephemeralKey'],
+          // customerId: data['customer'],
+          // testEnv: true,
+          // applePay: true,
+          // googlePay: true,
           style: ThemeMode.dark,
-          merchantCountryCode: 'DE',
+          // merchantCountryCode: 'MT',
         ),
       );
-  //     setState(() {
-  //       _ready = true;
-  //     });
+
+      await Stripe.instance.presentPaymentSheet();
+
+      //     setState(() {
+      //   _ready = true;
+      // });
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Error: $e')),
@@ -80,8 +83,7 @@ class _OrderReviewState extends State<OrderReview> {
                   Container(
                     padding: EdgeInsets.all(10),
                     width: double.infinity,
-                    child: Card(
-                        child: Padding(
+                    child: getCard(Padding(
                       padding: EdgeInsets.all(5),
                       child: Row(
                         children: [
@@ -122,8 +124,7 @@ class _OrderReviewState extends State<OrderReview> {
                   Container(
                     padding: EdgeInsets.all(10),
                     width: double.infinity,
-                    child: Card(
-                        child: Padding(
+                    child: getCard(Padding(
                       padding: EdgeInsets.all(5),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -201,8 +202,7 @@ class _OrderReviewState extends State<OrderReview> {
                   Container(
                     padding: EdgeInsets.all(10),
                     width: double.infinity,
-                    child: Card(
-                        child: Padding(
+                    child: getCard(Padding(
                       padding: EdgeInsets.all(5),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -277,10 +277,9 @@ class _OrderReviewState extends State<OrderReview> {
                   ),
                   InkWell(
                       onTap: () async{
-                        // await Stripe.instance.presentPaymentSheet();
 
-                        // placeOrder(StorageManager().accessToken,
-                        //     StorageManager().userId, context);
+                        placeOrder(StorageManager().accessToken,
+                            StorageManager().userId, context);
 
                       },
                       child: Container(
@@ -313,13 +312,13 @@ class _OrderReviewState extends State<OrderReview> {
             widget.bodyprovider['service_id'].toString(),
             userId.toString(),
             widget.bodyprovider['location'],
-            "USD",
-            "3")
-        .then((value) => {
-          print(value),
-      if (value.status) {
-          showSuccessDialog(context, value.message)
-    }
+            "EUR",
+            "0").then((value) => {
+              print(value),
+                if (value.status!) {
+                    // showSuccessDialog(context, value.message)
+                  initPaymentSheet(value)
+                }
         })
         .catchError((e) {
       BaseDio.getDioError(e);
@@ -348,6 +347,5 @@ class _OrderReviewState extends State<OrderReview> {
 
 
   _createTestPaymentSheet() async{
-
 
   }

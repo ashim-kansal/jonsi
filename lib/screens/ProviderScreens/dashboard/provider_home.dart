@@ -4,6 +4,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kappu/components/AppColors.dart';
 import 'package:kappu/constants/storage_manager.dart';
 import 'package:kappu/helperfunctions/screen_nav.dart';
+import 'package:kappu/screens/faqs/frequently_asked_questions.dart';
+import 'package:kappu/screens/provider_reviews/provider_reviews.dart';
 import 'package:kappu/screens/register/social_signup.dart';
 
 import 'widget/custom_toggle_button.dart';
@@ -160,7 +162,7 @@ class _ProviderHomeScreenState extends State<ProviderHomeScreen> {
                     ),
                     20.verticalSpace,
                     Row(
-                      children: const [
+                      children: [
                         Expanded(
                             child: HomeItem(
                           title: 'Earnings',
@@ -176,7 +178,7 @@ class _ProviderHomeScreenState extends State<ProviderHomeScreen> {
                     ),
                     const SizedBox(height: 20),
                     Row(
-                      children: const [
+                      children: [
                         Expanded(
                             child: HomeItem(
                           title: 'Availability',
@@ -192,17 +194,28 @@ class _ProviderHomeScreenState extends State<ProviderHomeScreen> {
                     ),
                     const SizedBox(height: 20),
                     Row(
-                      children: const [
+                      children: [
                         Expanded(
                             child: HomeItem(
                           title: 'Total Reviews',
                           imagePath: 'assets/images/rating.png',
+                              onTap: (){
+                                changeScreen(
+                                    context: context,
+                                    screen: ProviderReviewsPage(providerid: StorageManager().userId,averagerating: StorageManager().rating,));
+                              },
                         )),
                         const SizedBox(width: 20),
                         Expanded(
                             child: HomeItem(
                           title: 'Help Center',
                           imagePath: 'assets/images/help-support.png',
+                              onTap: (){
+                            print('click');
+                                changeScreen(
+                                    context: context,
+                                    screen: HelpCenterQuestions());
+                              },
                         )),
                       ],
                     ),
@@ -283,7 +296,7 @@ class _ProviderHomeScreenState extends State<ProviderHomeScreen> {
                           fontSize: 18,
                           fontFamily: "Montserrat-Bold"),
                     ),
-                    const SizedBox(height: 10),
+                    const SizedBox(height: 5),
                     Card(
                       color: Colors.white,
                       child: Padding(
@@ -324,6 +337,7 @@ class _ProviderHomeScreenState extends State<ProviderHomeScreen> {
                             ],
                           )),
                     ),
+                    SizedBox(height: 10,)
                   ],
                 )
               ],

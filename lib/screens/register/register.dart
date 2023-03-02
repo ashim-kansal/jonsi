@@ -692,6 +692,9 @@ class _SignUpState extends State<SignUp> {
           provider.isProvider = false;
           provider.nationality = value?.data['user']['nationality'];
           provider.language = value?.data['user']['languages'];
+          provider.stripeId =
+              "" + value?.data['user']['customer_stripe_id'];
+
         }
         setState(() {});
         Navigator.pushReplacement(

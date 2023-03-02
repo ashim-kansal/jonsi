@@ -46,6 +46,7 @@ class _OurBestServicesState extends State<OurBestServices> {
                                             const EdgeInsets.only(left: 4.0),
                                         child: Card(
                                           elevation: 2,
+                                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                                           child: SizedBox(
                                             width: 110,
                                             height: 100,
@@ -112,8 +113,8 @@ class _OurBestServicesState extends State<OurBestServices> {
   getImage(String image) {
     return Image.network(
         "https://urbanmalta.com/public/uploads/servicecategory/$image",
-        height: 40,
-        width: 40,
-        fit: BoxFit.contain);
+        height: 60,
+        width: 110,
+        fit: BoxFit.fill);
   }
 }

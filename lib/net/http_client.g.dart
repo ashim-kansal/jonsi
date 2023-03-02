@@ -436,6 +436,24 @@ class _HttpClient implements HttpClient {
   }
 
   @override
+  Future<List<Rating>> getUserReviews() async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{'Authorization': 'bearer '+StorageManager().accessToken};
+
+    var formData = FormData.fromMap({
+      'user_id': StorageManager().userId,
+    });
+    final _result = await _dio.fetch<String>(
+        _setStreamType<Rating>(
+            Options(method: 'POST', headers: _headers, extra: _extra)
+                .compose(_dio.options, 'services/recommended',
+                    queryParameters: queryParameters, data: formData)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    return ratingFromJson(_result.data!);
+  }
+
+  @override
   Future<AddOrderResponse> addOrder(
       String location, String token, String total_price, String provider_id,
       String service_id, String user_id, String address, String currency,
@@ -454,6 +472,7 @@ class _HttpClient implements HttpClient {
       'address': address,
       'currency': currency,
       'service_fee': service_fee,
+      'customer_stripe_id': StorageManager().stripeId,
     });
 
     final _result = await _dio.fetch<String>(
@@ -464,6 +483,26 @@ class _HttpClient implements HttpClient {
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     return addOrderResponseFromJson(_result.data!);
 
+  }
+
+
+  @override
+  Future<AddOrderResponse> orderPayment(String order_id) async{
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{'Authorization': 'Bearer '+StorageManager().accessToken};
+
+    var formData = FormData.fromMap({
+      'order_id': order_id
+    });
+
+    final _result = await _dio.fetch<String>(
+        _setStreamType<AddOrderResponse>(
+            Options(method: 'POST', headers: _headers, extra: _extra)
+                .compose(_dio.options, 'order/payment',
+                queryParameters: queryParameters, data: formData)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    return addOrderResponseFromJson(_result.data!);
   }
 
   @override

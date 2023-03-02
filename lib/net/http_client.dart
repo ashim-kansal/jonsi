@@ -132,6 +132,9 @@ abstract class HttpClient {
   Future<AddOrderResponse> addOrder(
       String location, String token, String total_price, String provider_id, String service_id, String user_id, String address, String currency, String service_fee);
 
+  @POST('order/payment')
+  Future<AddOrderResponse> orderPayment(String order_id);
+
   @POST('orders/provider/requests/accept')
   Future<AddOrderResponse> acceptOrder(String bookingId, String token);
 
@@ -200,6 +203,9 @@ abstract class HttpClient {
 
   @GET('service-review/')
   Future<List<Rating>> getproviderReviews(@Query('provider') int id);
+
+  @GET('user/provider/rattings')
+  Future<List<Rating>> getUserReviews();
 
   @POST('thread/')
   Future<Thread> gethread(@Body() Map<String, dynamic> params);

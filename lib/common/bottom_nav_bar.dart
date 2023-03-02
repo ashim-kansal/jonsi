@@ -3,6 +3,7 @@ import 'package:kappu/screens/ProviderScreens/dashboard/provider_home.dart';
 import 'package:kappu/screens/bookings/booking_screen.dart';
 import 'package:kappu/screens/catagories/catagories_screen.dart';
 import 'package:kappu/screens/notification/notification_screen.dart';
+import 'package:kappu/screens/settings/settings_screen.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
 import '../../common/bmnav.dart' as bmnav;
@@ -57,6 +58,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
                 bmnav.BottomNavItem('assets/icons/home.png', label: ''),
                 bmnav.BottomNavItem('assets/icons/notification.png', label: ''),
                 bmnav.BottomNavItem('assets/icons/booking.png', label: ''),
+                bmnav.BottomNavItem('assets/icons/ic_settings.png', label: ''),
               ]
             : [
                 bmnav.BottomNavItem('assets/icons/home.png', label: ''),
@@ -75,6 +77,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
               const ProviderHomeScreen(),
               const NotificationScreen(),
               const BookingScreen(),
+              SettingsPage(),
             ]
           : [
               const HomeScreen(),

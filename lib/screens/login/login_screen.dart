@@ -284,6 +284,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       "" + loginresponse.data['data']['user']['nationality'];
                   StorageManager().language =
                       "" + loginresponse.data['data']['user']['languages'];
+                  // StorageManager().stripeId =
+                  //     "" + loginresponse.data['data']['user']['customer_stripe_id'];
                   // StorageManager().phone = ""+loginresponse.data['data']['user']['phone_number'];
                 }
                 signin = false;
@@ -489,6 +491,8 @@ class _LoginScreenState extends State<LoginScreen> {
             loginresponse.data['data']['user']['first_name'];
         StorageManager().email =
             "" + loginresponse.data['data']['user']['email'];
+        StorageManager().stripeId =
+            "" + loginresponse.data['data']['user']['customer_stripe_id'];
         StorageManager().isProvider =
             loginresponse.data['data']['user']['is_provider'] ? true : false;
         StorageManager().nationality =

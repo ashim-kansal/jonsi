@@ -65,7 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               onPressed: () {
                                 // if (StorageManager().accessToken.isNotEmpty) {
                                 pushDynamicScreen(context,
-                                    screen: SettingsPage(), withNavBar: false);
+                                    screen: SettingsRoutePage(), withNavBar: false);
                                 // } else {
                                 //   changeScreen(
                                 //       context: context,
