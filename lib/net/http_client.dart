@@ -45,6 +45,9 @@ abstract class HttpClient {
   @POST('auth/customerregister')
   Future<HttpResponse?> userSignup(@Body() Map<String, dynamic> params, File file);
 
+  @POST('user/profileimage')
+  Future<HttpResponse?> UpdateUserProfilePic(File file);
+
   @POST('user/changepassword')
   Future<HttpResponse?> changePassword(String password);
 
@@ -206,6 +209,9 @@ abstract class HttpClient {
 
   @GET('user/provider/rattings')
   Future<List<Rating>> getUserReviews();
+
+  @GET('user/changename')
+  Future<AddOrderResponse> updateName(String name);
 
   @POST('thread/')
   Future<Thread> gethread(@Body() Map<String, dynamic> params);

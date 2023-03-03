@@ -487,6 +487,55 @@ class _HttpClient implements HttpClient {
 
 
   @override
+  Future<AddOrderResponse> updateName(String name)
+  async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{'Authorization': 'bearer '+StorageManager().accessToken};
+
+    var formData = FormData.fromMap({
+      'id': StorageManager().userId,
+      'first_name': name,
+      'last_name': ""
+    });
+
+    final _result = await _dio.fetch<String>(
+        _setStreamType<AddOrderResponse>(
+            Options(method: 'POST', headers: _headers, extra: _extra)
+                .compose(_dio.options, 'user/changename',
+                queryParameters: queryParameters, data: formData)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    return addOrderResponseFromJson(_result.data!);
+
+  }
+
+  @override
+  Future<HttpResponse?> UpdateUserProfilePic(File file)
+  async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{
+      'Content-Type': 'multipart/form-data',
+      'Authorization': 'Bearer '+StorageManager().accessToken
+    };
+    var formData = FormData.fromMap({
+      'id': StorageManager().userId,
+      'profileFileUpload': await MultipartFile.fromFile(file.path, filename: file.path.split('/').last),
+
+    });
+
+    final _result = await _dio.fetch(_setStreamType<HttpResponse<dynamic>>(
+        Options(method: 'POST', headers: _headers, extra: _extra)
+            .compose(_dio.options, 'user/profileimage',
+            queryParameters: queryParameters, data: formData)
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = _result.data;
+    final httpResponse = HttpResponse(value, _result);
+    return httpResponse;
+  }
+
+
+  @override
   Future<AddOrderResponse> orderPayment(String order_id) async{
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};

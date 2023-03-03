@@ -1,5 +1,10 @@
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart' hide Card;
+import 'package:image_cropper/image_cropper.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:kappu/common/validation_dialogbox.dart';
 import 'package:kappu/components/AppColors.dart';
 import 'package:kappu/components/ProviderItem.dart';
@@ -20,6 +25,145 @@ class _ProviderProfileScreenState extends State<ProviderProfileScreen> {
   void initState() {
     super.initState();
   }
+
+  Future getImage(ImageSource imageSource, context, bool isVideo) async {
+    XFile? image;
+    image = await ImagePicker().pickImage(source: imageSource);
+    ImageCropper imageCropper = ImageCropper();
+    if (image != null && !isVideo) {
+      File? croppedFile = await imageCropper.cropImage(
+          sourcePath: image.path,
+          aspectRatioPresets: [
+            CropAspectRatioPreset.square,
+            CropAspectRatioPreset.ratio3x2
+          ],
+          androidUiSettings: const AndroidUiSettings(
+              toolbarTitle: 'Crop',
+              toolbarColor: AppColors.app_color,
+              toolbarWidgetColor: Colors.white,
+              initAspectRatio: CropAspectRatioPreset.square,
+              lockAspectRatio: true),
+          iosUiSettings: const IOSUiSettings(
+            minimumAspectRatio: 1,
+          ));
+      if (croppedFile != null) {
+        HttpClient().UpdateUserProfilePic(croppedFile).then((value) => {
+          // setState(() {
+          //   this.loading = false;
+          // }),
+          print(value),
+          if (value!.data['status'])
+            {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text(''+value!.data['message'])),
+            )
+              // setState(() {
+              //   this.catagories = value.data;
+              // })
+            }
+        })
+            .catchError((e) {
+          // setState(() {
+          //   this.loading = true;
+          // });
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Error : $e')),
+          );
+          BaseDio.getDioError(e);
+        });
+      }
+    }
+    Navigator.pop(context);
+  }
+
+
+  Future source(BuildContext mContext, bool isVideo) async {
+    return showDialog(
+        context: mContext,
+        builder: (BuildContext context) {
+          return CupertinoAlertDialog(
+              title: const Text("Choose Option"),
+              content: const Text(
+                'Select Source',
+              ),
+              insetAnimationCurve: Curves.decelerate,
+              actions: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: GestureDetector(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const <Widget>[
+                        Icon(
+                          Icons.photo_camera,
+                          size: 28,
+                        ),
+                        Text(
+                          "Camera",
+                          style: TextStyle(
+                              fontSize: 15,
+                              color: Colors.black,
+                              decoration: TextDecoration.none),
+                        ),
+                      ],
+                    ),
+                    onTap: () {
+                      //   Navigator.pop(context);
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            getImage(ImageSource.camera, context, isVideo);
+                            return const Center(
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2,
+                                  valueColor:
+                                  AlwaysStoppedAnimation<Color>(Colors.white),
+                                ));
+                          });
+                    },
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: GestureDetector(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const <Widget>[
+                        Icon(
+                          Icons.photo_library,
+                          size: 28,
+                        ),
+                        Text(
+                          "Gallery",
+                          style: TextStyle(
+                              fontSize: 15,
+                              color: Colors.black,
+                              decoration: TextDecoration.none),
+                        ),
+                      ],
+                    ),
+                    onTap: () {
+                      Navigator.pop(context);
+                      showDialog(
+                          barrierDismissible: false,
+                          context: context,
+                          builder: (context) {
+                            getImage(ImageSource.gallery, context, isVideo);
+                            return const Center(
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2,
+                                  valueColor:
+                                  AlwaysStoppedAnimation<Color>(Colors.white),
+                                ));
+                          });
+                    },
+                  ),
+                ),
+              ]);
+        });
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,10 +183,15 @@ class _ProviderProfileScreenState extends State<ProviderProfileScreen> {
                   color: Colors.white,
                   child: Row(
                     children: [
-                      CircleAvatar(
-                          radius: 40,
-                          backgroundImage:  NetworkImage(
-                              'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500')
+                      InkWell(
+                        child: CircleAvatar(
+                            radius: 40,
+                            backgroundImage:  NetworkImage(
+                                'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500')
+                        ),
+                        onTap: () async {
+                          await source(context, false);
+                        },
                       ),
                       SizedBox(width: 15,),
                       Expanded(child: Column(
