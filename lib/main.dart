@@ -240,7 +240,7 @@ class _InitialScreenState extends State<InitialScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: AppColors.app_bg,
+        backgroundColor: Colors.white,
         body: StorageManager().accessToken.isNotEmpty
             ? BottomNavBar(
                 isprovider: StorageManager().isProvider,
