@@ -35,7 +35,7 @@ class _OrderReviewState extends State<OrderReview> {
           customFlow: true,
           setupIntentClientSecret: "sk_test_5ypI6Jx08NgWsTjG4WvlpK4d",
           // Main params
-          merchantDisplayName: 'Flutter Stripe Store Demo',
+          merchantDisplayName: 'UrbanMalta',
           paymentIntentClientSecret: data.stripeintent!.toJson().toString(),
           // Customer keys
           // customerEphemeralKeySecret: data['ephemeralKey'],
@@ -46,7 +46,7 @@ class _OrderReviewState extends State<OrderReview> {
           style: ThemeMode.dark,
           // merchantCountryCode: 'MT',
         ),
-      );
+      ).then((value) => {});
 
       await Stripe.instance.presentPaymentSheet();
 

@@ -71,7 +71,7 @@ dependencies:
   intl: ^0.17.0
   url_launcher: ^6.0.3
   flutter_stripe: ^8.0.0+1
-
+  stripe_checkout: ^1.0.0
 
 dependency_overrides:
   firebase_core_platform_interface: 4.5.1

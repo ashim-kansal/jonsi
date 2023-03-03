@@ -23,7 +23,7 @@ class _OurBestServicesState extends State<OurBestServices> {
           child: Column(
             children: [
               SizedBox(
-                height: 130,
+                height: 150,
                 child: Padding(
                     padding: const EdgeInsets.fromLTRB(0, 8, 16, 8),
                     child: FutureBuilder(
@@ -48,8 +48,8 @@ class _OurBestServicesState extends State<OurBestServices> {
                                           elevation: 2,
                                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                                           child: SizedBox(
-                                            width: 110,
-                                            height: 100,
+                                            width: MediaQuery.of(context).size.width/3,
+                                            height: 120,
                                             child: InkWell(
                                               onTap: () => {
                                                 pushDynamicScreen(context,
@@ -75,7 +75,7 @@ class _OurBestServicesState extends State<OurBestServices> {
                                                                 Radius.circular(
                                                                     8)),
                                                     child:
-                                                        getImage(item.image!),
+                                                        getImage(item.service_cat_icon!),
                                                   ),
                                                   Padding(
                                                     padding: EdgeInsets.all(12),
@@ -112,9 +112,8 @@ class _OurBestServicesState extends State<OurBestServices> {
 
   getImage(String image) {
     return Image.network(
-        "https://urbanmalta.com/public/uploads/servicecategory/$image",
-        height: 60,
-        width: 110,
+        "https://urbanmalta.com/public/uploads/servicecategory/icons/$image",
+        height: 80,
         fit: BoxFit.fill);
   }
 }

@@ -284,8 +284,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       "" + loginresponse.data['data']['user']['nationality'];
                   StorageManager().language =
                       "" + loginresponse.data['data']['user']['languages'];
-                  // StorageManager().stripeId =
-                  //     "" + loginresponse.data['data']['user']['customer_stripe_id'];
+                  StorageManager().stripeId =
+                      "" + loginresponse.data['data']['user']['customer_stripe_id'];
                   // StorageManager().phone = ""+loginresponse.data['data']['user']['phone_number'];
                 }
                 signin = false;

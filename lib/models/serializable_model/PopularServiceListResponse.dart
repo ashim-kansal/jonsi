@@ -13,12 +13,14 @@ class PopularServiceListResponse {
         this.id,
         this.name,
         this.image,
+        this.service_cat_icon,
         this.count,
     });
 
     int? id;
     String? name;
     String? image;
+    String? service_cat_icon;
     int? count;
 
     factory PopularServiceListResponse.fromJson(Map<String, dynamic> json) => PopularServiceListResponse(
@@ -26,6 +28,7 @@ class PopularServiceListResponse {
         name: json["name"],
         image: json["image"]!,
         count: json["count"],
+        service_cat_icon: json["service_cat_icon"],
     );
 
     Map<String, dynamic> toJson() => {
@@ -33,5 +36,6 @@ class PopularServiceListResponse {
         "name": name,
         "image": image,
         "count": count,
+        "service_cat_icon": service_cat_icon,
     };
 }
