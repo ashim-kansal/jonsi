@@ -14,6 +14,7 @@ import 'package:kappu/screens/faqs/frequently_asked_questions.dart';
 import 'package:kappu/screens/login/splash_view.dart';
 import 'package:kappu/screens/notification/notification_screen.dart';
 import 'package:kappu/screens/privacy_policy/privacy_policy.dart';
+import 'package:kappu/screens/profilepage/profile_page.dart';
 import 'package:kappu/screens/reset_password/create_new_password.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
@@ -24,6 +25,7 @@ import '../bookings/booking_screen.dart';
 import '../change_password/ChangePasswordPage.dart';
 import '../login/login_screen.dart';
 import '../provider_reviews/provider_reviews.dart';
+import 'provider_profile.dart';
 
 
 class SettingsPage extends StatefulWidget {
@@ -136,7 +138,13 @@ Widget _buildOverlayContent(BuildContext context) {
                   Padding(
                     padding: EdgeInsets.all(0),
                     child: RawMaterialButton(
-                      onPressed: () => Navigator.of(context).pop(),
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    ProviderProfileScreen()));
+                      },
                       fillColor: AppColors.app_color,
                       child: Icon(
                         Icons.edit,

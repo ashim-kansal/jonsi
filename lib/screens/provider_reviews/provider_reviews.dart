@@ -28,13 +28,10 @@ class _ProviderReviewsPageState extends State<ProviderReviewsPage> {
       appBar: MyAppBar(
         title: "Total Ratings and Reviews",
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
+      body: ListView(shrinkWrap: true, children: [
         Container(
-          width: double.infinity,
           color: Colors.white,
+          width: MediaQuery.of(context).size.width,
           child: Center(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -231,30 +228,112 @@ class _ProviderReviewsPageState extends State<ProviderReviewsPage> {
             ),
           ),
         ),
-        FutureBuilder(
-            future: HttpClient().getUserReviews(),
-            builder: (context, AsyncSnapshot<List<Rating>> ratings) {
-              if (ratings.connectionState != ConnectionState.done) {
-                return const Center(child: CircularProgressIndicator());
-              }
-              return Container(
-                margin: const EdgeInsets.all(20),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(6)
-                ),
-                child: SizedBox(
-                    height: 100,
-                    child: ListView.builder(
-                      padding: EdgeInsets.zero,
-                      shrinkWrap: true,
-                      scrollDirection: Axis.vertical,
-                      itemCount: ratings.data!.length,
-                      itemBuilder: (context, index) {
-                        return ReviewItem(reviewItem: null);
-                      },
-                    )),
-              );
-            })
+        Expanded(
+          child: Padding(
+            padding:
+                EdgeInsets.symmetric(horizontal: ScreenUtil().setWidth(15)),
+            child: FutureBuilder(
+                future: HttpClient().getUserReviews(),
+                builder: (context, AsyncSnapshot<List<Rating>> ratings) {
+                  if (ratings.connectionState != ConnectionState.done) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+                  return ListView.builder(
+                    padding: EdgeInsets.only(
+                      top: ScreenUtil().setHeight(12),
+                    ),
+                    scrollDirection: Axis.vertical,
+                    shrinkWrap: true,
+                    itemCount: 3,
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: EdgeInsets.all(15),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            CircleAvatar(
+                              radius: ScreenUtil().setHeight(15),
+                              backgroundImage: NetworkImage(
+                                  'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500'),
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Expanded(
+                                child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Name',
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                Text(
+                                  'Location',
+                                  style: TextStyle(
+                                      color: Colors.grey,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.normal),
+                                ),
+                                Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    RatingBar.builder(
+                                      initialRating: 3,
+                                      minRating: 1,
+                                      direction: Axis.horizontal,
+                                      allowHalfRating: true,
+                                      itemCount: 5,
+                                      itemSize: 20,
+                                      ignoreGestures: true,
+                                      itemPadding: EdgeInsets.only(right: 0.1),
+                                      itemBuilder: (context, _) =>
+                                          Icon(Icons.star, color: Colors.amber),
+                                      onRatingUpdate: (rating) {
+                                        print(rating);
+                                      },
+                                    ),
+                                    Text(
+                                      ' 5.0',
+                                      style: TextStyle(
+                                          color: AppColors.app_yellow,
+                                          fontFamily: "Montserrat-Bold",
+                                          fontSize: 10),
+                                    ),
+                                    Text(
+                                      '  5 days ago',
+                                      style: TextStyle(
+                                          color: AppColors.text_desc,
+                                          fontFamily: "Montserrat-Medium",
+                                          fontSize: 10),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: 5,),
+                                Text(
+                                  'Lorem ispum Lorem ispum Lorem ispum Lorem ispum Lorem ispum Lorem ispum Lorem ispum Lorem ispum Lorem ispum Lorem ispum Lorem ispum Lorem ispum Lorem ispum Lorem ispum Lorem ispum Lorem ispum Lorem ispum Lorem ispum Lorem ispum Lorem ispum Lorem ispum Lorem ispum Lorem ispum Lorem ispum Lorem ispum',
+                                  maxLines: 3,
+                                  overflow: TextOverflow.ellipsis,
+                                  textAlign: TextAlign.justify,
+                                  style: TextStyle(
+                                      color: Colors.grey,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.normal),
+                                )
+                              ],
+                            ))
+                          ],
+                        ),
+                      );
+                    },
+                  );
+                }),
+          ),
+        )
       ]),
     );
   }
