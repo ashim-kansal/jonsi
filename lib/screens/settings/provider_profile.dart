@@ -211,15 +211,14 @@ class _ProviderProfileScreenState extends State<ProviderProfileScreen> {
                                         HttpClient().updateName(name).then((value) {
                                           print(value);
                                           StorageManager().name = name;
-                                          Navigator.pop(context);
                                         })
                                             .catchError((e) {
                                           ScaffoldMessenger.of(context).showSnackBar(
                                             SnackBar(content: Text('Error : $e')),
                                           );
-                                          Navigator.pop(context);
                                           BaseDio.getDioError(e);
                                         });
+                                        Navigator.pop(context);
                                       },
                                     );
                                   });
