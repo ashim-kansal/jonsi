@@ -47,6 +47,7 @@ class _SaveDialogBoxState extends State<SaveDialogBox> {
       children: <Widget>[
         Container(
           width: double.infinity,
+          padding: EdgeInsets.all(20),
           decoration: BoxDecoration(
             shape: BoxShape.rectangle,
             color: Colors.white,
@@ -54,29 +55,30 @@ class _SaveDialogBoxState extends State<SaveDialogBox> {
           ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Padding(
-                  padding: EdgeInsets.only(left: 20, right: 20, top: 20),
-                  child: CustomTextFormField(
-                    controller: nameController,
-                    validator: (value) =>
-                        value!.isEmpty ? "Enter Your Name" : null,
-                    keyboardType: TextInputType.text,
-                    prefixIcon: const ImageIcon(
-                      AssetImage('assets/icons/prf.png'),
-                      color: AppColors.app_color,
-                    ),
-                    hintText: 'Name',
-                    isValid: isValidName,
-                    onChanged: (value) {
-                      if (value.isNotEmpty) {
-                        isValidName = true;
-                      } else {
-                        isValidName = false;
-                      }
-                      setState(() {});
-                    },
-                  )),
+              SizedBox(height: 20,),
+              Text('Name', style: TextStyle(fontSize: 12, fontFamily: 'Montserrat-Regular', color: AppColors.text_desc),),
+              CustomTextFormField(
+                controller: nameController,
+                validator: (value) =>
+                value!.isEmpty ? "Enter Your Name" : null,
+                keyboardType: TextInputType.text,
+                prefixIcon: const ImageIcon(
+                  AssetImage('assets/icons/prf.png'),
+                  color: AppColors.app_color,
+                ),
+                hintText: 'Name',
+                isValid: isValidName,
+                onChanged: (value) {
+                  if (value.isNotEmpty) {
+                    isValidName = true;
+                  } else {
+                    isValidName = false;
+                  }
+                  setState(() {});
+                },
+              ),
               SizedBox(
                 height: 15,
               ),
@@ -89,7 +91,6 @@ class _SaveDialogBoxState extends State<SaveDialogBox> {
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
                         color: widget.buttonColor),
-                    margin: EdgeInsets.only(left: 30, right: 30),
                     padding: EdgeInsets.only(
                         left: 25, right: 25, top: 10, bottom: 10),
                     child: Text(

@@ -439,7 +439,7 @@ class _HttpClient implements HttpClient {
   Future<List<Rating>> getUserReviews() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{'Authorization': 'bearer '+StorageManager().accessToken};
+    final _headers = <String, dynamic>{'Authorization': 'Bearer '+StorageManager().accessToken};
 
     var formData = FormData.fromMap({
       'user_id': StorageManager().userId,
@@ -491,7 +491,7 @@ class _HttpClient implements HttpClient {
   async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{'Authorization': 'bearer '+StorageManager().accessToken};
+    final _headers = <String, dynamic>{'Authorization': 'Bearer '+StorageManager().accessToken};
 
     var formData = FormData.fromMap({
       'id': StorageManager().userId,

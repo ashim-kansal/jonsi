@@ -211,6 +211,9 @@ class _ProviderProfileScreenState extends State<ProviderProfileScreen> {
                                         HttpClient().updateName(name).then((value) {
                                           print(value);
                                           StorageManager().name = name;
+                                          setState(() {
+
+                                          });
                                         })
                                             .catchError((e) {
                                           ScaffoldMessenger.of(context).showSnackBar(
