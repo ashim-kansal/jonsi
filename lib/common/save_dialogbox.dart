@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kappu/components/AppColors.dart';
 
+import '../screens/register/widgets/text_field.dart';
+
 class SaveDialogBox extends StatefulWidget {
   /// Creates a widget combines of  [Container].
   /// [title], [descriptions], [onPressed] must not be null.
@@ -10,24 +12,24 @@ class SaveDialogBox extends StatefulWidget {
   /// For e.g. when user tap on report user icon will show [SaveDialogBox] to warn user about the action.
   const SaveDialogBox({
     Key? key,
-    required this.title,
-    required this.icon,
-    required this.descriptions,
     required this.buttonTitle,
     required this.onPressed,
     this.buttonColor = AppColors.red,
   }) : super(key: key);
 
-  final String title, descriptions, buttonTitle;
+  final String buttonTitle;
   final Color buttonColor;
-  final IconData icon;
-  final Function() onPressed;
+  final Function(String) onPressed;
+
 
   @override
   _SaveDialogBoxState createState() => _SaveDialogBoxState();
 }
 
 class _SaveDialogBoxState extends State<SaveDialogBox> {
+  final TextEditingController nameController = TextEditingController();
+  late bool isValidName = true;
+
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -44,6 +46,7 @@ class _SaveDialogBoxState extends State<SaveDialogBox> {
     return Stack(
       children: <Widget>[
         Container(
+          width: double.infinity,
           decoration: BoxDecoration(
             shape: BoxShape.rectangle,
             color: Colors.white,
@@ -52,40 +55,46 @@ class _SaveDialogBoxState extends State<SaveDialogBox> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              SizedBox(
-                height: 20,
-              ),
-
-              Text(
-                widget.title,
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                    fontSize: 18),
-              ),
-              SizedBox(
-                height: 12,
-              ),
-              Text(
-                widget.descriptions,
-                style: TextStyle(
-                    fontWeight: FontWeight.normal,
-                    color: Color(0xff7B7D83),
-                    fontSize: 12),
-              ),
+              Padding(
+                  padding: EdgeInsets.only(left: 20, right: 20, top: 20),
+                  child: CustomTextFormField(
+                    controller: nameController,
+                    validator: (value) =>
+                        value!.isEmpty ? "Enter Your Name" : null,
+                    keyboardType: TextInputType.text,
+                    prefixIcon: const ImageIcon(
+                      AssetImage('assets/icons/prf.png'),
+                      color: AppColors.app_color,
+                    ),
+                    hintText: 'Name',
+                    isValid: isValidName,
+                    onChanged: (value) {
+                      if (value.isNotEmpty) {
+                        isValidName = true;
+                      } else {
+                        isValidName = false;
+                      }
+                      setState(() {});
+                    },
+                  )),
               SizedBox(
                 height: 15,
               ),
               InkWell(
-                  onTap:widget.onPressed,
+                  onTap: () {
+                    widget.onPressed(nameController.text);
+                  },
                   child: Container(
+                    width: double.infinity,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
                         color: widget.buttonColor),
+                    margin: EdgeInsets.only(left: 30, right: 30),
                     padding: EdgeInsets.only(
                         left: 25, right: 25, top: 10, bottom: 10),
                     child: Text(
                       'Save',
+                      textAlign: TextAlign.center,
                       style: TextStyle(color: Colors.white),
                     ),
                   )),

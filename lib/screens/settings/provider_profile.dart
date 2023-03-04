@@ -13,6 +13,7 @@ import 'package:kappu/models/serializable_model/AddOrderResponse.dart';
 import 'package:kappu/net/base_dio.dart';
 import 'package:kappu/net/http_client.dart';
 
+import '../../common/save_dialogbox.dart';
 import '../../components/MyAppBar.dart';
 
 class ProviderProfileScreen extends StatefulWidget {
@@ -198,14 +199,39 @@ class _ProviderProfileScreenState extends State<ProviderProfileScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(
+                          InkWell(
+                            onTap: (){
+                              showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return SaveDialogBox(
+                                      buttonTitle:'Save',
+                                      buttonColor: AppColors.app_color,
+                                      onPressed: (name) {
+                                        HttpClient().updateName(name).then((value) {
+                                          print(value);
+                                          StorageManager().name = name;
+                                          Navigator.pop(context);
+                                        })
+                                            .catchError((e) {
+                                          ScaffoldMessenger.of(context).showSnackBar(
+                                            SnackBar(content: Text('Error : $e')),
+                                          );
+                                          Navigator.pop(context);
+                                          BaseDio.getDioError(e);
+                                        });
+                                      },
+                                    );
+                                  });
+                            },
+                              child:Text(
                             StorageManager().name,
                             maxLines: 3,
                             style: TextStyle(
                                 color: Colors.black,
                                 fontSize: 24,
                                 fontWeight: FontWeight.bold),
-                          ),
+                          )),
                           SizedBox(height: 5,),
                           Text(
                             StorageManager().email,
@@ -241,7 +267,7 @@ class _ProviderProfileScreenState extends State<ProviderProfileScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                            StorageManager().name,
+                            'Name',
                               maxLines: 3,
                               style: TextStyle(
                                   color: AppColors.color_7B7D83,
@@ -249,8 +275,9 @@ class _ProviderProfileScreenState extends State<ProviderProfileScreen> {
                                   fontWeight: FontWeight.normal),
                             ),
                             SizedBox(height: 5,),
+
                             Text(
-                              "email",
+                              StorageManager().name,
                               maxLines: 3,
                               style: TextStyle(
                                   color: Colors.black,
@@ -271,7 +298,7 @@ class _ProviderProfileScreenState extends State<ProviderProfileScreen> {
                     padding: const EdgeInsets.only(left: 20,right: 20,top: 10,bottom: 10),
                     child: Row(
                       children: [
-                        Image.asset('assets/icons/prf.png',
+                        Image.asset('assets/icons/email.png',
                             scale: 1.0),
                         SizedBox(width: 20,),
                         Expanded(child: Column(

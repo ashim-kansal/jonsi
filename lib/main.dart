@@ -210,6 +210,7 @@ class _MyAppState extends State<MyApp> {
             ChangeNotifierProvider(
               create: (context) => UserProvider(),
             ),
+
           ],
           child: MaterialApp(
               navigatorKey: NavigationService.navigatorKey,
@@ -217,7 +218,6 @@ class _MyAppState extends State<MyApp> {
               debugShowCheckedModeBanner: false,
               theme: ThemeData(
                 scaffoldBackgroundColor: Colors.white,
-                primarySwatch: Colors.blue,
               ),
               home: const InitialScreen())),
     );
@@ -245,6 +245,6 @@ class _InitialScreenState extends State<InitialScreen> {
             ? BottomNavBar(
                 isprovider: StorageManager().isProvider,
               )
-            : SplashView());
+            : const SplashView());
   }
 }
