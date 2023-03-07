@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart' hide Card;
 import 'package:kappu/common/validation_dialogbox.dart';
@@ -7,6 +9,7 @@ import 'package:kappu/constants/storage_manager.dart';
 import 'package:kappu/models/serializable_model/AddOrderResponse.dart';
 import 'package:kappu/net/base_dio.dart';
 import 'package:kappu/net/http_client.dart';
+import 'package:kappu/screens/creditcardinput/credit_cardinput.dart';
 
 import '../../components/MyAppBar.dart';
 
@@ -26,29 +29,58 @@ class _OrderReviewState extends State<OrderReview> {
     // initPaymentSheet();
   }
 
+
+
   Future<void> initPaymentSheet(AddOrderResponse data) async {
+
     try {
       print(data.stripeintent!.toJson().toString());
-      await Stripe.instance.initPaymentSheet(
-        paymentSheetParameters: SetupPaymentSheetParameters(
-          // Enable custom flow
-          customFlow: true,
-          setupIntentClientSecret: "sk_test_5ypI6Jx08NgWsTjG4WvlpK4d",
-          // Main params
-          merchantDisplayName: 'UrbanMalta',
-          paymentIntentClientSecret: data.stripeintent!.toJson().toString(),
-          // Customer keys
-          // customerEphemeralKeySecret: data['ephemeralKey'],
-          // customerId: data['customer'],
-          // testEnv: true,
-          // applePay: true,
-          // googlePay: true,
-          style: ThemeMode.dark,
-          // merchantCountryCode: 'MT',
-        ),
-      ).then((value) => {});
+      // await Stripe.instance.initPaymentSheet(
+      //   paymentSheetParameters: SetupPaymentSheetParameters(
+      //     // Enable custom flow
+      //     customFlow: true,
+      //     // setupIntentClientSecret: 'sk_test_51Lde8bIv5chsib1PT1sD0GFaWv5viIQzU6zIwIqzOK9ULVWiQChmZ1huNaLibaIUJNszVnpG5Dk64wF0XR08wMnx00x2YIx8vp',
+      //     // Main params
+      //     merchantDisplayName: 'UrbanMalta',
+      //     paymentIntentClientSecret: data.stripeintent!.clientSecret,
+      //     primaryButtonLabel: 'Pay now',
+      //     applePay: Platform.isIOS?PaymentSheetApplePay(
+      //       merchantCountryCode: 'MT',
+      //     ):null,
+      //     googlePay: Platform.isAndroid? PaymentSheetGooglePay(
+      //       merchantCountryCode: 'MT',
+      //       testEnv: true,
+      //     ) : null,
+      //     style: ThemeMode.dark,
+      //     appearance: PaymentSheetAppearance(
+      //       colors: PaymentSheetAppearanceColors(
+      //         background: Colors.white,
+      //         primary: Colors.blue,
+      //       ),
+      //       shapes: PaymentSheetShape(
+      //         borderWidth: 4,
+      //         shadow: PaymentSheetShadowParams(color: AppColors.color_707070),
+      //       ),
+      //       primaryButton: PaymentSheetPrimaryButtonAppearance(
+      //         shapes: PaymentSheetPrimaryButtonShape(blurRadius: 8),
+      //         colors: PaymentSheetPrimaryButtonTheme(
+      //           light: PaymentSheetPrimaryButtonThemeColors(
+      //             background: AppColors.app_color,
+      //             text: Colors.white,
+      //           ),
+      //         ),
+      //       ),
+      //     ),
+      //   ),
+      // );
 
-      await Stripe.instance.presentPaymentSheet();
+      // await Stripe.instance.presentPaymentSheet();
+
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) =>
+                  CreditCardInput(clientSecret: data.stripeintent!.clientSecret,)));
 
       //     setState(() {
       //   _ready = true;

@@ -534,6 +534,28 @@ class _HttpClient implements HttpClient {
     return httpResponse;
   }
 
+  @override
+  Future<HttpResponse?> checkEmail(String email)
+  async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{
+      'Content-Type': 'multipart/form-data',
+    };
+    var formData = FormData.fromMap({
+      'email': email
+    });
+
+    final _result = await _dio.fetch(_setStreamType<HttpResponse<dynamic>>(
+        Options(method: 'POST', headers: _headers, extra: _extra)
+            .compose(_dio.options, 'user/checkemail',
+            queryParameters: queryParameters, data: formData)
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = _result.data;
+    final httpResponse = HttpResponse(value, _result);
+    return httpResponse;
+  }
+
 
   @override
   Future<AddOrderResponse> orderPayment(String order_id) async{

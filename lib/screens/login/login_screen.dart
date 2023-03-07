@@ -286,6 +286,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       "" + loginresponse.data['data']['user']['languages'];
                   StorageManager().stripeId =
                       "" + loginresponse.data['data']['user']['customer_stripe_id'];
+                  StorageManager().userImage =
+                      "" + loginresponse.data['data']['user']['profile_pic']!=null?"" + loginresponse.data['data']['user']['profile_pic'] : "";
                   // StorageManager().phone = ""+loginresponse.data['data']['user']['phone_number'];
                 }
                 signin = false;

@@ -55,12 +55,12 @@ class _ProviderProfileScreenState extends State<ProviderProfileScreen> {
           print(value),
           if (value!.data['status'])
             {
+              StorageManager().userImage = value!.data['profile_name'],
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(content: Text(''+value!.data['message'])),
-            )
-              // setState(() {
-              //   this.catagories = value.data;
-              // })
+            ),
+              setState(() {
+              })
             }
         })
             .catchError((e) {
@@ -187,7 +187,9 @@ class _ProviderProfileScreenState extends State<ProviderProfileScreen> {
                       InkWell(
                         child: CircleAvatar(
                             radius: 40,
-                            backgroundImage:  NetworkImage(
+                            backgroundImage: StorageManager().userImage.length>0 ?
+                            NetworkImage("https://urbanmalta.com/public/users/user_${StorageManager().userId}/documents/${StorageManager().userImage}")
+                                : NetworkImage(
                                 'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500')
                         ),
                         onTap: () async {

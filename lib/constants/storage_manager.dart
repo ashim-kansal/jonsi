@@ -29,6 +29,7 @@ class StorageManager {
 
   int get userId => _userPreferences!.getInt('userId') ?? -1;
   String get stripeId => _userPreferences!.getString('stripeId') ?? "";
+  String get userImage => _userPreferences!.getString('userImage') ?? "";
   double get rating => _userPreferences!.getDouble('rating') ?? 0.0;
 
   set userId(int id) {
@@ -37,6 +38,9 @@ class StorageManager {
 
   set stripeId(String id) {
     _userPreferences!.setString('stripeId', id);
+  }
+  set userImage(String id) {
+    _userPreferences!.setString('userImage', id);
   }
 
   set rating(double rate) {

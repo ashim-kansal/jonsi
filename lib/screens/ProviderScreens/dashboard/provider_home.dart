@@ -72,8 +72,10 @@ class _ProviderHomeScreenState extends State<ProviderHomeScreen> {
                   child: Row(children: [
                     CircleAvatar(
                       radius: ScreenUtil().setHeight(30),
-                      backgroundImage: NetworkImage(
-                          'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500'),
+                      backgroundImage: StorageManager().userImage.length>0 ?
+                      NetworkImage("https://urbanmalta.com/public/users/user_${StorageManager().userId}/documents/${StorageManager().userImage}")
+                          : NetworkImage(
+                          'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500')
                     ),
                     Padding(
                       padding: const EdgeInsets.only(left: 8.0),

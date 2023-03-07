@@ -2,11 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_credit_card/credit_card_brand.dart';
 import 'package:flutter_credit_card/flutter_credit_card.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
+import 'package:kappu/components/AppColors.dart';
+import 'package:kappu/components/MyAppBar.dart';
+import 'package:kappu/constants/storage_manager.dart';
+import 'package:kappu/screens/register/widgets/text_field.dart';
 // import '../enterbusinessdetail/business_detail_input.dart';
 // import '../../localization/credit_cardinput.i18n.dart';
 
 class CreditCardInput extends StatefulWidget {
-  const CreditCardInput({Key? key}) : super(key: key);
+
+  String? clientSecret = "";
+
+  CreditCardInput({this.clientSecret});
 
   @override
   State<StatefulWidget> createState() {
@@ -15,172 +23,225 @@ class CreditCardInput extends StatefulWidget {
 }
 
 class CreditCardInputState extends State<CreditCardInput> {
-  String cardNumber = '';
-  String expiryDate = '';
-  String cardHolderName = '';
-  String cvvCode = '';
-  bool isCvvFocused = false;
-  bool useGlassMorphism = false;
-  bool useBackgroundImage = false;
-  OutlineInputBorder? border;
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
+  CardFieldInputDetails? _card;
 
   @override
   void initState() {
-    border = OutlineInputBorder(
-      borderSide: BorderSide(
-        color: Colors.grey.withOpacity(0.7),
-        width: 2.0,
-      ),
-    );
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Padding(
-              padding: EdgeInsets.only(
-                  top: ScreenUtil().setWidth(20),
-                  left: ScreenUtil().setWidth(15)),
-              child: CircleAvatar(
-                backgroundColor: Colors.blue,
-                child: IconButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  icon: const Icon(
-                    Icons.arrow_back,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(height: ScreenUtil().setHeight(40)),
-            CreditCardWidget(
-              glassmorphismConfig:
-                  useGlassMorphism ? Glassmorphism.defaultConfig() : null,
-              cardNumber: cardNumber,
-              expiryDate: expiryDate,
-              cardHolderName: cardHolderName,
-              cvvCode: cvvCode,
-              showBackView: isCvvFocused,
-              obscureCardNumber: true,
-              obscureCardCvv: true,
-              isHolderNameVisible: true,
-              cardBgColor: Colors.blue,
-              isSwipeGestureEnabled: true,
-              onCreditCardWidgetChange: (CreditCardBrand creditCardBrand) {},
-              customCardTypeIcons: <CustomCardTypeIcon>[
-                CustomCardTypeIcon(
-                  cardType: CardType.mastercard,
-                  cardImage: Image.asset(
-                    'assets/images/mastercard.png',
-                    // color: Colors.white,
-                    height: 48,
-                    width: 48,
-                  ),
-                ),
-              ],
-            ),
-            Expanded(
-              child: SingleChildScrollView(
+      backgroundColor: AppColors.color_f2f7fd,
+      appBar: MyAppBar(title: "Add New Card"),
+      body: Container(
+        color: AppColors.color_f2f7fd,
+        padding: EdgeInsets.all(20),
+        child: Expanded(
+            child: ListView(
+              shrinkWrap: true,
+              padding: EdgeInsets.zero,
+              physics: const AlwaysScrollableScrollPhysics(),
+
+              children: [
+            Material(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(10),
+              elevation: 3,
+              shadowColor: Colors.black.withOpacity(0.14),
+              child: Padding(
+                padding: EdgeInsets.all(15),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    CreditCardForm(
-                      formKey: formKey,
-                      obscureCvv: true,
-                      obscureNumber: true,
-                      cardNumber: cardNumber,
-                      cvvCode: cvvCode,
-                      isHolderNameVisible: true,
-                      isCardNumberVisible: true,
-                      isExpiryDateVisible: true,
-                      cardHolderName: cardHolderName,
-                      expiryDate: expiryDate,
-                      themeColor: Colors.blue,
-                      textColor: Colors.black,
-                      cardNumberDecoration: InputDecoration(
-                        labelText: 'Number',
-                        hintText: 'XXXX XXXX XXXX XXXX',
-                        hintStyle: const TextStyle(color: Colors.black),
-                        labelStyle: const TextStyle(color: Colors.black),
-                        focusedBorder: border,
-                        enabledBorder: border,
-                      ),
-                      expiryDateDecoration: InputDecoration(
-                        hintStyle: const TextStyle(color: Colors.black),
-                        labelStyle: const TextStyle(color: Colors.black),
-                        focusedBorder: border,
-                        enabledBorder: border,
-                        labelText: 'Expired Date',
-                        hintText: 'XX/XX',
-                      ),
-                      cvvCodeDecoration: InputDecoration(
-                        hintStyle: const TextStyle(color: Colors.black),
-                        labelStyle: const TextStyle(color: Colors.black),
-                        focusedBorder: border,
-                        enabledBorder: border,
-                        labelText: 'CVV',
-                        hintText: 'XXX',
-                      ),
-                      cardHolderDecoration: InputDecoration(
-                        hintStyle: const TextStyle(color: Colors.black),
-                        labelStyle: const TextStyle(color: Colors.black),
-                        focusedBorder: border,
-                        enabledBorder: border,
-                        labelText: 'Card Holder',
-                      ),
-                      onCreditCardModelChange: onCreditCardModelChange,
-                    ),
+                CardField(
+                  onCardChanged: (card) {
+                    setState(() {
+                    _card = card!;
+                    });
+                  },
+                ),
+                    // Text("Enter Card Detail", style: TextStyle(color: Colors.black, fontFamily: 'Montserrat-Bold', fontSize: 16),),
+                    // SizedBox(height: 10,),
+                    // CustomTextFormField(
+                    //   controller: _numberController,
+                    //   hintText: 'Card Number',
+                    //   keyboardType: TextInputType.number,
+                    //   isValid: isValidNumber,
+                    //   onChanged: (value) {
+                    //     if (value.isNotEmpty) {
+                    //       isValidNumber = true;
+                    //     } else {
+                    //       isValidNumber = false;
+                    //     }
+                    //     setState(() {});
+                    //   },
+                    //   validator: (value) => value!.isEmpty
+                    //       ? "Enter Card Number"
+                    //       : value!.length > 2
+                    //       ? "Enter valid Card Number"
+                    //       : null,
+                    // ),
+                    // SizedBox(height: 10,),
+                    // Row(
+                    //   children: [
+                    //     Expanded(child: CustomTextFormField(
+                    //       controller: _expController,
+                    //       hintText: 'MM/YY',
+                    //       keyboardType: TextInputType.number,
+                    //       isValid: isValidEXP,
+                    //       onChanged: (value) {
+                    //         if (value.isNotEmpty) {
+                    //           isValidEXP = true;
+                    //         } else {
+                    //           isValidEXP = false;
+                    //         }
+                    //         setState(() {});
+                    //       },
+                    //       validator: (value) => value!.isEmpty
+                    //           ? "Enter Exp"
+                    //           : value!.length != 4
+                    //           ? "Enter valid EXP"
+                    //           : null,
+                    //     ),),
+                    //     SizedBox(width: 10,),
+                    //     Expanded(child: CustomTextFormField(
+                    //       controller: _cvvController,
+                    //       hintText: 'CVV',
+                    //       keyboardType: TextInputType.number,
+                    //       isValid: isValidCVV,
+                    //       onChanged: (value) {
+                    //         if (value.isNotEmpty) {
+                    //           isValidCVV = true;
+                    //         } else {
+                    //           isValidCVV = false;
+                    //         }
+                    //         setState(() {});
+                    //       },
+                    //       validator: (value) => value!.isEmpty
+                    //           ? "Enter Cvv"
+                    //           : value!.length != 3
+                    //           ? "Enter valid CVV"
+                    //           : null,
+                    //     ),)
+                    //   ],
+                    // ),
+                    // SizedBox(height: 10,),
+                    // CustomTextFormField(
+                    //   controller: _numberController,
+                    //   hintText: 'Name on Card',
+                    //   keyboardType: TextInputType.text,
+                    //   isValid: isValidName,
+                    //   onChanged: (value) {
+                    //     if (value.isNotEmpty) {
+                    //       isValidName = true;
+                    //     } else {
+                    //       isValidName = false;
+                    //     }
+                    //     setState(() {});
+                    //   },
+                    //   validator: (value) => value!.isEmpty
+                    //       ? "Enter Name"
+                    //       : value!.length < 2
+                    //       ? "Enter valid Name"
+                    //       : null,
+                    // ),
+
                     const SizedBox(
                       height: 50,
                     ),
-                    GestureDetector(
-                      onTap: () async {
-                        // Navigator.push(context,
-                        //     MaterialPageRoute(builder: (context) => const BusinessDetailInput()));
-                      },
-                      child: Container(
-                        height: ScreenUtil().setHeight(45),
-                        width: ScreenUtil().setWidth(330),
-                        decoration: const BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
-                            color: Colors.blue),
-                        child: Center(
-                          child: Text(
-                            'Confirm and Pay',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w700,
-                              color: Colors.white,
-                              fontSize: ScreenUtil().setWidth(18),
-                            ),
+                    Container(
+                      height: ScreenUtil().screenHeight * 0.06,
+                      width: double.infinity,
+                      child: TextButton(
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all(AppColors.app_color),
+                          shape: MaterialStateProperty.all(
+                            RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(
+                                    ScreenUtil().screenHeight * 0.03)),
                           ),
                         ),
+                        child: Text(
+                          "Pay Now",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            color: Colors.white,
+                            fontSize: 14.sp,
+                            fontFamily: 'Montserrat-Medium',
+                          ),
+                        ),
+                        onPressed: () async {
+                          if (_card != null && _card!.complete ?? false) {
+                            CardDetails cd = CardDetails();
+                            cd = cd.copyWith(number: _card?.number);
+                            cd = cd.copyWith(expirationMonth: _card?.expiryMonth);
+                            cd = cd.copyWith(expirationYear: _card?.expiryYear);
+                            cd = cd.copyWith(cvc: _card?.cvc);
+                            await Stripe.instance
+                                .dangerouslyUpdateCardDetails(cd);
+                            var preference = StorageManager();
+
+                            try {
+
+                              final billingDetails = BillingDetails(
+                                email: preference.email,
+                                phone: '',
+                                address: Address(
+                                  city: '',
+                                  country: "",
+                                  line1: '',
+                                  line2: '',
+                                  state: '',
+                                  postalCode: '',
+                                ),
+                              ); // mocked data for tests
+
+                              // 2. Create payment method
+                              // final paymentMethod = await Stripe.instance.createPaymentMethod(
+                              //     params: PaymentMethodParams.card(
+                              //       paymentMethodData: PaymentMethodData(
+                              //         billingDetails: billingDetails,
+                              //       ),
+                              //     ));
+
+                              final paymentIntent = await Stripe.instance
+                                  .handleNextAction(widget.clientSecret!);
+
+                              if (paymentIntent.status == PaymentIntentsStatus.RequiresConfirmation) {
+                                // 5. Call API to confirm intent
+                                // await confirmIntent(paymentIntent.id);
+                              // } else {
+                                // Payment succedeed
+                                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                    content: Text('Error: {}')));
+                              }
+                            }catch (e) {
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(SnackBar(content: Text('Error: $e')));
+                              rethrow;
+                            }
+
+                          }
+
+                        }
                       ),
                     ),
+
                   ],
                 ),
               ),
             ),
+            Spacer()
           ],
-        ),
+        )),
       ),
     );
   }
 
-  void onCreditCardModelChange(CreditCardModel? creditCardModel) {
-    setState(() {
-      cardNumber = creditCardModel!.cardNumber;
-      expiryDate = creditCardModel.expiryDate;
-      cardHolderName = creditCardModel.cardHolderName;
-      cvvCode = creditCardModel.cvvCode;
-      isCvvFocused = creditCardModel.isCvvFocused;
-    });
-  }
 }
+
+
+
