@@ -44,9 +44,8 @@ class ProviderSignupFirstScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 15),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Card(
+                      Flexible(flex:1,child:SizedBox(height:120,child:Card(
                         color: Colors.white,
                         child: Padding(
                           padding: const EdgeInsets.all(20),
@@ -74,8 +73,8 @@ class ProviderSignupFirstScreen extends StatelessWidget {
                             ],
                           ),
                         ),
-                      ),
-                      Card(
+                      ))),
+                      Flexible(flex:1,child:SizedBox(height:120,child:Card(
                         color: Colors.white,
                         child: Padding(
                           padding: const EdgeInsets.all(20),
@@ -103,8 +102,8 @@ class ProviderSignupFirstScreen extends StatelessWidget {
                             ],
                           ),
                         ),
-                      ),
-                      Card(
+                      ))),
+                      Flexible(flex:1,child:SizedBox(height:120,child:Card(
                         color: Colors.white,
                         child: Padding(
                           padding: const EdgeInsets.all(20),
@@ -135,7 +134,7 @@ class ProviderSignupFirstScreen extends StatelessWidget {
                             ],
                           ),
                         ),
-                      ),
+                      ))),
                     ],
                   ),
                   const SizedBox(height: 20),
