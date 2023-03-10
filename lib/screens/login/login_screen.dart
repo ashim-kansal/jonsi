@@ -493,8 +493,10 @@ class _LoginScreenState extends State<LoginScreen> {
             loginresponse.data['data']['user']['first_name'];
         StorageManager().email =
             "" + loginresponse.data['data']['user']['email'];
-        StorageManager().stripeId =
-            "" + loginresponse.data['data']['user']['customer_stripe_id'];
+        if(loginresponse.data['data']['user']['customer_stripe_id']==null)
+          StorageManager().stripeId =
+              "" + loginresponse.data['data']['user']['customer_stripe_id'];
+
         StorageManager().isProvider =
             loginresponse.data['data']['user']['is_provider'] ? true : false;
         StorageManager().nationality =

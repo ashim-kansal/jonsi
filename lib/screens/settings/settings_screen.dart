@@ -121,7 +121,7 @@ Widget _buildOverlayContent(BuildContext context) {
                       radius: 40,
                       backgroundImage:
                       StorageManager().userImage.length>0 ?
-                      NetworkImage("https://urbanmalta.com/public/users/user_${StorageManager().userId}/documents/${StorageManager().userImage}")
+                      NetworkImage("https://urbanmalta.com/public/users/user_${StorageManager().userId}/profile/${StorageManager().userImage}")
                           : NetworkImage(
                           'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500')
                   ),
