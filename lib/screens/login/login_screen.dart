@@ -284,7 +284,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       "" + loginresponse.data['data']['user']['nationality'];
                   StorageManager().language =
                       "" + loginresponse.data['data']['user']['languages'];
-                  StorageManager().stripeId =
+                  if(loginresponse.data['data']['user']['customer_stripe_id']!=null)
+                    StorageManager().stripeId =
                       "" + loginresponse.data['data']['user']['customer_stripe_id'];
                   StorageManager().userImage =
                       "" + loginresponse.data['data']['user']['profile_pic']!=null?"" + loginresponse.data['data']['user']['profile_pic'] : "";
@@ -493,7 +494,7 @@ class _LoginScreenState extends State<LoginScreen> {
             loginresponse.data['data']['user']['first_name'];
         StorageManager().email =
             "" + loginresponse.data['data']['user']['email'];
-        if(loginresponse.data['data']['user']['customer_stripe_id']==null)
+        if(loginresponse.data['data']['user']['customer_stripe_id']!=null)
           StorageManager().stripeId =
               "" + loginresponse.data['data']['user']['customer_stripe_id'];
 
