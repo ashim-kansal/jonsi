@@ -548,6 +548,7 @@ class _SignUpState extends State<SignUp> {
   }
 
   onregisterpressedprovider() async {
+
     print("inside>>>>>>>>>>>>");
     isVaildFirstName = !_nameController.text.isNullOrEmpty;
     isVaildEmail = !_emailController.text.isNullOrEmpty && isEmail(_emailController.text);
@@ -577,6 +578,25 @@ class _SignUpState extends State<SignUp> {
         !isEmail(_emailController.text) ) {
       return;
     }
+
+    HttpClient().checkEmail(_emailController.text).then((value) {
+      if(value!.data["status"]==true){
+        setState(() {
+          this.loading = false;
+        });
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text('Email id already exists, please login')));
+        return;
+      }
+
+    }).catchError((e){
+      setState(() {
+        this.loading = false;
+      });
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('Email id already exists, please login')));
+      return;
+    });
 
     Map<String, dynamic> bodyprovider = widget.socialId.isEmpty
         ? {

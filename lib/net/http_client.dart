@@ -48,6 +48,9 @@ abstract class HttpClient {
   @POST('user/profileimage')
   Future<HttpResponse?> UpdateUserProfilePic(File file);
 
+  @POST('user/checkemail')
+  Future<HttpResponse?> checkEmail(String email);
+
   @POST('user/changepassword')
   Future<HttpResponse?> changePassword(String password);
 

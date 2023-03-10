@@ -47,40 +47,18 @@ class _ProviderDetailScreenState extends State<ProviderDetailScreen> {
               } else {
                 return Container(
                   color: AppColors.color_f2f7fd,
-                  child: Column(
+                  child: Stack(
                     children: [
-                      Stack(
+                      ListView(
+                        shrinkWrap: true,
+                        padding: EdgeInsets.zero,
+                        physics: const AlwaysScrollableScrollPhysics(),
                         children: [
                           Container(
                             width: double.infinity,
                             height: 250,
                             child: getDataImage(response.data![0].gigdocument!),
                           ),
-                          Container(
-                              margin: EdgeInsets.only(left: 20, top: 50),
-                              child: CircleAvatar(
-                                  backgroundColor: Colors.white,
-                                  radius: 15,
-                                  child: Center(
-                                    child: IconButton(
-                                      onPressed: () {
-                                        Navigator.pop(context);
-                                      },
-                                      icon: const Icon(
-                                        Icons.arrow_back_ios,
-                                        color: AppColors.app_color,
-                                        size: 15,
-                                      ),
-                                    ),
-                                  ))),
-                        ],
-                      ),
-                      Expanded(
-                          child: ListView(
-                        shrinkWrap: true,
-                        padding: EdgeInsets.zero,
-                        physics: const AlwaysScrollableScrollPhysics(),
-                        children: [
                           Container(
                             color: Colors.white,
                             padding: EdgeInsets.all(10),
@@ -99,53 +77,53 @@ class _ProviderDetailScreenState extends State<ProviderDetailScreen> {
                                     child: Column(
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      response.data![0].userData != null &&
-                                              response.data![0].userData!
-                                                      .firstName !=
-                                                  null
-                                          ? '${response.data![0].userData!.firstName!} '
-                                              '${response.data![0].userData!.lastName!}'
-                                          : '',
-                                      style: const TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 16,
-                                          fontFamily: 'Montserrat-Bold'),
-                                    ),
-                                    Row(
                                       children: [
-                                        RatingBar.builder(
-                                          initialRating: double.parse(
-                                              response.data![0].rating!),
-                                          minRating: 1,
-                                          direction: Axis.horizontal,
-                                          allowHalfRating: true,
-                                          itemCount: 5,
-                                          itemSize: 20,
-                                          ignoreGestures: true,
-                                          itemPadding:
-                                              EdgeInsets.only(right: 0.1),
-                                          itemBuilder: (context, _) => Icon(
-                                              Icons.star,
-                                              color: AppColors.app_yellow),
-                                          onRatingUpdate: (rating) {
-                                            print(rating);
-                                          },
-                                        ),
                                         Text(
-                                          ' ${response.data![0].rating}',
-                                          style: TextStyle(fontSize: 14.sp, color: AppColors.app_yellow, fontFamily: "Montserrat-bold"),
-                                        ),Text(
-                                          ' (0 Rating)',
-                                          style: TextStyle(fontSize: 10.sp, color: AppColors.text_desc,
-                                              fontFamily: "Montserrat-regular"
-                                          ),
+                                          response.data![0].userData != null &&
+                                              response.data![0].userData!
+                                                  .firstName !=
+                                                  null
+                                              ? '${response.data![0].userData!.firstName!} '
+                                              '${response.data![0].userData!.lastName!}'
+                                              : '',
+                                          style: const TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 16,
+                                              fontFamily: 'Montserrat-Bold'),
                                         ),
+                                        Row(
+                                          children: [
+                                            RatingBar.builder(
+                                              initialRating: double.parse(
+                                                  response.data![0].rating!),
+                                              minRating: 1,
+                                              direction: Axis.horizontal,
+                                              allowHalfRating: true,
+                                              itemCount: 5,
+                                              itemSize: 20,
+                                              ignoreGestures: true,
+                                              itemPadding:
+                                              EdgeInsets.only(right: 0.1),
+                                              itemBuilder: (context, _) => Icon(
+                                                  Icons.star,
+                                                  color: AppColors.app_yellow),
+                                              onRatingUpdate: (rating) {
+                                                print(rating);
+                                              },
+                                            ),
+                                            Text(
+                                              ' ${response.data![0].rating}',
+                                              style: TextStyle(fontSize: 14.sp, color: AppColors.app_yellow, fontFamily: "Montserrat-bold"),
+                                            ),Text(
+                                              ' (0 Rating)',
+                                              style: TextStyle(fontSize: 10.sp, color: AppColors.text_desc,
+                                                  fontFamily: "Montserrat-regular"
+                                              ),
+                                            ),
+                                          ],
+                                        )
                                       ],
-                                    )
-                                  ],
-                                ))
+                                    ))
                               ],
                             ),
                           ),
@@ -176,7 +154,7 @@ class _ProviderDetailScreenState extends State<ProviderDetailScreen> {
                                   borderRadius: BorderRadius.circular(8)),
                               child: Row(
                                 mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
+                                MainAxisAlignment.spaceEvenly,
                                 children: [
                                   Column(
                                     children: [
@@ -246,7 +224,7 @@ class _ProviderDetailScreenState extends State<ProviderDetailScreen> {
                                                   fontFamily: "Montserrat-Bold"))),
                                       Text(
                                           response.data![0].servicepackages !=
-                                                  null
+                                              null
                                               ? '\€ ${response.data![0].servicepackages!.price!}'
                                               : '',
                                           style: TextStyle(
@@ -263,25 +241,25 @@ class _ProviderDetailScreenState extends State<ProviderDetailScreen> {
                                     child: TextButton(
                                       style: ButtonStyle(
                                         backgroundColor:
-                                            MaterialStateProperty.all(
-                                                AppColors.app_color),
+                                        MaterialStateProperty.all(
+                                            AppColors.app_color),
                                         shape: MaterialStateProperty.all(
                                           RoundedRectangleBorder(
                                               borderRadius:
-                                                  BorderRadius.circular(
-                                                      ScreenUtil()
-                                                              .screenHeight *
-                                                          0.035)),
+                                              BorderRadius.circular(
+                                                  ScreenUtil()
+                                                      .screenHeight *
+                                                      0.035)),
                                         ),
                                       ),
                                       child: Row(
                                         mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
+                                        MainAxisAlignment.spaceBetween,
                                         children: [
                                           const Opacity(
                                             opacity: 0,
                                             child:
-                                                Icon(Icons.arrow_forward_ios),
+                                            Icon(Icons.arrow_forward_ios),
                                           ),
                                           Text(
                                             "Continue",
@@ -334,10 +312,10 @@ class _ProviderDetailScreenState extends State<ProviderDetailScreen> {
                               children: [
                                 RatingBar.builder(
                                   initialRating:
-                                      response.data![0].ratingCount != null
-                                          ? double.parse(
-                                              response.data![0].ratingCount!)
-                                          : 3,
+                                  response.data![0].ratingCount != null
+                                      ? double.parse(
+                                      response.data![0].ratingCount!)
+                                      : 3,
                                   minRating: 1,
                                   direction: Axis.horizontal,
                                   allowHalfRating: true,
@@ -364,7 +342,7 @@ class _ProviderDetailScreenState extends State<ProviderDetailScreen> {
                           Container(
                               padding: const EdgeInsets.all(20),
                               margin:
-                                  const EdgeInsets.only(left: 20, right: 20),
+                              const EdgeInsets.only(left: 20, right: 20),
                               decoration: BoxDecoration(
                                   color: Color(0xff4995EB).withOpacity(0.2),
                                   borderRadius: BorderRadius.circular(10)),
@@ -380,9 +358,9 @@ class _ProviderDetailScreenState extends State<ProviderDetailScreen> {
                                                   fontFamily:'Montserrat-Bold'))),
                                       Text('20 Reviews',
                                           style: TextStyle(
-                                            color: AppColors.text_desc,
-                                            fontSize: 10,
-                                            fontFamily: 'Montserrat-Regular')),
+                                              color: AppColors.text_desc,
+                                              fontSize: 10,
+                                              fontFamily: 'Montserrat-Regular')),
                                     ],
                                   ),
                                   const SizedBox(
@@ -565,7 +543,24 @@ class _ProviderDetailScreenState extends State<ProviderDetailScreen> {
                                 )),
                           ),
                         ],
-                      ))
+                      ),
+                      Container(
+                          margin: EdgeInsets.only(left: 20, top: 50),
+                          child: CircleAvatar(
+                              backgroundColor: Colors.white,
+                              radius: 15,
+                              child: Center(
+                                child: IconButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  icon: const Icon(
+                                    Icons.arrow_back_ios,
+                                    color: AppColors.app_color,
+                                    size: 15,
+                                  ),
+                                ),
+                              ))),
                     ],
                   ),
                 );
