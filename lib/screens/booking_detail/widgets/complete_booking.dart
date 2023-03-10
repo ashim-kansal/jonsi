@@ -71,8 +71,8 @@ completebottomsheet(
 
                                 setbookingstate();
                                 Navigator.pop(context);
-                                pushDynamicScreen(context,
-                                    screen: AddReview(booking: booking, setbookingstate: setbookingstate), withNavBar: false);
+                                // pushDynamicScreen(context,
+                                //     screen: AddReview(booking: item!, setbookingstate: setbookingstate), withNavBar: false);
                               }).catchError((e) {
                                 completing = false;
                                 setstate(() {});

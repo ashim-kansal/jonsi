@@ -5,7 +5,9 @@ import 'package:kappu/common/button.dart';
 import 'package:kappu/common/painter.dart';
 import 'package:kappu/components/AppColors.dart';
 import 'package:kappu/components/MyAppBar.dart';
+import 'package:kappu/constants/storage_manager.dart';
 import 'package:kappu/main.dart';
+import 'package:kappu/models/serializable_model/OrderListResponse.dart';
 import 'package:kappu/models/serializable_model/booking.dart';
 
 import '../../net/base_dio.dart';
@@ -19,7 +21,7 @@ import '../register/widgets/text_field.dart';
 // const String testDevice = "787b9e0b-4f7c-47eb-a0b8-0eb9a7554728";
 
 class AddReview extends ModalRoute<void> {
-  final Booking booking;
+  final OrderListResponse booking;
   final Function setbookingstate;
 
   AddReview({
@@ -66,7 +68,7 @@ class AddReview extends ModalRoute<void> {
 
   Widget _buildOverlayContent(BuildContext context) {
     return Scaffold(
-      appBar: MyAppBar(title: "John Wing"),
+      appBar: MyAppBar(title: StorageManager().name),
       resizeToAvoidBottomInset: false,
       body: SingleChildScrollView(
         child: Padding(
@@ -87,7 +89,7 @@ class AddReview extends ModalRoute<void> {
               ),
               10.verticalSpace,
               Text(
-                'How was Your experience With ${booking.providerfname + " " + booking.providerlname}',
+                'How was Your experience With ${booking.userData!.firstName}',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     color: AppColors.title_desc,
@@ -171,8 +173,8 @@ class AddReview extends ModalRoute<void> {
                       Map<String, dynamic> body = {
                         "rating": rating,
                         "review": ratingcontoller.text,
-                        "reviewer": booking.userid,
-                        "service": booking.serviceid,
+                        "reviewer": booking.userId,
+                        "service": booking.serviceId,
                         "booking": booking.id
                       };
 
@@ -192,157 +194,157 @@ class AddReview extends ModalRoute<void> {
                 ),
               ),
               20.verticalSpace,
-              Container(
-                  color: AppColors.app_bg,
-                  child:  DecoratedBox(
-                    decoration: BoxDecoration(
-                        borderRadius: const BorderRadius.all(Radius.circular(6)),
-                        color: AppColors.app_bg),
-                    child: Padding(
-                      padding: EdgeInsets.all(10),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Awesome Sellers deserve a tip',
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                                fontSize: ScreenUtil().setSp(18)),
-                          ),
-                          10.verticalSpace,
-                          Text(
-                            'It\'s customary to leave a tip for the seller\'s service.',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                color: AppColors.title_desc,
-                                fontSize: ScreenUtil().setSp(12)),
-                          ),
-                          10.verticalSpace,
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Card(
-                                color: Colors.white,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(20),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    children: const [
-
-                                      Text(
-                                        "15%",
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 16,
-                                          fontFamily: 'Montserrat-Bold',
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              Card(
-                                color: Colors.white,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(20),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    children: const [
-
-                                      Text(
-                                        "20%",
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 16,
-                                          fontFamily: 'Montserrat-Bold',
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              Card(
-                                color: Colors.white,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(20),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    children: const [
-
-                                      FittedBox(
-                                        fit: BoxFit.contain,
-                                        child: Text(
-                                          '25%',
-                                          textAlign: TextAlign.justify,
-                                          style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 16,
-                                            fontFamily: 'Montserrat-Bold',
-                                          ),
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          10.verticalSpace,
-                          ElevatedTextFormField(
-                            controller: amountController,
-                            keyboardType: TextInputType.text,
-                            hintText: 'Enter Custom Amount',
-                            onChanged: (value) {
-                              setState(() {});
-                            },
-                          ),
-                          10.verticalSpace,
-                          SizedBox(
-                            height: ScreenUtil().screenHeight * 0.05,
-                            child: TextButton(
-                              style: ButtonStyle(
-                                backgroundColor: MaterialStateProperty.all(AppColors.app_color),
-                                shape: MaterialStateProperty.all(
-                                  RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(
-                                          ScreenUtil().screenHeight * 0.025)),
-                                ),
-                              ),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  const Opacity(
-                                    opacity: 0,
-                                    child: Icon(Icons.arrow_forward_ios),
-                                  ),
-                                  Text(
-                                    "Submit",
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.white,
-                                      fontSize: 14.sp,
-                                      fontFamily: 'Montserrat-Medium',
-                                    ),
-                                  ),
-                                  Image.asset('assets/icons/arw.png', scale: 1.0),
-                                ],
-                              ),
-                              onPressed: () {
-                              },
-                            ),
-                          ),
-                          15.verticalSpace,
-
-
-                        ],
-                      ),
-                    ),
-                  )
-              ),
-              20.verticalSpace
+              // Container(
+              //     color: AppColors.app_bg,
+              //     child:  DecoratedBox(
+              //       decoration: BoxDecoration(
+              //           borderRadius: const BorderRadius.all(Radius.circular(6)),
+              //           color: AppColors.app_bg),
+              //       child: Padding(
+              //         padding: EdgeInsets.all(10),
+              //         child: Column(
+              //           crossAxisAlignment: CrossAxisAlignment.start,
+              //           children: [
+              //             Text(
+              //               'Awesome Sellers deserve a tip',
+              //               style: TextStyle(
+              //                   color: Colors.black,
+              //                   fontWeight: FontWeight.bold,
+              //                   fontSize: ScreenUtil().setSp(18)),
+              //             ),
+              //             10.verticalSpace,
+              //             Text(
+              //               'It\'s customary to leave a tip for the seller\'s service.',
+              //               textAlign: TextAlign.center,
+              //               style: TextStyle(
+              //                   color: AppColors.title_desc,
+              //                   fontSize: ScreenUtil().setSp(12)),
+              //             ),
+              //             10.verticalSpace,
+              //             Row(
+              //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //               children: [
+              //                 Card(
+              //                   color: Colors.white,
+              //                   child: Padding(
+              //                     padding: const EdgeInsets.all(20),
+              //                     child: Column(
+              //                       crossAxisAlignment: CrossAxisAlignment.center,
+              //                       children: const [
+              //
+              //                         Text(
+              //                           "15%",
+              //                           textAlign: TextAlign.center,
+              //                           style: TextStyle(
+              //                             color: Colors.black,
+              //                             fontSize: 16,
+              //                             fontFamily: 'Montserrat-Bold',
+              //                           ),
+              //                         )
+              //                       ],
+              //                     ),
+              //                   ),
+              //                 ),
+              //                 Card(
+              //                   color: Colors.white,
+              //                   child: Padding(
+              //                     padding: const EdgeInsets.all(20),
+              //                     child: Column(
+              //                       crossAxisAlignment: CrossAxisAlignment.center,
+              //                       children: const [
+              //
+              //                         Text(
+              //                           "20%",
+              //                           textAlign: TextAlign.center,
+              //                           style: TextStyle(
+              //                             color: Colors.black,
+              //                             fontSize: 16,
+              //                             fontFamily: 'Montserrat-Bold',
+              //                           ),
+              //                         )
+              //                       ],
+              //                     ),
+              //                   ),
+              //                 ),
+              //                 Card(
+              //                   color: Colors.white,
+              //                   child: Padding(
+              //                     padding: const EdgeInsets.all(20),
+              //                     child: Column(
+              //                       crossAxisAlignment: CrossAxisAlignment.center,
+              //                       children: const [
+              //
+              //                         FittedBox(
+              //                           fit: BoxFit.contain,
+              //                           child: Text(
+              //                             '25%',
+              //                             textAlign: TextAlign.justify,
+              //                             style: TextStyle(
+              //                               color: Colors.black,
+              //                               fontSize: 16,
+              //                               fontFamily: 'Montserrat-Bold',
+              //                             ),
+              //                           ),
+              //                         )
+              //                       ],
+              //                     ),
+              //                   ),
+              //                 ),
+              //               ],
+              //             ),
+              //             10.verticalSpace,
+              //             ElevatedTextFormField(
+              //               controller: amountController,
+              //               keyboardType: TextInputType.text,
+              //               hintText: 'Enter Custom Amount',
+              //               onChanged: (value) {
+              //                 setState(() {});
+              //               },
+              //             ),
+              //             10.verticalSpace,
+              //             SizedBox(
+              //               height: ScreenUtil().screenHeight * 0.05,
+              //               child: TextButton(
+              //                 style: ButtonStyle(
+              //                   backgroundColor: MaterialStateProperty.all(AppColors.app_color),
+              //                   shape: MaterialStateProperty.all(
+              //                     RoundedRectangleBorder(
+              //                         borderRadius: BorderRadius.circular(
+              //                             ScreenUtil().screenHeight * 0.025)),
+              //                   ),
+              //                 ),
+              //                 child: Row(
+              //                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //                   children: [
+              //                     const Opacity(
+              //                       opacity: 0,
+              //                       child: Icon(Icons.arrow_forward_ios),
+              //                     ),
+              //                     Text(
+              //                       "Submit",
+              //                       style: TextStyle(
+              //                         fontWeight: FontWeight.w500,
+              //                         color: Colors.white,
+              //                         fontSize: 14.sp,
+              //                         fontFamily: 'Montserrat-Medium',
+              //                       ),
+              //                     ),
+              //                     Image.asset('assets/icons/arw.png', scale: 1.0),
+              //                   ],
+              //                 ),
+              //                 onPressed: () {
+              //                 },
+              //               ),
+              //             ),
+              //             15.verticalSpace,
+              //
+              //
+              //           ],
+              //         ),
+              //       ),
+              //     )
+              // ),
+              // 20.verticalSpace
             ]),
           ),
         ),

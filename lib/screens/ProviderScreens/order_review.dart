@@ -11,6 +11,7 @@ import 'package:kappu/net/base_dio.dart';
 import 'package:kappu/net/http_client.dart';
 import 'package:kappu/screens/creditcardinput/credit_cardinput.dart';
 
+import '../../common/custom_progress_bar.dart';
 import '../../components/MyAppBar.dart';
 
 class OrderReview extends StatefulWidget {
@@ -23,6 +24,7 @@ class OrderReview extends StatefulWidget {
 }
 
 class _OrderReviewState extends State<OrderReview> {
+  bool loading = false;
   @override
   void initState() {
     super.initState();
@@ -35,57 +37,58 @@ class _OrderReviewState extends State<OrderReview> {
 
     try {
       print(data.stripeintent!.toJson().toString());
-      // await Stripe.instance.initPaymentSheet(
-      //   paymentSheetParameters: SetupPaymentSheetParameters(
-      //     // Enable custom flow
-      //     customFlow: true,
-      //     // setupIntentClientSecret: 'sk_test_51Lde8bIv5chsib1PT1sD0GFaWv5viIQzU6zIwIqzOK9ULVWiQChmZ1huNaLibaIUJNszVnpG5Dk64wF0XR08wMnx00x2YIx8vp',
-      //     // Main params
-      //     merchantDisplayName: 'UrbanMalta',
-      //     paymentIntentClientSecret: data.stripeintent!.clientSecret,
-      //     primaryButtonLabel: 'Pay now',
-      //     applePay: Platform.isIOS?PaymentSheetApplePay(
-      //       merchantCountryCode: 'MT',
-      //     ):null,
-      //     googlePay: Platform.isAndroid? PaymentSheetGooglePay(
-      //       merchantCountryCode: 'MT',
-      //       testEnv: true,
-      //     ) : null,
-      //     style: ThemeMode.dark,
-      //     appearance: PaymentSheetAppearance(
-      //       colors: PaymentSheetAppearanceColors(
-      //         background: Colors.white,
-      //         primary: Colors.blue,
-      //       ),
-      //       shapes: PaymentSheetShape(
-      //         borderWidth: 4,
-      //         shadow: PaymentSheetShadowParams(color: AppColors.color_707070),
-      //       ),
-      //       primaryButton: PaymentSheetPrimaryButtonAppearance(
-      //         shapes: PaymentSheetPrimaryButtonShape(blurRadius: 8),
-      //         colors: PaymentSheetPrimaryButtonTheme(
-      //           light: PaymentSheetPrimaryButtonThemeColors(
-      //             background: AppColors.app_color,
-      //             text: Colors.white,
-      //           ),
-      //         ),
-      //       ),
-      //     ),
-      //   ),
-      // );
+      await Stripe.instance.initPaymentSheet(
+        paymentSheetParameters: SetupPaymentSheetParameters(
+          // Enable custom flow
+          customFlow: true,
+          // setupIntentClientSecret: 'sk_test_51Lde8bIv5chsib1PT1sD0GFaWv5viIQzU6zIwIqzOK9ULVWiQChmZ1huNaLibaIUJNszVnpG5Dk64wF0XR08wMnx00x2YIx8vp',
+          // Main params
+          merchantDisplayName: 'UrbanMalta',
+          paymentIntentClientSecret: data.stripeintent!.clientSecret,
+          primaryButtonLabel: 'Pay now',
+          googlePay: Platform.isAndroid? PaymentSheetGooglePay(
+            merchantCountryCode: 'MT',
+            testEnv: true,
+          ) : null,
+          style: ThemeMode.dark,
+          appearance: PaymentSheetAppearance(
+            colors: PaymentSheetAppearanceColors(
+              background: Colors.white,
+              primary: Colors.blue,
+            ),
+            shapes: PaymentSheetShape(
+              borderWidth: 4,
+              shadow: PaymentSheetShadowParams(color: AppColors.color_707070),
+            ),
+            primaryButton: PaymentSheetPrimaryButtonAppearance(
+              shapes: PaymentSheetPrimaryButtonShape(blurRadius: 8),
+              colors: PaymentSheetPrimaryButtonTheme(
+                light: PaymentSheetPrimaryButtonThemeColors(
+                  background: AppColors.app_color,
+                  text: Colors.white,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ).then((value) {
+        showPaymentSheet(data.orderData!.id);
+      });
 
-      // await Stripe.instance.presentPaymentSheet();
-
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) =>
-                  CreditCardInput(clientSecret: data.stripeintent!.clientSecret,)));
+      //
+      // Navigator.push(
+      //     context,
+      //     MaterialPageRoute(
+      //         builder: (context) =>
+      //             CreditCardInput(clientSecret: data.stripeintent!.clientSecret,)));
 
       //     setState(() {
       //   _ready = true;
       // });
-    } catch (e) {
+    } on StripeException catch (e) {
+      setState(() {
+        this.loading = false;
+      });
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Error: $e')),
       );
@@ -99,238 +102,245 @@ class _OrderReviewState extends State<OrderReview> {
     return Scaffold(
         appBar: MyAppBar(title: "Order review"),
         backgroundColor: Colors.white,
-        body: Container(
-          color: Colors.white,
-          child: Column(
-            children: [
-              Divider(
-                height: 0.5,
-                color: Colors.grey,
-              ),
-              Expanded(
-                  child: ListView(
-                padding: EdgeInsets.zero,
-                shrinkWrap: true,
+        body: Stack(
+          children: [
+            Container(
+              color: Colors.white,
+              child: Column(
                 children: [
-                  Container(
-                    padding: EdgeInsets.all(10),
-                    width: double.infinity,
-                    child: getCard(Padding(
-                      padding: EdgeInsets.all(5),
-                      child: Row(
-                        children: [
-                          Image.asset('assets/images/barber.jpg',
-                              height: 80, width: 80, fit: BoxFit.fill),
-                          Expanded(
-                              child: Padding(
-                                  padding: EdgeInsets.fromLTRB(15, 0, 15, 10),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        widget.bodyprovider['name'],
-                                        maxLines: 3,
-                                        style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      SizedBox(
-                                        height: 5,
-                                      ),
-                                      Text(
-                                        widget.bodyprovider['desc'],
-                                        maxLines: 3,
-                                        style: TextStyle(
-                                            color: Colors.grey,
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.normal),
-                                      ),
-                                    ],
-                                  )))
-                        ],
-                      ),
-                    )),
+                  Divider(
+                    height: 0.5,
+                    color: Colors.grey,
                   ),
-                  Container(
-                    padding: EdgeInsets.all(10),
-                    width: double.infinity,
-                    child: getCard(Padding(
-                      padding: EdgeInsets.all(5),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                  Expanded(
+                      child: ListView(
+                        padding: EdgeInsets.zero,
+                        shrinkWrap: true,
                         children: [
-                          Text(
-                            'Order Detail',
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 15,
-                                fontWeight: FontWeight.bold),
+                          Container(
+                            padding: EdgeInsets.all(10),
+                            width: double.infinity,
+                            child: getCard(Padding(
+                              padding: EdgeInsets.all(5),
+                              child: Row(
+                                children: [
+                                  Image.asset('assets/images/barber.jpg',
+                                      height: 80, width: 80, fit: BoxFit.fill),
+                                  Expanded(
+                                      child: Padding(
+                                          padding: EdgeInsets.fromLTRB(15, 0, 15, 10),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                widget.bodyprovider['name'],
+                                                maxLines: 3,
+                                                style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize: 15,
+                                                    fontWeight: FontWeight.bold),
+                                              ),
+                                              SizedBox(
+                                                height: 5,
+                                              ),
+                                              Text(
+                                                widget.bodyprovider['desc'],
+                                                maxLines: 3,
+                                                style: TextStyle(
+                                                    color: Colors.grey,
+                                                    fontSize: 12,
+                                                    fontWeight: FontWeight.normal),
+                                              ),
+                                            ],
+                                          )))
+                                ],
+                              ),
+                            )),
+                          ),
+                          Container(
+                            padding: EdgeInsets.all(10),
+                            width: double.infinity,
+                            child: getCard(Padding(
+                              padding: EdgeInsets.all(5),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Order Detail',
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(8),
+                                      color: Colors.blue.withOpacity(0.15),
+                                    ),
+                                    padding: EdgeInsets.all(10),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Icon(
+                                          Icons.check_circle,
+                                          color: AppColors.app_color,
+                                          size: 18,
+                                        ),
+                                        SizedBox(
+                                          width: 5,
+                                        ),
+                                        Expanded(
+                                            child: Column(
+                                              mainAxisAlignment: MainAxisAlignment.start,
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  'Item',
+                                                  style: TextStyle(
+                                                      color: Colors.black,
+                                                      fontSize: 15,
+                                                      fontWeight: FontWeight.bold),
+                                                ),
+                                                Text(
+                                                  widget.bodyprovider['name'],
+                                                  style: TextStyle(
+                                                      color: Colors.grey,
+                                                      fontSize: 15,
+                                                      fontWeight: FontWeight.normal),
+                                                ),
+                                              ],
+                                            )),
+                                        SizedBox(
+                                          width: 5,
+                                        ),
+                                        Text(
+                                          '\€' + widget.bodyprovider['price'],
+                                          style: TextStyle(
+                                              color: AppColors.app_color,
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                                ],
+                              ),
+                            )),
                           ),
                           SizedBox(
                             height: 10,
                           ),
                           Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8),
-                              color: Colors.blue.withOpacity(0.15),
-                            ),
                             padding: EdgeInsets.all(10),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Icon(
-                                  Icons.check_circle,
-                                  color: AppColors.app_color,
-                                  size: 18,
-                                ),
-                                SizedBox(
-                                  width: 5,
-                                ),
-                                Expanded(
+                            width: double.infinity,
+                            child: getCard(Padding(
+                              padding: EdgeInsets.all(5),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Order Summary',
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  Container(
+                                    padding: EdgeInsets.all(10),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(4),
+                                      color: Colors.grey.withOpacity(0.15),
+                                    ),
                                     child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      'Item',
-                                      style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.bold),
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Expanded(
+                                                child: Text(
+                                                  '\€' + widget.bodyprovider['price'],
+                                                  style: TextStyle(
+                                                      color: Colors.black,
+                                                      fontSize: 14,
+                                                      fontWeight: FontWeight.bold),
+                                                )),
+                                            Text(
+                                              '\€' + widget.bodyprovider['price'],
+                                              style: TextStyle(
+                                                  color: AppColors.app_color,
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.bold),
+                                            )
+                                          ],
+                                        ),
+                                        SizedBox(
+                                          height: 10,
+                                        ),
+                                        Row(
+                                          children: [
+                                            Expanded(
+                                                child: Text(
+                                                  'Total',
+                                                  style: TextStyle(
+                                                      color: Colors.black,
+                                                      fontSize: 14,
+                                                      fontWeight: FontWeight.bold),
+                                                )),
+                                            Text(
+                                              '\€10',
+                                              style: TextStyle(
+                                                  color: AppColors.app_color,
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.bold),
+                                            )
+                                          ],
+                                        ),
+                                      ],
                                     ),
-                                    Text(
-                                      widget.bodyprovider['name'],
-                                      style: TextStyle(
-                                          color: Colors.grey,
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.normal),
-                                    ),
-                                  ],
-                                )),
-                                SizedBox(
-                                  width: 5,
-                                ),
-                                Text(
-                                  '\€' + widget.bodyprovider['price'],
-                                  style: TextStyle(
-                                      color: AppColors.app_color,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ],
+                                  )
+                                ],
+                              ),
+                            )
                             ),
-                          )
-                        ],
-                      ),
-                    )),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Container(
-                    padding: EdgeInsets.all(10),
-                    width: double.infinity,
-                    child: getCard(Padding(
-                      padding: EdgeInsets.all(5),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Order Summary',
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 15,
-                                fontWeight: FontWeight.bold),
                           ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Container(
-                            padding: EdgeInsets.all(10),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(4),
-                              color: Colors.grey.withOpacity(0.15),
-                            ),
-                            child: Column(
-                              children: [
-                                Row(
-                                  children: [
-                                    Expanded(
-                                        child: Text(
-                                      '\€' + widget.bodyprovider['price'],
-                                      style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.bold),
-                                    )),
-                                    Text(
-                                      '\€' + widget.bodyprovider['price'],
-                                      style: TextStyle(
-                                          color: AppColors.app_color,
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.bold),
-                                    )
-                                  ],
+                          InkWell(
+                              onTap: () async{
+                                setState(() {
+                                  this.loading = true;
+                                });
+                                placeOrder(StorageManager().accessToken,
+                                    StorageManager().userId, context);
+
+                              },
+                              child: Container(
+                                padding: EdgeInsets.all(10),
+                                margin: EdgeInsets.all(15),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(25),
+                                  color: AppColors.app_color,
                                 ),
-                                SizedBox(
-                                  height: 10,
+                                child: Text(
+                                  'Add Payment Method',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(fontSize: 14, color: Colors.white),
                                 ),
-                                Row(
-                                  children: [
-                                    Expanded(
-                                        child: Text(
-                                      'Total',
-                                      style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.bold),
-                                    )),
-                                    Text(
-                                      '\€10',
-                                      style: TextStyle(
-                                          color: AppColors.app_color,
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.bold),
-                                    )
-                                  ],
-                                ),
-                              ],
-                            ),
-                          )
+                              ))
                         ],
-                      ),
-                    )
-                    ),
-                  ),
-                  InkWell(
-                      onTap: () async{
-
-                        placeOrder(StorageManager().accessToken,
-                            StorageManager().userId, context);
-
-                      },
-                      child: Container(
-                        padding: EdgeInsets.all(10),
-                        margin: EdgeInsets.all(15),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(25),
-                          color: AppColors.app_color,
-                        ),
-                        child: Text(
-                          'Add Payment Method',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: 14, color: Colors.white),
-                        ),
                       ))
                 ],
-              ))
-            ],
-          ),
+              ),
+            ),
+            if (loading) const CustomProgressBar()
+          ],
         ));
   }
 
@@ -366,7 +376,7 @@ class _OrderReviewState extends State<OrderReview> {
             descriptions: message,
             buttonTitle:'ok',
             buttonColor: AppColors.color_green,
-            icon: Icons.cancel,
+            icon: Icons.check,
             onPressed: () {
               print('ok');
               Navigator.pop(context);
@@ -374,6 +384,22 @@ class _OrderReviewState extends State<OrderReview> {
             },
           );
         });
+  }
+
+  void showPaymentSheet(orderId) async{
+    await Stripe.instance.presentPaymentSheet().then((value){
+      HttpClient().orderPayment(orderId.toString()).then((value){
+        setState(() {
+          this.loading = false;
+        });
+        showSuccessDialog(context,"Payment done",);
+      }).onError((error, stackTrace) {});
+    }).onError((error, stacktrace) {
+      setState(() {
+        this.loading = false;
+      });
+    });
+
   }
 }
 

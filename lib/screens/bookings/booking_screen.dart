@@ -7,8 +7,10 @@ import 'package:kappu/models/serializable_model/booking.dart';
 import 'package:kappu/net/http_client.dart';
 import 'package:kappu/provider/provider_provider.dart';
 import 'package:kappu/provider/userprovider.dart';
+import 'package:kappu/screens/add_review/add_review.dart';
 import 'package:kappu/screens/bookings/widgets/cancelled_booking.dart';
 import 'package:kappu/screens/bookings/widgets/booking_widget.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
 
 import '../../models/serializable_model/OrderListResponse.dart';
@@ -131,7 +133,7 @@ class _BookingScreenState extends State<BookingScreen> {
                                     bookingstatus: 'Active',
                                     booking: item,
                                     menuItemClicked: (String value) {
-                                      callAPI(value, item.id.toString());
+                                      callAPI(context, item, value, item.id.toString());
                                     },
                                   ),
                                 ))
@@ -177,7 +179,7 @@ class _BookingScreenState extends State<BookingScreen> {
                                     bookingstatus: 'Request',
                                     booking: item,
                                     menuItemClicked: (String value) {
-                                      callAPI(value, item.id.toString());
+                                      callAPI(context, item, value, item.id.toString());
                                     },
                                   ),
                                 ))
@@ -223,7 +225,7 @@ class _BookingScreenState extends State<BookingScreen> {
                                     bookingstatus: "Completed",
                                     booking: item,
                                     menuItemClicked: (String value) {
-                                      callAPI(value, item.id.toString());
+                                      callAPI(context, item, value, item.id.toString());
                                     },
                                   ),
                                 ))
@@ -269,7 +271,7 @@ class _BookingScreenState extends State<BookingScreen> {
                                     bookingstatus: "Cancel",
                                     booking: item,
                                     menuItemClicked: (String value) {
-                                      callAPI(value, item.id.toString());
+                                      callAPI(context, item, value, item.id.toString());
                                     },
                                   ),
                                 ))
@@ -284,7 +286,7 @@ class _BookingScreenState extends State<BookingScreen> {
     );
   }
 
-  Future<void> callAPI(String value, String bookingId) async {
+  Future<void> callAPI(BuildContext context, OrderListResponse item, String value, String bookingId) async {
     setState(() {
       isLoading = true;
     });
@@ -292,12 +294,16 @@ class _BookingScreenState extends State<BookingScreen> {
       await HttpClient()
           .completeOrder(bookingId.toString(), "Bearer "+StorageManager().accessToken)
           .then((value) {
+        setState(() {
+          isLoading = false;
+        });
         if (value.status!) {
-          setState(() {
-            isLoading = false;
-          });
-          reloadpage();
-        }
+          // reloadpage();
+          pushDynamicScreen(context,
+              screen: AddReview(booking: item, setbookingstate: (){}),
+        withNavBar: false);
+
+      }
       }).catchError((e) {
         setState(() {
           isLoading = false;
