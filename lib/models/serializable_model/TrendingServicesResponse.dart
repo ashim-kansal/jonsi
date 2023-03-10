@@ -38,7 +38,7 @@ class TrendingServicesResponse {
     String ratingCount;
     int reviewCount;
     String slug;
-    int rating;
+    double rating;
     List<Gigdocument> gigdocument;
 
     factory TrendingServicesResponse.fromJson(Map<String, dynamic> json) => TrendingServicesResponse(
@@ -54,7 +54,7 @@ class TrendingServicesResponse {
         ratingCount: json["rating_count"],
         reviewCount: json["review_count"],
         slug: json["slug"],
-        rating: json["rating"],
+        rating: json["rating"]?.toDouble(),
         gigdocument: List<Gigdocument>.from(json["gigdocument"].map((x) => Gigdocument.fromJson(x))),
     );
 
