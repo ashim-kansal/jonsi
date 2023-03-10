@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:csc_picker/csc_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_credit_card/extension.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -9,20 +8,13 @@ import 'package:kappu/common/bottom_nav_bar.dart';
 import 'package:kappu/components/AppColors.dart';
 import 'package:kappu/constants/storage_manager.dart';
 import 'package:kappu/models/serializable_model/Language.dart';
-import 'package:kappu/models/serializable_model/CategoryResponse.dart';
-import 'package:kappu/provider/provider_provider.dart';
 import 'package:kappu/screens/register/register_more.dart';
 import 'package:kappu/screens/register/widgets/text_field.dart';
-import 'package:kappu/screens/submitdocument/submit_doc.dart';
-import 'package:provider/provider.dart';
 import 'package:validators/validators.dart';
-import '../../common/button.dart';
-import '../../common/dialogues.dart';
-import '../../common/painter.dart';
+
 import '../../constants/icons.dart';
 import '../../net/base_dio.dart';
 import '../../net/http_client.dart';
-import 'email_otp.dart';
 
 class SignUp extends StatefulWidget {
   final bool isprovider;
@@ -227,7 +219,7 @@ class _SignUpState extends State<SignUp> {
                             print('ssss');
                             DateTime? pickedDate = await showDatePicker(
                                 context: context,
-                                initialDate: DateTime.now(),
+                                initialDate: DateTime(DateTime.now().year-18),
                                 firstDate: DateTime(1950),
                                 //DateTime.now() - not to allow to choose before today.
                                 lastDate: DateTime(DateTime.now().year-18));
@@ -580,13 +572,54 @@ class _SignUpState extends State<SignUp> {
     }
 
     HttpClient().checkEmail(_emailController.text).then((value) {
+      setState(() {
+        this.loading = false;
+      });
       if(value!.data["status"]==true){
-        setState(() {
-          this.loading = false;
-        });
+
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text('Email id already exists, please login')));
         return;
+      }
+      else{
+        Map<String, dynamic> bodyprovider = widget.socialId.isEmpty
+            ? {
+          'first_name': _nameController.text,
+          'last_name': "",
+          'username': "",
+          'email': _emailController.text,
+          'phone_number': '11',
+          'password': _passwordController.text,
+          "Age": _ageController.text,
+          "nationality": _nationalityController.text,
+          'fcm_token': StorageManager().fcmToken,
+          'os': Platform.isAndroid ? 'android' : 'ios',
+          "language": selectedLanguage.name,
+          "service_title": "proidehoubroufo-770",
+          "login_src": "",
+          "social_login_id": "",
+        }
+            : {
+          'first_name': _nameController.text,
+          'last_name': "",
+          'username': "",
+          'email': _emailController.text,
+          'phone_number': '111',
+          'password': '',
+          'login_src': widget.loginType,
+          'social_login_id': widget.socialId,
+          'fcm_token': StorageManager().fcmToken,
+          'os': Platform.isAndroid ? 'android' : 'ios',
+          "Age": _ageController.text,
+          "nationality": _nationalityController.text,
+          "language": selectedLanguage.name,
+          "service_title": "proidehoubroufo-770",
+        };
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => RegisterMore(bodyprovider: bodyprovider)));
+
       }
 
     }).catchError((e){
@@ -598,44 +631,7 @@ class _SignUpState extends State<SignUp> {
       return;
     });
 
-    Map<String, dynamic> bodyprovider = widget.socialId.isEmpty
-        ? {
-            'first_name': _nameController.text,
-            'last_name': "",
-            'username': "",
-            'email': _emailController.text,
-            'phone_number': '11',
-            'password': _passwordController.text,
-            "Age": _ageController.text,
-            "nationality": _nationalityController.text,
-            'fcm_token': StorageManager().fcmToken,
-            'os': Platform.isAndroid ? 'android' : 'ios',
-            "language": selectedLanguage.name,
-            "service_title": "proidehoubroufo-770",
-            "login_src": "",
-            "social_login_id": "",
-          }
-        : {
-            'first_name': _nameController.text,
-            'last_name': "",
-            'username': "",
-            'email': _emailController.text,
-            'phone_number': '111',
-            'password': '',
-            'login_src': widget.loginType,
-            'social_login_id': widget.socialId,
-            'fcm_token': StorageManager().fcmToken,
-            'os': Platform.isAndroid ? 'android' : 'ios',
-            "Age": _ageController.text,
-            "nationality": _nationalityController.text,
-            "language": selectedLanguage.name,
-            "service_title": "proidehoubroufo-770",
-          };
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => RegisterMore(bodyprovider: bodyprovider)));
-  }
+    }
 
   onregisterpressed() async {
     print('aacccdddddd');

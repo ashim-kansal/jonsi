@@ -35,57 +35,58 @@ class _OrderReviewState extends State<OrderReview> {
 
     try {
       print(data.stripeintent!.toJson().toString());
-      // await Stripe.instance.initPaymentSheet(
-      //   paymentSheetParameters: SetupPaymentSheetParameters(
-      //     // Enable custom flow
-      //     customFlow: true,
-      //     // setupIntentClientSecret: 'sk_test_51Lde8bIv5chsib1PT1sD0GFaWv5viIQzU6zIwIqzOK9ULVWiQChmZ1huNaLibaIUJNszVnpG5Dk64wF0XR08wMnx00x2YIx8vp',
-      //     // Main params
-      //     merchantDisplayName: 'UrbanMalta',
-      //     paymentIntentClientSecret: data.stripeintent!.clientSecret,
-      //     primaryButtonLabel: 'Pay now',
-      //     applePay: Platform.isIOS?PaymentSheetApplePay(
-      //       merchantCountryCode: 'MT',
-      //     ):null,
-      //     googlePay: Platform.isAndroid? PaymentSheetGooglePay(
-      //       merchantCountryCode: 'MT',
-      //       testEnv: true,
-      //     ) : null,
-      //     style: ThemeMode.dark,
-      //     appearance: PaymentSheetAppearance(
-      //       colors: PaymentSheetAppearanceColors(
-      //         background: Colors.white,
-      //         primary: Colors.blue,
-      //       ),
-      //       shapes: PaymentSheetShape(
-      //         borderWidth: 4,
-      //         shadow: PaymentSheetShadowParams(color: AppColors.color_707070),
-      //       ),
-      //       primaryButton: PaymentSheetPrimaryButtonAppearance(
-      //         shapes: PaymentSheetPrimaryButtonShape(blurRadius: 8),
-      //         colors: PaymentSheetPrimaryButtonTheme(
-      //           light: PaymentSheetPrimaryButtonThemeColors(
-      //             background: AppColors.app_color,
-      //             text: Colors.white,
-      //           ),
-      //         ),
-      //       ),
-      //     ),
-      //   ),
-      // );
+      await Stripe.instance.initPaymentSheet(
+        paymentSheetParameters: SetupPaymentSheetParameters(
+          // Enable custom flow
+          customFlow: true,
+          // setupIntentClientSecret: 'sk_test_51Lde8bIv5chsib1PT1sD0GFaWv5viIQzU6zIwIqzOK9ULVWiQChmZ1huNaLibaIUJNszVnpG5Dk64wF0XR08wMnx00x2YIx8vp',
+          // Main params
+          merchantDisplayName: 'UrbanMalta',
+          paymentIntentClientSecret: data.stripeintent!.clientSecret,
+          primaryButtonLabel: 'Pay now',
+          applePay: Platform.isIOS?PaymentSheetApplePay(
+            merchantCountryCode: 'MT',
+          ):null,
+          googlePay: Platform.isAndroid? PaymentSheetGooglePay(
+            merchantCountryCode: 'MT',
+            testEnv: true,
+          ) : null,
+          style: ThemeMode.dark,
+          appearance: PaymentSheetAppearance(
+            colors: PaymentSheetAppearanceColors(
+              background: Colors.white,
+              primary: Colors.blue,
+            ),
+            shapes: PaymentSheetShape(
+              borderWidth: 4,
+              shadow: PaymentSheetShadowParams(color: AppColors.color_707070),
+            ),
+            primaryButton: PaymentSheetPrimaryButtonAppearance(
+              shapes: PaymentSheetPrimaryButtonShape(blurRadius: 8),
+              colors: PaymentSheetPrimaryButtonTheme(
+                light: PaymentSheetPrimaryButtonThemeColors(
+                  background: AppColors.app_color,
+                  text: Colors.white,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ).then((value) {
+        showPaymentSheet(data.orderData!.id);
+      });
 
-      // await Stripe.instance.presentPaymentSheet();
-
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) =>
-                  CreditCardInput(clientSecret: data.stripeintent!.clientSecret,)));
+      //
+      // Navigator.push(
+      //     context,
+      //     MaterialPageRoute(
+      //         builder: (context) =>
+      //             CreditCardInput(clientSecret: data.stripeintent!.clientSecret,)));
 
       //     setState(() {
       //   _ready = true;
       // });
-    } catch (e) {
+    } on StripeException catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Error: $e')),
       );
@@ -374,6 +375,15 @@ class _OrderReviewState extends State<OrderReview> {
             },
           );
         });
+  }
+
+  void showPaymentSheet(orderId) async{
+    await Stripe.instance.presentPaymentSheet().then((value){
+      HttpClient().orderPayment(orderId).then((value){}).onError((error, stackTrace) {});
+    }).onError((error, stacktrace) {
+      print("Error is $error $stacktrace");
+    });
+
   }
 }
 
