@@ -29,6 +29,10 @@ class SearchTextField extends StatelessWidget {
           },
           onFieldSubmitted: (value) => {if (value.length > 2) {}},
           onChanged: onSearchingComplete,
+          textInputAction: TextInputAction.search,
+          // onSubmitted: (value) {
+          //   print("search");
+          // },
           cursorColor: Colors.black,
           enabled: enable,
           style: TextStyle(

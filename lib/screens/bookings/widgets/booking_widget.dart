@@ -51,7 +51,8 @@ class _BookingWidgetState extends State<BookingWidget> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15.0),
           ),
-          elevation: 10,
+          elevation: 3,
+          shadowColor: Colors.black.withOpacity(0.14),
           child: Padding(
             padding: EdgeInsets.all(15.h),
             child:
@@ -105,14 +106,13 @@ class _BookingWidgetState extends State<BookingWidget> {
                   )
                 ],
               ),
-              10.verticalSpace,
+              SizedBox(height: 6,),
               Container(
                 height: 1,
                 width: MediaQuery.of(context).size.width,
                 color: AppColors.divider,
               ),
-              10.verticalSpace,
-
+                  SizedBox(height: 6,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -146,14 +146,14 @@ class _BookingWidgetState extends State<BookingWidget> {
                               : 3)
                 ],
               ),
-              10.verticalSpace,
+                  SizedBox(height: 6,),
 
               Container(
                 height: 1,
                 width: MediaQuery.of(context).size.width,
                 color: AppColors.divider,
               ),
-              10.verticalSpace,
+                  SizedBox(height: 6,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -170,6 +170,7 @@ class _BookingWidgetState extends State<BookingWidget> {
                       widget.bookingstatus == 'Request')
                     PopupMenuButton(
                       icon: const Icon(Icons.more_vert),
+
                       itemBuilder: (context) {
                         return [
                           if (widget.bookingstatus == 'Request' &&
@@ -210,7 +211,7 @@ class _BookingWidgetState extends State<BookingWidget> {
                 ],
               ),
 
-              10.verticalSpace,
+              // 10.verticalSpace,
               // ServiceProviderOrUserSummary(booking: widget.booking),
               // widget.bookingstatus == "Completed" &&
               //     widget.booking.rating != 0

@@ -42,7 +42,7 @@ class RecommendedServiceProvidersResponse {
     dynamic ratingCount;
     dynamic reviewCount;
     String? slug;
-    int? rating;
+    double? rating;
     UserData? userData;
     Servicepackages? servicepackages;
     List<Gigdocument>? gigdocument;
@@ -60,7 +60,7 @@ class RecommendedServiceProvidersResponse {
         ratingCount: json["rating_count"] == null ? 0 : json["rating_count"],
         reviewCount: json["review_count"]== null ? 0 : json["review_count"],
         slug: json["slug"],
-        rating: json["rating"],
+        rating: json["rating"]?.toDouble(),
         gigdocument: json["gigdocument"] == null ? [] : List<Gigdocument>.from(json["gigdocument"]!.map((x) => Gigdocument.fromJson(x))),
         userData: json["user_data"] == null ? null : UserData.fromJson(json["user_data"]),
         servicepackages: json["servicepackages"] == null ? null : Servicepackages.fromJson(json["servicepackages"]),

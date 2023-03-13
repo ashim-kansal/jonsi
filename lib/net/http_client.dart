@@ -107,6 +107,9 @@ abstract class HttpClient {
   @POST('services/byid')
   Future<List<RecommendedServiceProvidersResponse>> getRecommendedServiceProviders(categoryid);
 
+  @POST('servicesprovider/desc')
+  Future<List<RecommendedServiceProvidersResponse>> searchServiceProviders(String text);
+
   @POST('services/details')
   Future<List<ProviderDetailModel>> getServiceProviderDetail(serviceProviderId);
 

@@ -401,6 +401,24 @@ class _HttpClient implements HttpClient {
   }
 
   @override
+  Future<List<RecommendedServiceProvidersResponse>> searchServiceProviders(String text) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    var formData = FormData.fromMap({
+      'text': text,
+    });
+
+    final _result = await _dio.fetch<String>(
+        _setStreamType<RecommendedServiceProvidersResponse>(
+            Options(method: 'POST', headers: _headers, extra: _extra)
+                .compose(_dio.options, 'servicesprovider/desc',
+                    queryParameters: queryParameters, data: formData)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    return recommendedServiceProvidersResponseFromJson(_result.data!);
+  }
+
+  @override
   Future<List<ProviderDetailModel>> getServiceProviderDetail(id) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};

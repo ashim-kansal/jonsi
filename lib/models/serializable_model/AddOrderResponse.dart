@@ -62,7 +62,7 @@ class OrderData {
     String? currency;
     String? serviceFee;
     DateTime? time;
-    int? rating;
+    double? rating;
     DateTime? updatedAt;
     DateTime? createdAt;
     int? id;
@@ -77,7 +77,7 @@ class OrderData {
         currency: json["currency"],
         serviceFee: json["service_fee"],
         time: json["time"] == null ? null : DateTime.parse(json["time"]),
-        rating: json["rating"],
+        rating: json["rating"]?.toDouble(),
         updatedAt: json["updated_at"] == null ? null : DateTime.parse(json["updated_at"]),
         createdAt: json["created_at"] == null ? null : DateTime.parse(json["created_at"]),
         id: json["id"],
