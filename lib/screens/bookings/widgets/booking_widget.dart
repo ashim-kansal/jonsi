@@ -54,7 +54,7 @@ class _BookingWidgetState extends State<BookingWidget> {
           elevation: 3,
           shadowColor: Colors.black.withOpacity(0.14),
           child: Padding(
-            padding: EdgeInsets.all(15.h),
+            padding: const EdgeInsets.only(left: 10,right: 10,top: 5),
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Row(
