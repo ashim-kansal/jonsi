@@ -58,6 +58,7 @@ class _SearchCatagoriesScreenState extends State<SearchCatagoriesScreen> {
                   const SizedBox(
                     height: 15,
                   ),
+
                   Expanded(
                       child: FutureBuilder(
                           future: HttpClient().searchServiceProviders(this.searchText),
@@ -69,7 +70,6 @@ class _SearchCatagoriesScreenState extends State<SearchCatagoriesScreen> {
                               );
                             }
                             return ListView.separated(
-                              physics: NeverScrollableScrollPhysics(),
                               shrinkWrap: true,
                               itemCount: response.data!.length,
                               itemBuilder: (context, position) {
