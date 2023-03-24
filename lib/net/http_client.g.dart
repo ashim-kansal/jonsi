@@ -43,6 +43,12 @@ class _HttpClient implements HttpClient {
       'Content-Type': 'multipart/form-data',
     };
 
+
+    List<Future> list = [];
+    for(var i=0;i<gigImage.length;i++){
+      list.add(MultipartFile.fromFile(gigImage[i].path, filename: gigImage[i].path.split('/').last),);
+    }
+
     var formData = FormData.fromMap({
       'first_name': params['first_name'],
       'last_name': params['last_name'],
@@ -55,7 +61,7 @@ class _HttpClient implements HttpClient {
       "Age":params['Age'],
       "nationality":params['nationality'],
       "language": params['language'],
-      "service_title":"proidehoubroufo-770",
+      "service_title": params['service_title'],
       "Perhour":params['Perhour'],
       "description":params["description"],
       "Extra_for_urgent_need":params['Extra_for_urgent_need'],
@@ -68,15 +74,46 @@ class _HttpClient implements HttpClient {
       //   await MultipartFile.fromFile(doc.path, filename: doc.path.split('/').last),
       //   await MultipartFile.fromFile(licence.path, filename: licence.path.split('/').last),
       // ],
-      'fileUploadGIG[]': [
-        await MultipartFile.fromFile(gigImage.path, filename: gigImage.path.split('/').last),
-        // await MultipartFile.fromFile('./text2.txt', filename: 'text2.txt'),
-      ]
+      'fileUploadGIG[]': await list
     });
 
     final _result = await _dio.fetch(_setStreamType<HttpResponse<dynamic>>(
         Options(method: 'POST', headers: _headers, extra: _extra)
             .compose(_dio.options, 'auth/poviderregister',
+                queryParameters: queryParameters, data: formData)
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = _result.data;
+    final httpResponse = HttpResponse(value, _result);
+    return httpResponse;
+  }
+
+  @override
+  Future<HttpResponse<dynamic>?> addGig(params, gigImage) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = {
+      'Content-Type': 'multipart/form-data',
+      'Authorization': "Bearer "+StorageManager().accessToken
+    };
+
+
+    List<Future> list = [];
+    for(var i=0;i<gigImage.length;i++){
+      list.add(MultipartFile.fromFile(gigImage[i].path, filename: gigImage[i].path.split('/').last),);
+    }
+
+    var formData = FormData.fromMap({
+      'user_id': StorageManager().userId,
+      'title': params['service_title'],
+      'description': params['description'],
+      'category': params['category'],
+      'perhour': params['Perhour'],
+      'fileUploadGIG[]': await list
+    });
+
+    final _result = await _dio.fetch(_setStreamType<HttpResponse<dynamic>>(
+        Options(method: 'POST', headers: _headers, extra: _extra)
+            .compose(_dio.options, 'gig/add',
                 queryParameters: queryParameters, data: formData)
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = _result.data;
@@ -472,6 +509,24 @@ class _HttpClient implements HttpClient {
   }
 
   @override
+  Future<List<GigListResponse>> getGigList() async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{'Authorization': 'Bearer '+StorageManager().accessToken};
+
+    var formData = FormData.fromMap({
+      'user_id': StorageManager().userId,
+    });
+    final _result = await _dio.fetch<String>(
+        _setStreamType<GigListResponse>(
+            Options(method: 'POST', headers: _headers, extra: _extra)
+                .compose(_dio.options, 'gig/list',
+                queryParameters: queryParameters, data: formData)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    return gigListResponseFromJson(_result.data!);
+  }
+
+  @override
   Future<AddOrderResponse> addOrder(
       String location, String token, String total_price, String provider_id,
       String service_id, String user_id, String address, String currency,
@@ -629,6 +684,26 @@ class _HttpClient implements HttpClient {
         _setStreamType<AddOrderResponse>(
             Options(method: 'POST', headers: _headers, extra: _extra)
                 .compose(_dio.options, 'orders/provider/requests/cancel',
+                queryParameters: queryParameters, data: formData)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    return addOrderResponseFromJson(_result.data!);
+
+  }
+
+  @override
+  Future<AddOrderResponse> deleteGig(String id, String token) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{'Authorization': token};
+
+    var formData = FormData.fromMap({
+      'id': id,
+    });
+
+    final _result = await _dio.fetch<String>(
+        _setStreamType<AddOrderResponse>(
+            Options(method: 'POST', headers: _headers, extra: _extra)
+                .compose(_dio.options, 'gig/delete',
                 queryParameters: queryParameters, data: formData)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     return addOrderResponseFromJson(_result.data!);

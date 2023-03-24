@@ -22,7 +22,7 @@ class HomeItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return InkWell(
         onTap: onTap,
         child: Card(
       elevation: 2,

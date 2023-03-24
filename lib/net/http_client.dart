@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:kappu/constants/storage_manager.dart';
 import 'package:kappu/models/serializable_model/FaqModel.dart';
+import 'package:kappu/models/serializable_model/GigListResponse.dart';
 import 'package:kappu/models/serializable_model/Language.dart';
 import 'package:kappu/models/serializable_model/NotificationModel.dart';
 import 'package:kappu/models/serializable_model/RecommendedServiceProvidersResponse.dart';
@@ -40,7 +41,10 @@ abstract class HttpClient {
   Future<UserSignUpModel?> signup(@Body() Map<String, dynamic> params);
 
   @POST('auth/poviderregister/')
-  Future<HttpResponse?> providersignup(@Body() Map<String, dynamic> params, File gigpath);
+  Future<HttpResponse?> providersignup(@Body() Map<String, dynamic> params, List<File> gigpath);
+
+  @POST('gig/add')
+  Future<HttpResponse?> addGig(@Body() Map<String, dynamic> params, List<File> gigpath);
 
   @POST('auth/customerregister')
   Future<HttpResponse?> userSignup(@Body() Map<String, dynamic> params, File file);
@@ -101,6 +105,9 @@ abstract class HttpClient {
   @GET('getpopuplerservices')
   Future<List<PopularServiceListResponse>> getPopularServices();
 
+  @GET('gig/list')
+  Future<List<GigListResponse>>  getGigList();
+
   @GET('trending/profile')
   Future<List<TrendingServicesResponse>> getTrendingCatagory();
 
@@ -149,6 +156,9 @@ abstract class HttpClient {
 
   @POST('orders/provider/requests/cancel')
   Future<AddOrderResponse> cancelOrder(String bookingId, String token);
+
+  @POST('delete')
+  Future<AddOrderResponse> deleteGig(String id, String token);
 
   @POST('orders/provider/requests/completed')
   Future<AddOrderResponse> completeOrder(String bookingId, String token);
@@ -237,4 +247,5 @@ abstract class HttpClient {
   @PATCH('/provider/devices/{id}/')
   Future<HttpResponse> updatetoken(
       @Path('id') String id, @Body() Map<String, dynamic> params);
+
 }

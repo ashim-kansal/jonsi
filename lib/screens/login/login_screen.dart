@@ -288,12 +288,14 @@ class _LoginScreenState extends State<LoginScreen> {
                     StorageManager().stripeId =
                       "" + loginresponse.data['data']['user']['customer_stripe_id'];
                   StorageManager().userImage =
-                      "" + loginresponse.data['data']['user']['profile_pic']!=null?"" + loginresponse.data['data']['user']['profile_pic'] : "";
+                      loginresponse.data['data']['user']['profile_pic']!=null?"" + loginresponse.data['data']['user']['profile_pic'] : "";
                   // StorageManager().phone = ""+loginresponse.data['data']['user']['phone_number'];
                 }
                 signin = false;
                 isLoading = false;
                 print('aaaaa');
+                (widget.isFromOtherScreen && loginresponse.data['data']['user']['is_provider'] == false)
+                    ? Navigator.pop(context, "1") :
                 Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (BuildContext context){
                   return BottomNavBar(
                     isprovider: loginresponse.data['data']['user']['is_provider'],
@@ -397,7 +399,7 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
           GestureDetector(
             onTap: () {
-              changeScreen(context: context, screen: const ProviderOrUser());
+              changeScreen(context: context, screen: ProviderOrUser());
             },
             child: const Text(
               'Signup',
@@ -432,40 +434,6 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Future checkaddusertoken(int id) async {
-    var token = await FirebaseMessaging.instance.getToken();
-    await HttpClient().checktoken(id.toString()).then((value) {
-      print("!!!!!!@@@@@@@@@#########");
-      print(value.data['registration_id']);
-      if (value.data['registration_id'] != token) {
-        Map<String, dynamic> updatebody = {
-          'registration_id': token,
-          'type': Platform.isAndroid ? 'android' : 'ios'
-        };
-        HttpClient()
-            .updatetoken(id.toString(), updatebody)
-            .then((value) => {print(value)})
-            .catchError((e) {
-          print(e);
-        });
-      }
-    }).catchError((e) async {
-      print('token not set');
-
-      print(token);
-      Map<String, dynamic> body = {
-        'user': id,
-        'registration_id': token,
-        'type': Platform.isAndroid ? 'android' : 'ios'
-      };
-      HttpClient()
-          .addtoken(body)
-          .then((value) => {print(value)})
-          .catchError((e) {
-        print(e);
-      });
-    });
-  }
 
   Image returnLogo(BuildContext context) {
     return Image.asset(
@@ -505,11 +473,10 @@ class _LoginScreenState extends State<LoginScreen> {
         StorageManager().language =
             "" + loginresponse.data['data']['user']['languages'];
         // StorageManager().phone = ""+loginresponse.data['data']['user']['phone_number'];
-      }
       signin = false;
       isLoading = false;
       print('aaaaa');
-      widget.isFromOtherScreen
+        (widget.isFromOtherScreen && loginresponse.data['data']['user']['is_provider'] == false)
           ? Navigator.pop(context, "1")
           : changeScreenReplacement(
               context,
@@ -517,18 +484,35 @@ class _LoginScreenState extends State<LoginScreen> {
                 isprovider: loginresponse.data['data']['user']['is_provider'],
               ));
       // Navigator.pop(context);
+        }
     }).catchError((error) {
       signin = false;
       isLoading = false;
       setState(() {});
-      changeScreen(
-          context: context,
-          screen: ProviderOrUser(
-            loginType: type,
-            name: displayName,
-            socialId: id,
-            email: email,
-          ));
+      final result = Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => ProviderOrUser(
+                  loginType: type,
+                  name: displayName,
+                  socialId: id,
+                  email: email,
+                  isFromOtherScreen: widget.isFromOtherScreen
+              )));
+
+      // final result = changeScreen(
+      //     context: context,
+      //     screen: ProviderOrUser(
+      //       loginType: type,
+      //       name: displayName,
+      //       socialId: id,
+      //       email: email,
+      //         isFromOtherScreen: widget.isFromOtherScreen
+      //     ));
+
+      if(widget.isFromOtherScreen && result == "1"){
+        Navigator.pop(context);
+      }
     });
   }
 }

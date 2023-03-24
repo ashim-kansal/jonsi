@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_credit_card/extension.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kappu/components/AppColors.dart';
+import 'package:kappu/constants/storage_manager.dart';
 import 'package:kappu/screens/catagories/search_catagories_screen.dart';
 import 'package:kappu/screens/home_page/widgets/best_services.dart';
 import 'package:kappu/screens/home_page/widgets/slider.dart';
+import 'package:kappu/screens/login/login_screen.dart';
 import 'package:kappu/screens/settings/settings_screen.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
@@ -18,6 +21,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,14 +68,12 @@ class _HomeScreenState extends State<HomeScreen> {
                             backgroundColor: Colors.white,
                             child: IconButton(
                               onPressed: () {
-                                // if (StorageManager().accessToken.isNotEmpty) {
+                                if (StorageManager().accessToken.isNotEmpty) {
                                 pushDynamicScreen(context,
                                     screen: SettingsRoutePage(), withNavBar: false);
-                                // } else {
-                                //   changeScreen(
-                                //       context: context,
-                                //       screen: LoginScreen(isFromOtherScreen: true));
-                                // }
+                                } else {
+                                  bottomSheetForSignIn(context);
+                                }
                               },
                               icon: const Icon(
                                 Icons.account_circle_outlined,
@@ -253,6 +256,30 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
       ),
+    );
+  }
+
+  bottomSheetForSignIn(BuildContext context)
+  {
+    showModalBottomSheet(
+      constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height-50),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(topLeft: Radius.circular(25),topRight: Radius.circular(25)),
+        ),
+        isScrollControlled: true,
+        context: context,
+        builder: (context){
+          return ClipRRect(
+              borderRadius: BorderRadius.circular(20.0),child:LoginScreen(isFromOtherScreen: true));
+
+        }
+    ).whenComplete(() {
+        print('ondismiss');
+        if(StorageManager().accessToken.isNotNullAndNotEmpty)
+          pushDynamicScreen(context,
+            screen: SettingsRoutePage(), withNavBar: false);
+
+    }
     );
   }
 }

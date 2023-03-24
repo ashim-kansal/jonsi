@@ -18,8 +18,9 @@ import '../../net/http_client.dart';
 
 class RegisterMore extends StatefulWidget {
   final Map<String, dynamic> bodyprovider;
+  bool? isFromAddGig = false;
 
-  const RegisterMore({Key? key, required this.bodyprovider}) : super(key: key);
+  RegisterMore({Key? key, required this.bodyprovider, this.isFromAddGig}) : super(key: key);
 
   @override
   _RegisterMoreState createState() => _RegisterMoreState();
@@ -29,9 +30,11 @@ class _RegisterMoreState extends State<RegisterMore> {
   bool loading = false;
   final _formState = GlobalKey<FormState>();
   final TextEditingController _descController = TextEditingController();
+  final TextEditingController _titleController = TextEditingController();
   final TextEditingController _rateController = TextEditingController();
   final TextEditingController _extraRateController = TextEditingController();
   bool isValidDesc= true;
+  bool isValidTitle= true;
   bool isValidRate= true;
   bool isValidExtraRate= true;
 
@@ -213,6 +216,26 @@ class _RegisterMoreState extends State<RegisterMore> {
                                   ])),
                           10.verticalSpace,
                           CustomTextFormField(
+                            controller: _titleController,
+                            hintText: 'Title',
+                            keyboardType: TextInputType.text,
+                            prefixIcon: ImageIcon(AssetImage('assets/icons/price.png'), color: AppColors.app_color,),
+                            isValid: isValidTitle,
+                            onChanged: (value) {
+                              if (value.isNotEmpty) {
+                                isValidTitle = true;
+                              } else {
+                                isValidTitle = false;
+                              }
+                              setState(() {});
+                            },
+                            validator: (value) => value!.isEmpty
+                                ? "Enter Title"
+                                : null,
+                          ),
+
+                          10.verticalSpace,
+                          CustomTextFormField(
                             controller: _descController,
                             hintText:
                                 'Description | Cover letter – why should user hire you?',
@@ -326,10 +349,17 @@ class _RegisterMoreState extends State<RegisterMore> {
 
   onregisterpressedprovider() async {
     print('anc');
-    if(_descController.text.isEmpty || _rateController.text.isEmpty || _extraRateController.text.isEmpty){
+    if(_titleController.text.isEmpty ||_descController.text.isEmpty || _rateController.text.isEmpty || _extraRateController.text.isEmpty){
       return;
     }
-    Map<String, dynamic> bodyprovider1 = {
+
+    Map<String, dynamic> bodyprovider1 = widget.isFromAddGig??false ? {
+      'category': selectedcatagory.id,
+      "description": _descController.text,
+      "Perhour": _rateController.text,
+      "Extra_for_urgent_need": _extraRateController.text,
+      "service_title": _titleController.text
+    } : {
       'first_name': widget.bodyprovider['first_name'],
       'last_name': widget.bodyprovider['last_name'],
       'username': widget.bodyprovider['username'],
@@ -341,23 +371,19 @@ class _RegisterMoreState extends State<RegisterMore> {
       "Age": widget.bodyprovider['Age'],
       "nationality": widget.bodyprovider['nationality'],
       "language": widget.bodyprovider['language'],
-      "service_title": "proidehoubroufo-770",
+      "service_title": _titleController.text,
       "description": _descController.text,
       "Perhour": _rateController.text,
       'fcm_token': StorageManager().fcmToken,
       'os': Platform.isAndroid?'android':'ios',
       "Extra_for_urgent_need": _extraRateController.text
     };
-    Navigator.push(
+    final result = Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => AddGig(bodyprovider: bodyprovider1)));
-
-    // Navigator.push(
-    //     context,
-    //     MaterialPageRoute(
-    //         builder: (context) => AddDocument(bodyprovider: bodyprovider1)));
-
-
+            builder: (context) => AddGig(bodyprovider: bodyprovider1, isFromAddGig: widget.isFromAddGig)));
+        if(widget.isFromAddGig! && result == "1"){
+          Navigator.pop(context);
+        }
   }
 }

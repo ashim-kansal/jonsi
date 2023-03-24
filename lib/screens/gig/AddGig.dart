@@ -19,12 +19,14 @@ import '../../common/CircleButton.dart';
 
 class AddGig extends StatefulWidget {
   final Map<String, dynamic> bodyprovider;
+  bool? isFromAddGig = false;
   // final File doc;
   // final File licence;
 
-  const AddGig(
+  AddGig(
       {Key? key,
-      required this.bodyprovider
+      required this.bodyprovider,
+        this.isFromAddGig
       // ,required this.doc,
       // required this.licence
       })
@@ -315,40 +317,65 @@ class _AddGigState extends State<AddGig> {
       setState(() {
         isLoading = true;
       });
-      await HttpClient()
-          .providersignup(
-          widget.bodyprovider, images.first)
-          .then((value) {
-        setState(() {
-          isLoading = false;
+      if(widget.isFromAddGig??false){
+        await HttpClient()
+            .addGig(
+            widget.bodyprovider, images)
+            .then((value) {
+          setState(() {
+            isLoading = false;
+          });
+          if (value?.data['status']) {
+            Navigator.pop(context, "1");
+          }
+          }).catchError((e) {
+          setState(() {
+            isLoading = false;
+          });
+          print(e);
+          BaseDio.getDioError(e);
+          // if (e.response != null && e.response.data['errors'].length > 0) {
+          //   showAlertDialog(
+          //       error: "Please check your email address",
+          //       errorType: "Alert");
+          // }
         });
-        if(value?.data['status']) {
-          var provider = StorageManager();
-          provider.accessToken = value?.data['token'];
-          provider.userId = value?.data['user']['id'];
-          provider.name = widget.bodyprovider['first_name'];
-          provider.phone = widget.bodyprovider['phone_number'];
-          provider.email = widget.bodyprovider['email'];
-          provider.isProvider = true;
-          provider.nationality = widget.bodyprovider['nationality'];
-          provider.language = value?.data['user']['languages'];
-          provider.stripeId =
-              "" + value?.data['user']['customer_stripe_id'];
-        }
-        Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-                builder: (context) => const BottomNavBar(isprovider: true)));
-      }).catchError((e) {
-        setState(() {
-          isLoading = false;
+      }else {
+        await HttpClient()
+            .providersignup(
+            widget.bodyprovider, images)
+            .then((value) {
+          setState(() {
+            isLoading = false;
+          });
+          if (value?.data['status']) {
+            var provider = StorageManager();
+            provider.accessToken = value?.data['token'];
+            provider.userId = value?.data['user']['id'];
+            provider.name = widget.bodyprovider['first_name'];
+            provider.phone = widget.bodyprovider['phone_number'];
+            provider.email = widget.bodyprovider['email'];
+            provider.isProvider = true;
+            provider.nationality = widget.bodyprovider['nationality'];
+            provider.language = value?.data['user']['languages'];
+            provider.stripeId =
+                "" + value?.data['user']['customer_stripe_id'];
+          }
+          Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => const BottomNavBar(isprovider: true)));
+        }).catchError((e) {
+          setState(() {
+            isLoading = false;
+          });
+          if (e.response != null && e.response.data['errors'].length > 0) {
+            showAlertDialog(
+                error: "Please check your email address",
+                errorType: "Alert");
+          }
         });
-        if(e.response !=null && e.response.data['errors'].length>0){
-          showAlertDialog(
-              error: "Please check your email address",
-              errorType: "Alert");
-        }
-      });
+      }
     }
 
 

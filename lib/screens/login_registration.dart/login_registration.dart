@@ -188,7 +188,7 @@ class LoginOrRegistration extends StatelessWidget {
                         ),
                         onPressed: () {
                           changeScreen(
-                              context: context, screen: const ProviderOrUser());
+                              context: context, screen: ProviderOrUser());
                         },
                       )),
                   const SizedBox(height: 20.0),

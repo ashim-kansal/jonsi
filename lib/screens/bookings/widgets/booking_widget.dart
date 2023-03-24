@@ -169,8 +169,7 @@ class _BookingWidgetState extends State<BookingWidget> {
                   if (widget.bookingstatus == 'Active' ||
                       widget.bookingstatus == 'Request')
                     PopupMenuButton(
-                      icon: const Icon(Icons.more_vert),
-
+                      icon: const Text("...", style: TextStyle(fontSize: 28, color: AppColors.app_black),),
                       itemBuilder: (context) {
                         return [
                           if (widget.bookingstatus == 'Request' &&

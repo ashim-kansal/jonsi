@@ -6,6 +6,7 @@ import 'package:kappu/constants/storage_manager.dart';
 import 'package:kappu/helperfunctions/screen_nav.dart';
 import 'package:kappu/screens/faqs/frequently_asked_questions.dart';
 import 'package:kappu/screens/provider_reviews/provider_reviews.dart';
+import 'package:kappu/screens/register/register_more.dart';
 import 'package:kappu/screens/register/social_signup.dart';
 
 import 'widget/custom_toggle_button.dart';
@@ -191,6 +192,15 @@ class _ProviderHomeScreenState extends State<ProviderHomeScreen> {
                             child: HomeItem(
                           title: 'Create GIG Offer',
                           imagePath: 'assets/images/create-gig-offer.png',
+                              onTap: (){
+                            print('aaa');
+                                Map<String, dynamic> map = {};
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => RegisterMore(bodyprovider: map, isFromAddGig : true)));
+
+                              },
                         )),
                       ],
                     ),

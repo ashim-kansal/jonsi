@@ -11,10 +11,12 @@ import 'package:kappu/provider/provider_provider.dart';
 import 'package:kappu/provider/userprovider.dart';
 import 'package:kappu/screens/edit_profile/edit_profile.dart';
 import 'package:kappu/screens/faqs/frequently_asked_questions.dart';
+import 'package:kappu/screens/gig/GigListPage.dart';
 import 'package:kappu/screens/login/splash_view.dart';
 import 'package:kappu/screens/notification/notification_screen.dart';
 import 'package:kappu/screens/privacy_policy/privacy_policy.dart';
 import 'package:kappu/screens/profilepage/profile_page.dart';
+import 'package:kappu/screens/register/register_more.dart';
 import 'package:kappu/screens/reset_password/create_new_password.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
@@ -183,10 +185,21 @@ Widget _buildOverlayContent(BuildContext context) {
 
             }),
             ProfileItemTitle(label: "General", context: context),
-            // if(provider.isProvider)
-            //   ProfileItem(label: "Add GIG", iconPath: 'assets/icons/addgig.png'),
-            // if(provider.isProvider)
-            //   ProfileItem(label: "GIGs Offered", iconPath: 'assets/icons/savegig.png'),
+            if(provider.isProvider)
+                ProfileItem(label: "Add GIG", iconPath: 'assets/icons/addgig.png', onTap: (){
+                  Map<String, dynamic> map = {};
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => RegisterMore(bodyprovider: map, isFromAddGig : true)));
+
+              }),
+            if(provider.isProvider)
+              ProfileItem(label: "GIGs Offered", iconPath: 'assets/icons/savegig.png', onTap: (){
+                changeScreen(
+                    context: context,
+                    screen: GigListPage());
+              }),
 
             ProfileItem(label: "Faq’s", iconPath: 'assets/icons/loc.png', onTap: (){
               changeScreen(

@@ -33,17 +33,6 @@ class _BookingScreenState extends State<BookingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    if (StorageManager().accessToken.isEmpty) {
-      SchedulerBinding.instance.addPostFrameCallback((_) async {
-        final result = await Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => LoginScreen(isFromOtherScreen: true)));
-        if (result == "1") {
-          reloadpage();
-        }
-      });
-    }
     return DefaultTabController(
       length: 4,
       child: Scaffold(

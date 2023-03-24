@@ -30,17 +30,17 @@ class _NotificationScreenState extends State<NotificationScreen> {
   }
   @override
   Widget build(BuildContext context) {
-    if(StorageManager().accessToken.isEmpty){
-      SchedulerBinding.instance.addPostFrameCallback((_) async {
-        final result = await Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen(isFromOtherScreen: true)));
-        if(result=="1"){
-          setState(() {
-
-          });
-        }
-
-      });
-    }
+    // if(StorageManager().accessToken.isEmpty){
+    //   SchedulerBinding.instance.addPostFrameCallback((_) async {
+    //     final result = await Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen(isFromOtherScreen: true)));
+    //     if(result=="1"){
+    //       setState(() {
+    //
+    //       });
+    //     }
+    //
+    //   });
+    // }
     return Scaffold(
       appBar: AppBar(
           backgroundColor: Colors.white,
