@@ -126,12 +126,31 @@ class _AddPhotoWidgetState extends State<AddPhotoWidget> {
             ),
           ),
         ),
-        widget.filePath != null ? InkWell(
-          onTap: (){
-            widget.onTapCancel;
-          },
-          child: Icon(Icons.delete),
-        ) : Container()
+        widget.filePath != null ?
+        Positioned(
+          top:0.0,
+          right: 0.0,
+          child: Padding(
+            padding: const EdgeInsets.all(0.0),
+            child: InkWell(
+              onTap: widget.onTapCancel,
+              child: Container(
+                width: 20,
+                height: 20,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.blue,
+                ),
+                child: Icon(
+                  Icons.close,
+                  color: Colors.white,
+                  size: 15,
+                ),
+              ),
+            ),
+          ),
+        )
+         : Container()
       ],
     );
   }

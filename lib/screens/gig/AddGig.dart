@@ -8,6 +8,7 @@ import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:kappu/common/custom_progress_bar.dart';
 import 'package:kappu/common/dialogues.dart';
+import 'package:kappu/common/validation_dialogbox.dart';
 import 'package:kappu/components/AppColors.dart';
 import 'package:kappu/constants/storage_manager.dart';
 import 'package:kappu/models/serializable_model/GigListResponse.dart';
@@ -276,9 +277,9 @@ class _AddGigState extends State<AddGig> {
                                     progress: progress,
                                     isImage: false,
                                     onTapCancel: () {
+                                      print('aaaa');
                                       setState(() {
-                                        // uploadTask.cancel();
-                                        isUploading = false;
+                                        images.removeAt(index);
                                       });
                                     },
                                   ));
@@ -351,7 +352,7 @@ class _AddGigState extends State<AddGig> {
             isLoading = false;
           });
           if (value?.data['status']) {
-            Navigator.pop(context, "1");
+            showSuccessDialog("Gig added successfully");
           }
           }).catchError((e) {
           setState(() {
@@ -359,11 +360,6 @@ class _AddGigState extends State<AddGig> {
           });
           print(e);
           BaseDio.getDioError(e);
-          // if (e.response != null && e.response.data['errors'].length > 0) {
-          //   showAlertDialog(
-          //       error: "Please check your email address",
-          //       errorType: "Alert");
-          // }
         });
       }
       if(widget.isFromEditGig??false){
@@ -375,7 +371,7 @@ class _AddGigState extends State<AddGig> {
             isLoading = false;
           });
           if (value?.data['status']) {
-            Navigator.pop(context, "1");
+            showSuccessDialog("Gig updated successfully");
           }
           }).catchError((e) {
           setState(() {
@@ -447,4 +443,19 @@ class _AddGigState extends State<AddGig> {
       });
       });
   }
+
+  showSuccessDialog(desc) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return WarningDialogBox(title: "Success",descriptions: desc,buttonTitle: "ok",
+            onPressed: () {
+              Navigator.pop(context, "1");
+              Navigator.pop(context, "1");
+            },
+            buttonColor: AppColors.color_green,
+            icon: Icons.check);
+        });
+  }
+
 }
