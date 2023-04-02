@@ -14,6 +14,7 @@ import 'package:kappu/screens/add_review/add_review.dart';
 import 'package:kappu/screens/bookings/widgets/cancelled_booking.dart';
 import 'package:kappu/screens/bookings/widgets/booking_widget.dart';
 import 'package:kappu/screens/gig/GigItemWidget.dart';
+import 'package:kappu/screens/register/register_more.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
 
@@ -88,22 +89,17 @@ class GigListPageState extends State<GigListPage> {
     // setState(() {
     //   isLoading = true;
     // });
-    if (value == 'edit') {
-      // await HttpClient()
-      //     .acceptOrder(bookingId.toString(), "Bearer "+StorageManager().accessToken)
-      //     .then((value) {
-      //   if (value.status) {
-      //     setState(() {
-      //       isLoading = false;
-      //     });
-      //     reloadpage();
-      //   }
-      // }).catchError((e) {
-      //   setState(() {
-      //     isLoading = false;
-      //   });
-      //   BaseDio.getDioError(e);
-      // });
+    if (value == 'edit')  {
+      Map<String, dynamic> map = {};
+      final result = await Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => RegisterMore(bodyprovider: map, isFromEditGig : true, myGig: item)));
+
+      if(result == "1"){
+        setState(() {
+        });
+      }
     }
     else if (value == 'delete') {
      deleteGig(item);

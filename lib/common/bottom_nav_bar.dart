@@ -53,10 +53,13 @@ class _BottomNavBarState extends State<BottomNavBar> {
         onTap: (i) {
           setState(() {
             currentTab = i;
-            currentScreen = screens[i];
-
-            if(i>1 && StorageManager().accessToken.isNullOrEmpty)
+            if(i>1 && StorageManager().accessToken.isNullOrEmpty){
+              // currentScreen = screens[0];
               bottomSheetForSignIn(context, i);
+            }else{
+              currentScreen = screens[i];
+            }
+
 
           });
         },
@@ -114,15 +117,19 @@ class _BottomNavBarState extends State<BottomNavBar> {
     ).whenComplete(() {
       print('complete');
       if(StorageManager().accessToken.isNotNullAndNotEmpty) {
-        if (type == 1) {
-          return NotificationScreen();
+        if (type == 2) {
+          setState(() {
+            currentScreen = NotificationScreen();
+          });
         } else {
-          return BookingScreen();
+          setState(() {
+            currentScreen = BookingScreen();
+          });
         }
       }else{
         setState(() {
-          currentTab = 0;
-          currentScreen = HomeScreen();
+          // currentTab = 0;
+          // currentScreen = HomeScreen();
         });
       }
     }

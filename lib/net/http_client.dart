@@ -46,6 +46,9 @@ abstract class HttpClient {
   @POST('gig/add')
   Future<HttpResponse?> addGig(@Body() Map<String, dynamic> params, List<File> gigpath);
 
+  @POST('gig/edit')
+  Future<HttpResponse?> editGig(@Body() Map<String, dynamic> params, List<File> gigpath, int id);
+
   @POST('auth/customerregister')
   Future<HttpResponse?> userSignup(@Body() Map<String, dynamic> params, File file);
 

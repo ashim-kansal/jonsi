@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +10,7 @@ import 'package:kappu/common/custom_progress_bar.dart';
 import 'package:kappu/common/dialogues.dart';
 import 'package:kappu/components/AppColors.dart';
 import 'package:kappu/constants/storage_manager.dart';
+import 'package:kappu/models/serializable_model/GigListResponse.dart';
 import 'package:kappu/net/base_dio.dart';
 import 'package:kappu/provider/provider_provider.dart';
 import 'package:kappu/screens/submitdocument/add_photo.dart';
@@ -16,17 +18,24 @@ import 'package:provider/provider.dart';
 import '../../common/bottom_nav_bar.dart';
 import '../../net/http_client.dart';
 import '../../common/CircleButton.dart';
+import 'package:http/http.dart' as http;
+import 'package:path_provider/path_provider.dart';
 
 class AddGig extends StatefulWidget {
   final Map<String, dynamic> bodyprovider;
   bool? isFromAddGig = false;
   // final File doc;
   // final File licence;
+  bool? isFromEditGig = false;
+  GigListResponse? myGig;
+
 
   AddGig(
       {Key? key,
       required this.bodyprovider,
-        this.isFromAddGig
+        this.isFromAddGig,
+        this.isFromEditGig,
+        this.myGig
       // ,required this.doc,
       // required this.licence
       })
@@ -41,6 +50,22 @@ class _AddGigState extends State<AddGig> {
   bool isLoading = false;
   double progress = 0;
   List<File> images = [];
+
+  @override
+  void initState() {
+    super.initState();
+    if(widget.isFromEditGig??false){
+      setState(() {
+        isLoading = true;
+      });
+      for( var i=0; i< widget.myGig!.servicepackages!.gigdocument!.length; i++) {
+        getFileFromUrl(widget.myGig!.servicepackages!.gigdocument![i]);
+      }
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
 
   Future getImage(ImageSource imageSource, context, bool isVideo) async {
     XFile? image;
@@ -340,7 +365,32 @@ class _AddGigState extends State<AddGig> {
           //       errorType: "Alert");
           // }
         });
-      }else {
+      }
+      if(widget.isFromEditGig??false){
+        await HttpClient()
+            .editGig(
+            widget.bodyprovider, images, widget.myGig!.id!)
+            .then((value) {
+          setState(() {
+            isLoading = false;
+          });
+          if (value?.data['status']) {
+            Navigator.pop(context, "1");
+          }
+          }).catchError((e) {
+          setState(() {
+            isLoading = false;
+          });
+          print(e);
+          BaseDio.getDioError(e);
+          // if (e.response != null && e.response.data['errors'].length > 0) {
+          //   showAlertDialog(
+          //       error: "Please check your email address",
+          //       errorType: "Alert");
+          // }
+        });
+      }
+      else {
         await HttpClient()
             .providersignup(
             widget.bodyprovider, images)
@@ -379,5 +429,22 @@ class _AddGigState extends State<AddGig> {
     }
 
 
+  }
+
+  getFileFromUrl(Gigdocument item) {
+    String url = "https://urbanmalta.com/public/users/user_${item.userid}/documents/${item.fileName}";
+    var rng = new Random();
+    var tempDir;
+    getTemporaryDirectory().then((value) {
+      tempDir = value;
+      String tempPath = tempDir.path;
+      File file = new File('$tempPath'+ (rng.nextInt(100)).toString() +'.png');
+      http.get(Uri.parse(url)).then((value){
+        file.writeAsBytes(value.bodyBytes);
+        setState(() {
+            images.add(file);
+        });
+      });
+      });
   }
 }

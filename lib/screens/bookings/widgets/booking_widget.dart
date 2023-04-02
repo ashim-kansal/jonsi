@@ -47,12 +47,11 @@ class _BookingWidgetState extends State<BookingWidget> {
           //     ),
           //     withNavBar: false);
         },
-        child: Card(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15.0),
-          ),
-          elevation: 3,
-          shadowColor: Colors.black.withOpacity(0.14),
+        child: Container(
+        child: DecoratedBox(
+        decoration: BoxDecoration(
+        borderRadius: const BorderRadius.all(Radius.circular(6)),
+        color: Colors.white),
           child: Padding(
             padding: const EdgeInsets.only(left: 10,right: 10,top: 5),
             child:
@@ -240,7 +239,7 @@ class _BookingWidgetState extends State<BookingWidget> {
               //   bookingstatus: widget.bookingstatus,
               // ),
             ]),
-          ),
+          ),)
         ));
   }
 

@@ -3,6 +3,7 @@ import 'dart:collection';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter_credit_card/extension.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kappu/components/AppColors.dart';
@@ -275,22 +276,22 @@ class _ProviderDetailScreenState extends State<ProviderDetailScreen> {
                                         ],
                                       ),
                                       onPressed: () {
-                                        if(StorageManager().accessToken.isNotEmpty) {
-                                          Map<String, dynamic> map = {
-                                            'name': response.data![0].title,
-                                            'desc': response.data![0]
-                                                .description,
-                                            'price': response
-                                                .data![0].servicepackages!
-                                                .price,
-                                            // 'image': response.data![0].gigdocument![0].fileName ?? "",
-                                            'location': response.data![0]
-                                                .servicepackages!.location,
-                                            'provider_id':
-                                            response.data![0].userId,
-                                            'service_id': response.data![0].id,
-                                          };
+                                        Map<String, dynamic> map = {
+                                          'name': response.data![0].title,
+                                          'desc': response.data![0]
+                                              .description,
+                                          'price': response
+                                              .data![0].servicepackages!
+                                              .price,
+                                          // 'image': response.data![0].gigdocument![0].fileName ?? "",
+                                          'location': response.data![0]
+                                              .servicepackages!.location,
+                                          'provider_id':
+                                          response.data![0].userId,
+                                          'service_id': response.data![0].id,
+                                        };
 
+                                        if(StorageManager().accessToken.isNotEmpty) {
                                           Navigator.push(
                                               context,
                                               MaterialPageRoute(
@@ -299,7 +300,9 @@ class _ProviderDetailScreenState extends State<ProviderDetailScreen> {
                                                         bodyprovider: map,
                                                       )));
                                         }else{
-                                          showLoginDialog(context, "Please login to continue");
+                                          // showLoginDialog(context, "Please login to continue");
+                                          bottomSheetForSignIn(context, map);
+
                                         }
                                       },
                                     ),
@@ -582,28 +585,57 @@ class _ProviderDetailScreenState extends State<ProviderDetailScreen> {
     }
   }
 
-  showLoginDialog(context, String message) {
+  // showLoginDialog(context, String message) {
+  //
+  //   showDialog(
+  //       context: context,
+  //       builder: (BuildContext context) {
+  //         return WarningDialogBox(
+  //           title: 'Alert',
+  //           descriptions: message,
+  //           buttonTitle:'ok',
+  //           buttonColor: AppColors.color_green,
+  //           icon: Icons.cancel,
+  //           onPressed: () {
+  //             Navigator.pop(context);
+  //             SchedulerBinding.instance.addPostFrameCallback((_) async {
+  //               final result = await Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen(isFromOtherScreen: true)));
+  //               if(result=="1"){
+  //
+  //               }
+  //
+  //             });
+  //           },
+  //         );
+  //       });
+  // }
 
-    showDialog(
+  bottomSheetForSignIn(BuildContext context, Map<String, dynamic> map)
+  {
+    showModalBottomSheet(
+        constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height-50),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(topLeft: Radius.circular(25),topRight: Radius.circular(25)),
+        ),
+        isScrollControlled: true,
         context: context,
-        builder: (BuildContext context) {
-          return WarningDialogBox(
-            title: 'Alert',
-            descriptions: message,
-            buttonTitle:'ok',
-            buttonColor: AppColors.color_green,
-            icon: Icons.cancel,
-            onPressed: () {
-              Navigator.pop(context);
-              SchedulerBinding.instance.addPostFrameCallback((_) async {
-                final result = await Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen(isFromOtherScreen: true)));
-                if(result=="1"){
+        builder: (context){
+          return ClipRRect(
+              borderRadius: BorderRadius.circular(20.0),child:LoginScreen(isFromOtherScreen: true));
 
-                }
-
-              });
-            },
-          );
-        });
+        }
+    ).whenComplete(() {
+      print('ondismiss');
+      if(StorageManager().accessToken.isNotNullAndNotEmpty) {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) =>
+                    OrderReview(
+                      bodyprovider: map,
+                    )));
+      }
+    }
+    );
   }
 }

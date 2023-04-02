@@ -74,7 +74,12 @@ class _HttpClient implements HttpClient {
       //   await MultipartFile.fromFile(doc.path, filename: doc.path.split('/').last),
       //   await MultipartFile.fromFile(licence.path, filename: licence.path.split('/').last),
       // ],
-      'fileUploadGIG[]': await list
+      'fileUploadGIG[]': [
+        if(gigImage.length>0) await MultipartFile.fromFile(gigImage[0].path, filename: gigImage[0].path.split('/').last),
+        if(gigImage.length>1) await MultipartFile.fromFile(gigImage[1].path, filename: gigImage[1].path.split('/').last),
+        if(gigImage.length>2) await MultipartFile.fromFile(gigImage[2].path, filename: gigImage[2].path.split('/').last),
+        // await MultipartFile.fromFile('./text2.txt', filename: 'text2.txt'),
+      ]
     });
 
     final _result = await _dio.fetch(_setStreamType<HttpResponse<dynamic>>(
@@ -108,12 +113,51 @@ class _HttpClient implements HttpClient {
       'description': params['description'],
       'category': params['category'],
       'perhour': params['Perhour'],
-      'fileUploadGIG[]': await list
+      'fileUploadGIG[]': [
+        if(gigImage.length>0) await MultipartFile.fromFile(gigImage[0].path, filename: gigImage[0].path.split('/').last),
+        if(gigImage.length>1) await MultipartFile.fromFile(gigImage[1].path, filename: gigImage[1].path.split('/').last),
+        if(gigImage.length>2) await MultipartFile.fromFile(gigImage[2].path, filename: gigImage[2].path.split('/').last),
+        // await MultipartFile.fromFile('./text2.txt', filename: 'text2.txt'),
+      ]
     });
 
     final _result = await _dio.fetch(_setStreamType<HttpResponse<dynamic>>(
         Options(method: 'POST', headers: _headers, extra: _extra)
             .compose(_dio.options, 'gig/add',
+                queryParameters: queryParameters, data: formData)
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = _result.data;
+    final httpResponse = HttpResponse(value, _result);
+    return httpResponse;
+  }
+
+  @override
+  Future<HttpResponse<dynamic>?> editGig(params, gigImage, id) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = {
+      'Content-Type': 'multipart/form-data',
+      'Authorization': "Bearer "+StorageManager().accessToken
+    };
+
+    var formData = FormData.fromMap({
+      'user_id': StorageManager().userId,
+      'title': params['service_title'],
+      'description': params['description'],
+      'category': params['category'],
+      'perhour': params['Perhour'],
+      'id':id,
+      'fileUploadGIG[]': [
+        if(gigImage.length>0) await MultipartFile.fromFile(gigImage[0].path, filename: gigImage[0].path.split('/').last),
+        if(gigImage.length>1) await MultipartFile.fromFile(gigImage[1].path, filename: gigImage[1].path.split('/').last),
+        if(gigImage.length>2) await MultipartFile.fromFile(gigImage[2].path, filename: gigImage[2].path.split('/').last),
+        // await MultipartFile.fromFile('./text2.txt', filename: 'text2.txt'),
+      ]
+    });
+
+    final _result = await _dio.fetch(_setStreamType<HttpResponse<dynamic>>(
+        Options(method: 'POST', headers: _headers, extra: _extra)
+            .compose(_dio.options, 'gig/edit',
                 queryParameters: queryParameters, data: formData)
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = _result.data;

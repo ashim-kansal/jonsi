@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kappu/common/custom_progress_bar.dart';
 import 'package:kappu/components/AppColors.dart';
 import 'package:kappu/models/serializable_model/CategoryResponse.dart';
+import 'package:kappu/models/serializable_model/GigListResponse.dart';
 import 'package:kappu/screens/gig/AddGig.dart';
 import 'package:kappu/screens/register/widgets/text_field.dart';
 import 'package:kappu/screens/submitdocument/submit_doc.dart';
@@ -19,8 +20,10 @@ import '../../net/http_client.dart';
 class RegisterMore extends StatefulWidget {
   final Map<String, dynamic> bodyprovider;
   bool? isFromAddGig = false;
+  bool? isFromEditGig = false;
+  GigListResponse? myGig;
 
-  RegisterMore({Key? key, required this.bodyprovider, this.isFromAddGig}) : super(key: key);
+  RegisterMore({Key? key, required this.bodyprovider, this.isFromAddGig, this.isFromEditGig, this.myGig}) : super(key: key);
 
   @override
   _RegisterMoreState createState() => _RegisterMoreState();
@@ -39,7 +42,7 @@ class _RegisterMoreState extends State<RegisterMore> {
   bool isValidExtraRate= true;
 
   List<Category> catagories = [
-    Category(id: 1, name: "Select a Service", createdAt: "",image: "", description: "")
+    Category(id: -1, name: "Select a Service", createdAt: "",image: "", description: "")
   ];
 
   Category selectedcatagory =
@@ -65,9 +68,24 @@ class _RegisterMoreState extends State<RegisterMore> {
               print(value),
               if (value.status)
                 {
-                  setState(() {
-                    this.catagories = value.data;
-                  })
+                  if(widget.isFromEditGig??false){
+                    for (var value1 in value.data) {
+                        if(widget.myGig!.categoryId==value1.id){
+                          setState(() {
+                            this.catagories = value.data;
+                            this.selectedcatagory = value1;
+                            this._descController.text = widget.myGig!.description??"";
+                            this._titleController.text = widget.myGig!.title??"";
+                            this._rateController.text = widget.myGig!.servicepackages?.price??"";
+                            this._extraRateController.text = widget.myGig!.servicepackages?.extraForUrgentNeed??"";
+                          })
+                        }
+                    }
+                  }else {
+                      setState(() {
+                        this.catagories = value.data;
+                      })
+                    }
                 }
             })
         .catchError((e) {
@@ -200,12 +218,13 @@ class _RegisterMoreState extends State<RegisterMore> {
                                           fontWeight: FontWeight.w500,
                                           fontSize: ScreenUtil().setSp(15),
                                         ),
-                                        value: catagories.first,
-                                        onChanged: (value) {
+                                        value: widget.isFromEditGig??false ? selectedcatagory : catagories.first,
+                                        onChanged: widget.isFromEditGig??false ? null :  (value) {
                                           setState(() {
                                             selectedcatagory = value!;
                                           });
                                         },
+
                                         items: catagories
                                             .map((value) => DropdownMenuItem(
                                                 value: value,
@@ -353,7 +372,9 @@ class _RegisterMoreState extends State<RegisterMore> {
       return;
     }
 
-    Map<String, dynamic> bodyprovider1 = widget.isFromAddGig??false ? {
+    print("aa");
+
+    Map<String, dynamic> bodyprovider1 = (widget.isFromAddGig??false || (widget.isFromEditGig??false)) ? {
       'category': selectedcatagory.id,
       "description": _descController.text,
       "Perhour": _rateController.text,
@@ -378,12 +399,27 @@ class _RegisterMoreState extends State<RegisterMore> {
       'os': Platform.isAndroid?'android':'ios',
       "Extra_for_urgent_need": _extraRateController.text
     };
-    final result = Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => AddGig(bodyprovider: bodyprovider1, isFromAddGig: widget.isFromAddGig)));
-        if(widget.isFromAddGig! && result == "1"){
-          Navigator.pop(context);
-        }
+
+    print('bb');
+    if(widget.isFromEditGig??false){
+      final result = await Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => AddGig(bodyprovider: bodyprovider1, isFromEditGig: widget.isFromEditGig, myGig: widget.myGig??null)));
+      if(result == "1" && (widget.isFromEditGig??false)){
+        Navigator.pop(context, "1");
+      }
+    }
+    else {
+      final result = await Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) =>
+                  AddGig(bodyprovider: bodyprovider1,
+                      isFromAddGig: widget.isFromAddGig)));
+      if (result == "1" && (widget.isFromAddGig??false)) {
+        Navigator.pop(context, "1");
+      }
+    }
   }
 }
