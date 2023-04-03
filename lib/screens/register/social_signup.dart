@@ -258,13 +258,26 @@ class SocailSignUpScreen extends StatelessWidget {
         StorageManager().language =
             "" + loginresponse.data['data']['user']['languages'];
         // StorageManager().phone = ""+loginresponse.data['data']['user']['phone_number'];
+
+        changeScreenReplacement(
+            context,
+            BottomNavBar(
+              isprovider: loginresponse.data['data']['user']['is_provider'],
+            ));
+      }else{
+        changeScreen(
+            context: context,
+            screen: SignUp(
+              isprovider: true,
+              loginType: type,
+              name: displayName,
+              socialId: id,
+              email: _email,
+            ));
+
       }
 
-      changeScreenReplacement(
-          context,
-          BottomNavBar(
-            isprovider: loginresponse.data['data']['user']['is_provider'],
-          ));
+
       // Navigator.pop(context);
     }).catchError((error) {
       changeScreen(
