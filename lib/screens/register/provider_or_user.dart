@@ -5,6 +5,7 @@ import 'package:flutter_credit_card/extension.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kappu/common/bottom_nav_bar.dart';
 import 'package:kappu/common/button.dart';
+import 'package:kappu/common/custom_progress_bar.dart';
 import 'package:kappu/constants/storage_manager.dart';
 import 'package:kappu/helperfunctions/screen_nav.dart';
 import 'package:kappu/net/base_dio.dart';
@@ -36,12 +37,14 @@ class ProviderOrUser extends StatefulWidget{
 
 class ProviderOrUserState extends State<ProviderOrUser> {
 
-  bool loading = false;
+  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
+      body:Stack(
+        children:[
+        Container(
         alignment: Alignment.center,
         height: double.infinity,
         padding: EdgeInsets.all(25),
@@ -97,15 +100,18 @@ class ProviderOrUserState extends State<ProviderOrUser> {
           ],
         ),
       ),
+          if (isLoading) const CustomProgressBar()
+
+        ])
     );
   }
 
   registerUser(loginType, name,socialId, email) async {
     print('aacccdddddd');
-    if (!loading) {
-      // setState(() {
-      //   this.loading = true;
-      // });
+    if (!isLoading) {
+      setState(() {
+        this.isLoading = true;
+      });
       Map<String, dynamic> body =  {
         'first_name': name,
         'username': "",
@@ -122,7 +128,9 @@ class ProviderOrUserState extends State<ProviderOrUser> {
       };
 
       await HttpClient().userSignup(body, new File("path")).then((value) {
-        loading = false;
+        setState(() {
+          isLoading = false;
+        });
         if (value?.data['status']) {
           var provider = StorageManager();
           provider.accessToken = value?.data['token'];
@@ -136,7 +144,7 @@ class ProviderOrUserState extends State<ProviderOrUser> {
               "" + value?.data['user']['customer_stripe_id'];
 
         }
-        widget.isFromOtherScreen!
+        widget.isFromOtherScreen??false
             ? Navigator.pop(context, "1")
             :
         Navigator.pushReplacement(
@@ -145,7 +153,7 @@ class ProviderOrUserState extends State<ProviderOrUser> {
                 builder: (context) => const BottomNavBar(isprovider: false)));
       }).catchError((e) {
         setState(() {
-          this.loading = false;
+          this.isLoading = false;
         });
         BaseDio.getDioError(e);
       });

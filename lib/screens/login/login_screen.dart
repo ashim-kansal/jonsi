@@ -382,7 +382,7 @@ class _LoginScreenState extends State<LoginScreen> {
             action: false,
             text: 'Google',
             onTap: (user) {
-              socialLogin('google', user.id, user.email, user.displayName!);
+              socialLogin('google', user.id, user.email, user.displayName??"");
             },
           )),
         ],
@@ -484,35 +484,31 @@ class _LoginScreenState extends State<LoginScreen> {
                 isprovider: loginresponse.data['data']['user']['is_provider'],
               ));
       // Navigator.pop(context);
-        }
+        }else{
+        navigateToRegister(type, displayName, id, email);
+      }
     }).catchError((error) {
       signin = false;
       isLoading = false;
       setState(() {});
-      final result = Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => ProviderOrUser(
-                  loginType: type,
-                  name: displayName,
-                  socialId: id,
-                  email: email,
-                  isFromOtherScreen: widget.isFromOtherScreen
-              )));
-
-      // final result = changeScreen(
-      //     context: context,
-      //     screen: ProviderOrUser(
-      //       loginType: type,
-      //       name: displayName,
-      //       socialId: id,
-      //       email: email,
-      //         isFromOtherScreen: widget.isFromOtherScreen
-      //     ));
-
-      if(widget.isFromOtherScreen && result == "1"){
-        Navigator.pop(context);
-      }
+      navigateToRegister(type, displayName, id, email);
     });
+  }
+
+  void navigateToRegister(String type, String displayName, String id, String email) async{
+    final result = await Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => ProviderOrUser(
+                loginType: type,
+                name: displayName,
+                socialId: id,
+                email: email,
+                isFromOtherScreen: widget.isFromOtherScreen
+            )));
+
+    if(widget.isFromOtherScreen && result == "1"){
+      Navigator.pop(context);
+    }
   }
 }
