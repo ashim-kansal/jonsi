@@ -43,8 +43,8 @@ class _BottomNavBarState extends State<BottomNavBar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      extendBodyBehindAppBar: true,
-      extendBody: true,
+      extendBodyBehindAppBar: false,
+      extendBody: false,
       backgroundColor: Colors.white,
       body: PageStorage(child: currentScreen!, bucket: bucket),
       bottomNavigationBar: bmnav.BottomNav(

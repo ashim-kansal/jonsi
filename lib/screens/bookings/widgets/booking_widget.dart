@@ -126,9 +126,7 @@ class _BookingWidgetState extends State<BookingWidget> {
                       ),
                       10.horizontalSpace,
                       Text(
-                        this.widget.booking.userData!.firstName! +
-                            " " +
-                            this.widget.booking.userData!.lastName!,
+                        this.widget.booking.userData!.firstName! ,
                         style: TextStyle(
                             fontSize: 16,
                             fontFamily: "Montserrat-Bold",
