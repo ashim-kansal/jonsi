@@ -61,6 +61,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
                   obscuringCharacter: '*',
                   readOnly: widget.readOnly!,
                   obscureText: widget.showPassword,
+                  style: TextStyle(color: Colors.black, fontFamily: "Montserrat-Medium"),
                   decoration: InputDecoration(
                     prefixIcon: Padding(
                       padding:
@@ -84,6 +85,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
                     errorStyle: TextStyle(
                       color: Colors.red,
                       wordSpacing: 5.0,
+                      fontFamily: "Montserrat-Regular"
                     ),
                     labelStyle: TextStyle(
                       color: Colors.green,

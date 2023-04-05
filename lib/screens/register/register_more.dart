@@ -199,7 +199,7 @@ class _RegisterMoreState extends State<RegisterMore> {
                                   children: [
                                     SizedBox(
                                       height: ScreenUtil().setHeight(40),
-                                      width: ScreenUtil().setWidth(317),
+                                      width: MediaQuery.of(context).size.width-50,
                                       child: DropdownButtonFormField<Category>(
                                         decoration: InputDecoration(
                                             border: InputBorder.none,
@@ -211,8 +211,12 @@ class _RegisterMoreState extends State<RegisterMore> {
 
                                             hintStyle: TextStyle(
                                                 color: Colors.grey[100], fontFamily: "Montserrat-Medium"),
+                                            labelStyle: TextStyle(
+                                                color: AppColors.text_desc, fontFamily: "Montserrat-Medium"),
                                             hintText: "Choose catagory",
-                                            fillColor: Colors.red[100]),
+                                            fillColor: Colors.red[100],
+
+                                        ),
                                         style: TextStyle(
                                           color: Colors.grey.shade600,
                                           fontWeight: FontWeight.w500,
@@ -224,6 +228,17 @@ class _RegisterMoreState extends State<RegisterMore> {
                                             selectedcatagory = value!;
                                           });
                                         },
+                                          selectedItemBuilder: (BuildContext context) {
+                                            return catagories.map((Category value) {
+                                              return Align(
+                                                alignment: Alignment.centerLeft,
+                                                child: Text(
+                                                  value.name,
+                                                  style: const TextStyle(color: Colors.black, fontFamily: "Montserrat-Medium"),
+                                                ),
+                                              );
+                                            }).toList();
+                                          },
 
                                         items: catagories
                                             .map((value) => DropdownMenuItem(

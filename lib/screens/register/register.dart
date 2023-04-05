@@ -114,6 +114,7 @@ class _SignUpState extends State<SignUp> {
       body: Stack(
         children: [
           Container(
+            child:SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -135,9 +136,12 @@ class _SignUpState extends State<SignUp> {
                         CustomTextFormField(
                           controller: _nameController,
                           validator: (value) =>
-                          value!.isEmpty ? "Enter Your Name" : null,
+                              value!.isEmpty ? "Enter Your Name" : null,
                           keyboardType: TextInputType.text,
-                          prefixIcon: ImageIcon(AssetImage('assets/icons/prf.png'), color: AppColors.app_color,),
+                          prefixIcon: ImageIcon(
+                            AssetImage('assets/icons/prf.png'),
+                            color: AppColors.app_color,
+                          ),
                           hintText: 'Name',
                           isValid: isVaildFirstName,
                           onChanged: (value) {
@@ -169,9 +173,12 @@ class _SignUpState extends State<SignUp> {
                         CustomTextFormField(
                           controller: _emailController,
                           validator: (value) =>
-                          isEmail(value!) ? null : "Check your email",
+                              isEmail(value!) ? null : "Check your email",
                           keyboardType: TextInputType.emailAddress,
-                          prefixIcon:  ImageIcon(AssetImage('assets/icons/ft-4.png'), color: AppColors.app_color,),
+                          prefixIcon: ImageIcon(
+                            AssetImage('assets/icons/ft-4.png'),
+                            color: AppColors.app_color,
+                          ),
                           suffixIcon: isEmail(email) ? checkIcon : null,
                           hintText: 'Email',
                           isValid: isVaildEmail,
@@ -221,16 +228,17 @@ class _SignUpState extends State<SignUp> {
                               print('ssss');
                               DateTime? pickedDate = await showDatePicker(
                                   context: context,
-                                  initialDate: DateTime(DateTime.now().year-18),
+                                  initialDate:
+                                      DateTime(DateTime.now().year - 18),
                                   firstDate: DateTime(1950),
                                   //DateTime.now() - not to allow to choose before today.
-                                  lastDate: DateTime(DateTime.now().year-18));
+                                  lastDate: DateTime(DateTime.now().year - 18));
 
                               if (pickedDate != null) {
                                 print(
                                     pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
                                 String formattedDate =
-                                DateFormat('dd/MM/yyyy').format(pickedDate);
+                                    DateFormat('dd/MM/yyyy').format(pickedDate);
                                 print(
                                     formattedDate); //formatted date output using intl package =>  2021-03-16
                                 setState(() {
@@ -254,29 +262,36 @@ class _SignUpState extends State<SignUp> {
                                 setState(() {});
                               },
                               keyboardType: TextInputType.none,
-                              prefixIcon: ImageIcon(AssetImage('assets/icons/age.png'), color: AppColors.app_color,),
+                              prefixIcon: ImageIcon(
+                                AssetImage('assets/icons/age.png'),
+                                color: AppColors.app_color,
+                              ),
                               validator: (value) => null,
                             ),
                           ),
 
-                        CustomTextFormField(
-                          controller: _nationalityController,
-                          hintText: 'Nationality',
-                          keyboardType: TextInputType.text,
-                          prefixIcon: ImageIcon(AssetImage('assets/icons/flag.png'), color: AppColors.app_color,),
-                          isValid: isVaildNati,
-                          onChanged: (value) {
-                            if (value.isNotEmpty) {
-                              isVaildNati = true;
-                            } else {
-                              isVaildNati = false;
-                            }
-                            setState(() {});
-                          },
-                          validator: (value) =>
-                          value!.isEmpty ? "Enter Your Nationality" : null,
-                        ),
-
+                        if (widget.isprovider)
+                          CustomTextFormField(
+                            controller: _nationalityController,
+                            hintText: 'Nationality',
+                            keyboardType: TextInputType.text,
+                            prefixIcon: ImageIcon(
+                              AssetImage('assets/icons/flag.png'),
+                              color: AppColors.app_color,
+                            ),
+                            isValid: isVaildNati,
+                            onChanged: (value) {
+                              if (value.isNotEmpty) {
+                                isVaildNati = true;
+                              } else {
+                                isVaildNati = false;
+                              }
+                              setState(() {});
+                            },
+                            validator: (value) => value!.isEmpty
+                                ? "Enter Your Nationality"
+                                : null,
+                          ),
 
                         // if (!widget.isprovider)
                         //   Padding(
@@ -338,29 +353,50 @@ class _SignUpState extends State<SignUp> {
                         //   ),
 
                         // 10.verticalSpace,
-                        Material(
+                        if (widget.isprovider)
+                          Material(
                             borderRadius: BorderRadius.circular(
                                 ScreenUtil().screenHeight * 0.03),
                             elevation: 3,
                             shadowColor: Colors.black.withOpacity(0.14),
                             child: Row(
                                 mainAxisAlignment:
-                                MainAxisAlignment.spaceBetween,
+                                    MainAxisAlignment.spaceBetween,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   SizedBox(
                                     height: ScreenUtil().setHeight(40),
-                                    width: ScreenUtil().setHeight(317),
+                                    width: MediaQuery.of(context).size.width-50,
                                     child: DropdownButtonFormField<Language>(
+                                      selectedItemBuilder:
+                                          (BuildContext context) {
+                                        return languages.map((Language value) {
+                                          return Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Text(
+                                              value.name,
+                                              style: const TextStyle(
+                                                  color: Colors.black,
+                                                  fontFamily:
+                                                      "Montserrat-Medium"),
+                                            ),
+                                          );
+                                        }).toList();
+                                      },
                                       decoration: InputDecoration(
                                           border: InputBorder.none,
                                           prefixIcon: Padding(
-                                            padding:
-                                            const EdgeInsetsDirectional.only(start: 15, end: 10),
-                                            child: ImageIcon(AssetImage('assets/icons/language.png'), color: AppColors.app_color,),
+                                            padding: const EdgeInsetsDirectional
+                                                .only(start: 15, end: 10),
+                                            child: ImageIcon(
+                                              AssetImage(
+                                                  'assets/icons/language.png'),
+                                              color: AppColors.app_color,
+                                            ),
                                           ),
                                           hintStyle: TextStyle(
-                                              color: Colors.grey[100], fontFamily: "Montserrat-Medium"),
+                                              color: Colors.grey[100],
+                                              fontFamily: "Montserrat-Medium"),
                                           hintText: "Language known",
                                           fillColor: Colors.red[100]),
                                       style: TextStyle(
@@ -376,19 +412,18 @@ class _SignUpState extends State<SignUp> {
                                       },
                                       items: languages
                                           .map((value) => DropdownMenuItem(
-                                          value: value,
-                                          child: Text(
-                                            value.name,
-                                            style: TextStyle(
-                                              color: Colors.grey.shade600,
-                                              fontWeight: FontWeight.w500,
-                                              fontSize:
-                                              ScreenUtil().setSp(15),
-                                            ),
-                                          )))
+                                              value: value,
+                                              child: Text(
+                                                value.name,
+                                                style: TextStyle(
+                                                  color: Colors.grey.shade600,
+                                                  fontWeight: FontWeight.w500,
+                                                  fontSize:
+                                                      ScreenUtil().setSp(15),
+                                                ),
+                                              )))
                                           .toList(),
                                     ),
-
                                   ),
                                 ])),
                         10.verticalSpace,
@@ -396,7 +431,7 @@ class _SignUpState extends State<SignUp> {
                           CustomTextFormField(
                             controller: _passwordController,
                             validator: (value) => vaidatePassword(value!) ==
-                                'Weak'
+                                    'Weak'
                                 ? "Must contain at least one Capital letter and a number"
                                 : null,
                             keyboardType: TextInputType.visiblePassword,
@@ -428,30 +463,31 @@ class _SignUpState extends State<SignUp> {
                         passwordStrength == ''
                             ? SizedBox(height: ScreenUtil().setHeight(0))
                             : Padding(
-                          padding: const EdgeInsets.only(top: 8, bottom: 8),
-                          child: Row(
-                            mainAxisAlignment:
-                            MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'Password Strength:',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    color: const Color(0xFF767F94),
-                                    fontSize: ScreenUtil().setSp(13)),
+                                padding:
+                                    const EdgeInsets.only(top: 8, bottom: 8),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      'Password Strength:',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w500,
+                                          color: const Color(0xFF767F94),
+                                          fontSize: ScreenUtil().setSp(13)),
+                                    ),
+                                    Text(
+                                      passwordStrength,
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w500,
+                                          color: passwordStrength == 'Weak'
+                                              ? Colors.red
+                                              : const Color(0xFF05C46B),
+                                          fontSize: ScreenUtil().setSp(13)),
+                                    )
+                                  ],
+                                ),
                               ),
-                              Text(
-                                passwordStrength,
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    color: passwordStrength == 'Weak'
-                                        ? Colors.red
-                                        : const Color(0xFF05C46B),
-                                    fontSize: ScreenUtil().setSp(13)),
-                              )
-                            ],
-                          ),
-                        ),
                         if (widget.socialId.isEmpty)
                           CustomTextFormField(
                             showPassword: _showCheckPassword,
@@ -494,7 +530,8 @@ class _SignUpState extends State<SignUp> {
                           height: ScreenUtil().screenHeight * 0.06,
                           child: TextButton(
                             style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all(AppColors.app_color),
+                              backgroundColor: MaterialStateProperty.all(
+                                  AppColors.app_color),
                               shape: MaterialStateProperty.all(
                                 RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(
@@ -536,7 +573,7 @@ class _SignUpState extends State<SignUp> {
                 )
               ],
             ),
-          ),
+          )),
           if (loading) const CustomProgressBar()
         ],
       ),
@@ -544,17 +581,16 @@ class _SignUpState extends State<SignUp> {
   }
 
   onregisterpressedprovider() async {
-
     print("inside>>>>>>>>>>>>");
     isVaildFirstName = !_nameController.text.isNullOrEmpty;
-    isVaildEmail = !_emailController.text.isNullOrEmpty && isEmail(_emailController.text);
+    isVaildEmail =
+        !_emailController.text.isNullOrEmpty && isEmail(_emailController.text);
     isVaildAge = !_ageController.text.isNullOrEmpty;
     isVaildNati = !_nationalityController.text.isNullOrEmpty;
     isVaildPassword = !_passwordController.text.isNullOrEmpty;
-    isVaildConfirm = !_checkPasswordController.text.isNullOrEmpty && _passwordController.text == _checkPasswordController.text;
-    setState(() {
-
-    });
+    isVaildConfirm = !_checkPasswordController.text.isNullOrEmpty &&
+        _passwordController.text == _checkPasswordController.text;
+    setState(() {});
     if (widget.socialId.isEmpty) {
       if (_nameController.text.isEmpty ||
           _emailController.text.isEmpty ||
@@ -571,7 +607,7 @@ class _SignUpState extends State<SignUp> {
     if (_nameController.text.isEmpty ||
         _emailController.text.isEmpty ||
         _ageController.text.isEmpty ||
-        !isEmail(_emailController.text) ) {
+        !isEmail(_emailController.text)) {
       return;
     }
 
@@ -579,81 +615,76 @@ class _SignUpState extends State<SignUp> {
       setState(() {
         this.loading = false;
       });
-      if(value!.data["status"]==true){
-
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text('Email id already exists, please login')));
+      if (value!.data["status"] == true) {
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Email id already exists, please login')));
         return;
-      }
-      else{
+      } else {
         Map<String, dynamic> bodyprovider = widget.socialId.isEmpty
             ? {
-          'first_name': _nameController.text,
-          'last_name': "",
-          'username': "",
-          'email': _emailController.text,
-          'phone_number': '11',
-          'password': _passwordController.text,
-          "Age": _ageController.text,
-          "nationality": _nationalityController.text,
-          'fcm_token': StorageManager().fcmToken,
-          'os': Platform.isAndroid ? 'android' : 'ios',
-          "language": selectedLanguage.name,
-          "service_title": "proidehoubroufo-770",
-          "login_src": "",
-          "social_login_id": "",
-        }
+                'first_name': _nameController.text,
+                'last_name': "",
+                'username': "",
+                'email': _emailController.text,
+                'phone_number': '11',
+                'password': _passwordController.text,
+                "Age": _ageController.text,
+                "nationality": _nationalityController.text,
+                'fcm_token': StorageManager().fcmToken,
+                'os': Platform.isAndroid ? 'android' : 'ios',
+                "language": selectedLanguage.name,
+                "service_title": "proidehoubroufo-770",
+                "login_src": "",
+                "social_login_id": "",
+              }
             : {
-          'first_name': _nameController.text,
-          'last_name': "",
-          'username': "",
-          'email': _emailController.text,
-          'phone_number': '111',
-          'password': '',
-          'login_src': widget.loginType,
-          'social_login_id': widget.socialId,
-          'fcm_token': StorageManager().fcmToken,
-          'os': Platform.isAndroid ? 'android' : 'ios',
-          "Age": _ageController.text,
-          "nationality": _nationalityController.text,
-          "language": selectedLanguage.name,
-          "service_title": "proidehoubroufo-770",
-        };
+                'first_name': _nameController.text,
+                'last_name': "",
+                'username': "",
+                'email': _emailController.text,
+                'phone_number': '111',
+                'password': '',
+                'login_src': widget.loginType,
+                'social_login_id': widget.socialId,
+                'fcm_token': StorageManager().fcmToken,
+                'os': Platform.isAndroid ? 'android' : 'ios',
+                "Age": _ageController.text,
+                "nationality": _nationalityController.text,
+                "language": selectedLanguage.name,
+                "service_title": "proidehoubroufo-770",
+              };
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => RegisterMore(bodyprovider: bodyprovider)));
-
+                builder: (context) =>
+                    RegisterMore(bodyprovider: bodyprovider)));
       }
-
-    }).catchError((e){
+    }).catchError((e) {
       setState(() {
         this.loading = false;
       });
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text('Email id already exists, please login')));
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Email id already exists, please login')));
       return;
     });
-
-    }
+  }
 
   onregisterpressed() async {
     print('aacccdddddd');
     isVaildFirstName = !_nameController.text.isNullOrEmpty;
-    isVaildEmail = !_emailController.text.isNullOrEmpty && isEmail(_emailController.text);
-    isVaildNati = !_nationalityController.text.isNullOrEmpty;
+    isVaildEmail =
+        !_emailController.text.isNullOrEmpty && isEmail(_emailController.text);
+    // isVaildNati = !_nationalityController.text.isNullOrEmpty;
     isVaildPassword = !_passwordController.text.isNullOrEmpty;
-    isVaildConfirm = !_checkPasswordController.text.isNullOrEmpty && _passwordController.text == _checkPasswordController.text;
+    isVaildConfirm = !_checkPasswordController.text.isNullOrEmpty &&
+        _passwordController.text == _checkPasswordController.text;
 
-    setState(() {
-
-    });
+    setState(() {});
     // isVaildFirstName = !_nationalityController.text.isNullOrEmpty;
     if (widget.socialId.isEmpty) {
       if (_nameController.text.isEmpty ||
           _emailController.text.isEmpty ||
           !isEmail(_emailController.text) ||
-          _nationalityController.text.isEmpty ||
           _passwordController.text.isEmpty ||
           passwordStrength == 'Weak' ||
           _checkPasswordController.text.isEmpty ||
@@ -663,8 +694,7 @@ class _SignUpState extends State<SignUp> {
     }
     if (_nameController.text.isEmpty ||
         _emailController.text.isEmpty ||
-        !isEmail(_emailController.text) ||
-        _nationalityController.text.isEmpty) {
+        !isEmail(_emailController.text) ) {
       return;
     }
     if (!loading) {
@@ -674,17 +704,17 @@ class _SignUpState extends State<SignUp> {
       Map<String, dynamic> body = widget.socialId.isEmpty
           ? {
               'first_name': _nameController.text,
-              'username': "" ,
+              'username': "",
               'last_name': "",
               'email': _emailController.text,
               'phone_number': "",
               'password': _passwordController.text,
               'fcm_token': StorageManager().fcmToken,
               'os': Platform.isAndroid ? 'android' : 'ios',
-              'language': selectedLanguage.name,
-              'nationality': _nationalityController.text,
+              'language': "English",
+              'nationality': "Malta",
               'login_src': '',
-              'social_login_id':''
+              'social_login_id': ''
             }
           : {
               'first_name': _nameController.text,
@@ -697,8 +727,8 @@ class _SignUpState extends State<SignUp> {
               'social_login_id': widget.socialId,
               'fcm_token': StorageManager().fcmToken,
               'os': Platform.isAndroid ? 'android' : 'ios',
-              'language': selectedLanguage.name,
-              'nationality': _nationalityController.text,
+              'language': "English",
+              'nationality': "Malta",
             };
 
       await HttpClient().userSignup(body, new File("path")).then((value) {
@@ -707,14 +737,13 @@ class _SignUpState extends State<SignUp> {
           var provider = StorageManager();
           provider.accessToken = value?.data['token'];
           provider.name = _nameController.text;
-          provider.phone = _phnocontroller.text;
+          // provider.phone = _phnocontroller.text;
           provider.email = _emailController.text;
           provider.isProvider = false;
+          provider.userId = value?.data['user']['id'];
           provider.nationality = value?.data['user']['nationality'];
           provider.language = value?.data['user']['languages'];
-          provider.stripeId =
-              "" + value?.data['user']['customer_stripe_id'];
-
+          provider.stripeId = "" + value?.data['user']['customer_stripe_id'];
         }
         setState(() {});
         Navigator.pushReplacement(

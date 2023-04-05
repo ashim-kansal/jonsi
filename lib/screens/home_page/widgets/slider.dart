@@ -16,10 +16,22 @@ class SliderWidget extends StatefulWidget {
   _SliderWidgetState createState() => _SliderWidgetState();
 }
 
-class _SliderWidgetState extends State<SliderWidget> {
+class _SliderWidgetState extends State<SliderWidget> with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
+
+
+  Future<List<TrendingServicesResponse>>? _future;
+
+  @override
+  void initState() {
+    _future = HttpClient().getTrendingCatagory();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Container(
       // height: ScreenUtil().setHeight(220),
         decoration: const BoxDecoration(
@@ -28,7 +40,7 @@ class _SliderWidgetState extends State<SliderWidget> {
               bottomRight: Radius.circular(50)),
         ),
         child: FutureBuilder(
-            future: HttpClient().getTrendingCatagory(),
+            future: _future,
             builder: (context, AsyncSnapshot<List<TrendingServicesResponse>> response) {
               if (response.connectionState != ConnectionState.done) {
                 return const Center(

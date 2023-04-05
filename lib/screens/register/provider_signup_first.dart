@@ -56,7 +56,7 @@ class ProviderSignupFirstScreen extends StatelessWidget {
                                 "Gig is Bought\nEvery",
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
-                                    color: Color(0xFF7B7D83), fontSize: 10),
+                                    color: Color(0xFF7B7D83), fontSize: 10, fontFamily: "Montserrat-Regular"),
                               ),
                               SizedBox(
                                 height: 10,
@@ -85,7 +85,7 @@ class ProviderSignupFirstScreen extends StatelessWidget {
                                 "Project Completed\n",
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
-                                    color: Color(0xFF7B7D83), fontSize: 10),
+                                    color: Color(0xFF7B7D83), fontSize: 10, fontFamily: "Montserrat-Regular"),
                               ),
                               SizedBox(
                                 height: 10,
@@ -114,7 +114,7 @@ class ProviderSignupFirstScreen extends StatelessWidget {
                                 "Price Range\n",
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
-                                    color: Color(0xFF7B7D83), fontSize: 10),
+                                    color: Color(0xFF7B7D83), fontSize: 10, fontFamily: "Montserrat-Regular"),
                               ),
                               SizedBox(
                                 height: 10,

@@ -77,8 +77,8 @@ class _LoginScreenState extends State<LoginScreen> {
       15.verticalSpace,
       customtext(
         buttontext: 'Welcome to Urban Malta',
-        fontWeight: FontWeight.bold,
-        fontSize: 16,
+        fontSize: 20,
+        fontfailmy: "Montserrat-Bold"
       ),
       15.verticalSpace,
       CustomTextFormField(
@@ -213,7 +213,7 @@ class _LoginScreenState extends State<LoginScreen> {
           },
           child: customtext(
             buttontext: 'Forgot Your Password?',
-            fontWeight: FontWeight.w500,
+            fontfailmy: "Montserrat-Medium",
             color: AppColors.app_color,
             fontSize: 10,
           ),
@@ -242,10 +242,9 @@ class _LoginScreenState extends State<LoginScreen> {
               Text(
                 "Sign In",
                 style: TextStyle(
-                  fontWeight: FontWeight.w500,
                   color: Colors.white,
                   fontSize: 14.sp,
-                  fontFamily: 'Montserrat-Light',
+                  fontFamily: 'Montserrat-Medium',
                 ),
               ),
               Image.asset('assets/icons/arw.png', scale: 1.0),
@@ -438,8 +437,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Image returnLogo(BuildContext context) {
     return Image.asset(
       'assets/images/colorfulLogo.png',
-      width: MediaQuery.of(context).size.width * 0.23,
-      height: MediaQuery.of(context).size.height * 0.1,
+      scale: 1.5,
       fit: BoxFit.fill,
     );
   }

@@ -20,7 +20,9 @@ class HomeScreen extends StatefulWidget {
   _HomeScreenState createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMixin<HomeScreen> {
+  @override
+  bool get wantKeepAlive => true;
 
 
   @override
@@ -112,14 +114,18 @@ class _HomeScreenState extends State<HomeScreen> {
                         horizontal: ScreenUtil().setWidth(6)),
                     child: GestureDetector(
                       onTap: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) =>
-                                const SearchCatagoriesScreen()));
+
                       },
                       child: SearchTextField(
-                        enable: false,
+                        enable: true,
                         hintext: "Search Services",
-                        onSearchingComplete: (value) {},
+                        value: "",
+                        onSearchingComplete: (value) {
+                          print('aaaa');
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) =>
+                              SearchCatagoriesScreen(searchtext: value)));
+                        },
                       ),
                     )),
                 const SizedBox(

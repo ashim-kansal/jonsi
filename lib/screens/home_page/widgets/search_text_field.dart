@@ -9,8 +9,9 @@ class SearchTextField extends StatelessWidget {
 
   final Function(String) onSearchingComplete;
   final bool enable;
-  const SearchTextField(
-      {Key? key, required this.hintext, required this.onSearchingComplete,this.enable =true})
+  String? value;
+  SearchTextField(
+      {Key? key, required this.hintext, required this.onSearchingComplete,this.enable =true, this.value})
       : super(key: key);
  @override
   Widget build(BuildContext context) {
@@ -27,13 +28,13 @@ class SearchTextField extends StatelessWidget {
             // pushDynamicScreen(context,
             //     screen: SearchScreen(), withNavBar: false);
           },
-          onFieldSubmitted: (value) => {if (value.length > 2) {}},
-          onChanged: onSearchingComplete,
+          onFieldSubmitted: onSearchingComplete,
           textInputAction: TextInputAction.search,
           // onSubmitted: (value) {
           //   print("search");
           // },
           cursorColor: Colors.black,
+          initialValue: this.value??"",
           enabled: enable,
           style: TextStyle(
             color: Colors.grey,

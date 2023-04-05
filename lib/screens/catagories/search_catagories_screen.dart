@@ -13,7 +13,8 @@ import '../../models/serializable_model/CategoryResponse.dart';
 import '../home_page/widgets/search_text_field.dart';
 
 class SearchCatagoriesScreen extends StatefulWidget {
-  const SearchCatagoriesScreen({Key? key}) : super(key: key);
+  String? searchtext;
+  SearchCatagoriesScreen({this.searchtext});
 
   @override
   _SearchCatagoriesScreenState createState() => _SearchCatagoriesScreenState();
@@ -26,6 +27,7 @@ class _SearchCatagoriesScreenState extends State<SearchCatagoriesScreen> {
 
   @override
   void initState() {
+    searchText = widget.searchtext??"";
     super.initState();
   }
 
@@ -45,6 +47,7 @@ class _SearchCatagoriesScreenState extends State<SearchCatagoriesScreen> {
                         horizontal: ScreenUtil().setWidth(6)),
                     child: SearchTextField(
                       hintext: "Search Services",
+                      value: this.searchText,
                       onSearchingComplete: (value) {
                         print(value);
                         if(value.length>2){
