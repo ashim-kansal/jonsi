@@ -102,8 +102,8 @@ class _ProviderHomeScreenState extends State<ProviderHomeScreen> {
                                   height: 1.4),
                             ),
                             RatingBar.builder(
-                              initialRating: 3,
-                              minRating: 1,
+                              initialRating: 0,
+                              minRating: 0,
                               direction: Axis.horizontal,
                               allowHalfRating: true,
                               itemCount: 5,

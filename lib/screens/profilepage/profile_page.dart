@@ -91,7 +91,7 @@ class ProviderProfilePageScreen extends ModalRoute<void> {
           Column(
             children: [
               Text(
-                "providerProfile.firstname" + " " + "providerProfile.lastname",
+                "providerProfile.firstname",
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: ScreenUtil().setSp(22)),

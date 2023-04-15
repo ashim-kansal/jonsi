@@ -388,14 +388,15 @@ class _AddGigState extends State<AddGig> {
             provider.isProvider = true;
             provider.nationality = widget.bodyprovider['nationality'];
             provider.language = value?.data['user']['languages'];
-            provider.stripeId =
-                "" + value?.data['user']['customer_stripe_id'];
-          }
+
           Navigator.pushReplacement(
               context,
               MaterialPageRoute(
                   builder: (context) => const BottomNavBar(isprovider: true)));
-        }).catchError((e) {
+            // provider.stripeId =
+            //     "" + value?.data['user']['customer_stripe_id'];
+          }
+          }).catchError((e) {
           setState(() {
             isLoading = false;
           });

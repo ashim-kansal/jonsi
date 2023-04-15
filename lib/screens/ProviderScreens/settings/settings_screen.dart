@@ -52,9 +52,7 @@ class _SettingsPageProviderState extends State<SettingsPageProvider> {
                             ));
                       },
                       title: Text(
-                        loggedinprovider.provider.firstname +
-                            " " +
-                            loggedinprovider.provider.lastname,
+                        loggedinprovider.provider.firstname ,
                         style: const TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.w500,

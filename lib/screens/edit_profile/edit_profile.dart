@@ -221,9 +221,7 @@ class _EditProfileState extends State<EditProfile> {
                         ? loggedinuser.user.fname +
                             " " +
                             loggedinuser.user.lname
-                        : loggedinprovider.provider.firstname +
-                            " " +
-                            loggedinprovider.provider.lastname,
+                        : loggedinprovider.provider.firstname,
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: ScreenUtil().setSp(22)),
@@ -264,9 +262,7 @@ class _EditProfileState extends State<EditProfile> {
                                         ? loggedinuser.user.fname +
                                             " " +
                                             loggedinuser.user.lname
-                                        : loggedinprovider.provider.firstname +
-                                            " " +
-                                            loggedinprovider.provider.lastname,
+                                        : loggedinprovider.provider.firstname ,
                                   ),
                                 ),
                                 ListTile(

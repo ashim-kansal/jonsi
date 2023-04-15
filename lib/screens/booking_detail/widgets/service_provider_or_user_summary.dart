@@ -54,9 +54,7 @@ class ServiceProviderOrUserSummary extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               customtext(
-                                buttontext: providerprofile.data!.firstname +
-                                    " " +
-                                    providerprofile.data!.lastname,
+                                buttontext: providerprofile.data!.firstname ,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 14,
                               ),

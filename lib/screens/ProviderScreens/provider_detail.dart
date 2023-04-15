@@ -85,7 +85,6 @@ class _ProviderDetailScreenState extends State<ProviderDetailScreen> {
                                                   .firstName !=
                                                   null
                                               ? '${response.data![0].userData!.firstName!} '
-                                              '${response.data![0].userData!.lastName!}'
                                               : '',
                                           style: const TextStyle(
                                               color: Colors.black,
