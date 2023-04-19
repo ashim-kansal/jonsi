@@ -28,6 +28,7 @@ class _GoogleLoginButtonState extends State<GoogleLoginButton> {
       print(user.displayName);
       print(user.email);
       widget.onTap(user);
+      await GoogleSignInApi.logout();
     }
   }
 

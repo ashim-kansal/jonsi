@@ -84,6 +84,7 @@ class _RegisterMoreState extends State<RegisterMore> {
                   }else {
                       setState(() {
                         this.catagories = value.data;
+                        this.selectedcatagory = value.data[0];
                       })
                     }
                 }
@@ -129,65 +130,6 @@ class _RegisterMoreState extends State<RegisterMore> {
                             ),
                           ),
                           30.verticalSpace,
-
-                          // if (!widget.isprovider)
-                          //   Padding(
-                          //     padding: EdgeInsets.only(top: 10.h),
-                          //     child: CSCPicker(
-                          //       showStates: true,
-                          //       showCities: true,
-                          //       flagState: CountryFlag.DISABLE,
-                          //       dropdownDecoration: BoxDecoration(
-                          //           borderRadius:
-                          //           const BorderRadius.all(Radius.circular(10)),
-                          //           color: Colors.white,
-                          //           border:
-                          //           Border.all(color: Colors.grey, width: 1)),
-                          //       disabledDropdownDecoration: BoxDecoration(
-                          //           borderRadius:
-                          //           const BorderRadius.all(Radius.circular(10)),
-                          //           color: Colors.grey.shade300,
-                          //           border: Border.all(
-                          //               color: Colors.grey.shade300, width: 1)),
-                          //       countrySearchPlaceholder: "Country",
-                          //       stateSearchPlaceholder: "State",
-                          //       citySearchPlaceholder: "City",
-                          //       countryDropdownLabel: "Country",
-                          //       stateDropdownLabel: "State",
-                          //       cityDropdownLabel: "City",
-                          //       defaultCountry: DefaultCountry.Malta,
-                          //       selectedItemStyle: TextStyle(
-                          //         fontWeight: FontWeight.w500,
-                          //         fontSize: ScreenUtil().setSp(15),
-                          //       ),
-                          //       dropdownHeadingStyle: TextStyle(
-                          //         fontWeight: FontWeight.w500,
-                          //         fontSize: ScreenUtil().setSp(15),
-                          //       ),
-                          //       dropdownItemStyle: TextStyle(
-                          //         fontWeight: FontWeight.w500,
-                          //         fontSize: ScreenUtil().setSp(15),
-                          //       ),
-                          //       dropdownDialogRadius: 15.0,
-                          //       searchBarRadius: 10.0,
-                          //       onCountryChanged: (value) {
-                          //         countryValue = value;
-                          //         setState(() {});
-                          //       },
-                          //       onStateChanged: (value) {
-                          //         if (value != null) {
-                          //           stateValue = value;
-                          //         }
-                          //         setState(() {});
-                          //       },
-                          //       onCityChanged: (value) {
-                          //         if (value != null) {
-                          //           cityValue = value;
-                          //         }
-                          //         setState(() {});
-                          //       },
-                          //     ),
-                          //   ),
                           Material(
                               borderRadius: BorderRadius.circular(
                                   ScreenUtil().screenHeight * 0.03),
@@ -408,6 +350,8 @@ class _RegisterMoreState extends State<RegisterMore> {
       "nationality": widget.bodyprovider['nationality'],
       "language": widget.bodyprovider['language'],
       "service_title": _titleController.text,
+      'login_src':widget.bodyprovider['login_src'],
+      'social_login_id': widget.bodyprovider['social_login_id'],
       "description": _descController.text,
       "Perhour": _rateController.text,
       'fcm_token': StorageManager().fcmToken,

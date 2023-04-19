@@ -212,6 +212,7 @@ class _ProviderHomeScreenState extends State<ProviderHomeScreen> {
                           title: 'Total Reviews',
                           imagePath: 'assets/images/rating.png',
                               onTap: (){
+                            print('aa');
                                 changeScreen(
                                     context: context,
                                     screen: ProviderReviewsPage(providerid: StorageManager().userId,averagerating: StorageManager().rating,));

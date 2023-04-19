@@ -626,7 +626,7 @@ class _SignUpState extends State<SignUp> {
                 'last_name': "",
                 'username': "",
                 'email': _emailController.text,
-                'phone_number': '11',
+                'phone_number': '',
                 'password': _passwordController.text,
                 "Age": _ageController.text,
                 "nationality": _nationalityController.text,
@@ -642,7 +642,7 @@ class _SignUpState extends State<SignUp> {
                 'last_name': "",
                 'username': "",
                 'email': _emailController.text,
-                'phone_number': '111',
+                'phone_number': '',
                 'password': '',
                 'login_src': widget.loginType,
                 'social_login_id': widget.socialId,
@@ -653,6 +653,7 @@ class _SignUpState extends State<SignUp> {
                 "language": selectedLanguage.name,
                 "service_title": "proidehoubroufo-770",
               };
+        print(bodyprovider);
         Navigator.push(
             context,
             MaterialPageRoute(

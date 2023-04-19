@@ -16,6 +16,12 @@ import 'register.dart';
 
 class SocailSignUpScreen extends StatelessWidget {
 
+  final bool isprovider;
+  const SocailSignUpScreen(
+      {Key? key,
+        required this.isprovider,
+       });
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -108,6 +114,7 @@ class SocailSignUpScreen extends StatelessWidget {
                   const SizedBox(height: 10),
                   GoogleLoginButton(action: false, text: 'Connect with Google',onTap: (user){
                     socialLogin('google', user.id!, user.email!, user.displayName!, context);
+
                   },),
                   const SizedBox(
                     height: 10,
@@ -146,8 +153,8 @@ class SocailSignUpScreen extends StatelessWidget {
                         print('aaaa');
                         changeScreen(
                             context: context,
-                            screen: const SignUp(
-                              isprovider: true,
+                            screen: SignUp(
+                              isprovider: this.isprovider,
                             ));
                       },
                     ),
@@ -236,6 +243,7 @@ class SocailSignUpScreen extends StatelessWidget {
     Map<String, dynamic> body = {
       'login_src': type,
       'social_login_id': id,
+      'email': _email,
       'fcm_token': StorageManager().fcmToken,
       'os': Platform.isAndroid?'android':'ios',
     };
@@ -268,7 +276,7 @@ class SocailSignUpScreen extends StatelessWidget {
         changeScreen(
             context: context,
             screen: SignUp(
-              isprovider: true,
+              isprovider: this.isprovider,
               loginType: type,
               name: displayName,
               socialId: id,

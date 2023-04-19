@@ -1,32 +1,27 @@
 import 'dart:io';
-import 'package:firebase_messaging/firebase_messaging.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_credit_card/extension.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:kappu/common/custom_progress_bar.dart';
 import 'package:kappu/common/customtexts.dart';
 import 'package:kappu/common/dialogues.dart';
-import 'package:kappu/common/painter.dart';
 import 'package:kappu/components/AppColors.dart';
 import 'package:kappu/constants/storage_manager.dart';
 import 'package:kappu/helperfunctions/screen_nav.dart';
-import 'package:kappu/models/serializable_model/signedinprovider.dart';
-import 'package:kappu/provider/provider_provider.dart';
-import 'package:kappu/provider/userprovider.dart';
 import 'package:kappu/screens/login/widgets/google_login_button.dart';
+import 'package:kappu/screens/register/social_signup.dart';
 import 'package:kappu/screens/reset_password/enter_email_screen.dart';
-import 'package:provider/provider.dart';
+import 'package:the_apple_sign_in/the_apple_sign_in.dart' hide ButtonStyle;
 import 'package:validators/validators.dart';
+
 import '../../common/bottom_nav_bar.dart';
 import '../../constants/icons.dart';
-import '../../models/serializable_model/signed_in_user.dart';
 import '../../net/base_dio.dart';
 import '../../net/http_client.dart';
-import '../register/widgets/text_field.dart';
 import '../register/provider_or_user.dart';
+import '../register/widgets/text_field.dart';
 import 'google_signin.dart';
-import 'package:the_apple_sign_in/the_apple_sign_in.dart' hide ButtonStyle;
 
 class LoginScreen extends StatefulWidget {
   bool isFromOtherScreen;
@@ -398,8 +393,9 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
           GestureDetector(
             onTap: () {
-              changeScreen(context: context, screen: ProviderOrUser());
-            },
+              changeScreen(
+                  context: context,
+                  screen: SocailSignUpScreen(isprovider: false,));            },
             child: const Text(
               'Signup',
               style: TextStyle(
@@ -444,11 +440,13 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Future<void> socialLogin(
       String type, String id, String email, String displayName) async {
+    print(widget.isFromOtherScreen);
     isLoading = true;
     setState(() {});
     Map<String, dynamic> body = {
       'login_src': type,
       'social_login_id': id,
+      'email': email,
       'fcm_token': StorageManager().fcmToken,
       'os': Platform.isAndroid ? 'android' : 'ios',
     };
@@ -483,30 +481,68 @@ class _LoginScreenState extends State<LoginScreen> {
               ));
       // Navigator.pop(context);
         }else{
-        navigateToRegister(type, displayName, id, email);
+        registerUser(type, displayName, id, email);
       }
     }).catchError((error) {
       signin = false;
       isLoading = false;
       setState(() {});
-      navigateToRegister(type, displayName, id, email);
+      registerUser(type, displayName, id, email);
     });
   }
 
-  void navigateToRegister(String type, String displayName, String id, String email) async{
-    final result = await Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => ProviderOrUser(
-                loginType: type,
-                name: displayName,
-                socialId: id,
-                email: email,
-                isFromOtherScreen: widget.isFromOtherScreen
-            )));
+  registerUser(loginType, name,socialId, email) async {
+    print('aacccdddddd');
+    if (!isLoading) {
+      setState(() {
+        this.isLoading = true;
+      });
+      Map<String, dynamic> body =  {
+        'first_name': name,
+        'username': "",
+        'last_name': "",
+        'email': email,
+        'phone_number': "",
+        'password': '',
+        'login_src': loginType,
+        'social_login_id': socialId,
+        'fcm_token': StorageManager().fcmToken,
+        'os': Platform.isAndroid ? 'android' : 'ios',
+        'language': "English",
+        'nationality': "Malta"
+      };
 
-    if(widget.isFromOtherScreen && result == "1"){
-      Navigator.pop(context);
+      await HttpClient().userSignup(body, new File("path")).then((value) {
+        setState(() {
+          isLoading = false;
+        });
+        if (value?.data['status']) {
+          var provider = StorageManager();
+          provider.accessToken = value?.data['token'];
+          provider.name = name;
+          provider.phone = " ";
+          provider.email = email;
+          provider.isProvider = false;
+          provider.nationality = value?.data['user']['nationality'];
+          provider.language = value?.data['user']['languages'];
+          provider.stripeId =
+              "" + value?.data['user']['customer_stripe_id'];
+
+        }
+        widget.isFromOtherScreen
+            ? Navigator.pop(context, "1")
+            :
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+                builder: (context) => const BottomNavBar(isprovider: false)));
+      }).catchError((e) {
+        setState(() {
+          this.isLoading = false;
+        });
+        BaseDio.getDioError(e);
+      });
     }
   }
+
 }

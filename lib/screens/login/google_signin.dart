@@ -8,6 +8,7 @@ class GoogleSignInApi {
   static final _googlesignin = GoogleSignIn();
 
   static Future<GoogleSignInAccount?> login() => _googlesignin.signIn();
+  static Future<GoogleSignInAccount?> logout() => _googlesignin.signOut();
 }
 
 class AppleAuthService {

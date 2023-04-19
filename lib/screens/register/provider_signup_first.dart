@@ -336,7 +336,7 @@ class ProviderSignupFirstScreen extends StatelessWidget {
                 onPressed: () {
                   changeScreen(
                       context: context,
-                      screen: SocailSignUpScreen());
+                      screen: SocailSignUpScreen(isprovider: true));
                 },
               ),
             ),

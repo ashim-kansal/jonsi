@@ -389,6 +389,9 @@ class _AddGigState extends State<AddGig> {
             provider.nationality = widget.bodyprovider['nationality'];
             provider.language = value?.data['user']['languages'];
 
+            while(Navigator.canPop(context)){
+              Navigator.pop(context);
+            }
           Navigator.pushReplacement(
               context,
               MaterialPageRoute(

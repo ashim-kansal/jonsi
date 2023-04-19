@@ -45,7 +45,7 @@ class SettingsPageState extends State<SettingsPage> {
     final provider = StorageManager();
     if(provider.accessToken.isEmpty){
       SchedulerBinding.instance.addPostFrameCallback((_) async {
-        final result = await Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen(isFromOtherScreen: true)));
+        final result = await Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen()));
         if(result=="1"){
           setState(() { });
         }
@@ -92,7 +92,7 @@ class SettingsRoutePage extends ModalRoute<void> {
 
     if(provider.accessToken.isEmpty){
       SchedulerBinding.instance.addPostFrameCallback((_) async {
-        final result = await Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen(isFromOtherScreen: true)));
+        final result = await Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen()));
         if(result=="1"){
           setState(() { });
         }
