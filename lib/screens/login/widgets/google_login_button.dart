@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import '../../../common/bottom_nav_bar.dart';
@@ -73,10 +74,10 @@ class _GoogleLoginButtonState extends State<GoogleLoginButton> {
 }
 
 class FacebookLoginButton extends StatefulWidget {
-  Function()? onTap;
+  Function(Map<String, dynamic>) onTap;
   final String text;
   FacebookLoginButton(
-      {Key? key, this.onTap, required this.text})
+      {Key? key, required this.onTap, required this.text})
       : super(key: key);
 
   @override
@@ -117,8 +118,32 @@ class _FacebookLoginButtonState extends State<FacebookLoginButton> {
             Image.asset('assets/icons/f.png', scale: 1.0),
           ],
         ),
-        onPressed: widget.onTap,
+        onPressed: (){
+          _onPressedLogInButton();
+        },
       ),
     );
   }
+  Future<void> _onPressedLogInButton() async {
+    final LoginResult result = await FacebookAuth.instance.login(permissions: ['public_profile', 'email']); // by default we request the email and the public profile
+// or FacebookAuth.i.login()
+    if (result.status == LoginStatus.success) {
+      // you are logged
+      final AccessToken accessToken = result.accessToken!;
+      print(accessToken);
+      print(result.status);
+      final userData = await FacebookAuth.i.getUserData(
+        fields: "name,email",
+      );
+
+      print(userData);
+      widget.onTap(userData);
+      await FacebookAuth.instance.logOut();
+
+    } else {
+      print(result.status);
+      print(result.message);
+    }
+  }
+
 }

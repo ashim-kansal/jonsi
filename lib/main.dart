@@ -77,7 +77,8 @@ void main() async {
   //   badge: true,
   //   sound: true,
   // );
-  Stripe.publishableKey = "pk_test_51Lde8bIv5chsib1Pz9bXZPJbZcDZnozh8J4k0w13wI9UyvA9Oh5E7mRRm2uNatxGhIegAWpIWG08rRYJOrO6s68q00lYAdkoY6";
+  // Stripe.publishableKey = "pk_test_51Lde8bIv5chsib1Pz9bXZPJbZcDZnozh8J4k0w13wI9UyvA9Oh5E7mRRm2uNatxGhIegAWpIWG08rRYJOrO6s68q00lYAdkoY6";
+  Stripe.publishableKey = "pk_live_51Lde8bIv5chsib1PXmka1VnQgYqfn3uSUcUXqpN0OF1pF2h4qnp5LWhmt5ZUrKWTtcOQ2sqCPDuoWIB73nu3X9Ji005rPDnoEU";
   runApp(Phoenix(child: MyApp(messaging: messaging)));
 }
 
