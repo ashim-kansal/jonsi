@@ -30,10 +30,7 @@ class SocailSignUpScreen extends StatelessWidget {
       final user =
       await authService.signInWithApple([Scope.email, Scope.fullName]);
       print('uid: ${user.uid}');
-      Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-              builder: (context) => const BottomNavBar(isprovider: false)));
+      socialLogin('apple', user.uid, user.email ?? "", user.displayName ?? "", context);
     } catch (e) {
       // TODO: Show alert here
       print(e);
@@ -81,50 +78,49 @@ class SocailSignUpScreen extends StatelessWidget {
                     ),
                     textAlign: TextAlign.center,
                   ),
-                  const SizedBox(height: 20),
-                  // SizedBox(
-                  //   height: ScreenUtil().screenHeight * 0.05,
-                  //   child: TextButton(
-                  //     style: ButtonStyle(
-                  //       backgroundColor:
-                  //           MaterialStateProperty.all(Colors.white),
-                  //       shape: MaterialStateProperty.all(
-                  //         RoundedRectangleBorder(
-                  //           side: new BorderSide(color: Colors.black),
-                  //           borderRadius: BorderRadius.circular(
-                  //               ScreenUtil().screenHeight * 0.025),
-                  //         ),
-                  //       ),
-                  //     ),
-                  //     child: Row(
-                  //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  //       children: [
-                  //         const Opacity(
-                  //           opacity: 0,
-                  //           child: Icon(Icons.arrow_forward_ios),
-                  //         ),
-                  //         Text(
-                  //           "Connect with Apple",
-                  //           style: TextStyle(
-                  //             fontWeight: FontWeight.w500,
-                  //             color: Colors.black,
-                  //             fontSize: 14.sp,
-                  //             fontFamily: 'Montserrat-Medium',
-                  //           ),
-                  //         ),
-                  //         Image.asset('assets/icons/app.png', scale: 1.0),
-                  //       ],
-                  //     ),
-                  //     onPressed: () {
-                  //       changeScreen(
-                  //           context: context,
-                  //           screen: const SignUp(
-                  //             isprovider: true,
-                  //           ));
-                  //     },
-                  //   ),
-                  // ),
-                  // const SizedBox(height: 10),
+                  const SizedBox(height: 10),
+                  Visibility(visible: Platform.isIOS, child: SizedBox(height: 10)),
+                  Visibility(
+                    visible: Platform.isIOS,
+                    child: SizedBox(
+                      height: ScreenUtil().screenHeight * 0.05,
+                      child: TextButton(
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all(Colors.white),
+                          shape: MaterialStateProperty.all(
+                            RoundedRectangleBorder(
+                              borderRadius:
+                              BorderRadius.circular(ScreenUtil().screenHeight * 0.025),
+                              side: const BorderSide(width: 1, color: Colors.black),
+                            ),
+                          ),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Opacity(
+                              opacity: 0,
+                              child: Icon(Icons.apple),
+                            ),
+                            Text(
+                              "Sign In With Apple",
+                              style: TextStyle(
+                                fontWeight: FontWeight.w500,
+                                color: Colors.black,
+                                fontSize: 14.sp,
+                                fontFamily: 'Montserrat-Light',
+                              ),
+                            ),
+                            Image.asset('assets/icons/app.png', scale: 1.0),
+                          ],
+                        ),
+                        onPressed: () async {
+                          signInWithApple(context);
+                        },
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
                   FacebookLoginButton(
                       text: 'Connect with Facebook', onTap: (user){
                     socialLogin('facebook', user["id"], user["email"], user["name"], context);
