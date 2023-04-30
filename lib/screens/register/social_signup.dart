@@ -5,7 +5,9 @@ import 'package:kappu/components/AppColors.dart';
 import 'package:kappu/constants/storage_manager.dart';
 import 'package:kappu/helperfunctions/screen_nav.dart';
 import 'package:kappu/net/http_client.dart';
+import 'package:kappu/screens/login/google_signin.dart';
 import 'dart:io';
+import 'package:the_apple_sign_in/the_apple_sign_in.dart' hide ButtonStyle;
 import 'package:kappu/screens/login/widgets/google_login_button.dart';
 import 'package:path/path.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -21,6 +23,23 @@ class SocailSignUpScreen extends StatelessWidget {
       {Key? key,
         required this.isprovider,
        });
+
+  Future<void> signInWithApple(BuildContext context) async {
+    try {
+      final authService = AppleAuthService();
+      final user =
+      await authService.signInWithApple([Scope.email, Scope.fullName]);
+      print('uid: ${user.uid}');
+      Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+              builder: (context) => const BottomNavBar(isprovider: false)));
+    } catch (e) {
+      // TODO: Show alert here
+      print(e);
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
