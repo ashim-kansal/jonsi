@@ -241,14 +241,4 @@ abstract class HttpClient {
   @GET('/conversation/{userid}/')
   Future<List<AllChats>> getallchats(@Path('userid') String userid);
 
-  @GET('/provider/devices/{userid}/')
-  Future<HttpResponse> checktoken(@Path('userid') String userid);
-
-  @POST('/provider/devices/')
-  Future<HttpResponse> addtoken(@Body() Map<String, dynamic> params);
-
-  @PATCH('/provider/devices/{id}/')
-  Future<HttpResponse> updatetoken(
-      @Path('id') String id, @Body() Map<String, dynamic> params);
-
 }

@@ -116,8 +116,10 @@ Widget _buildOverlayContent(BuildContext context) {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
 
-            Padding(padding: EdgeInsets.all(15),
+            Padding(padding: EdgeInsets.all(10),
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisSize: MainAxisSize.max,
                 children: [
                   CircleAvatar(
                       radius: 40,
@@ -128,18 +130,19 @@ Widget _buildOverlayContent(BuildContext context) {
                           'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500')
                   ),
                   SizedBox(width: 10,),
-                  Column(
+                  Expanded(child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(provider.name,
                         textAlign: TextAlign.justify,
+                        softWrap: true,
+                        maxLines: 2,
                         style: TextStyle(fontFamily: "Montserrat-Bold", fontSize: 18, color: Colors.black, ),),
-                      Text(provider.email, style: TextStyle(fontFamily: "Montserrat-Regular", fontSize: 12, color: AppColors.text_desc),),
-                      10.verticalSpace,
-                      Text(provider.phone, style: TextStyle(fontFamily: "Montserrat-Regular", fontSize: 12, color: AppColors.text_desc),),
-                    ],
-                  ),
-                  Spacer(),
+                      Text(provider.email,softWrap: true,
+                        maxLines: 2, style: TextStyle(fontFamily: "Montserrat-Regular", fontSize: 12, color: AppColors.text_desc),),
+                      ],
+                  ),),
+                  SizedBox(width: 10,),
                   Padding(
                     padding: EdgeInsets.all(0),
                     child: RawMaterialButton(
