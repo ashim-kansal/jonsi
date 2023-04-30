@@ -55,10 +55,7 @@ class _LoginScreenState extends State<LoginScreen> {
       final user =
       await authService.signInWithApple([Scope.email, Scope.fullName]);
       print('uid: ${user.uid}');
-      Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-              builder: (context) => const BottomNavBar(isprovider: false)));
+      socialLogin('facebook', user.uid, user.email ?? "", user.displayName ?? "");
     } catch (e) {
       // TODO: Show alert here
       print(e);
