@@ -10,6 +10,7 @@ import 'package:kappu/components/AppColors.dart';
 import 'package:kappu/constants/storage_manager.dart';
 import 'package:kappu/helperfunctions/screen_nav.dart';
 import 'package:kappu/screens/login/widgets/google_login_button.dart';
+import 'package:kappu/screens/register/register.dart';
 import 'package:kappu/screens/register/social_signup.dart';
 import 'package:kappu/screens/reset_password/enter_email_screen.dart';
 import 'package:the_apple_sign_in/the_apple_sign_in.dart' hide ButtonStyle;
@@ -404,7 +405,7 @@ class _LoginScreenState extends State<LoginScreen> {
             onTap: () {
               changeScreen(
                   context: context,
-                  screen: SocailSignUpScreen(isprovider: false,));
+                  screen: SignUp(isprovider: false,));
             },
             child: const Text(
               'Signup',
