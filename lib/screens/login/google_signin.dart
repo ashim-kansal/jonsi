@@ -14,8 +14,9 @@ class GoogleSignInApi {
 class AppleAuthService {
   final _firebaseAuth = FirebaseAuth.instance;
 
-  Future<User> signInWithApple(List<Scope> scopes,
-      ) async {
+  Future<User> signInWithApple({
+    required List<Scope> scopes,
+  }) async {
     // 1. perform the sign-in request
     final result = await TheAppleSignIn.performRequests(
         [AppleIdRequest(requestedScopes: scopes)]);
@@ -58,4 +59,3 @@ class AppleAuthService {
     }
   }
 }
-

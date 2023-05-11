@@ -11,7 +11,8 @@ class GoogleLoginButton extends StatefulWidget {
   final bool action;
   final String text;
   final Function(GoogleSignInAccount) onTap;
-  const GoogleLoginButton({Key? key, required this.action, required this.text,required this.onTap})
+  const GoogleLoginButton(
+      {Key? key, required this.action, required this.text, required this.onTap})
       : super(key: key);
 
   @override
@@ -76,8 +77,7 @@ class _GoogleLoginButtonState extends State<GoogleLoginButton> {
 class FacebookLoginButton extends StatefulWidget {
   Function(Map<String, dynamic>) onTap;
   final String text;
-  FacebookLoginButton(
-      {Key? key, required this.onTap, required this.text})
+  FacebookLoginButton({Key? key, required this.onTap, required this.text})
       : super(key: key);
 
   @override
@@ -85,7 +85,6 @@ class FacebookLoginButton extends StatefulWidget {
 }
 
 class _FacebookLoginButtonState extends State<FacebookLoginButton> {
-
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -118,14 +117,18 @@ class _FacebookLoginButtonState extends State<FacebookLoginButton> {
             Image.asset('assets/icons/f.png', scale: 1.0),
           ],
         ),
-        onPressed: (){
+        onPressed: () {
           _onPressedLogInButton();
         },
       ),
     );
   }
+
   Future<void> _onPressedLogInButton() async {
-    final LoginResult result = await FacebookAuth.instance.login(permissions: ['public_profile', 'email']); // by default we request the email and the public profile
+    final LoginResult result = await FacebookAuth.instance.login(permissions: [
+      'public_profile',
+      'email'
+    ]); // by default we request the email and the public profile
 // or FacebookAuth.i.login()
     if (result.status == LoginStatus.success) {
       // you are logged
@@ -139,11 +142,9 @@ class _FacebookLoginButtonState extends State<FacebookLoginButton> {
       print(userData);
       widget.onTap(userData);
       await FacebookAuth.instance.logOut();
-
     } else {
       print(result.status);
       print(result.message);
     }
   }
-
 }

@@ -49,12 +49,11 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   initState() {}
 
-
   Future<void> signInWithApple(BuildContext context) async {
     try {
       final authService = AppleAuthService();
-      final user =
-      await authService.signInWithApple([Scope.email, Scope.fullName]);
+      final user = await authService
+          .signInWithApple(scopes: [Scope.email, Scope.fullName]);
       print('uid: ${user.uid}');
       socialLogin('apple', user.uid, user.email ?? "", user.displayName ?? "");
     } catch (e) {
@@ -72,16 +71,16 @@ class _LoginScreenState extends State<LoginScreen> {
       customtext(
           buttontext: 'Welcome to Urban Malta',
           fontSize: 20,
-          fontfailmy: "Montserrat-Bold"
-      ),
+          fontfailmy: "Montserrat-Bold"),
       15.verticalSpace,
       CustomTextFormField(
         controller: emailController,
-        validator: (value) =>
-        isEmail(value!) ? null : "Check your email",
+        validator: (value) => isEmail(value!) ? null : "Check your email",
         keyboardType: TextInputType.emailAddress,
         prefixIcon: ImageIcon(
-          AssetImage('assets/icons/ft-4.png'), color: AppColors.app_color,),
+          AssetImage('assets/icons/ft-4.png'),
+          color: AppColors.app_color,
+        ),
         suffixIcon: isEmail(email) ? checkIcon : null,
         hintText: 'Enter Email',
         isValid: isVaildEmail,
@@ -138,9 +137,7 @@ class _LoginScreenState extends State<LoginScreen> {
               _showPassword = !_showPassword;
               setState(() {});
             },
-            child: _showPassword
-                ? passwordEyeIcon
-                : passwordGreenEyeIcon),
+            child: _showPassword ? passwordEyeIcon : passwordGreenEyeIcon),
         hintText: "Enter Password",
       ),
 
@@ -223,7 +220,7 @@ class _LoginScreenState extends State<LoginScreen> {
             shape: MaterialStateProperty.all(
               RoundedRectangleBorder(
                 borderRadius:
-                BorderRadius.circular(ScreenUtil().screenHeight * 0.025),
+                    BorderRadius.circular(ScreenUtil().screenHeight * 0.025),
               ),
             ),
           ),
@@ -266,26 +263,28 @@ class _LoginScreenState extends State<LoginScreen> {
                   StorageManager().accessToken =
                       "" + loginresponse.data['data']['token'];
                   StorageManager().userId =
-                  loginresponse.data['data']['user']['id'];
-                  StorageManager().name = "" +
-                      loginresponse.data['data']['user']['first_name'];
+                      loginresponse.data['data']['user']['id'];
+                  StorageManager().name =
+                      "" + loginresponse.data['data']['user']['first_name'];
                   StorageManager().email =
                       "" + loginresponse.data['data']['user']['email'];
                   StorageManager().isProvider = loginresponse.data['data']
-                  ['user']['is_provider']
+                          ['user']['is_provider']
                       ? true
                       : false;
                   StorageManager().nationality =
                       "" + loginresponse.data['data']['user']['nationality'];
                   StorageManager().language =
                       "" + loginresponse.data['data']['user']['languages'];
-                  if (loginresponse
-                      .data['data']['user']['customer_stripe_id'] != null)
-                    StorageManager().stripeId =
-                        "" + loginresponse
-                            .data['data']['user']['customer_stripe_id'];
-                  StorageManager().userImage =
-                  loginresponse.data['data']['user']['profile_pic'] != null
+                  if (loginresponse.data['data']['user']
+                          ['customer_stripe_id'] !=
+                      null)
+                    StorageManager().stripeId = "" +
+                        loginresponse.data['data']['user']
+                            ['customer_stripe_id'];
+                  StorageManager().userImage = loginresponse.data['data']
+                              ['user']['profile_pic'] !=
+                          null
                       ? "" + loginresponse.data['data']['user']['profile_pic']
                       : "";
                   // StorageManager().phone = ""+loginresponse.data['data']['user']['phone_number'];
@@ -294,17 +293,18 @@ class _LoginScreenState extends State<LoginScreen> {
                 isLoading = false;
                 print('aaaaa');
                 (widget.isFromOtherScreen &&
-                    loginresponse.data['data']['user']['is_provider'] == false)
-                    ? Navigator.pop(context, "1") :
-                Navigator.pushAndRemoveUntil(
-                    context, MaterialPageRoute(builder: (BuildContext context) {
-                  return BottomNavBar(
-                    isprovider: loginresponse
-                        .data['data']['user']['is_provider'],
-                  );
-                }), (r) {
-                  return false;
-                });
+                        loginresponse.data['data']['user']['is_provider'] ==
+                            false)
+                    ? Navigator.pop(context, "1")
+                    : Navigator.pushAndRemoveUntil(context,
+                        MaterialPageRoute(builder: (BuildContext context) {
+                        return BottomNavBar(
+                          isprovider: loginresponse.data['data']['user']
+                              ['is_provider'],
+                        );
+                      }), (r) {
+                        return false;
+                      });
 
                 // widget.isFromOtherScreen
                 //     ? Navigator.pop(context, "1")
@@ -337,7 +337,7 @@ class _LoginScreenState extends State<LoginScreen> {
               shape: MaterialStateProperty.all(
                 RoundedRectangleBorder(
                   borderRadius:
-                  BorderRadius.circular(ScreenUtil().screenHeight * 0.025),
+                      BorderRadius.circular(ScreenUtil().screenHeight * 0.025),
                   side: const BorderSide(width: 1, color: Colors.black),
                 ),
               ),
@@ -373,22 +373,21 @@ class _LoginScreenState extends State<LoginScreen> {
         children: <Widget>[
           Expanded(
               child: FacebookLoginButton(
-                text: 'Facebook',
-                onTap: (user) {
-                  socialLogin(
-                      'facebook', user["id"], user["email"], user["name"]);
-                },
-              )),
+            text: 'Facebook',
+            onTap: (user) {
+              socialLogin('facebook', user["id"], user["email"], user["name"]);
+            },
+          )),
           15.horizontalSpace,
           Expanded(
               child: GoogleLoginButton(
-                action: false,
-                text: 'Google',
-                onTap: (user) {
-                  socialLogin(
-                      'google', user.id, user.email, user.displayName ?? "");
-                },
-              )),
+            action: false,
+            text: 'Google',
+            onTap: (user) {
+              socialLogin(
+                  'google', user.id, user.email, user.displayName ?? "");
+            },
+          )),
         ],
       ),
       20.verticalSpace,
@@ -405,7 +404,9 @@ class _LoginScreenState extends State<LoginScreen> {
             onTap: () {
               changeScreen(
                   context: context,
-                  screen: SignUp(isprovider: false,));
+                  screen: SignUp(
+                    isprovider: false,
+                  ));
             },
             child: const Text(
               'Signup',
@@ -440,7 +441,6 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-
   Image returnLogo(BuildContext context) {
     return Image.asset(
       'assets/images/colorfulLogo.png',
@@ -449,8 +449,8 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Future<void> socialLogin(String type, String id, String email,
-      String displayName) async {
+  Future<void> socialLogin(
+      String type, String id, String email, String displayName) async {
     print(widget.isFromOtherScreen);
     isLoading = true;
     setState(() {});
@@ -465,8 +465,8 @@ class _LoginScreenState extends State<LoginScreen> {
       if (loginresponse.data['isSuccess'] == true) {
         StorageManager().accessToken = "" + loginresponse.data['data']['token'];
         StorageManager().userId = loginresponse.data['data']['user']['id'];
-        StorageManager().name = "" +
-            loginresponse.data['data']['user']['first_name'];
+        StorageManager().name =
+            "" + loginresponse.data['data']['user']['first_name'];
         StorageManager().email =
             "" + loginresponse.data['data']['user']['email'];
         if (loginresponse.data['data']['user']['customer_stripe_id'] != null)
@@ -474,7 +474,7 @@ class _LoginScreenState extends State<LoginScreen> {
               "" + loginresponse.data['data']['user']['customer_stripe_id'];
 
         StorageManager().isProvider =
-        loginresponse.data['data']['user']['is_provider'] ? true : false;
+            loginresponse.data['data']['user']['is_provider'] ? true : false;
         StorageManager().nationality =
             "" + loginresponse.data['data']['user']['nationality'];
         StorageManager().language =
@@ -484,15 +484,16 @@ class _LoginScreenState extends State<LoginScreen> {
         isLoading = false;
         print('aaaaa');
         (widget.isFromOtherScreen &&
-            loginresponse.data['data']['user']['is_provider'] == false)
+                loginresponse.data['data']['user']['is_provider'] == false)
             ? Navigator.pop(context, "1")
             : changeScreenReplacement(
-            context,
-            BottomNavBar(
-              isprovider: loginresponse.data['data']['user']['is_provider'],
-            ));
+                context,
+                BottomNavBar(
+                  isprovider: loginresponse.data['data']['user']['is_provider'],
+                ));
         // Navigator.pop(context);
       } else {
+        isLoading = false;
         registerUser(type, displayName, id, email);
       }
     }).catchError((error) {
@@ -537,16 +538,15 @@ class _LoginScreenState extends State<LoginScreen> {
           provider.isProvider = false;
           provider.nationality = value?.data['user']['nationality'];
           provider.language = value?.data['user']['languages'];
-          provider.stripeId =
-              "" + value?.data['user']['customer_stripe_id'];
+          provider.stripeId = "" + value?.data['user']['customer_stripe_id'];
         }
         widget.isFromOtherScreen
             ? Navigator.pop(context, "1")
-            :
-        Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-                builder: (context) => const BottomNavBar(isprovider: false)));
+            : Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                    builder: (context) =>
+                        const BottomNavBar(isprovider: false)));
       }).catchError((e) {
         setState(() {
           this.isLoading = false;
@@ -555,6 +555,4 @@ class _LoginScreenState extends State<LoginScreen> {
       });
     }
   }
-
-
 }

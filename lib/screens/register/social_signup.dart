@@ -14,29 +14,26 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'register.dart';
 
-
-
 class SocailSignUpScreen extends StatelessWidget {
-
   final bool isprovider;
-  const SocailSignUpScreen(
-      {Key? key,
-        required this.isprovider,
-       });
+  const SocailSignUpScreen({
+    Key? key,
+    required this.isprovider,
+  });
 
   Future<void> signInWithApple(BuildContext context) async {
     try {
       final authService = AppleAuthService();
-      final user =
-      await authService.signInWithApple([Scope.email, Scope.fullName]);
+      final user = await authService
+          .signInWithApple(scopes: [Scope.email, Scope.fullName]);
       print('uid: ${user.uid}');
-      socialLogin('apple', user.uid, user.email ?? "", user.displayName ?? "", context);
+      socialLogin(
+          'apple', user.uid, user.email ?? "", user.displayName ?? "", context);
     } catch (e) {
       // TODO: Show alert here
       print(e);
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -79,19 +76,22 @@ class SocailSignUpScreen extends StatelessWidget {
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 10),
-                  Visibility(visible: Platform.isIOS, child: SizedBox(height: 10)),
+                  Visibility(
+                      visible: Platform.isIOS, child: SizedBox(height: 10)),
                   Visibility(
                     visible: Platform.isIOS,
                     child: SizedBox(
                       height: ScreenUtil().screenHeight * 0.05,
                       child: TextButton(
                         style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all(Colors.white),
+                          backgroundColor:
+                              MaterialStateProperty.all(Colors.white),
                           shape: MaterialStateProperty.all(
                             RoundedRectangleBorder(
-                              borderRadius:
-                              BorderRadius.circular(ScreenUtil().screenHeight * 0.025),
-                              side: const BorderSide(width: 1, color: Colors.black),
+                              borderRadius: BorderRadius.circular(
+                                  ScreenUtil().screenHeight * 0.025),
+                              side: const BorderSide(
+                                  width: 1, color: Colors.black),
                             ),
                           ),
                         ),
@@ -122,15 +122,21 @@ class SocailSignUpScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 10),
                   FacebookLoginButton(
-                      text: 'Connect with Facebook', onTap: (user){
-                    socialLogin('facebook', user["id"], user["email"], user["name"], context);
-
-                  },),
+                    text: 'Connect with Facebook',
+                    onTap: (user) {
+                      socialLogin('facebook', user["id"], user["email"],
+                          user["name"], context);
+                    },
+                  ),
                   const SizedBox(height: 10),
-                  GoogleLoginButton(action: false, text: 'Connect with Google',onTap: (user){
-                    socialLogin('google', user.id!, user.email!, user.displayName!, context);
-
-                  },),
+                  GoogleLoginButton(
+                    action: false,
+                    text: 'Connect with Google',
+                    onTap: (user) {
+                      socialLogin('google', user.id!, user.email!,
+                          user.displayName!, context);
+                    },
+                  ),
                   const SizedBox(
                     height: 10,
                   ),
@@ -190,10 +196,12 @@ class SocailSignUpScreen extends StatelessWidget {
                       GestureDetector(
                         onTap: () async {
                           String url = "https://urbanmalta.com/privacy-policy";
-                          var urllaunchable = await canLaunchUrlString(url); //canLaunch is from url_launcher package
-                          if(urllaunchable){
-                            await launchUrlString(url); //launch is ffrom url_launcher package to launch URL
-                          }else{
+                          var urllaunchable = await canLaunchUrlString(
+                              url); //canLaunch is from url_launcher package
+                          if (urllaunchable) {
+                            await launchUrlString(
+                                url); //launch is ffrom url_launcher package to launch URL
+                          } else {
                             print("URL can't be launched.");
                           }
                         },
@@ -215,14 +223,14 @@ class SocailSignUpScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       GestureDetector(
-                        onTap: (){
+                        onTap: () {
                           Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
                                   builder: (context) =>
-                                  const BottomNavBar(isprovider: false)));
+                                      const BottomNavBar(isprovider: false)));
                         },
-                        child:   Text(
+                        child: Text(
                           "Skip",
                           style: TextStyle(
                             color: Color(0xFF4995EB),
@@ -231,7 +239,6 @@ class SocailSignUpScreen extends StatelessWidget {
                           ),
                         ),
                       ),
-
                       Text(
                         "",
                         style: TextStyle(
@@ -251,8 +258,8 @@ class SocailSignUpScreen extends StatelessWidget {
     ));
   }
 
-  Future<void> socialLogin(
-      String type,String id, String _email, String displayName, BuildContext context) async {
+  Future<void> socialLogin(String type, String id, String _email,
+      String displayName, BuildContext context) async {
     // isLoading = true;
     // setState(() {});
     Map<String, dynamic> body = {
@@ -260,24 +267,24 @@ class SocailSignUpScreen extends StatelessWidget {
       'social_login_id': id,
       'email': _email,
       'fcm_token': StorageManager().fcmToken,
-      'os': Platform.isAndroid?'android':'ios',
+      'os': Platform.isAndroid ? 'android' : 'ios',
     };
     await HttpClient().signinSocial(body).then((loginresponse) async {
       if (loginresponse.data['isSuccess'] == true) {
         StorageManager().accessToken = "" + loginresponse.data['data']['token'];
         StorageManager().userId = loginresponse.data['data']['user']['id'];
-        StorageManager().name = "" +
-            loginresponse.data['data']['user']['first_name'];
+        StorageManager().name =
+            "" + loginresponse.data['data']['user']['first_name'];
         StorageManager().email =
             "" + loginresponse.data['data']['user']['email'];
         StorageManager().isProvider =
-        loginresponse.data['data']['user']['is_provider'] ? true : false;
+            loginresponse.data['data']['user']['is_provider'] ? true : false;
         StorageManager().nationality =
             "" + loginresponse.data['data']['user']['nationality'];
 
-        if(loginresponse.data['data']['user']['customer_stripe_id']!=null)
+        if (loginresponse.data['data']['user']['customer_stripe_id'] != null)
           StorageManager().stripeId =
-            "" + loginresponse?.data['data']['user']['customer_stripe_id'];
+              "" + loginresponse?.data['data']['user']['customer_stripe_id'];
         StorageManager().language =
             "" + loginresponse.data['data']['user']['languages'];
         // StorageManager().phone = ""+loginresponse.data['data']['user']['phone_number'];
@@ -287,7 +294,7 @@ class SocailSignUpScreen extends StatelessWidget {
             BottomNavBar(
               isprovider: loginresponse.data['data']['user']['is_provider'],
             ));
-      }else{
+      } else {
         changeScreen(
             context: context,
             screen: SignUp(
@@ -297,9 +304,7 @@ class SocailSignUpScreen extends StatelessWidget {
               socialId: id,
               email: _email,
             ));
-
       }
-
 
       // Navigator.pop(context);
     }).catchError((error) {
@@ -312,10 +317,6 @@ class SocailSignUpScreen extends StatelessWidget {
             socialId: id,
             email: _email,
           ));
-
     });
   }
-
-
-
 }
