@@ -375,7 +375,13 @@ class _LoginScreenState extends State<LoginScreen> {
               child: FacebookLoginButton(
             text: 'Facebook',
             onTap: (user) {
-              socialLogin('facebook', user["id"], user["email"], user["name"]);
+              if (user.containsKey("email")) {
+                socialLogin(
+                    'facebook', user["id"], user["email"], user["name"]);
+              } else {
+                socialLogin('facebook', user["id"],
+                    user["id"] + "@urbanmalta.com", user["name"]);
+              }
             },
           )),
           15.horizontalSpace,
