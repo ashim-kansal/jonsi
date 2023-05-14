@@ -34,21 +34,6 @@ class _ProviderHomeScreenState extends State<ProviderHomeScreen> {
                 color: AppColors.app_color,
                 child: Row(
                   children: [
-                    CircleAvatar(
-                        backgroundColor: Colors.white,
-                        radius: 15,
-                        child: Center(
-                          child: IconButton(
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                            icon: const Icon(
-                              Icons.arrow_back_ios,
-                              color: AppColors.app_color,
-                              size: 15,
-                            ),
-                          ),
-                        )),
                     SizedBox(
                       width: 10,
                     ),

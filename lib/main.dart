@@ -215,7 +215,7 @@ class _MyAppState extends State<MyApp> {
           ],
           child: MaterialApp(
               navigatorKey: NavigationService.navigatorKey,
-              title: 'jonsi',
+              title: 'UrbanMalta',
               debugShowCheckedModeBanner: false,
               theme: ThemeData(
                 scaffoldBackgroundColor: Colors.white,
