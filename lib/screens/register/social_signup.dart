@@ -27,8 +27,8 @@ class SocailSignUpScreen extends StatelessWidget {
       final user = await authService
           .signInWithApple(scopes: [Scope.email, Scope.fullName]);
       print('uid: ${user.uid}');
-      socialLogin(
-          'apple', user.uid, user.email ?? "", user.displayName ?? "", context);
+      socialLogin('apple', user.uid, user.email ?? user.uid + "@urbanmalta.com",
+          user.displayName ?? "Guest User", context);
     } catch (e) {
       // TODO: Show alert here
       print(e);
