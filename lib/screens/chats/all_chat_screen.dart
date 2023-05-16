@@ -145,7 +145,7 @@ class AllChatScreen extends ModalRoute<void> {
                         name: otherpersoname,
                         messageText: allchats.data![index].message,
                         imageUrl:
-                            'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+                            'https://urbanmalta.com/public/frontend/images/johnwing.png',
                         time: '12:21 pm',
                       );
                     },

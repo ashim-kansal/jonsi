@@ -129,6 +129,9 @@ abstract class HttpClient {
   @POST('user/notifications')
   Future<List<NotificationModel>> getNotifications(userId, token);
 
+  @POST('user/deleteaccount')
+  Future<HttpResponse?> deleteAccount();
+
   @POST('orders/completed')
   Future<List<OrderListResponse>> getcompletedbooking(
       String provider_id, String token, String by);

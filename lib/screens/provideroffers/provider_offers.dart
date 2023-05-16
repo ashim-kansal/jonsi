@@ -131,7 +131,7 @@ class ProviderOffers extends ModalRoute<void> {
                                             backgroundColor: Colors.transparent,
                                             radius: 20.h,
                                             backgroundImage: const NetworkImage(
-                                              'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+                                              'https://urbanmalta.com/public/frontend/images/johnwing.png',
                                             ),
                                           )
                                         ]),

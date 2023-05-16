@@ -121,7 +121,7 @@ class _BookingWidgetState extends State<BookingWidget> {
                         backgroundColor: Colors.transparent,
                         radius: ScreenUtil().setHeight(20),
                         backgroundImage: NetworkImage(
-                          'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+                          'https://urbanmalta.com/public/frontend/images/johnwing.png',
                         ),
                       ),
                       10.horizontalSpace,

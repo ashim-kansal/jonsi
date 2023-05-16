@@ -15,7 +15,7 @@ List<ChatUsers> tempchats = [
       name: 'Huzaifa',
       messageText: 'How Are you?',
       imageURL:
-          'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+          'https://urbanmalta.com/public/frontend/images/johnwing.png',
       time: 'yesterday'),
   ChatUsers(
       name: 'Elisha',
@@ -45,13 +45,13 @@ List<ChatUsers> tempchats = [
       name: 'Huzaifa',
       messageText: 'How Are you?',
       imageURL:
-          'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+          'https://urbanmalta.com/public/frontend/images/johnwing.png',
       time: 'yesterday'),
   ChatUsers(
       name: 'Huzaifa',
       messageText: 'How Are you?',
       imageURL:
-          'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+          'https://urbanmalta.com/public/frontend/images/johnwing.png',
       time: 'yesterday'),
   ChatUsers(
       name: 'Elisha',
@@ -81,6 +81,6 @@ List<ChatUsers> tempchats = [
       name: 'Huzaifa',
       messageText: 'How Are you?',
       imageURL:
-          'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+          'https://urbanmalta.com/public/frontend/images/johnwing.png',
       time: 'yesterday'),
 ];

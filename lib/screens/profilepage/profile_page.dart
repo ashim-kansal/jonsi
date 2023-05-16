@@ -76,7 +76,7 @@ class ProviderProfilePageScreen extends ModalRoute<void> {
                   child: Material(
                     color: Colors.transparent,
                     child: Ink.image(
-                      image: NetworkImage('https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500'),
+                      image: NetworkImage('https://urbanmalta.com/public/frontend/images/johnwing.png'),
                       fit: BoxFit.cover,
                       width: 128,
                       height: 128,

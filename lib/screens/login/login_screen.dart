@@ -544,6 +544,7 @@ class _LoginScreenState extends State<LoginScreen> {
           provider.email = email;
           provider.isProvider = false;
           provider.nationality = value?.data['user']['nationality'];
+          provider.userId = value?.data['user']['id'];
           provider.language = value?.data['user']['languages'];
           provider.stripeId = "" + value?.data['user']['customer_stripe_id'];
         }

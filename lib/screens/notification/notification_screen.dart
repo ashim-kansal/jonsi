@@ -150,7 +150,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                               CircleAvatar(
                                 radius: ScreenUtil().setHeight(30),
                                 backgroundImage:
-                                NetworkImage('https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500'),
+                                NetworkImage('https://urbanmalta.com/public/frontend/images/johnwing.png'),
                               ),
                               Padding(
                                 padding: const EdgeInsets.only(left: 8.0),

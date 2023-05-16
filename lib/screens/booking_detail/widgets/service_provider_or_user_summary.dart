@@ -89,7 +89,7 @@ class ServiceProviderOrUserSummary extends StatelessWidget {
                             backgroundImage: NetworkImage(
                               providerprofile.data!.profilepicture != null
                                   ? providerprofile.data!.profilepicture!
-                                  : 'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+                                  : 'https://urbanmalta.com/public/frontend/images/johnwing.png',
                             ),
                           )
                         ],
@@ -121,7 +121,7 @@ class ServiceProviderOrUserSummary extends StatelessWidget {
                       backgroundColor: Colors.transparent,
                       radius: ScreenUtil().setHeight(20),
                       backgroundImage: const NetworkImage(
-                        'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+                        'https://urbanmalta.com/public/frontend/images/johnwing.png',
                       ),
                     )
                   ],

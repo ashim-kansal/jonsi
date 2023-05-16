@@ -259,6 +259,26 @@ class _HttpClient implements HttpClient {
   }
 
   @override
+  Future<HttpResponse<dynamic>> deleteAccount() async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{'Authorization': 'Bearer '+StorageManager().accessToken};
+
+    var formData = FormData.fromMap({
+      'user_id': StorageManager().userId,
+    });
+
+    final _result = await _dio.fetch(_setStreamType<HttpResponse<dynamic>>(
+        Options(method: 'POST', headers: _headers, extra: _extra)
+            .compose(_dio.options, 'user/deleteaccount',
+            queryParameters: queryParameters, data: formData)
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = _result.data;
+    final httpResponse = HttpResponse(value, _result);
+    return httpResponse;
+  }
+
+  @override
   Future<HttpResponse<dynamic>> sendotpemail(id) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
