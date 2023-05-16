@@ -4,30 +4,28 @@ import 'package:dio/dio.dart';
 import 'package:kappu/constants/storage_manager.dart';
 import 'package:kappu/models/serializable_model/FaqModel.dart';
 import 'package:kappu/models/serializable_model/GigListResponse.dart';
-import 'package:kappu/models/serializable_model/Language.dart';
 import 'package:kappu/models/serializable_model/NotificationModel.dart';
 import 'package:kappu/models/serializable_model/RecommendedServiceProvidersResponse.dart';
 import 'package:kappu/models/serializable_model/TrendingServicesResponse.dart';
 import 'package:kappu/models/serializable_model/signup.dart';
 import 'package:retrofit/dio.dart';
 import 'package:retrofit/http.dart';
+
 import '../models/serializable_model/AddOrderResponse.dart';
+import '../models/serializable_model/CategoryResponse.dart';
 import '../models/serializable_model/HelpCenterResponse.dart';
 import '../models/serializable_model/OrderListResponse.dart';
 import '../models/serializable_model/PopularServiceListResponse.dart';
 import '../models/serializable_model/PrivacyPolicyResponse.dart';
 import '../models/serializable_model/ServiceResponse.dart';
-import '../models/serializable_model/CategoryResponse.dart';
 import '../models/serializable_model/allchats.dart';
-import '../models/serializable_model/booking.dart';
 import '../models/serializable_model/chat.dart';
 import '../models/serializable_model/forget_password_response.dart';
-import '../models/serializable_model/offer.dart';
 import '../models/serializable_model/provider_detail_model.dart';
 import '../models/serializable_model/provider_profile.dart';
 import '../models/serializable_model/review.dart';
-import '../models/serializable_model/thread_id.dart';
 import 'base_dio.dart';
+
 part 'http_client.g.dart';
 
 @RestApi(baseUrl: "https://urbanmalta.com/api/")
@@ -166,57 +164,6 @@ abstract class HttpClient {
   @POST('orders/provider/requests/completed')
   Future<AddOrderResponse> completeOrder(String bookingId, String token);
 
-
-  // @GET('category/{id}')
-  // Future<Category> getservicecatagorynbyid(@Path('id') String id);
-
-  @POST('service/')
-  Future<HttpResponse> createoffer(@Body() Map<String, dynamic> params);
-
-  @GET('service/')
-  Future<List<Offers>> getoffersbycatagory(@Query('category') int catagoryid);
-
-  @GET('list-service/')
-  Future<List<Offers>> getprovideroffer(@Header("Authorization") String token);
-
-  @GET('service/{id}')
-  Future<Offers> getservicebyid(@Path('id') String id);
-
-  @DELETE('service/{id}/')
-  Future<HttpResponse> deleteservice(@Path('id') String id);
-
-  @PATCH('service/{id}/')
-  Future<HttpResponse> pauseorResumeservice(
-      @Path('id') String id, @Body() Map<String, dynamic> params);
-
-  @POST('booking/')
-  Future<HttpResponse> createbookingrequest(
-      @Header("Authorization") String token,
-      @Body() Map<String, dynamic> params);
-
-  @GET('booking/')
-  Future<List<Booking>> getbookingrequest(
-      @Header("Authorization") String token);
-
-
-  @PATCH('booking-status/{id}/')
-  Future<HttpResponse> acceptrejectbookingrequest(
-      @Path('id') int id, @Body() Map<String, dynamic> params);
-
-  @PATCH('booking-status/{id}/')
-  Future<HttpResponse> cancelactivebooking(
-      @Path('id') int id, @Body() Map<String, dynamic> params);
-
-  @POST('get-signed-url/')
-  Future<HttpResponse> updateprofilepic(@Body() Map<String, dynamic> params);
-
-  @PATCH('profile/{id}/')
-  Future<HttpResponse> updateprofile(
-      @Path('id') String id, @Body() Map<String, dynamic> params);
-
-  @GET('profile/{id}/')
-  Future<HttpResponse> getuserprofilepic(@Path('id') String id);
-
   @POST('service-review/')
   Future<HttpResponse> addreview(@Body() Map<String, dynamic> params);
 
@@ -231,9 +178,6 @@ abstract class HttpClient {
 
   @GET('user/changename')
   Future<AddOrderResponse> updateName(String name);
-
-  @POST('thread/')
-  Future<Thread> gethread(@Body() Map<String, dynamic> params);
 
   @GET('/loadmessages/{threadid}/')
   Future<List<Chat>> getchatwithauser(@Path('threadid') String threadid);

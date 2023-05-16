@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kappu/components/AppColors.dart';
-// import 'package:kappu/models/all_chats.dart';
 import 'package:kappu/models/notification.dart';
 
 class NotificationsPageProvider extends StatefulWidget {
@@ -15,7 +14,6 @@ class NotificationsPageProvider extends StatefulWidget {
 class _NotificationsPageProviderState extends State<NotificationsPageProvider> {
   @override
   void initState() {
-    // HttpClient().getbookingrequest("Bearer "+)
     super.initState();
   }
 

@@ -9,7 +9,6 @@ import 'package:kappu/constants/storage_manager.dart';
 import 'package:kappu/models/serializable_model/AddOrderResponse.dart';
 import 'package:kappu/net/base_dio.dart';
 import 'package:kappu/net/http_client.dart';
-import 'package:kappu/screens/creditcardinput/credit_cardinput.dart';
 
 import '../../common/custom_progress_bar.dart';
 import '../../components/MyAppBar.dart';
@@ -75,16 +74,6 @@ class _OrderReviewState extends State<OrderReview> {
         showPaymentSheet(data.orderData!.id);
       });
 
-      //
-      // Navigator.push(
-      //     context,
-      //     MaterialPageRoute(
-      //         builder: (context) =>
-      //             CreditCardInput(clientSecret: data.stripeintent!.clientSecret,)));
-
-      //     setState(() {
-      //   _ready = true;
-      // });
     } on StripeException catch (e) {
       setState(() {
         this.loading = false;

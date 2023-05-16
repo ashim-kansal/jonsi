@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kappu/components/AppColors.dart';
-import 'package:kappu/screens/search_screen/search_screen.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
 class SearchTextField extends StatelessWidget {
@@ -25,8 +24,7 @@ class SearchTextField extends StatelessWidget {
         ),
         child: Center(child: TextFormField(
           onTap: () {
-            // pushDynamicScreen(context,
-            //     screen: SearchScreen(), withNavBar: false);
+
           },
           onFieldSubmitted: onSearchingComplete,
           textInputAction: TextInputAction.search,

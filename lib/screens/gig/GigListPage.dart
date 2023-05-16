@@ -1,26 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kappu/common/validation_dialogbox.dart';
-import 'package:kappu/components/AppColors.dart';
 import 'package:kappu/components/MyAppBar.dart';
 import 'package:kappu/constants/storage_manager.dart';
 import 'package:kappu/models/serializable_model/GigListResponse.dart';
-import 'package:kappu/models/serializable_model/booking.dart';
 import 'package:kappu/net/http_client.dart';
-import 'package:kappu/provider/provider_provider.dart';
-import 'package:kappu/provider/userprovider.dart';
-import 'package:kappu/screens/add_review/add_review.dart';
-import 'package:kappu/screens/bookings/widgets/cancelled_booking.dart';
-import 'package:kappu/screens/bookings/widgets/booking_widget.dart';
 import 'package:kappu/screens/gig/GigItemWidget.dart';
 import 'package:kappu/screens/register/register_more.dart';
-import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
-import 'package:provider/provider.dart';
 
-import '../../models/serializable_model/OrderListResponse.dart';
 import '../../net/base_dio.dart';
-import '../login/login_screen.dart';
 
 class GigListPage extends StatefulWidget {
   const GigListPage({Key? key}) : super(key: key);

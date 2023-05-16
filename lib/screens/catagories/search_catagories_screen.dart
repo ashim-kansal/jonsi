@@ -2,14 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kappu/components/MyAppBar.dart';
 import 'package:kappu/components/ProviderItem.dart';
-import 'package:kappu/constants/service_summary.dart';
 import 'package:kappu/models/serializable_model/RecommendedServiceProvidersResponse.dart';
 import 'package:kappu/net/http_client.dart';
-import 'package:kappu/screens/provideroffers/provider_offers.dart';
-import 'package:kappu/screens/slider_offers.dart';
-import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
-import '../../models/serializable_model/CategoryResponse.dart';
 import '../home_page/widgets/search_text_field.dart';
 
 class SearchCatagoriesScreen extends StatefulWidget {

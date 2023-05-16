@@ -3,20 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:kappu/components/AppColors.dart';
 import 'package:kappu/constants/storage_manager.dart';
-import 'package:kappu/models/serializable_model/booking.dart';
-import 'package:kappu/provider/userprovider.dart';
-import 'package:kappu/screens/booking_detail/widgets/action_button.dart';
-import 'package:kappu/screens/booking_detail/widgets/service_provider_or_user_summary.dart';
-import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
-import 'package:provider/provider.dart';
 
 import '../../../models/serializable_model/OrderListResponse.dart';
-import '../../../net/base_dio.dart';
-import '../../../net/http_client.dart';
-import '../../add_review/add_review.dart';
-import '../../booking_detail/request_booking_detail.dart';
-import '../../booking_detail/widgets/order_summary.dart';
-import '../../booking_detail/widgets/rating_widget.dart';
 
 class BookingWidget extends StatefulWidget {
   final String bookingstatus;
@@ -207,35 +195,7 @@ class _BookingWidgetState extends State<BookingWidget> {
                 ],
               ),
 
-              // 10.verticalSpace,
-              // ServiceProviderOrUserSummary(booking: widget.booking),
-              // widget.bookingstatus == "Completed" &&
-              //     widget.booking.rating != 0
-              //     ? BookingRatingWidget(booking: widget.booking)
-              //     : Column(
-              //   children: [
-              //     10.verticalSpace,
-              //     if (widget.bookingstatus == "Completed")
-              //       Center(
-              //         child: TextButton(
-              //             onPressed: () {
-              //               // pushDynamicScreen(context,
-              //               //     screen: AddReview(
-              //               //         setbookingstate:
-              //               //         widget.setbookingstate,
-              //               //         booking: widget.booking),
-              //               //     withNavBar: false);
-              //             },
-              //             child: const Text("Add Feedback")),
-              //       ),
-              //   ],
-              // ),
-              // if (widget.bookingstatus != "Completed")
-              // ActionButtons(
-              //   booking: widget.booking,
-              //   setbookingstate: widget.setbookingstate,
-              //   bookingstatus: widget.bookingstatus,
-              // ),
+
             ]),
           ),)
         ));

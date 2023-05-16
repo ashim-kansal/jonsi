@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:kappu/screens/offer_detail.dart/offer_detail.dart';
-import '../../models/serializable_model/offer.dart';
 import '../../net/http_client.dart';
 import '../components/AppColors.dart';
 import '../components/ProviderItem.dart';

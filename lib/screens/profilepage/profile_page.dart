@@ -115,23 +115,7 @@ class ProviderProfilePageScreen extends ModalRoute<void> {
               ),
               child: const Text('Message'),
               onPressed: () async {
-                // Map<String, dynamic> map = {
-                //   'user_one': loggedinuser.user.id,
-                //   'user_two': "providerProfile.id",
-                // };
-                // HttpClient().gethread(map).then((value) {
-                //   print("><><><><><");
-                //   pushDynamicScreen(context,
-                //       screen: ChattingScreen(
-                //           otheruserid: providerProfile.id,
-                //           threadid: value.id,
-                //           otherusername: providerProfile.firstname +
-                //               " " +
-                //               providerProfile.lastname));
-                // }).catchError((e) {
-                //   print('Error he bhai');
-                //   showErrorFlushBar(context: context, message: e.toString());
-                // });
+
               },
             )),
           ),
